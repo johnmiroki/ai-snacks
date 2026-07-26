@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Every slash command, bundled skill, CLI subcommand and flag in Claude Code 2.1.220 — extracted from the installed binary, probed for availability, and linked to the official documentation.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='54' font-size='76' text-anchor='middle' dominant-baseline='central'%3E%E2%8C%98%3C/text%3E%3C/svg%3E">
+<title>Claude Code Command Index — v2.1.220</title>
+
+<style>
+  :root {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --fam-native:#3F4FC0;
+    --fam-skill:#0D7C87;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0F1117;
+      --surface:#161922;
+      --surface-2:#1E222E;
+      --ink:#E3E6EE;
+      --muted:#969DB0;
+      --faint:#6C7385;
+      --rule:#262B38;
+      --rule-soft:#1E222E;
+      --accent:#8E9AF2;
+      --accent-soft:#1F2540;
+      --fam-native:#8E9AF2;
+      --fam-skill:#4FC7D2;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0F1117;
+    --surface:#161922;
+    --surface-2:#1E222E;
+    --ink:#E3E6EE;
+    --muted:#969DB0;
+    --faint:#6C7385;
+    --rule:#262B38;
+    --rule-soft:#1E222E;
+    --accent:#8E9AF2;
+    --accent-soft:#1F2540;
+    --fam-native:#8E9AF2;
+    --fam-skill:#4FC7D2;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --fam-native:#3F4FC0;
+    --fam-skill:#0D7C87;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,4.4vw,44px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .slash { color:var(--accent); }
+  .lede { margin:0; max-width:64ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .stats {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(224px,1fr));
+    gap:var(--sp-2); margin-top:var(--sp-5);
+  }
+  .stat {
+    appearance:none; font:inherit; color:inherit; text-align:left; width:100%; cursor:pointer;
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4);
+    border-left:2px solid var(--sc, var(--accent));
+    transition:background .12s ease, box-shadow .12s ease;
+  }
+  .stat:hover { box-shadow:var(--shadow); }
+  .stat:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .stat[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--sc) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--sc) 45%, var(--rule));
+    border-left-color:var(--sc);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:22px; font-weight:600;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.2;
+  }
+  .stat .lbl {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .stat .lbl::after {
+    content:"filter"; margin-left:auto; letter-spacing:.1em;
+    opacity:0; transition:opacity .12s ease; color:var(--sc);
+  }
+  .stat:hover .lbl::after, .stat:focus-visible .lbl::after { opacity:.85; }
+  .stat[aria-pressed="true"] .lbl::after { content:"filtering"; opacity:1; }
+  .stat .stat-note {
+    display:block; margin-top:var(--sp-2); font-size:12.5px; line-height:1.5;
+    color:var(--muted); max-width:38ch;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .stat .stat-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+  }
+  .toolbar-inner { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+
+  .search { position:relative; flex:1 1 260px; min-width:0; }
+  .search input {
+    width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px 34px 9px 30px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .search .prefix {
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); color:var(--accent); font-size:14px; pointer-events:none;
+  }
+  .search kbd {
+    position:absolute; right:9px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); font-size:10px; color:var(--faint);
+    border:1px solid var(--rule); border-radius:3px; padding:1px 5px; background:var(--ground);
+  }
+
+  .filters { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-1); }
+  .chip {
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--surface); color:var(--muted);
+    border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .chip .dot { width:7px; height:7px; border-radius:50%; background:var(--cc, var(--accent)); }
+  .chip.st .dot { background:transparent; border:1.5px solid var(--cc, var(--muted)); }
+  .chip[aria-pressed="true"] { background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .chip.st[aria-pressed="true"] .dot { background:var(--cc, var(--accent)); }
+  .chips-sep { width:1px; align-self:stretch; background:var(--rule); margin:0 var(--sp-1); }
+  .reset { display:none; }
+  .reset.show { display:inline-flex; }
+
+  .count {
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top:var(--sp-6); }
+  .sec-head {
+    display:flex; align-items:baseline; gap:var(--sp-3);
+    border-bottom:1px solid var(--rule); padding-bottom:var(--sp-2); margin-bottom:var(--sp-4);
+  }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; margin:0; color:var(--ink);
+  }
+  .sec-head .n {
+    font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums;
+  }
+  .sec-head p { margin:0 0 0 auto; font-size:13px; color:var(--muted); text-align:right; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(330px,1fr)); gap:var(--sp-2); }
+
+  .cmd {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-left:2px solid var(--fc, var(--accent));
+    padding:var(--sp-3) var(--sp-4);
+    transition:box-shadow .12s ease;
+  }
+  .cmd:hover { box-shadow:var(--shadow); }
+
+  .cmd-top { display:flex; align-items:baseline; gap:var(--sp-2); }
+  .cmd-id {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2);
+    flex:1 1 auto; min-width:0;
+  }
+  .cmd-name {
+    font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:-.01em;
+    color:var(--fc, var(--accent)); text-decoration:none;
+  }
+  a.cmd-name { border-bottom:1px solid transparent; }
+  a.cmd-name:hover { border-bottom-color:currentColor; }
+  a.cmd-name:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+  .cmd-name .ext { font-size:10px; margin-left:2px; opacity:.5; vertical-align:1px; }
+  a.cmd-name:hover .ext { opacity:1; }
+  .cmd-name.plain { color:var(--ink); }
+
+  .sr {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  .copy {
+    flex:0 0 auto; margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--faint); background:transparent;
+    border:1px solid transparent; border-radius:3px; padding:2px 6px; cursor:pointer;
+    opacity:0; transition:opacity .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .cmd:hover .copy, .copy:focus-visible { opacity:1; }
+  .copy:hover { color:var(--accent); border-color:var(--rule); }
+  .copy:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  @media (hover:none) { .copy { opacity:1; } }
+
+  .cmd-arg { font-family:var(--mono); font-size:11.5px; color:var(--faint); overflow-wrap:anywhere; }
+  .cmd-desc { margin:var(--sp-1) 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+
+  .tags { display:flex; flex-wrap:wrap; gap:var(--sp-1); margin-top:var(--sp-2); }
+  .tag {
+    font-family:var(--mono); font-size:10px; letter-spacing:.05em;
+    border:1px solid var(--rule); border-radius:3px; padding:1px 6px; color:var(--faint);
+    background:var(--surface-2);
+  }
+  .tag.alias::before { content:"/"; opacity:.55; }
+  .tag.gate { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); background:transparent; }
+  .tag.unreg {
+    color:var(--fam-hidden); background:transparent;
+    border-color:color-mix(in srgb, var(--fam-hidden) 45%, var(--rule));
+    font-weight:600; cursor:help;
+  }
+  .tag.hidden-t { color:var(--fam-hidden); border-color:color-mix(in srgb, var(--fam-hidden) 35%, var(--rule)); background:transparent; }
+
+  .empty {
+    display:none; padding:var(--sp-6); text-align:center; color:var(--muted);
+    border:1px dashed var(--rule); border-radius:3px; font-family:var(--mono); font-size:13px;
+  }
+  .empty.show { display:block; }
+
+  /* ---------- flags table ---------- */
+  .tablewrap { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:640px; }
+  th, td { text-align:left; padding:9px var(--sp-4); border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; border-bottom:1px solid var(--rule);
+    background:var(--surface);
+  }
+  tbody tr:last-child td { border-bottom:none; }
+  td.f { font-family:var(--mono); font-size:12.5px; color:var(--fam-cli); white-space:nowrap; }
+  td.d { font-size:13.5px; color:var(--muted); }
+
+  /* ---------- notes / footer ---------- */
+  .note {
+    background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--fam-hidden);
+    border-radius:3px; padding:var(--sp-3) var(--sp-4); margin-top:var(--sp-4);
+    font-size:13.5px; color:var(--muted);
+  }
+  .note b { color:var(--ink); font-weight:600; }
+
+  footer {
+    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    border-top:1px solid var(--rule); color:var(--faint); font-size:12.5px;
+  }
+  footer code { font-family:var(--mono); font-size:.9em; }
+  footer p { margin:0 0 var(--sp-2); max-width:70ch; }
+
+  .toast {
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+    background:var(--ink); color:var(--ground);
+    font-family:var(--mono); font-size:12px; padding:9px 14px; border-radius:3px;
+    opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; z-index:60;
+  }
+  .toast.show { opacity:1; transform:translate(-50%, 0); }
+
+  /* ---------- support ---------- */
+  .masthead-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-3); }
+  .masthead-top .eyebrow { flex:1 1 260px; margin-bottom:0; }
+
+  .coffee {
+    display:inline-flex; align-items:center; gap:7px; flex:0 0 auto;
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--fam-cli); text-decoration:none; white-space:nowrap;
+    border:1px solid color-mix(in srgb, var(--fam-cli) 40%, var(--rule));
+    background:color-mix(in srgb, var(--fam-cli) 7%, var(--surface));
+    border-radius:3px; padding:7px 11px;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .coffee:hover {
+    background:color-mix(in srgb, var(--fam-cli) 16%, var(--surface));
+    border-color:var(--fam-cli);
+  }
+  .coffee:focus-visible { outline:2px solid var(--fam-cli); outline-offset:2px; }
+  .coffee .cup { font-size:13px; }
+
+  .support {
+    display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-4);
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-cli); border-radius:3px;
+    padding:var(--sp-4); margin-top:var(--sp-6);
+  }
+  .support p { margin:0; flex:1 1 340px; font-size:13.5px; color:var(--muted); }
+  .support b { color:var(--ink); font-weight:600; }
+  .support code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .support .coffee { font-size:12px; padding:9px 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; animation:none !important; }
+  }
+
+  @media (max-width:640px) {
+    .wrap { padding:0 var(--sp-4); }
+    .masthead { padding-top:var(--sp-5); }
+    .sec-head p { display:none; }
+    .search kbd { display:none; }
+    .search input { padding-right:12px; }
+    .toolbar-inner { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-2); }
+    .search { flex:0 0 auto; }
+    .filters {
+      flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain;
+      scrollbar-width:none; -ms-overflow-style:none; gap:var(--sp-2);
+    }
+    .filters::-webkit-scrollbar { display:none; }
+    .chips { flex-wrap:nowrap; }
+    .chip { white-space:nowrap; }
+    .chips-sep { align-self:auto; height:20px; }
+    .count { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="masthead-top">
+      <p class="eyebrow">Reference &middot; build 2.1.220 &middot; extracted from the installed binary</p>
+      <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+        <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+    </div>
+    <h1><span class="slash">/</span>Claude Code Command Index</h1>
+    <p class="lede">
+      Every command the latest Claude Code build ships with — the native slash commands compiled
+      into the binary, the skills bundled alongside them, and the <code>claude</code> CLI surface.
+      Every tile below is also a filter — click one to isolate that group. Search to find a command,
+      follow its name through to the official documentation for the full explanation, or hover a
+      card to copy it.
+    </p>
+    <div class="stats">
+      <button class="stat" type="button" data-iso="native" aria-pressed="false" style="--sc:var(--fam-native)">
+        <b id="s-native">0</b><span class="lbl">Native</span>
+        <span class="stat-note">Slash commands compiled into the binary's own command registry. Typed at the
+           Claude Code prompt, they run CLI code directly.</span>
+      </button>
+      <button class="stat" type="button" data-iso="skill" aria-pressed="false" style="--sc:var(--fam-skill)">
+        <b id="s-skill">0</b><span class="lbl">Bundled skills</span>
+        <span class="stat-note">Prompt-driven skills shipped inside the binary instead of living in
+           <code>~/.claude/skills</code>. You invoke them the same way; Claude can pick
+           some of them on its own.</span>
+      </button>
+      <button class="stat" type="button" data-iso="cli" aria-pressed="false" style="--sc:var(--fam-cli)">
+        <b id="s-cli">0</b><span class="lbl">CLI commands</span>
+        <span class="stat-note">Subcommands of the <code>claude</code> executable — <code>claude mcp</code>,
+           <code>claude update</code>. Run in your shell, not at the prompt.</span>
+      </button>
+      <button class="stat" type="button" data-iso="hidden" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-hidden">0</b><span class="lbl">Hidden</span>
+        <span class="stat-note">Registered and runnable, but withheld from <code>/help</code>: diagnostics,
+           renamed aliases, and screens for specific states. Off by default in the filter below.</span>
+      </button>
+      <button class="stat" type="button" data-iso="flags" aria-pressed="false" style="--sc:var(--muted)">
+        <b id="s-flags">0</b><span class="lbl">CLI flags</span>
+        <span class="stat-note">Options passed to <code>claude</code> at launch, from
+           <code>claude --help</code>. Tabulated at the foot of this page.</span>
+      </button>
+      <button class="stat" type="button" data-iso="linked" aria-pressed="false" style="--sc:var(--accent)">
+        <b id="s-linked">0</b><span class="lbl">Linked to docs</span>
+        <span class="stat-note">Entries whose name links through to its page on <code>code.claude.com</code>.
+           The twelve without a link have no official page — they exist only in the build.</span>
+      </button>
+      <button class="stat" type="button" data-iso="unreg" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-unreg">0</b><span class="lbl">Not in CLI</span>
+        <span class="stat-note">Defined in the bundle but never registered by the terminal build — typing one
+           returns <em>Unknown command</em>. Mostly skills other hosts register.</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <span class="prefix">/</span>
+        <input id="q" type="search" placeholder="search name, alias, description&hellip;"
+               autocomplete="off" spellcheck="false" aria-label="Search commands" />
+        <kbd>/</kbd>
+      </div>
+      <div class="filters">
+      <div class="chips" id="fams" role="group" aria-label="Filter by family">
+        <button class="chip" type="button" data-fam="native"  aria-pressed="true" style="--cc:var(--fam-native)"><i class="dot"></i>Native</button>
+        <button class="chip" type="button" data-fam="skill"   aria-pressed="true" style="--cc:var(--fam-skill)"><i class="dot"></i>Skills</button>
+        <button class="chip" type="button" data-fam="cli"     aria-pressed="true" style="--cc:var(--fam-cli)"><i class="dot"></i>CLI</button>
+        <button class="chip" type="button" data-fam="hidden"  aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Hidden</button>
+        <button class="chip" type="button" data-fam="flags"   aria-pressed="true" style="--cc:var(--muted)"><i class="dot"></i>Flags</button>
+      </div>
+      <div class="chips-sep" aria-hidden="true"></div>
+      <div class="chips" id="stats-f" role="group" aria-label="Narrow by documentation and availability">
+        <button class="chip st" type="button" data-st="linked" aria-pressed="false" style="--cc:var(--accent)"><i class="dot"></i>Linked</button>
+        <button class="chip st" type="button" data-st="unreg"  aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Not in CLI</button>
+        <button class="chip reset" type="button" id="reset">Reset</button>
+      </div>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+
+  <main id="sections"></main>
+
+  <div class="empty" id="empty">No command matches that search.</div>
+
+  <section id="flags-sec">
+    <div class="sec-head">
+      <h2>CLI flags</h2>
+      <span class="n" id="flagcount"></span>
+      <p>Passed to <code>claude</code> at launch</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Flag</th><th scope="col">What it does</th></tr></thead>
+        <tbody id="flagbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="support">
+    <p><b>Found this useful?</b> Every entry here was parsed out of the shipped binary, probed
+      against the running CLI to see whether it is actually reachable, and matched to its page in
+      the official docs. If it saved you a trip through <code>/help</code>, you can put a coffee
+      toward keeping it current with the next build.</p>
+    <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+      <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+  </div>
+
+  <footer>
+    <p>
+      <b>Source of truth.</b> Names, descriptions, aliases and argument hints were parsed directly out
+      of the command registry inside <code>~/.local/share/claude/versions/2.1.220</code>, not from
+      published documentation. CLI commands and flags come from <code>claude --help</code> on the same build.
+    </p>
+    <p>
+      <b>Defined is not the same as available.</b> Being compiled into the binary does not mean a
+      command is reachable. The terminal CLI builds its registry from a list with conditional entries,
+      so a command can exist in the bundle and still never be registered — typing it returns
+      <em>Unknown command</em>, which is a different failure from a registered-but-gated command's
+      <em>isn't available in this environment</em>. Eleven entries here are in that state and carry a
+      <span class="tag unreg">not in terminal CLI</span> tag; hover it for the reason. Most are
+      Artifact- and Desktop-oriented skills that other hosts register. <code>/skill-doctor</code> is
+      the interesting one — it is withheld by the <code>tengu_lantern_prism</code> feature gate and
+      does run if you set <code>CLAUDE_CODE_LANTERN_PRISM=1</code>.
+    </p>
+    <p>
+      That claim was tested, not inferred: each command without <code>supportsNonInteractive</code>
+      was probed against build 2.1.220 and classified by its response. Commands that could actually
+      execute were excluded from the probe rather than run.
+    </p>
+    <p>
+      <b>Where the links go.</b> Each command name links to the most specific page that explains it on
+      <code>code.claude.com/docs</code> — a dedicated feature page where one exists, otherwise the
+      official commands reference or the bundled-skills section. Every destination was checked against
+      the published documentation index. A name shown without a link has no official page: those are
+      internal or undocumented entries that exist only in the build.
+    </p>
+    <p>
+      <b>Build and docs disagree in places.</b> This index follows the binary, so it includes commands the
+      documentation does not cover, and omits <code>/deep-research</code>, <code>/pr-comments</code> and
+      <code>/verify</code>, which the docs list but this build does not register. <code>/vim</code> is
+      likewise absent — in 2.1.220 vim is an editor-mode setting, not a command.
+    </p>
+    <p>
+      Availability varies by context. Many commands are gated on an interactive terminal session, a
+      feature flag, your plan, or environment variables — entries carry a <span class="tag gate">conditional</span>
+      tag where that gating is explicit in the build. Hidden entries are internal and do not appear in <code>/help</code>.
+    </p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // family: native | skill | cli | hidden
+  var C = [
+    // ---------- Session & context ----------
+    ["Session &amp; context", "Steering the conversation you are in right now", [
+      ["help", "Show help and available commands", [], "", "native", ""],
+      ["clear", "Start a new session with empty context; the previous session stays on disk and is resumable with /resume", ["reset","new"], "[name]", "native", ""],
+      ["compact", "Free up context by summarizing the conversation so far", [], "<optional custom summarization instructions>", "native", ""],
+      ["autocompact", "Set how full the context gets before auto-summarizing", [], "[auto|<tokens>]", "native", ""],
+      ["context", "Visualize current context usage as a colored grid", [], "[all]", "native", ""],
+      ["resume", "Resume a previous conversation", ["continue"], "[conversation id or search term]", "native", ""],
+      ["rewind", "Restore the code and/or conversation to a previous point", ["checkpoint","undo"], "", "native", ""],
+      ["branch", "Create a branch of the current conversation at this point", [], "[name]", "native", ""],
+      ["rename", "Rename the current conversation", ["name"], "[name]", "native", ""],
+      ["export", "Export the current conversation to a file or clipboard", [], "[filename]", "native", ""],
+      ["copy", "Copy Claude's last response to clipboard (or /copy N for the Nth-latest)", [], "[n]", "native", ""],
+      ["plan", "Enable plan mode or view the current session plan", [], "[open|share|<description>]", "native", ""],
+      ["goal", "Set a goal Claude checks before stopping", [], "[<condition> | clear]", "native", ""],
+      ["focus", "Toggle focus view: just your prompt, summary, and response", [], "", "native", ""],
+      ["brief", "Toggle brief-only mode", [], "", "native", "conditional"],
+      ["recap", "Generate a one-line session recap now", [], "", "native", "conditional"],
+      ["memory", "Open a memory file in your editor", [], "", "native", ""],
+      ["pause-memory", "Pause automemory for this session", ["memory-pause","toggle-memory"], "", "native", ""],
+      ["exit", "End the session", ["quit"], "", "native", ""]
+    ]],
+
+    // ---------- Model & reasoning ----------
+    ["Model &amp; reasoning", "How much horsepower each turn gets", [
+      ["model", "Set the AI model for Claude Code", [], "<model>", "native", ""],
+      ["effort", "Set effort level for model usage (low, medium, high, xhigh, max)", [], "<level>", "native", ""],
+      ["fast", "Toggle fast mode — Opus with faster output, not a smaller model", [], "[on|off]", "native", "conditional"],
+      ["advisor", "Let Claude consult a stronger model at key moments", [], "", "native", "conditional"]
+    ]],
+
+    // ---------- Workspace & code ----------
+    ["Workspace &amp; code", "Directories, project memory, and your working diff", [
+      ["init", "Initialize a new CLAUDE.md file with codebase documentation (the newer variant also scaffolds skills and hooks)", [], "", "native", ""],
+      ["add-dir", "Add a new working directory", [], "<path>", "native", ""],
+      ["cd", "Move this session to a new working directory", [], "<path>", "native", ""],
+      ["diff", "View uncommitted changes and per-turn diffs", [], "", "native", ""],
+      ["review", "Review a GitHub pull request; for your working diff use /code-review", [], "[pr number]", "native", ""],
+      ["code-review", "Review the changes since a fixed point along two axes — repo standards and the originating spec — in parallel sub-agents", [], "[since]", "skill", ""],
+      ["security-review", "Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure", [], "", "native", ""],
+      ["simplify", "Review changed code for reuse, simplification and efficiency, then apply the fixes", [], "", "skill", ""],
+      ["batch", "Plan a large change; background agents each open a PR", [], "", "skill", ""],
+      ["run", "Launch this project's app to see your change working", [], "", "skill", ""],
+      ["run-skill-generator", "Create a skill that knows how to run this project's app", [], "", "skill", ""]
+    ]],
+
+    // ---------- Config & environment ----------
+    ["Config &amp; environment", "Settings, permissions, hooks, and how the terminal behaves", [
+      ["config", "Open settings", ["settings"], "[key=value]", "native", ""],
+      ["permissions", "Manage allow and deny tool permission rules", ["allowed-tools"], "", "native", ""],
+      ["sandbox", "Toggle sandbox mode for the Bash tool; available on supported platforms only", [], "", "native", "conditional"],
+      ["hooks", "View hook configurations for tool events", [], "", "native", ""],
+      ["update-config", "Change settings: hooks, permissions, environment variables", [], "", "skill", ""],
+      ["fewer-permission-prompts", "Pre-approve safe read-only commands based on your usage", [], "", "skill", ""],
+      ["statusline", "Set up Claude Code's status line UI", [], "", "native", ""],
+      ["theme", "Change the theme", [], "", "native", ""],
+      ["color", "Set the prompt bar color for this session", [], "", "native", ""],
+      ["tui", "Set the terminal UI renderer", [], "[default|fullscreen]", "native", ""],
+      ["terminal-setup", "Configure terminal key bindings — Shift+Enter or Option+Enter for newlines", [], "", "native", ""],
+      ["keybindings", "Open your keyboard shortcuts file", [], "", "native", ""],
+      ["keybindings-help", "Customize keyboard shortcuts, rebind keys, and add chord bindings", [], "", "skill", ""],
+      ["scroll-speed", "Adjust mouse wheel scroll speed", [], "", "native", "conditional"],
+      ["voice", "Toggle voice mode", [], "[hold|tap|off]", "native", "conditional"],
+      ["wellbeing", "Configure optional break reminders and quiet-hours nudges", ["breaks","break-reminder","downtime"], "", "native", "conditional"],
+      ["import", "Import config from another AI coding agent", [], "[codex|gemini] [--dry-run]", "native", "conditional"],
+      ["ide", "Manage IDE integrations and show status", [], "[open]", "native", ""],
+      ["doctor", "Health-check your setup and fix issues: installation, unused extensions, duplicates", ["checkup"], "", "skill", ""],
+      ["debug", "Turn on debug logging and investigate problems", [], "", "skill", ""],
+      ["setup-bedrock", "Reconfigure Amazon Bedrock authentication, region, or model pins", [], "", "native", "conditional"],
+      ["setup-vertex", "Reconfigure Google Vertex AI authentication, project, region, or model pins", [], "", "native", "conditional"]
+    ]],
+
+    // ---------- Extensions ----------
+    ["Extensions", "MCP servers, plugins, and skills", [
+      ["mcp", "Manage MCP servers", [], "[reconnect|enable|disable [<server>|all]]", "native", ""],
+      ["plugin", "Manage Claude Code plugins", ["plugins","marketplace"], "", "native", ""],
+      ["reload-plugins", "Activate pending plugin changes in the current session", [], "[--force]", "native", ""],
+      ["skills", "List available skills", [], "", "native", ""],
+      ["reload-skills", "Pick up skills added or changed on disk during this session", [], "", "native", ""],
+      ["skill-doctor", "Show which loaded skills are unused and costing context", [], "", "native", ""],
+      ["agents", "Removed. Ask Claude to create or manage subagents, or edit .claude/agents/ directly", [], "", "native", "removed"]
+    ]],
+
+    // ---------- Background & parallel ----------
+    ["Background &amp; parallel work", "Sending work off and getting it back", [
+      ["background", "Send this session to the background and free the terminal", ["bg"], "[prompt]", "native", ""],
+      ["stop", "Stop this background session; transcript and worktree are kept", [], "", "native", ""],
+      ["tasks", "View and manage everything running in the background", ["bashes"], "", "native", ""],
+      ["fork", "Spawn a background agent that inherits the full conversation", [], "<directive>", "native", ""],
+      ["subtask", "Send a subagent off with your full context; its result comes back here", [], "<task>", "native", ""],
+      ["workflows", "Browse running and completed workflows", [], "", "native", "conditional"],
+      ["loops", "List, create, and delete loops", [], "", "native", "conditional"],
+      ["loop", "Repeat a prompt or command on an interval, e.g. /loop 5m /foo", ["proactive"], "[interval] [prompt]", "skill", ""],
+      ["daemon", "Manage background services and routines", [], "", "native", ""],
+      ["schedule", "Create and manage routines: cloud agents on a schedule", ["routines"], "", "skill", ""]
+    ]],
+
+    // ---------- Cloud, web & devices ----------
+    ["Cloud, web &amp; devices", "Moving a session between the terminal, the web, and your phone", [
+      ["teleport", "Resume a Claude Code session from claude.ai", ["tp"], "", "native", "conditional"],
+      ["session", "Show cloud session URL and QR code", ["remote"], "", "native", "conditional"],
+      ["remote-control", "Control this session from your phone or claude.ai/code", ["rc"], "", "native", "conditional"],
+      ["remote-env", "Choose the default environment for cloud agents", [], "", "native", "conditional"],
+      ["web-setup", "Set up Claude Code on the web with your GitHub account", [], "", "native", "conditional"],
+      ["desktop", "Continue the current session in Claude Desktop", ["app"], "", "native", "conditional"],
+      ["ultraplan", "Draft an editable plan in Claude Code on the web", [], "<prompt>", "native", "conditional"],
+      ["ultrareview", "Find and verify bugs in your branch using Claude Code on the web", [], "[target]", "native", "conditional"],
+      ["autofix-pr", "Monitor and autofix any issues with the current PR", [], "", "native", "conditional"],
+      ["install-github-app", "Set up Claude GitHub Actions for a repository", [], "", "native", "conditional"],
+      ["install-slack-app", "Install the Claude Slack app", [], "", "native", "conditional"],
+      ["chrome", "Open Claude in Chrome settings", [], "", "native", "conditional"],
+      ["claude-in-chrome", "Let Claude browse and interact with pages in your Chrome", [], "", "skill", ""],
+      ["setup-cowork", "Guided setup — pick a role, install a plugin, try a skill, connect a tool", [], "", "skill", ""]
+    ]],
+
+    // ---------- Design & artifacts ----------
+    ["Design &amp; artifacts", "Publishing pages and syncing design systems", [
+      ["artifacts", "Browse your published and shared artifacts", [], "", "native", "conditional"],
+      ["artifact-design", "Design guidance and fundamentals for Artifacts", [], "", "skill", ""],
+      ["artifact-capabilities", "Runtime capabilities for published Artifacts", [], "", "skill", ""],
+      ["plan-artifact", "Publish a plan as a shareable Artifact", [], "", "skill", ""],
+      ["whiteboard", "Sketch on a whiteboard Artifact you can send to Claude", [], "", "skill", ""],
+      ["workshop", "Workshop a document through artifact decisions", [], "", "skill", ""],
+      ["dataviz", "Chart, dashboard and palette guidance for any visualization you build", [], "", "skill", ""],
+      ["design", "Grant or revoke Claude agent access to your Design projects", [], "consent | revoke", "native", "conditional"],
+      ["design-login", "Authorize design-system access for /design-sync with your claude.ai account", [], "", "native", "conditional"],
+      ["design-sync", "Push your design system components to claude.ai/design", [], "", "skill", ""]
+    ]],
+
+    // ---------- Account, usage & install ----------
+    ["Account, usage &amp; install", "Who you are signed in as, what it costs, and keeping current", [
+      ["login", "Sign in with your Anthropic account, or switch accounts", [], "", "native", ""],
+      ["logout", "Sign out from your Anthropic account", [], "", "native", ""],
+      ["status", "Show Claude Code status including version, model, account, API connectivity, and tool statuses", [], "", "native", ""],
+      ["usage", "Show session cost, plan usage, and activity stats", ["cost","stats"], "", "native", ""],
+      ["explain-usage", "See where this session's tokens went, in plain words", [], "", "skill", ""],
+      ["insights", "Generate a report analyzing your Claude Code sessions", [], "", "native", ""],
+      ["usage-credits", "Configure usage credits or request them from your admin when you hit a limit", [], "", "native", "conditional"],
+      ["upgrade", "Upgrade to Max for higher rate limits and more Opus", [], "", "native", "conditional"],
+      ["passes", "Share a free week of Claude Code with friends and earn usage credits", [], "", "native", "conditional"],
+      ["privacy-settings", "View and update your privacy settings", [], "", "native", "conditional"],
+      ["version", "Show this session's version — autoupdate may have a newer one", [], "", "native", ""],
+      ["release-notes", "View release notes", [], "", "native", ""],
+      ["update", "Switch to the latest version; the conversation continues", ["restart"], "", "native", ""],
+      ["install", "Install Claude Code native build", [], "[options]", "native", ""]
+    ]],
+
+    // ---------- Help, feedback & extras ----------
+    ["Help, feedback &amp; extras", "Learning the tool, reporting problems, and a few indulgences", [
+      ["claude-api", "Build and debug apps that use the Claude API", [], "", "skill", ""],
+      ["powerup", "Discover Claude Code features through quick interactive lessons", [], "", "native", "conditional"],
+      ["team-onboarding", "Help teammates ramp on Claude Code with a guide from your usage", [], "", "native", "conditional"],
+      ["mobile", "Show QR code to download the Claude mobile app", ["ios","android"], "", "native", "conditional"],
+      ["bug", "Report a bug or share your conversation", ["share"], "[report]", "native", ""],
+      ["feedback", "Send feedback to Anthropic or report a bug", [], "[report]", "native", ""],
+      ["stickers", "Order Claude Code stickers", [], "", "native", "conditional"],
+      ["radio", "Listen to Claude FM lo-fi radio", [], "", "native", "conditional"]
+    ]],
+
+    // ---------- CLI ----------
+    ["Terminal CLI", "Subcommands of the <code>claude</code> executable, run from your shell", [
+      ["claude", "Start an interactive session in the current directory", [], "[prompt]", "cli", ""],
+      ["claude -p", "Print mode: run a prompt non-interactively and exit, useful for pipes and scripts", ["--print"], "<prompt>", "cli", ""],
+      ["claude agents", "Manage background agents", [], "[options]", "cli", ""],
+      ["claude auth", "Manage authentication", [], "", "cli", ""],
+      ["claude auto-mode", "Inspect or reset auto mode classifier configuration", [], "", "cli", ""],
+      ["claude doctor", "Check the health of your installation, reading settings without a trust prompt", [], "", "cli", ""],
+      ["claude gateway", "Run the enterprise auth/telemetry gateway", [], "[options]", "cli", ""],
+      ["claude install", "Install the native build — stable, latest, or a specific version", [], "[target]", "cli", ""],
+      ["claude mcp", "Configure and manage MCP servers", [], "", "cli", ""],
+      ["claude plugin", "Manage Claude Code plugins", ["plugins"], "", "cli", ""],
+      ["claude project", "Manage Claude Code project state", [], "", "cli", ""],
+      ["claude setup-token", "Set up a long-lived authentication token, requires a Claude subscription", [], "", "cli", ""],
+      ["claude ultrareview", "Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings", [], "[target]", "cli", ""],
+      ["claude update", "Check for updates and install if available", ["upgrade"], "", "cli", ""]
+    ]],
+
+    // ---------- Hidden ----------
+    ["Hidden &amp; internal", "Present in the registry but suppressed from /help — listed for completeness", [
+      ["btw", "Ask a quick side question without interrupting the main conversation", [], "[question]", "hidden", "hidden"],
+      ["auto-mode-setup", "Set up and customise auto mode — environment context, plus optional rule tweaks", [], "[--wizard ...]", "hidden", "hidden"],
+      ["heapdump", "Dump the JS heap to ~/Desktop", [], "", "hidden", "hidden"],
+      ["design-consent", "Grant Claude agent access to your Design projects", [], "", "hidden", "hidden"],
+      ["design-revoke", "Revoke Claude agent access to your Design projects", [], "", "hidden", "hidden"],
+      ["extra-usage", "Renamed to /usage-credits", [], "", "hidden", "hidden"],
+      ["pro-trial-expired", "Options shown when the Pro plan Claude Code trial has ended", [], "", "hidden", "hidden"],
+      ["rate-limit-options", "Show options when rate limit is reached", [], "", "hidden", "hidden"],
+      ["__remote-workflow", "Run the workflow script delivered in this session environment — server-launched sessions only", [], "", "hidden", "hidden"],
+      ["workflow-launch-exec", "Execute a server-launched workflow handoff — workflow_launch event sessions only", [], "", "hidden", "hidden"]
+    ]]
+  ];
+
+  var FLAGS = [
+    ["--add-dir <dirs...>", "Additional directories to allow tool access to"],
+    ["--agent <agent>", "Agent for the current session; overrides the 'agent' setting"],
+    ["--agents <json>", "JSON object defining custom agents"],
+    ["--allow-dangerously-skip-permissions", "Make permission bypass available as an option without enabling it by default"],
+    ["--allowedTools <tools...>", "Comma or space-separated list of tool names to allow, e.g. \"Bash(git *) Edit\""],
+    ["--append-system-prompt <prompt>", "Append text to the default system prompt"],
+    ["--ax-screen-reader", "Render screen-reader friendly output: flat text, no borders or animations"],
+    ["--bg, --background", "Start as a background agent and return immediately"],
+    ["--bare", "Minimal mode: skip hooks, LSP, plugin sync, auto-memory, keychain reads and CLAUDE.md discovery"],
+    ["--betas <betas...>", "Beta headers to include in API requests (API key users only)"],
+    ["--brief", "Enable the SendUserMessage tool for agent-to-user communication"],
+    ["--chrome / --no-chrome", "Enable or disable the Claude in Chrome integration"],
+    ["-c, --continue", "Continue the most recent conversation in the current directory"],
+    ["--dangerously-skip-permissions", "Bypass all permission checks; for sandboxes with no internet access"],
+    ["-d, --debug [filter]", "Debug mode with optional category filtering, e.g. \"api,hooks\" or \"!1p,!file\""],
+    ["--debug-file <path>", "Write debug logs to a specific path, implicitly enabling debug mode"],
+    ["--disable-slash-commands", "Disable all skills"],
+    ["--disallowedTools <tools...>", "Comma or space-separated list of tool names to deny"],
+    ["--effort <level>", "Effort level for the session: low, medium, high, xhigh, max"],
+    ["--exclude-dynamic-system-prompt-sections", "Move per-machine sections into the first user message to improve prompt-cache reuse"],
+    ["--fallback-model <model>", "Fall back to these models when the default is overloaded (--print only)"],
+    ["--file <specs...>", "File resources to download at startup, as file_id:relative_path"],
+    ["--fork-session", "When resuming, create a new session ID instead of reusing the original"],
+    ["--forward-subagent-text", "Forward subagent text and thinking as messages with parent_tool_use_id set"],
+    ["--from-pr [value]", "Resume a session linked to a PR by number or URL, or open a picker"],
+    ["-h, --help", "Display help for command"],
+    ["--ide", "Automatically connect to the IDE on startup if exactly one is available"],
+    ["--include-hook-events", "Include all hook lifecycle events in the output stream"],
+    ["--include-partial-messages", "Include partial message chunks as they arrive"],
+    ["--input-format <format>", "Input format with --print: text (default) or stream-json"],
+    ["--json-schema <schema>", "JSON Schema for structured output validation"],
+    ["--max-budget-usd <amount>", "Maximum dollar amount to spend on API calls (--print only)"],
+    ["--mcp-config <configs...>", "Load MCP servers from JSON files or strings"],
+    ["--model <model>", "Model for the session: an alias like 'fable', 'opus', 'sonnet', or a full model name"],
+    ["-n, --name <name>", "Display name for the session, shown in the prompt box, /resume picker and title"],
+    ["--no-session-persistence", "Do not save the session to disk; it cannot be resumed (--print only)"],
+    ["--output-format <format>", "Output format with --print: text, json, or stream-json"],
+    ["--permission-mode <mode>", "acceptEdits, auto, bypassPermissions, manual, dontAsk, or plan"],
+    ["--plugin-dir <path>", "Load a plugin from a directory or .zip for this session only (repeatable)"],
+    ["--plugin-url <url>", "Fetch a plugin .zip from a URL for this session only (repeatable)"],
+    ["-p, --print", "Print the response and exit; skips the workspace trust dialog"],
+    ["--prompt-suggestions [value]", "Emit a predicted next user prompt after each turn"],
+    ["--remote-control [name]", "Start an interactive session with Remote Control enabled"],
+    ["--remote-control-session-name-prefix <prefix>", "Prefix for auto-generated Remote Control session names"],
+    ["--replay-user-messages", "Re-emit user messages from stdin back on stdout for acknowledgment"],
+    ["-r, --resume [value]", "Resume a conversation by session ID, or open a picker with an optional search term"],
+    ["--safe-mode", "Start with all customizations disabled; useful for troubleshooting a broken config"],
+    ["--session-id <uuid>", "Use a specific session ID for the conversation"],
+    ["--setting-sources <sources>", "Comma-separated setting sources to load: user, project, local"],
+    ["--settings <file-or-json>", "Path to a settings JSON file, or a JSON string of additional settings"],
+    ["--strict-mcp-config", "Only use MCP servers from --mcp-config, ignoring all other MCP configuration"],
+    ["--system-prompt <prompt>", "System prompt to use for the session"],
+    ["--tmux", "Create a tmux session for the worktree; requires --worktree"],
+    ["--tools <tools...>", "Available tools from the built-in set; \"\" disables all, \"default\" uses all"],
+    ["--verbose", "Override the verbose mode setting from config"],
+    ["-v, --version", "Output the version number"],
+    ["-w, --worktree [name]", "Create a new git worktree for this session"]
+  ];
+
+  var esc = function (s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+
+  // Official docs. Paths verified against https://code.claude.com/docs/llms.txt
+  // Anchors taken from the docs' own internal links.
+  var BASE = "https://code.claude.com/docs/en/";
+  var CMDS_PAGE = "commands#all-commands";
+
+  // Commands with no official page get no link (see the note in the footer).
+  var DOCS = {
+    // dedicated feature pages
+    advisor: "advisor", goal: "goal", ultraplan: "ultraplan", ultrareview: "ultrareview",
+    rewind: "checkpointing", keybindings: "keybindings", "keybindings-help": "keybindings",
+    statusline: "statusline", memory: "memory", "pause-memory": "memory", init: "memory",
+    mcp: "mcp", chrome: "chrome", "claude-in-chrome": "chrome", fast: "fast-mode",
+    voice: "voice-dictation", "remote-control": "remote-control", schedule: "routines",
+    loop: "scheduled-tasks", loops: "scheduled-tasks", workflows: "workflows",
+    sandbox: "sandboxing", "code-review": "code-review", review: "code-review#review-a-diff-locally",
+    mobile: "mobile", desktop: "desktop", teleport: "claude-code-on-the-web",
+    session: "claude-code-on-the-web", "web-setup": "web-quickstart",
+    "install-github-app": "github-actions", "install-slack-app": "slack",
+    "setup-bedrock": "amazon-bedrock", "setup-vertex": "google-vertex-ai",
+    permissions: "permissions", "fewer-permission-prompts": "permissions",
+    plan: "permission-modes", hooks: "hooks", config: "settings", "update-config": "settings",
+    plugin: "plugins", "reload-plugins": "plugins", skills: "skills", "reload-skills": "skills",
+    "skill-doctor": "skills", agents: "sub-agents", subtask: "sub-agents",
+    fork: "agents", background: "agents", stop: "agents", tasks: "agent-view", daemon: "agent-view",
+    context: "context-window", compact: "context-window", autocompact: "context-window",
+    resume: "sessions", clear: "sessions", branch: "sessions", rename: "sessions",
+    "terminal-setup": "terminal-config", tui: "fullscreen", usage: "costs",
+    "usage-credits": "costs", "explain-usage": "costs", insights: "analytics",
+    model: "model-config", effort: "model-config", debug: "debug-your-config",
+    "auto-mode-setup": "auto-mode-config", "privacy-settings": "data-usage",
+    login: "authentication", logout: "authentication", install: "setup", update: "setup",
+    version: "setup", "release-notes": "changelog",
+    artifacts: "artifacts", "artifact-design": "artifacts", "artifact-capabilities": "artifacts",
+    "plan-artifact": "artifacts", whiteboard: "artifacts", workshop: "artifacts",
+
+    // Bundled skills. Their substantive entries live in the commands table;
+    // skills#bundled-skills only explains the concept and names a few.
+    batch: CMDS_PAGE, simplify: CMDS_PAGE, run: CMDS_PAGE,
+    "run-skill-generator": CMDS_PAGE, dataviz: CMDS_PAGE, "claude-api": CMDS_PAGE,
+
+    // listed in the official command table, no dedicated page
+    "add-dir": CMDS_PAGE, "autofix-pr": CMDS_PAGE, btw: CMDS_PAGE, bug: CMDS_PAGE, cd: CMDS_PAGE,
+    color: CMDS_PAGE, copy: CMDS_PAGE, "design-login": CMDS_PAGE, "design-sync": CMDS_PAGE,
+    diff: CMDS_PAGE, doctor: CMDS_PAGE, exit: CMDS_PAGE, "export": CMDS_PAGE,
+    feedback: CMDS_PAGE, focus: CMDS_PAGE, heapdump: CMDS_PAGE, help: CMDS_PAGE, ide: CMDS_PAGE,
+    passes: CMDS_PAGE, powerup: CMDS_PAGE, radio: CMDS_PAGE, recap: CMDS_PAGE,
+    "remote-env": CMDS_PAGE, "scroll-speed": CMDS_PAGE, "security-review": CMDS_PAGE,
+    status: CMDS_PAGE, stickers: CMDS_PAGE, "team-onboarding": CMDS_PAGE, theme: CMDS_PAGE,
+    upgrade: CMDS_PAGE
+  };
+
+  // Defined in the build but NOT present in the terminal CLI's command registry:
+  // typing them returns "Unknown command", a different failure than a gated command's
+  // "isn't available in this environment". Verified by probing build 2.1.220 directly.
+  var UNREG = {
+    "skill-doctor": "Registered only when the tengu_lantern_prism feature gate is on. " +
+      "Works with CLAUDE_CODE_LANTERN_PRISM=1 set in the environment.",
+    "artifact-design": "Not registered by the terminal CLI.",
+    "artifact-capabilities": "Not registered by the terminal CLI.",
+    "plan-artifact": "Not registered by the terminal CLI.",
+    "whiteboard": "Not registered by the terminal CLI.",
+    "workshop": "Not registered by the terminal CLI.",
+    "claude-in-chrome": "Not registered by the terminal CLI.",
+    "setup-cowork": "Not registered by the terminal CLI.",
+    "explain-usage": "Not registered by the terminal CLI.",
+    "daemon": "Not registered by the terminal CLI; the `claude daemon` subcommand works.",
+    "install": "Not registered by the terminal CLI; the `claude install` subcommand works."
+  };
+
+  function docFor(name, fam) {
+    if (fam === "cli") return BASE + "cli-reference";
+    var p = DOCS[name];
+    return p ? BASE + p : null;
+  }
+
+  // ---- build DOM ----
+  var host = document.getElementById("sections");
+  var counts = { native: 0, skill: 0, cli: 0, hidden: 0 };
+  var linked = 0;
+  var unreg = 0;
+  var html = [];
+
+  C.forEach(function (sec, si) {
+    var rows = sec[2];
+    var items = rows.map(function (r) {
+      var name = r[0], desc = r[1], aliases = r[2], arg = r[3], fam = r[4], flag = r[5];
+      counts[fam] = (counts[fam] || 0) + 1;
+
+      var isCli = fam === "cli";
+      var display = isCli ? name : "/" + name;
+      var tags = aliases.map(function (a) {
+        return '<span class="tag' + (isCli ? "" : " alias") + '">' + esc(a) + "</span>";
+      });
+      if (flag === "conditional") tags.push('<span class="tag gate">conditional</span>');
+      if (flag === "removed") tags.push('<span class="tag hidden-t">removed</span>');
+      if (flag === "hidden") tags.push('<span class="tag hidden-t">hidden</span>');
+      var isUnreg = !!UNREG[name];
+      if (isUnreg) {
+        unreg++;
+        tags.push('<span class="tag unreg" title="' + esc(UNREG[name]) +
+          '">not in terminal CLI &mdash; &ldquo;Unknown command&rdquo;</span>');
+      }
+
+      var hay = (name + " " + aliases.join(" ") + " " + desc).toLowerCase();
+      var href = docFor(name, fam);
+      if (href) linked++;
+
+      var nameHtml = href
+        ? '<a class="cmd-name" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(display) + '<span class="ext" aria-hidden="true">&#8599;</span>' +
+          '<span class="sr">&nbsp;(opens the official documentation)</span></a>'
+        : '<span class="cmd-name plain">' + esc(display) + "</span>";
+
+      return '<div class="cmd" style="--fc:var(--fam-' + fam + ')" data-fam="' + fam +
+        '" data-doc="' + (href ? "1" : "0") + '" data-unreg="' + (isUnreg ? "1" : "0") +
+        '" data-hay="' + esc(hay) + '">' +
+        '<div class="cmd-top"><span class="cmd-id">' + nameHtml +
+        (arg ? '<span class="cmd-arg">' + esc(arg) + "</span>" : "") +
+        "</span>" +
+        '<button class="copy" type="button" data-copy="' + esc(display) +
+        '" aria-label="Copy ' + esc(display) + '">copy</button>' +
+        "</div>" +
+        '<p class="cmd-desc">' + esc(desc) + "</p>" +
+        (tags.length ? '<span class="tags">' + tags.join("") + "</span>" : "") +
+        "</div>";
+    });
+
+    html.push(
+      '<section data-sec="' + si + '">' +
+      '<div class="sec-head"><h2>' + sec[0] + '</h2>' +
+      '<span class="n" data-n="' + si + '">' + rows.length + "</span>" +
+      "<p>" + sec[1] + "</p></div>" +
+      '<div class="grid">' + items.join("") + "</div></section>"
+    );
+  });
+
+  host.innerHTML = html.join("");
+
+  // flags table
+  document.getElementById("flagbody").innerHTML = FLAGS.map(function (f) {
+    return "<tr data-hay=\"" + esc((f[0] + " " + f[1]).toLowerCase()) + "\">" +
+      "<td class=\"f\">" + esc(f[0]) + "</td><td class=\"d\">" + esc(f[1]) + "</td></tr>";
+  }).join("");
+  document.getElementById("flagcount").textContent = FLAGS.length;
+
+  // stats
+  document.getElementById("s-native").textContent = counts.native;
+  document.getElementById("s-skill").textContent = counts.skill;
+  document.getElementById("s-cli").textContent = counts.cli;
+  document.getElementById("s-hidden").textContent = counts.hidden;
+  document.getElementById("s-flags").textContent = FLAGS.length;
+  document.getElementById("s-linked").textContent = linked;
+  document.getElementById("s-unreg").textContent = unreg;
+
+  // ---- filtering ----
+  var q = document.getElementById("q");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".cmd"));
+  var secs = Array.prototype.slice.call(document.querySelectorAll("#sections section"));
+  var flagRows = Array.prototype.slice.call(document.querySelectorAll("#flagbody tr"));
+  var flagSec = document.getElementById("flags-sec");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+
+  var FAMS = ["native", "skill", "cli", "hidden", "flags"];
+  var STS = ["linked", "unreg"];
+  var DEFAULTS = { native: true, skill: true, cli: true, hidden: false, flags: true, linked: false, unreg: false };
+  var state = Object.assign({}, DEFAULTS);
+
+  function stateFor(key) {
+    var s = {};
+    if (STS.indexOf(key) !== -1) {
+      FAMS.forEach(function (f) { s[f] = f !== "flags"; });
+      STS.forEach(function (t) { s[t] = t === key; });
+    } else {
+      FAMS.forEach(function (f) { s[f] = f === key; });
+      STS.forEach(function (t) { s[t] = false; });
+    }
+    return s;
+  }
+
+  function equals(a, b) {
+    return FAMS.concat(STS).every(function (k) { return !!a[k] === !!b[k]; });
+  }
+
+  function sync() {
+    document.querySelectorAll("#fams .chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.fam]));
+    });
+    document.querySelectorAll("#stats-f .chip.st").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.st]));
+    });
+    document.querySelectorAll(".stat").forEach(function (t) {
+      t.setAttribute("aria-pressed", String(equals(state, stateFor(t.dataset.iso))));
+    });
+    resetBtn.classList.toggle("show", !equals(state, DEFAULTS) || q.value.trim() !== "");
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase().replace(/^\//, "");
+    var narrowing = STS.some(function (t) { return state[t]; });
+    var shown = 0;
+    var perSec = {};
+
+    cards.forEach(function (el) {
+      var ok = state[el.dataset.fam] &&
+        (!term || el.dataset.hay.indexOf(term) !== -1) &&
+        (!narrowing ||
+          (state.linked && el.dataset.doc === "1") ||
+          (state.unreg && el.dataset.unreg === "1"));
+      el.style.display = ok ? "" : "none";
+      if (ok) {
+        shown++;
+        var si = el.closest("section").dataset.sec;
+        perSec[si] = (perSec[si] || 0) + 1;
+      }
+    });
+
+    secs.forEach(function (s) {
+      var any = perSec[s.dataset.sec] || 0;
+      s.style.display = any ? "" : "none";
+      var n = s.querySelector(".n");
+      if (n) n.textContent = any;
+    });
+
+    var flagsShown = 0;
+    if (state.flags) {
+      flagRows.forEach(function (r) {
+        var ok = !term || r.dataset.hay.indexOf(term) !== -1;
+        r.style.display = ok ? "" : "none";
+        if (ok) flagsShown++;
+      });
+    }
+    flagSec.style.display = flagsShown ? "" : "none";
+    document.getElementById("flagcount").textContent = flagsShown;
+
+    countEl.textContent = shown + " shown" + (flagsShown ? " · " + flagsShown + " flags" : "");
+    emptyEl.classList.toggle("show", shown === 0 && flagsShown === 0);
+    sync();
+  }
+
+  q.addEventListener("input", apply);
+
+  function onChip(e) {
+    var btn = e.target.closest(".chip");
+    if (!btn || btn.id === "reset") return;
+    var key = btn.dataset.fam || btn.dataset.st;
+    state[key] = !state[key];
+    if (btn.dataset.st && state[key]) state.flags = false;
+    apply();
+  }
+  document.getElementById("fams").addEventListener("click", onChip);
+  document.getElementById("stats-f").addEventListener("click", onChip);
+
+  document.querySelector(".stats").addEventListener("click", function (e) {
+    var tile = e.target.closest(".stat");
+    if (!tile) return;
+    var iso = stateFor(tile.dataset.iso);
+    state = equals(state, iso) ? Object.assign({}, DEFAULTS) : iso;
+    apply();
+    document.querySelector(".toolbar").scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = Object.assign({}, DEFAULTS);
+    q.value = "";
+    apply();
+  });
+
+  // ---- copy ----
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+  function flash(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1400);
+  }
+
+  host.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var text = btn.dataset.copy;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { flash("Copied  " + text); },
+        function () { flash(text); }
+      );
+    } else {
+      flash(text);
+    }
+  });
+
+  // ---- "/" focuses search ----
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+      q.blur();
+    }
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>

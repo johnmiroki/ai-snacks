@@ -1,40 +1,47 @@
-# Claude Code Cheatsheet
+# AI Snacks
 
-An interactive index of every command in Claude Code **build 2.1.220** — 96 native slash commands,
-23 bundled skills, 14 `claude` CLI subcommands, 10 hidden entries, and 57 CLI flags. Search, filter
-by category, and follow any name through to its page in the official documentation.
+Small, self-contained reference pages for the AI tools I use every day — each one a single
+`index.html` with no build step, no dependencies, no analytics, and nothing loaded from another
+server.
 
-**→ [johnmiroki.github.io/claude-code-cheatsheet](https://johnmiroki.github.io/claude-code-cheatsheet/)**
+**→ [johnmiroki.github.io/ai-snacks](https://johnmiroki.github.io/ai-snacks/)**
 
-## Where the data comes from
+## On the shelf
 
-Names, descriptions, aliases, and argument hints were parsed out of the command registry inside the
-installed binary (`~/.local/share/claude/versions/2.1.220`) rather than copied from the published
-docs. CLI commands and flags come from `claude --help` on the same build. As a result the index
-covers commands the documentation doesn't mention — and omits four it lists that this build does not
-register.
+| Snack | What it is |
+| --- | --- |
+| [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/) | Every slash command, bundled skill, `claude` subcommand and CLI flag in Claude Code 2.1.220 — extracted from the installed binary, probed for availability, linked to the official docs |
 
-## Defined is not the same as available
+## Layout
 
-Being compiled into the binary does not make a command reachable: the CLI builds its registry from a
-list with conditional entries, so a command can ship in the bundle and never be registered. Every
-command that cannot execute in print mode was probed against the build and classified by its
-response:
+```
+ai-snacks/
+├── index.html                          hub — lists every snack
+├── 404.html                            shared not-found page
+├── claude-code-cheatsheet/index.html   one folder per snack
+└── README.md
+```
 
-| Response to `claude -p "/x"`             | Meaning                       |
-| ---------------------------------------- | ----------------------------- |
-| actual output                             | registered and enabled        |
-| `/x isn't available in this environment.` | registered, gated at runtime  |
-| `Unknown command: /x`                     | not in the registry at all    |
+GitHub Pages serves the repo root, so a folder named `<slug>` is reachable at
+`johnmiroki.github.io/ai-snacks/<slug>/`.
 
-Eleven entries fall into the last group and are tagged as such on the page. Commands that *would*
-have executed were excluded from the probe rather than run.
+## Adding a snack
 
-## The page
+1. Create `<slug>/index.html` — one self-contained file. Include `<meta charset="utf-8">`,
+   a viewport meta, and both light and dark themes via `prefers-color-scheme`.
+2. In the root `index.html`, copy the `<a class="snack">` block and edit the href, title,
+   description, and facts.
+3. Add a row to the table above.
+4. Commit and push to `main`. Pages redeploys in about 20 seconds.
 
-One self-contained `index.html`. No build step, no dependencies, no external requests; light and
-dark themes follow your system setting.
+## House rules
+
+- **One file per page.** No bundler, no CDN, no webfont URL — inline everything. A snack should
+  still work saved to disk and opened offline.
+- **Check claims against the thing itself,** not its documentation. Where the two disagree, follow
+  the tool and say so on the page.
+- **Say what was measured.** If a number came from a probe or a parse, the page should explain how.
 
 ---
 
-If it saved you some time: [buy me a coffee](https://buymeacoffee.com/john42) ☕
+If one of these saved you some time: [buy me a coffee](https://buymeacoffee.com/john42) ☕
