@@ -1,0 +1,15 @@
+{
+  "name": "ai-snacks-build",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Build pipeline for the AI Snacks pages",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "build": "python3 build.py",
+    "all": "node capture.mjs && python3 build.py"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}

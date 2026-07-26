@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --ground:#F6F7FA; --surface:#FFFFFF; --ink:#15171E; --muted:#5B6172; --faint:#8B91A3;
+    --rule:#E0E3EC; --accent:#3F4FC0; --skill:#0F7B6C; --cli:#8A6320; --hidden:#9B3B6E;
+    --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; }
+  body {
+    width:1200px; height:630px; background:var(--ground); color:var(--ink);
+    font-family:var(--mono); display:flex; flex-direction:column;
+    padding:64px 72px; overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .eyebrow {
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow b { color:var(--accent); font-weight:600; }
+  .eyebrow i { flex:1 1 auto; height:1px; background:var(--rule); font-style:normal; }
+
+  h1 {
+    margin-top:38px; font-size:76px; font-weight:600; letter-spacing:-.035em; line-height:1.02;
+  }
+  h1 .slash { color:var(--accent); }
+  p.sub {
+    margin-top:24px; margin-bottom:40px; font-size:24px; line-height:1.5;
+    color:var(--muted); max-width:34ch;
+  }
+  p.sub b { color:var(--ink); font-weight:600; }
+
+  .grid { margin-top:auto; display:flex; gap:12px; }
+  .cell {
+    flex:1 1 0; background:var(--surface); border:1px solid var(--rule);
+    border-left:3px solid var(--c); border-radius:4px; padding:18px 20px;
+  }
+  .cell b { display:block; font-size:40px; font-weight:600; letter-spacing:-.03em; }
+  .cell span {
+    display:block; margin-top:6px; font-size:15px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .foot {
+    margin-top:26px; display:flex; align-items:center; gap:16px;
+    font-size:18px; color:var(--faint); letter-spacing:.04em;
+  }
+  .foot .url { color:var(--accent); }
+  .foot .dot { color:var(--rule); }
+</style>
+</head>
+<body>
+  <div class="eyebrow"><b>AI Snacks</b><i></i><span>Build 2.1.220</span></div>
+
+  <h1><span class="slash">/</span>Claude Code<br>Command Index</h1>
+  <p class="sub">Read out of the <b>installed binary</b>, not the documentation.</p>
+
+  <div class="grid">
+    <div class="cell" style="--c:var(--accent)"><b>96</b><span>Native</span></div>
+    <div class="cell" style="--c:var(--skill)"><b>23</b><span>Skills</span></div>
+    <div class="cell" style="--c:var(--cli)"><b>14</b><span>CLI</span></div>
+    <div class="cell" style="--c:var(--hidden)"><b>10</b><span>Hidden</span></div>
+    <div class="cell" style="--c:var(--muted)"><b>57</b><span>Flags</span></div>
+  </div>
+
+  <div class="foot">
+    <span class="url">johnmiroki.github.io/ai-snacks</span>
+    <span class="dot">&bull;</span>
+    <span>131 linked to the official docs</span>
+  </div>
+</body>
+</html>

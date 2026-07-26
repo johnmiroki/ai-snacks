@@ -1,0 +1,497 @@
+<title>Claude Code Bundled Skills — v2.1.220</title>
+
+<style>
+  :root {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --fam-native:#3F4FC0;
+    --fam-skill:#0D7C87;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0F1117;
+      --surface:#161922;
+      --surface-2:#1E222E;
+      --ink:#E3E6EE;
+      --muted:#969DB0;
+      --faint:#6C7385;
+      --rule:#262B38;
+      --rule-soft:#1E222E;
+      --accent:#8E9AF2;
+      --accent-soft:#1F2540;
+      --fam-native:#8E9AF2;
+      --fam-skill:#4FC7D2;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0F1117;
+    --surface:#161922;
+    --surface-2:#1E222E;
+    --ink:#E3E6EE;
+    --muted:#969DB0;
+    --faint:#6C7385;
+    --rule:#262B38;
+    --rule-soft:#1E222E;
+    --accent:#8E9AF2;
+    --accent-soft:#1F2540;
+    --fam-native:#8E9AF2;
+    --fam-skill:#4FC7D2;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --fam-native:#3F4FC0;
+    --fam-skill:#0D7C87;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,4.4vw,44px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .slash { color:var(--accent); }
+  .lede { margin:0; max-width:68ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .lede a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .lede a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- stats ---------- */
+  .stats {
+    display:grid; gap:var(--sp-3); margin:var(--sp-5) 0 0;
+    grid-template-columns:repeat(auto-fit, minmax(184px, 1fr));
+  }
+  .stat {
+    text-align:left; font:inherit; cursor:default;
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--sc, var(--accent));
+    border-radius:3px; padding:var(--sp-3) var(--sp-4);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:23px; font-weight:600;
+    letter-spacing:-.01em; color:var(--sc, var(--accent)); line-height:1.2;
+  }
+  .stat .lbl {
+    display:block; font-size:12.5px; color:var(--muted); margin-top:2px;
+  }
+  .stat .stat-note {
+    display:block; font-size:12px; color:var(--faint); margin-top:var(--sp-2);
+    line-height:1.45;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.92em; }
+
+  /* ---------- how it was read ---------- */
+  .method {
+    margin:var(--sp-5) 0 0; padding:var(--sp-4);
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-skill); border-radius:3px;
+  }
+  .method h2 {
+    margin:0 0 var(--sp-2); font-family:var(--mono); font-size:12px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--fam-skill); font-weight:600;
+  }
+  .method p { margin:0 0 var(--sp-3); font-size:13.5px; color:var(--muted); max-width:88ch; }
+  .method p:last-child { margin-bottom:0; }
+  .method code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .method a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .method a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- controls ---------- */
+  .controls {
+    position:sticky; top:0; z-index:5;
+    background:color-mix(in srgb, var(--ground) 92%, transparent);
+    backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+    margin-bottom:var(--sp-5);
+  }
+  .controls-in { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+  .search {
+    flex:1 1 260px; min-width:0;
+    font-family:var(--mono); font-size:13.5px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px var(--sp-3);
+  }
+  .search::placeholder { color:var(--faint); }
+  .search:focus { outline:2px solid var(--accent); outline-offset:-1px; border-color:var(--accent); }
+
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-2); }
+  .chip {
+    display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.04em;
+    color:var(--muted); background:var(--surface);
+    border:1px solid var(--rule); border-radius:3px; padding:7px 10px;
+  }
+  .chip[aria-pressed="true"] { color:var(--ink); border-color:var(--cc, var(--accent)); }
+  .chip .dot {
+    width:7px; height:7px; border-radius:50%; background:var(--cc, var(--accent));
+    opacity:.35; flex:0 0 auto;
+  }
+  .chip[aria-pressed="true"] .dot { opacity:1; }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .count { font-family:var(--mono); font-size:12px; color:var(--faint); white-space:nowrap; }
+
+  /* ---------- sections ---------- */
+  .sec { margin:0 0 var(--sp-7); scroll-margin-top:72px; }
+  .sec-head { margin:0 0 var(--sp-4); }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--fam-skill);
+    margin:0 0 var(--sp-1);
+  }
+  .sec-head p { margin:0; font-size:13.5px; color:var(--faint); }
+
+  /* ---------- skill card ---------- */
+  .skill {
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-skill); border-radius:3px;
+    padding:var(--sp-4); margin-bottom:var(--sp-3);
+    scroll-margin-top:78px;
+  }
+  .skill:target { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+
+  .skill-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2) var(--sp-3); }
+  .skill-name {
+    font-family:var(--mono); font-size:16px; font-weight:600; color:var(--ink);
+    letter-spacing:-.01em; margin:0;
+  }
+  .skill-name .slash { color:var(--fam-skill); }
+  .anchor {
+    font-family:var(--mono); font-size:12px; color:var(--faint);
+    text-decoration:none; opacity:0; transition:opacity .12s ease;
+  }
+  .skill:hover .anchor, .anchor:focus { opacity:1; }
+  .anchor:hover { color:var(--accent); }
+
+  .tags { display:flex; flex-wrap:wrap; gap:var(--sp-1) 6px; margin-left:auto; }
+  .tag {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); background:var(--surface-2);
+    border:1px solid var(--rule); border-radius:2px; padding:3px 7px; white-space:nowrap;
+  }
+  .tag.slash { color:var(--fam-native); border-color:color-mix(in srgb, var(--fam-native) 35%, var(--rule)); }
+  .tag.auto  { color:var(--fam-skill);  border-color:color-mix(in srgb, var(--fam-skill) 35%, var(--rule)); }
+  .tag.gate  { color:var(--fam-cli);    border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); }
+
+  .skill > p.desc {
+    margin:var(--sp-3) 0 0; font-size:14px; color:var(--muted); max-width:92ch;
+    overflow-wrap:anywhere;
+  }
+  .skill > p.desc code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+
+  .meta {
+    display:flex; flex-wrap:wrap; gap:var(--sp-1) var(--sp-4);
+    margin-top:var(--sp-3); font-family:var(--mono); font-size:11.5px; color:var(--faint);
+  }
+  .meta span { min-width:0; overflow-wrap:anywhere; }
+  .meta span b { color:var(--muted); font-weight:500; }
+  .meta code { color:var(--ink); }
+
+  /* ---------- prompt disclosure ---------- */
+  details.prompt { margin-top:var(--sp-3); border-top:1px solid var(--rule-soft); padding-top:var(--sp-3); }
+  details.prompt > summary {
+    cursor:pointer; list-style:none; display:flex; align-items:center; gap:var(--sp-2);
+    font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--accent);
+  }
+  details.prompt > summary::-webkit-details-marker { display:none; }
+  details.prompt > summary::before {
+    content:"\25B8"; display:inline-block; transition:transform .12s ease; font-size:10px;
+  }
+  details.prompt[open] > summary::before { transform:rotate(90deg); }
+  details.prompt > summary:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  details.prompt > summary .how { color:var(--faint); letter-spacing:0; }
+
+  .prompt-body { position:relative; margin-top:var(--sp-3); }
+  .prompt-body pre {
+    margin:0; padding:var(--sp-4); max-height:30em; overflow:auto;
+    background:var(--surface-2); border:1px solid var(--rule); border-radius:3px;
+    font-family:var(--mono); font-size:12.5px; line-height:1.6; color:var(--ink);
+    white-space:pre-wrap; overflow-wrap:anywhere; tab-size:2;
+  }
+  .copy {
+    position:absolute; top:var(--sp-2); right:var(--sp-2);
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); background:var(--surface); cursor:pointer;
+    border:1px solid var(--rule); border-radius:2px; padding:5px 9px;
+  }
+  .copy:hover { color:var(--ink); border-color:var(--accent); }
+  .copy:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .empty {
+    display:none; padding:var(--sp-6) 0; text-align:center;
+    font-family:var(--mono); font-size:13px; color:var(--faint);
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top:1px solid var(--rule); margin-top:var(--sp-7);
+    padding:var(--sp-5) 0 var(--sp-7); color:var(--faint); font-size:13px;
+  }
+  footer p { margin:0 0 var(--sp-2); max-width:82ch; }
+  footer a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  footer a:hover { border-bottom-color:currentColor; }
+  footer code { font-family:var(--mono); font-size:.9em; }
+
+  @media (max-width: 620px) {
+    .tags { margin-left:0; width:100%; }
+    .prompt-body pre { font-size:12px; padding:var(--sp-3); }
+    /* The chips wrap to three rows here; sticking that to the top costs a third of
+       the viewport and buries whatever you just jumped to. */
+    .controls { position:static; }
+    .sec, .skill { scroll-margin-top:var(--sp-3); }
+    details.prompt > summary { flex-wrap:wrap; }
+    details.prompt > summary .how { flex:1 1 100%; margin-left:18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Reference &middot; build 2.1.220 &middot; extracted from the installed binary</p>
+    <h1><span class="slash">/</span>bundled skills &mdash; the prompts, in full</h1>
+    <p class="lede">
+      Claude Code ships with skills that are nothing but prompts. When you type <code>/doctor</code>
+      or Claude reaches for <code>dataviz</code>, what actually happens is that a block of text gets
+      pushed into the context window. This page is that text &mdash; every bundled skill in build
+      2.1.220, read out of the shipped binary and reproduced in full, so you can see exactly what
+      the model is being told before it answers you.
+    </p>
+
+    <div class="stats">
+      <div class="stat" style="--sc:var(--fam-skill)">
+        <b id="s-skills">0</b><span class="lbl">Bundled skills</span>
+        <span class="stat-note">Registered inside the binary itself, not in
+          <code>~/.claude/skills</code>. The command index counts 23 of these because it only lists
+          the ones that reach the slash-command menu on a default terminal build.</span>
+      </div>
+      <div class="stat" style="--sc:var(--fam-native)">
+        <b id="s-words">0</b><span class="lbl">Words of prompt</span>
+        <span class="stat-note">The whole corpus, reproduced below. Longest is
+          <code>claude-api</code>; shortest is <code>design</code>.</span>
+      </div>
+      <div class="stat" style="--sc:var(--fam-cli)">
+        <b id="s-verbatim">0</b><span class="lbl">Shipped as whole SKILL.md files</span>
+        <span class="stat-note">Stored complete, frontmatter and all. The rest are built at run
+          time from constants, joined section arrays, or builder functions.</span>
+      </div>
+      <div class="stat" style="--sc:var(--fam-hidden)">
+        <b id="s-gated">0</b><span class="lbl">Registered conditionally</span>
+        <span class="stat-note">Present in every copy of the binary, but they appear only when an
+          <code>isEnabled</code> check passes &mdash; a feature flag, an entry point, a login. The
+          flag name is listed where the check names one outright.</span>
+      </div>
+    </div>
+
+    <div class="method">
+      <h2>How this was read</h2>
+      <p>
+        Claude Code is distributed as a single Bun-compiled executable with its JavaScript bundle
+        embedded verbatim. Every bundled skill is registered in that bundle by a call carrying the
+        skill's name, the description the model sees when deciding whether to invoke it, and a
+        <code>getPromptForCommand</code> function that returns the prompt. The extractor reads the
+        binary as text, locates those calls, and resolves each prompt back to its source string.
+      </p>
+      <p>
+        Prompts arrive by four routes, and each entry below says which one it took. <b>A whole
+        SKILL.md</b> shipped as a module export is reproduced byte for byte, and so is <b>a single
+        string constant</b>. <b>A joined section array</b> is concatenated in the order the skill
+        joins it. <b>A builder function</b> stitches literals around values known only at run time
+        &mdash; those are marked <em>assembled</em>.
+      </p>
+      <p>
+        Where a prompt interpolates something, you will see <code>${…}</code>: a value this page
+        cannot know, because it depends on your repo, your model, or your session. Where the
+        interpolation was itself a choice between two phrasings, both phrasings are shown, so an
+        assembled prompt occasionally reads as two sentences run together where the running CLI
+        would pick one. Everything shown is text the binary really contains. Nothing is
+        paraphrased, and nothing was produced by executing the program.
+      </p>
+      <p>
+        The extractor is checked in at
+        <code>build/claude-code-built-in-skills/extract_skills.py</code> &mdash; point it at your
+        own copy of the binary to reproduce this page.
+      </p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="controls-in">
+      <input class="search" id="q" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Filter by name, description or prompt text&hellip;"
+             aria-label="Filter skills">
+      <div class="chips" id="chips"></div>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <main id="skills"></main>
+
+  <p class="empty" id="empty">Nothing matches that filter.</p>
+
+  <footer>
+    <p>
+      Read out of <code>~/.local/share/claude/versions/2.1.220</code> on 2026-07-26. Prompts are
+      Anthropic's; they are reproduced here for reference, and they change between builds. Where
+      this page and the documentation disagree, this page reflects what the binary actually
+      contains.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".skill"));
+  var secs = Array.prototype.slice.call(document.querySelectorAll(".sec"));
+
+  // Searching the prompt bodies matters more than searching titles, and the prompts are
+  // already in the DOM — indexing them here beats shipping a second copy in an attribute.
+  cards.forEach(function (card) { card._hay = card.textContent.toLowerCase(); });
+  var q = document.getElementById("q");
+  var chipHost = document.getElementById("chips");
+  var count = document.getElementById("count");
+  var empty = document.getElementById("empty");
+  var off = {};
+
+  secs.forEach(function (sec) {
+    var b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.setAttribute("data-key", sec.getAttribute("data-key"));
+    b.setAttribute("aria-pressed", "true");
+    b.innerHTML = '<i class="dot"></i>' + sec.getAttribute("data-short");
+    chipHost.appendChild(b);
+  });
+
+  function apply() {
+    var needle = q.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (card) {
+      var keyOff = off[card.getAttribute("data-key")];
+      var hit = !needle || card._hay.indexOf(needle) !== -1;
+      var show = hit && !keyOff;
+      card.hidden = !show;
+      if (show) shown++;
+    });
+    secs.forEach(function (sec) {
+      var any = sec.querySelectorAll(".skill:not([hidden])").length > 0;
+      sec.hidden = !any;
+    });
+    empty.style.display = shown ? "none" : "block";
+    count.textContent = shown === cards.length
+      ? cards.length + " skills"
+      : shown + " of " + cards.length;
+  }
+
+  q.addEventListener("input", apply);
+
+  chipHost.addEventListener("click", function (e) {
+    var chip = e.target.closest(".chip");
+    if (!chip) return;
+    var key = chip.getAttribute("data-key");
+    off[key] = !off[key];
+    chip.setAttribute("aria-pressed", off[key] ? "false" : "true");
+    apply();
+  });
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var pre = btn.parentElement.querySelector("pre");
+    if (!pre || !navigator.clipboard) return;
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      var was = btn.textContent;
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = was; }, 1400);
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    }
+    if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+    }
+  });
+
+  // A deep link into a collapsed prompt should open it.
+  function openTarget() {
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    var d = el.querySelector ? el.querySelector("details.prompt") : null;
+    if (d) d.open = true;
+  }
+  window.addEventListener("hashchange", openTarget);
+  openTarget();
+
+  apply();
+})();
+</script>

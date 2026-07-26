@@ -10,14 +10,15 @@ server.
 
 | Snack | What it is | Also as |
 | --- | --- | --- |
+| [Claude Code Bundled Skills](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/) | The full prompt behind all 35 skills bundled inside Claude Code 2.1.220 — read out of the shipped binary and reproduced verbatim, not summarised | [json](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.md) |
 | [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/) | Every slash command, bundled skill, `claude` subcommand and CLI flag in Claude Code 2.1.220 — extracted from the installed binary, probed for availability, linked to the official docs | [json](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.md) |
 
 ## Layout
 
 ```
 ai-snacks/
-├── index.html                          hub — lists every snack
-├── 404.html                            shared not-found page
+├── index.html                          hub — lists every snack (hand-maintained)
+├── 404.html                            shared not-found page (hand-maintained)
 ├── og.png                              social preview for the hub
 ├── llms.txt                            site index for language models
 ├── llms-full.txt                       every page's Markdown, concatenated
@@ -29,11 +30,64 @@ ai-snacks/
 │   ├── commands.json                   the same data, structured
 │   ├── commands.md                     the same page, plain Markdown
 │   └── og.png
+├── claude-code-built-in-skills/
+│   ├── index.html                      the page, prompts baked in
+│   ├── skills.json                     every prompt, structured
+│   ├── skills.md                       every prompt, plain Markdown
+│   └── og.png
+├── build/                              what everything above is built from
+│   ├── build.py                        assembles the site into the repo root
+│   ├── capture.mjs                     pre-renders the cards, shoots the OG images
+│   ├── siteconf.py                     URLs, build number, titles, date
+│   ├── og-hub.html                     OG template for the hub
+│   ├── claude-code-cheatsheet/
+│   │   ├── claude-code-commands.html   the page source — edit this, not the output
+│   │   ├── og.html                     OG template for the page
+│   │   ├── extract.json                captured command and flag data
+│   │   └── prerender.json              captured HTML for the cards
+│   └── claude-code-built-in-skills/
+│       ├── skills.html                 the page source — edit this, not the output
+│       ├── og.html                     OG template for the page
+│       ├── extract_skills.py           mines the prompts out of the CLI binary
+│       └── skills-data.json            what it mined — the page's source of truth
 └── README.md
 ```
 
 GitHub Pages serves the repo root, so a folder named `<slug>` is reachable at
 `johnmiroki.github.io/ai-snacks/<slug>/`.
+
+Everything outside `build/` and the two hand-maintained pages is **generated**. Editing a published
+file directly is wasted work — the next build overwrites it.
+
+## Building
+
+```sh
+node build/capture.mjs    # only when a page source or an OG template changed
+python3 build/build.py    # always — assembles the site
+```
+
+`capture.mjs` opens the command-index source in headless Chromium, snapshots the JavaScript-built
+cards into `extract.json` and `prerender.json`, and screenshots all three OG images. `build.py`
+needs nothing but the checked-in JSON, so the usual edit-and-rebuild loop is Python only. It
+verifies the capture still holds 143 commands and 57 flags, and that the skill data still holds 35
+skills, and stops rather than publish a half-built page.
+
+Playwright provides the browser (`npm install` in `build/`); set `CHROMIUM_PATH` to use one it did
+not install itself. A clean `python3 build/build.py` on an unchanged checkout produces no diff — if
+it does, the source and the published output have drifted. Re-running `capture.mjs` does rewrite
+every `og.png` with different bytes for a pixel-identical image, since PNG output varies between
+Chromium versions; that churn is not worth committing.
+
+The skill prompts come from a third script, run only when Claude Code itself updates:
+
+```sh
+python3 build/claude-code-built-in-skills/extract_skills.py \
+    ~/.local/share/claude/versions/2.1.220 \
+    build/claude-code-built-in-skills/skills-data.json
+```
+
+It reads the binary as text — it never executes it — finds each bundled skill's registration in the
+embedded JavaScript bundle, and resolves every prompt back to its source string.
 
 ## Readable by people, machines and crawlers
 
@@ -41,11 +95,12 @@ Every page ships three ways: as HTML for people, as Markdown and JSON for agents
 `schema.org` metadata for search engines.
 
 - **Content lives in the HTML.** Pages that build themselves with JavaScript are invisible to
-  crawlers that do not run it — which is most of the ones that feed AI answers. The command index
-  is rendered once at build time and baked into the file; its JavaScript only filters what is
-  already there.
-- **Every entry has a stable anchor.** `#cmd-compact`, `#cli-claude-mcp` — deep-linkable and
-  unchanged between builds.
+  crawlers that do not run it — which is most of the ones that feed AI answers. Both pages are
+  rendered once at build time and baked into the file; their JavaScript only filters what is
+  already there. On the skills page the prompts sit inside `<details>`, which collapses them for
+  readers without hiding them from a crawler.
+- **Every entry has a stable anchor.** `#cmd-compact`, `#cli-claude-mcp`, `#skill-dataviz` —
+  deep-linkable and unchanged between builds.
 - **`llms.txt`** indexes the site for language models; **`llms-full.txt`** is the whole thing in one
   fetch.
 - **Structured data.** The hub carries `WebSite` + `CollectionPage`; each page carries `TechArticle`,
@@ -58,13 +113,19 @@ become effective under a custom domain, but does not currently govern crawling. 
 
 ## Adding a snack
 
-1. Create `<slug>/index.html` — one self-contained file. Include `<meta charset="utf-8">`,
+1. Write the page source under `build/<slug>/`. One self-contained file: `<meta charset="utf-8">`,
    a viewport meta, both light and dark themes via `prefers-color-scheme`, and a `<link rel=
    "canonical">`.
-2. In the root `index.html`, copy the `<a class="snack">` block and edit the href, title,
-   description, and facts.
-3. Add a row to the table above, a `<url>` entry to `sitemap.xml`, and a bullet to `llms.txt`.
-4. Commit and push to `main`. Pages redeploys in about 20 seconds.
+2. Teach `build.py` about it — a build function that writes `<slug>/index.html`, a `schema.org`
+   block, an entry in `PAGES`, and a line in the `llms.txt` template. The masthead, coffee CSS,
+   support callout, `<head>` and machine-readable footer are already shared; a new page picks them
+   up by carrying the same anchors in its source and calling `page_head()`.
+3. In the root `index.html`, copy the `<a class="snack">` block and edit the href, title,
+   description, and facts. Add a row to the table above.
+4. Run the build, then commit and push to `main`. Pages redeploys in about 20 seconds.
+
+`sitemap.xml`, `llms.txt` and `llms-full.txt` are generated — add the page to `build.py` rather than
+editing them by hand.
 
 ## House rules
 

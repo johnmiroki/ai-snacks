@@ -58,12 +58,24 @@
     "mainEntity": {
       "@type": "ItemList",
       "name": "Reference pages",
-      "numberOfItems": 1,
+      "numberOfItems": 2,
       "itemListOrder": "https://schema.org/ItemListOrderDescending",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
+          "url": "https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/",
+          "item": {
+            "@type": "TechArticle",
+            "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/#article",
+            "name": "Claude Code Bundled Skills",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/",
+            "description": "The complete prompt behind every skill bundled inside Claude Code build 2.1.220 — all 35 of them, read out of the shipped binary and reproduced verbatim rather than summarised."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
           "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
           "item": {
             "@type": "TechArticle",
@@ -244,6 +256,26 @@
 
   <main class="shelf">
     <!-- To add a snack: create <slug>/index.html, then copy this <a class="snack"> block and edit it. -->
+    <a class="snack" href="claude-code-built-in-skills/">
+      <span class="snack-top">
+        <span class="snack-title">Claude Code Bundled Skills</span>
+        <span class="go" aria-hidden="true">&#8594;</span>
+      </span>
+      <p>
+        The prompts. Claude Code ships 35 skills that are nothing but text pushed into the context
+        window — <code>/doctor</code>, <code>dataviz</code>, <code>/code-review</code> and the rest.
+        Every one of them read out of the shipped binary and reproduced in full, so you can see
+        what the model is actually told before it answers you.
+      </p>
+      <span class="facts">
+        <span class="fact">35 skills</span>
+        <span class="fact">62,010 words</span>
+        <span class="fact">build 2.1.220</span>
+        <span class="fact">full text, searchable</span>
+        <span class="fact stamp">updated 2026-07-26</span>
+      </span>
+    </a>
+
     <a class="snack" href="claude-code-cheatsheet/">
       <span class="snack-top">
         <span class="snack-title">Claude Code Command Index</span>
@@ -272,7 +304,7 @@
       <a href="llms.txt">llms.txt</a>
       <a href="llms-full.txt">llms-full.txt</a>
       <a href="claude-code-cheatsheet/commands.json">commands.json</a>
-      <a href="claude-code-cheatsheet/commands.md">commands.md</a>
+      <a href="claude-code-built-in-skills/skills.json">skills.json</a>
       <span>&mdash; every page also exists as plain text and structured data.</span>
     </p>
   </main>

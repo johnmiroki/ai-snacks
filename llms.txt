@@ -11,12 +11,18 @@ follows the tool and says so.
 - [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/): every slash command, bundled skill, `claude` CLI subcommand
   and launch flag in Claude Code build 2.1.220 — 143 commands and 57 flags, extracted from
   the installed binary, probed for availability, and linked to the official docs.
+- [Claude Code Bundled Skills](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/): the complete prompt behind every skill bundled inside build
+  2.1.220 — all 35 of them, 62,010 words in total, read out of the shipped binary and
+  reproduced verbatim rather than summarised.
 
 ## Machine-readable data
 
 - [Claude Code commands as Markdown](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.md): the full command index as plain Markdown.
 - [Claude Code commands as JSON](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json): the same inventory as structured data, with
   descriptions, aliases, argument hints, availability and documentation links per command.
+- [Claude Code skill prompts as Markdown](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.md): every bundled skill's prompt in full.
+- [Claude Code skill prompts as JSON](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.json): the same prompts as structured data, with
+  the description, trigger hint, gating and assembly method per skill.
 - [Everything as one file](https://johnmiroki.github.io/ai-snacks/llms-full.txt): every page's Markdown concatenated.
 
 ## About
