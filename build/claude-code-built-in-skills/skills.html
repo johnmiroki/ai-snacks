@@ -321,8 +321,8 @@
       <div class="stat" style="--sc:var(--fam-skill)">
         <b id="s-skills">0</b><span class="lbl">Bundled skills</span>
         <span class="stat-note">Registered inside the binary itself, not in
-          <code>~/.claude/skills</code>. The command index counts 23 of these because it only lists
-          the ones that reach the slash-command menu on a default terminal build.</span>
+          <code>~/.claude/skills</code>. The command index on this site counts 23 &mdash; the
+          twelve-skill difference is itemised below.</span>
       </div>
       <div class="stat" style="--sc:var(--fam-native)">
         <b id="s-words">0</b><span class="lbl">Words of prompt</span>
@@ -365,6 +365,16 @@
         assembled prompt occasionally reads as two sentences run together where the running CLI
         would pick one. Everything shown is text the binary really contains. Nothing is
         paraphrased, and nothing was produced by executing the program.
+      </p>
+      <p>
+        <b>Why 35 here and 23 on the command index.</b> That page inventories what a default
+        terminal build registers, and counts 23 commands as bundled skills. Every one of those 23
+        is here. Of the remaining twelve, <code>/design</code> is on that page too but filed as a
+        native command rather than a skill; ten are registered conditionally and never appear in a
+        default build, among them the four <code>artifact-*</code> templates,
+        <code>code-walkthrough</code>, <code>pr-explainer</code> and <code>cowork-plugin</code>;
+        and <code>verify</code> is the one genuine omission &mdash; unconditional and
+        user-invocable, but absent from that inventory. Neither page drops a skill the other has.
       </p>
       <p>
         The extractor is checked in at

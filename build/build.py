@@ -82,15 +82,19 @@ COFFEE_CSS = """
   .eyebrow .home:hover { color:var(--accent); border-bottom-color:currentColor; }
 """
 
+# Both anchors carry S.BUILD rather than a literal, so bumping the build number in siteconf
+# fails the swap loudly instead of quietly publishing a masthead that still names the old one.
+# The fix when it fires is to update the eyebrow in each page source to match.
 MASTHEAD_OLD = """  <header class="masthead">
-    <p class="eyebrow">Reference &middot; build 2.1.220 &middot; extracted from the installed binary</p>"""
+    <p class="eyebrow">Reference &middot; build {build} &middot; extracted from the installed binary</p>""".format(build=S.BUILD)
 
 MASTHEAD_NEW = """  <header class="masthead">
     <div class="masthead-top">
-      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build 2.1.220 &middot; extracted from the installed binary</p>
+      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build {build} &middot; extracted from the installed binary</p>
       <a class="coffee" href="{bmc}" target="_blank" rel="noopener noreferrer">
         <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
-    </div>""".format(bmc=S.BMC)
+    </div>""".format(build=S.BUILD, bmc=S.BMC)
+
 
 def support(pitch):
     return """
@@ -265,7 +269,8 @@ def build_cheatsheet_page(prerender):
     frag = swap(frag, "\n  </footer>", MACHINE, "machine-readable")
     frag = swap(frag, "\n  @media (prefers-reduced-motion",
                 COFFEE_CSS + "  @media (prefers-reduced-motion", "css")
-    frag = swap(frag, "<title>Claude Code Command Index — v2.1.220</title>\n", "", "old title")
+    frag = swap(frag, "<title>Claude Code Command Index — v%s</title>\n" % S.BUILD, "",
+                "old title")
 
     head = page_head(
         title=S.CS_TITLE, desc=S.CS_DESC, url=S.CHEATSHEET, ld=cheatsheet_ld(),
@@ -396,7 +401,8 @@ def build_skills_page(data):
     frag = swap(frag, "\n  </footer>", SK_MACHINE, "machine-readable")
     frag = swap(frag, "\n  @media (prefers-reduced-motion",
                 COFFEE_CSS + "  @media (prefers-reduced-motion", "css")
-    frag = swap(frag, "<title>Claude Code Bundled Skills — v2.1.220</title>\n", "", "old title")
+    frag = swap(frag, "<title>Claude Code Bundled Skills — v%s</title>\n" % S.BUILD, "",
+                "old title")
 
     head = page_head(
         title=S.SK_TITLE, desc=S.SK_DESC, url=S.SKILLS, ld=skills_ld(data),
