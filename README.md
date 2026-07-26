@@ -37,4 +37,4 @@ dark themes follow your system setting.
 
 ---
 
-If it saved you some time: [buy me a coffee](https://buymeacoffee.com/johnmiroki) ☕
+If it saved you some time: [buy me a coffee](https://buymeacoffee.com/john42) ☕
