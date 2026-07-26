@@ -1,0 +1,25 @@
+# AI Snacks
+
+> Small, self-contained reference pages for AI developer tools. One HTML file each, checked against the tool rather than its documentation.
+
+Every page is a single self-contained HTML file with no external requests. Facts on each page were
+checked against the tool itself rather than its documentation; where the two disagree, the page
+follows the tool and says so.
+
+## Pages
+
+- [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/): every slash command, bundled skill, `claude` CLI subcommand
+  and launch flag in Claude Code build 2.1.220 — 143 commands and 57 flags, extracted from
+  the installed binary, probed for availability, and linked to the official docs.
+
+## Machine-readable data
+
+- [Claude Code commands as Markdown](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.md): the full command index as plain Markdown.
+- [Claude Code commands as JSON](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json): the same inventory as structured data, with
+  descriptions, aliases, argument hints, availability and documentation links per command.
+- [Everything as one file](https://johnmiroki.github.io/ai-snacks/llms-full.txt): every page's Markdown concatenated.
+
+## About
+
+- [Source repository](https://github.com/johnmiroki/ai-snacks): all pages, hand-built, no framework.
+- [Support the work](https://buymeacoffee.com/john42).

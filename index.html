@@ -3,10 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Snacks</title>
-<meta name="description" content="Small, self-contained reference pages for the AI tools I use every day. One HTML file each — no build step, no dependencies, no tracking.">
+<title>AI Snacks — single-page references for AI developer tools</title>
+<meta name="description" content="Small, self-contained reference pages for AI developer tools. One HTML file each — no build step, no dependencies, no tracking — checked against the tool rather than its documentation.">
+<link rel="canonical" href="https://johnmiroki.github.io/ai-snacks/">
+<meta name="author" content="johnmiroki">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F6F7FA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1117" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI Snacks">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="AI Snacks — single-page references for AI developer tools">
+<meta property="og:description" content="Reference pages for AI developer tools, each a single HTML file, each checked against the tool rather than its documentation.">
+<meta property="og:url" content="https://johnmiroki.github.io/ai-snacks/">
+<meta property="og:image" content="https://johnmiroki.github.io/ai-snacks/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Snacks — reference pages for AI tools, checked against the tool rather than its docs">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Snacks — single-page references for AI developer tools">
+<meta name="twitter:description" content="Reference pages for AI developer tools, each a single HTML file, each checked against the tool rather than its documentation.">
+<meta name="twitter:image" content="https://johnmiroki.github.io/ai-snacks/og.png">
+
+<link rel="alternate" type="text/plain" href="llms.txt" title="Site index for language models">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='54' font-size='74' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%8D%A1%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://johnmiroki.github.io/ai-snacks/#website",
+    "name": "AI Snacks",
+    "alternateName": "ai-snacks",
+    "url": "https://johnmiroki.github.io/ai-snacks/",
+    "description": "Small, self-contained reference pages for AI developer tools.",
+    "inLanguage": "en",
+    "author": { "@type": "Person", "name": "johnmiroki", "url": "https://github.com/johnmiroki" },
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://johnmiroki.github.io/ai-snacks/#collection",
+    "name": "AI Snacks",
+    "url": "https://johnmiroki.github.io/ai-snacks/",
+    "description": "Reference pages for AI developer tools, each a single self-contained HTML file.",
+    "isPartOf": { "@id": "https://johnmiroki.github.io/ai-snacks/#website" },
+    "dateModified": "2026-07-26",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Reference pages",
+      "numberOfItems": 1,
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
+          "item": {
+            "@type": "TechArticle",
+            "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#article",
+            "name": "Claude Code Command Index",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
+            "description": "Every slash command, bundled skill, claude CLI subcommand and launch flag in Claude Code build 2.1.220 — 143 commands and 57 flags, extracted from the installed binary and linked to the official docs."
+          }
+        }
+      ]
+    }
+  }
+]
+</script>
 <style>
   :root {
     --ground:#F6F7FA;
@@ -131,8 +202,17 @@
   .coffee:focus-visible { outline:2px solid var(--bronze); outline-offset:2px; }
   .coffee .cup { font-size:13px; }
 
+  .machine {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2) var(--sp-3);
+    margin-top:var(--sp-5); padding-top:var(--sp-4); border-top:1px solid var(--rule);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--faint);
+  }
+  .machine b { color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.12em; }
+  .machine a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .machine a:hover { border-bottom-color:currentColor; }
+
   footer {
-    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    margin-top:var(--sp-6); padding:var(--sp-5) 0 var(--sp-7);
     border-top:1px solid var(--rule);
     display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-4);
     font-size:13px; color:var(--muted);
@@ -185,6 +265,15 @@
 
     <p class="more">
       More on the way. Each one gets its own folder in the <code>ai-snacks</code> repo and a card here.
+    </p>
+
+    <p class="machine">
+      <b>For agents</b>
+      <a href="llms.txt">llms.txt</a>
+      <a href="llms-full.txt">llms-full.txt</a>
+      <a href="claude-code-cheatsheet/commands.json">commands.json</a>
+      <a href="claude-code-cheatsheet/commands.md">commands.md</a>
+      <span>&mdash; every page also exists as plain text and structured data.</span>
     </p>
   </main>
 

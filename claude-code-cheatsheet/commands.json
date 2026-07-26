@@ -1,0 +1,2409 @@
+{
+  "name": "Claude Code command and flag inventory",
+  "description": "Every slash command, bundled skill, CLI subcommand and launch flag registered by Claude Code build 2.1.220.",
+  "claudeCodeBuild": "2.1.220",
+  "generated": "2026-07-26",
+  "license": "CC BY 4.0",
+  "canonicalPage": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
+  "source": {
+    "method": "Names, descriptions, aliases and argument hints were parsed out of the command registry inside the installed binary. CLI subcommands and flags come from `claude --help` on the same build. Availability was established by probing the running CLI, not by reading the documentation.",
+    "binary": "~/.local/share/claude/versions/2.1.220",
+    "officialDocs": "https://code.claude.com/docs/"
+  },
+  "counts": {
+    "total": 143,
+    "native": 96,
+    "skills": 23,
+    "cli": 14,
+    "hidden": 10,
+    "flags": 57,
+    "documented": 131,
+    "notRegisteredInCli": 11
+  },
+  "families": {
+    "native": "Slash command compiled into the binary's own command registry",
+    "skill": "Prompt-driven skill bundled inside the binary",
+    "cli": "Subcommand of the claude executable, run in the shell",
+    "hidden": "Registered and runnable but withheld from /help"
+  },
+  "fields": {
+    "id": "Stable anchor on the canonical page; append as #id to deep-link",
+    "name": "How the command is typed (/name for slash commands, bare for CLI subcommands)",
+    "family": "One of native, skill, cli, hidden — see families",
+    "description": "Description string carried in the build",
+    "argument": "Argument hint shown by the CLI, when it has one",
+    "aliases": "Other names that resolve to the same command",
+    "conditional": "Registered only when a feature gate or environment condition is met",
+    "registeredInCli": "false means the entry exists in the bundle but the terminal build never registers it — typing it returns Unknown command",
+    "unregisteredReason": "Why it is not registered, when known",
+    "docs": "Most specific official documentation page, or null if none exists"
+  },
+  "sections": [
+    {
+      "id": "sec-session-context",
+      "title": "Session & context",
+      "description": "Steering the conversation you are in right now",
+      "commandCount": 19
+    },
+    {
+      "id": "sec-model-reasoning",
+      "title": "Model & reasoning",
+      "description": "How much horsepower each turn gets",
+      "commandCount": 4
+    },
+    {
+      "id": "sec-workspace-code",
+      "title": "Workspace & code",
+      "description": "Directories, project memory, and your working diff",
+      "commandCount": 11
+    },
+    {
+      "id": "sec-config-environment",
+      "title": "Config & environment",
+      "description": "Settings, permissions, hooks, and how the terminal behaves",
+      "commandCount": 22
+    },
+    {
+      "id": "sec-extensions",
+      "title": "Extensions",
+      "description": "MCP servers, plugins, and skills",
+      "commandCount": 7
+    },
+    {
+      "id": "sec-background-parallel-work",
+      "title": "Background & parallel work",
+      "description": "Sending work off and getting it back",
+      "commandCount": 10
+    },
+    {
+      "id": "sec-cloud-web-devices",
+      "title": "Cloud, web & devices",
+      "description": "Moving a session between the terminal, the web, and your phone",
+      "commandCount": 14
+    },
+    {
+      "id": "sec-design-artifacts",
+      "title": "Design & artifacts",
+      "description": "Publishing pages and syncing design systems",
+      "commandCount": 10
+    },
+    {
+      "id": "sec-account-usage-install",
+      "title": "Account, usage & install",
+      "description": "Who you are signed in as, what it costs, and keeping current",
+      "commandCount": 14
+    },
+    {
+      "id": "sec-help-feedback-extras",
+      "title": "Help, feedback & extras",
+      "description": "Learning the tool, reporting problems, and a few indulgences",
+      "commandCount": 8
+    },
+    {
+      "id": "sec-terminal-cli",
+      "title": "Terminal CLI",
+      "description": "Subcommands of the claude executable, run from your shell",
+      "commandCount": 14
+    },
+    {
+      "id": "sec-hidden-internal",
+      "title": "Hidden & internal",
+      "description": "Present in the registry but suppressed from /help — listed for completeness",
+      "commandCount": 10
+    }
+  ],
+  "commands": [
+    {
+      "id": "cmd-help",
+      "name": "/help",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Show help and available commands",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-help"
+    },
+    {
+      "id": "cmd-clear",
+      "name": "/clear",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Start a new session with empty context; the previous session stays on disk and is resumable with /resume",
+      "argument": "[name]",
+      "aliases": [
+        "reset",
+        "new"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sessions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-clear"
+    },
+    {
+      "id": "cmd-compact",
+      "name": "/compact",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Free up context by summarizing the conversation so far",
+      "argument": "<optional custom summarization instructions>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/context-window",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-compact"
+    },
+    {
+      "id": "cmd-autocompact",
+      "name": "/autocompact",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Set how full the context gets before auto-summarizing",
+      "argument": "[auto|<tokens>]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/context-window",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-autocompact"
+    },
+    {
+      "id": "cmd-context",
+      "name": "/context",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Visualize current context usage as a colored grid",
+      "argument": "[all]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/context-window",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-context"
+    },
+    {
+      "id": "cmd-resume",
+      "name": "/resume",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Resume a previous conversation",
+      "argument": "[conversation id or search term]",
+      "aliases": [
+        "continue"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sessions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-resume"
+    },
+    {
+      "id": "cmd-rewind",
+      "name": "/rewind",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Restore the code and/or conversation to a previous point",
+      "argument": null,
+      "aliases": [
+        "checkpoint",
+        "undo"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/checkpointing",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rewind"
+    },
+    {
+      "id": "cmd-branch",
+      "name": "/branch",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Create a branch of the current conversation at this point",
+      "argument": "[name]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sessions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-branch"
+    },
+    {
+      "id": "cmd-rename",
+      "name": "/rename",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Rename the current conversation",
+      "argument": "[name]",
+      "aliases": [
+        "name"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sessions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rename"
+    },
+    {
+      "id": "cmd-export",
+      "name": "/export",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Export the current conversation to a file or clipboard",
+      "argument": "[filename]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-export"
+    },
+    {
+      "id": "cmd-copy",
+      "name": "/copy",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Copy Claude's last response to clipboard (or /copy N for the Nth-latest)",
+      "argument": "[n]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-copy"
+    },
+    {
+      "id": "cmd-plan",
+      "name": "/plan",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Enable plan mode or view the current session plan",
+      "argument": "[open|share|<description>]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/permission-modes",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plan"
+    },
+    {
+      "id": "cmd-goal",
+      "name": "/goal",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Set a goal Claude checks before stopping",
+      "argument": "[<condition> | clear]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/goal",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-goal"
+    },
+    {
+      "id": "cmd-focus",
+      "name": "/focus",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Toggle focus view: just your prompt, summary, and response",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-focus"
+    },
+    {
+      "id": "cmd-brief",
+      "name": "/brief",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Toggle brief-only mode",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-brief"
+    },
+    {
+      "id": "cmd-recap",
+      "name": "/recap",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Generate a one-line session recap now",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-recap"
+    },
+    {
+      "id": "cmd-memory",
+      "name": "/memory",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Open a memory file in your editor",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/memory",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-memory"
+    },
+    {
+      "id": "cmd-pause-memory",
+      "name": "/pause-memory",
+      "family": "native",
+      "section": "Session & context",
+      "description": "Pause automemory for this session",
+      "argument": null,
+      "aliases": [
+        "memory-pause",
+        "toggle-memory"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/memory",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-pause-memory"
+    },
+    {
+      "id": "cmd-exit",
+      "name": "/exit",
+      "family": "native",
+      "section": "Session & context",
+      "description": "End the session",
+      "argument": null,
+      "aliases": [
+        "quit"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-exit"
+    },
+    {
+      "id": "cmd-model",
+      "name": "/model",
+      "family": "native",
+      "section": "Model & reasoning",
+      "description": "Set the AI model for Claude Code",
+      "argument": "<model>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/model-config",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-model"
+    },
+    {
+      "id": "cmd-effort",
+      "name": "/effort",
+      "family": "native",
+      "section": "Model & reasoning",
+      "description": "Set effort level for model usage (low, medium, high, xhigh, max)",
+      "argument": "<level>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/model-config",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-effort"
+    },
+    {
+      "id": "cmd-fast",
+      "name": "/fast",
+      "family": "native",
+      "section": "Model & reasoning",
+      "description": "Toggle fast mode — Opus with faster output, not a smaller model",
+      "argument": "[on|off]",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/fast-mode",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fast"
+    },
+    {
+      "id": "cmd-advisor",
+      "name": "/advisor",
+      "family": "native",
+      "section": "Model & reasoning",
+      "description": "Let Claude consult a stronger model at key moments",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/advisor",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-advisor"
+    },
+    {
+      "id": "cmd-init",
+      "name": "/init",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "Initialize a new CLAUDE.md file with codebase documentation (the newer variant also scaffolds skills and hooks)",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/memory",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-init"
+    },
+    {
+      "id": "cmd-add-dir",
+      "name": "/add-dir",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "Add a new working directory",
+      "argument": "<path>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-add-dir"
+    },
+    {
+      "id": "cmd-cd",
+      "name": "/cd",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "Move this session to a new working directory",
+      "argument": "<path>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-cd"
+    },
+    {
+      "id": "cmd-diff",
+      "name": "/diff",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "View uncommitted changes and per-turn diffs",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-diff"
+    },
+    {
+      "id": "cmd-review",
+      "name": "/review",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "Review a GitHub pull request; for your working diff use /code-review",
+      "argument": "[pr number]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/code-review#review-a-diff-locally",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-review"
+    },
+    {
+      "id": "cmd-code-review",
+      "name": "/code-review",
+      "family": "skill",
+      "section": "Workspace & code",
+      "description": "Review the changes since a fixed point along two axes — repo standards and the originating spec — in parallel sub-agents",
+      "argument": "[since]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/code-review",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-code-review"
+    },
+    {
+      "id": "cmd-security-review",
+      "name": "/security-review",
+      "family": "native",
+      "section": "Workspace & code",
+      "description": "Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-security-review"
+    },
+    {
+      "id": "cmd-simplify",
+      "name": "/simplify",
+      "family": "skill",
+      "section": "Workspace & code",
+      "description": "Review changed code for reuse, simplification and efficiency, then apply the fixes",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-simplify"
+    },
+    {
+      "id": "cmd-batch",
+      "name": "/batch",
+      "family": "skill",
+      "section": "Workspace & code",
+      "description": "Plan a large change; background agents each open a PR",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-batch"
+    },
+    {
+      "id": "cmd-run",
+      "name": "/run",
+      "family": "skill",
+      "section": "Workspace & code",
+      "description": "Launch this project's app to see your change working",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-run"
+    },
+    {
+      "id": "cmd-run-skill-generator",
+      "name": "/run-skill-generator",
+      "family": "skill",
+      "section": "Workspace & code",
+      "description": "Create a skill that knows how to run this project's app",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-run-skill-generator"
+    },
+    {
+      "id": "cmd-config",
+      "name": "/config",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Open settings",
+      "argument": "[key=value]",
+      "aliases": [
+        "settings"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/settings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-config"
+    },
+    {
+      "id": "cmd-permissions",
+      "name": "/permissions",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Manage allow and deny tool permission rules",
+      "argument": null,
+      "aliases": [
+        "allowed-tools"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/permissions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-permissions"
+    },
+    {
+      "id": "cmd-sandbox",
+      "name": "/sandbox",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Toggle sandbox mode for the Bash tool; available on supported platforms only",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sandboxing",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-sandbox"
+    },
+    {
+      "id": "cmd-hooks",
+      "name": "/hooks",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "View hook configurations for tool events",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/hooks",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-hooks"
+    },
+    {
+      "id": "cmd-update-config",
+      "name": "/update-config",
+      "family": "skill",
+      "section": "Config & environment",
+      "description": "Change settings: hooks, permissions, environment variables",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/settings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-update-config"
+    },
+    {
+      "id": "cmd-fewer-permission-prompts",
+      "name": "/fewer-permission-prompts",
+      "family": "skill",
+      "section": "Config & environment",
+      "description": "Pre-approve safe read-only commands based on your usage",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/permissions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fewer-permission-prompts"
+    },
+    {
+      "id": "cmd-statusline",
+      "name": "/statusline",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Set up Claude Code's status line UI",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/statusline",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-statusline"
+    },
+    {
+      "id": "cmd-theme",
+      "name": "/theme",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Change the theme",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-theme"
+    },
+    {
+      "id": "cmd-color",
+      "name": "/color",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Set the prompt bar color for this session",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-color"
+    },
+    {
+      "id": "cmd-tui",
+      "name": "/tui",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Set the terminal UI renderer",
+      "argument": "[default|fullscreen]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/fullscreen",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-tui"
+    },
+    {
+      "id": "cmd-terminal-setup",
+      "name": "/terminal-setup",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Configure terminal key bindings — Shift+Enter or Option+Enter for newlines",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/terminal-config",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-terminal-setup"
+    },
+    {
+      "id": "cmd-keybindings",
+      "name": "/keybindings",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Open your keyboard shortcuts file",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/keybindings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-keybindings"
+    },
+    {
+      "id": "cmd-keybindings-help",
+      "name": "/keybindings-help",
+      "family": "skill",
+      "section": "Config & environment",
+      "description": "Customize keyboard shortcuts, rebind keys, and add chord bindings",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/keybindings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-keybindings-help"
+    },
+    {
+      "id": "cmd-scroll-speed",
+      "name": "/scroll-speed",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Adjust mouse wheel scroll speed",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-scroll-speed"
+    },
+    {
+      "id": "cmd-voice",
+      "name": "/voice",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Toggle voice mode",
+      "argument": "[hold|tap|off]",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/voice-dictation",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-voice"
+    },
+    {
+      "id": "cmd-wellbeing",
+      "name": "/wellbeing",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Configure optional break reminders and quiet-hours nudges",
+      "argument": null,
+      "aliases": [
+        "breaks",
+        "break-reminder",
+        "downtime"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-wellbeing"
+    },
+    {
+      "id": "cmd-import",
+      "name": "/import",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Import config from another AI coding agent",
+      "argument": "[codex|gemini] [--dry-run]",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-import"
+    },
+    {
+      "id": "cmd-ide",
+      "name": "/ide",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Manage IDE integrations and show status",
+      "argument": "[open]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ide"
+    },
+    {
+      "id": "cmd-doctor",
+      "name": "/doctor",
+      "family": "skill",
+      "section": "Config & environment",
+      "description": "Health-check your setup and fix issues: installation, unused extensions, duplicates",
+      "argument": null,
+      "aliases": [
+        "checkup"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-doctor"
+    },
+    {
+      "id": "cmd-debug",
+      "name": "/debug",
+      "family": "skill",
+      "section": "Config & environment",
+      "description": "Turn on debug logging and investigate problems",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/debug-your-config",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-debug"
+    },
+    {
+      "id": "cmd-setup-bedrock",
+      "name": "/setup-bedrock",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Reconfigure Amazon Bedrock authentication, region, or model pins",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/amazon-bedrock",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-bedrock"
+    },
+    {
+      "id": "cmd-setup-vertex",
+      "name": "/setup-vertex",
+      "family": "native",
+      "section": "Config & environment",
+      "description": "Reconfigure Google Vertex AI authentication, project, region, or model pins",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/google-vertex-ai",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-vertex"
+    },
+    {
+      "id": "cmd-mcp",
+      "name": "/mcp",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Manage MCP servers",
+      "argument": "[reconnect|enable|disable [<server>|all]]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/mcp",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-mcp"
+    },
+    {
+      "id": "cmd-plugin",
+      "name": "/plugin",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Manage Claude Code plugins",
+      "argument": null,
+      "aliases": [
+        "plugins",
+        "marketplace"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/plugins",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plugin"
+    },
+    {
+      "id": "cmd-reload-plugins",
+      "name": "/reload-plugins",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Activate pending plugin changes in the current session",
+      "argument": "[--force]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/plugins",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-reload-plugins"
+    },
+    {
+      "id": "cmd-skills",
+      "name": "/skills",
+      "family": "native",
+      "section": "Extensions",
+      "description": "List available skills",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/skills",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-skills"
+    },
+    {
+      "id": "cmd-reload-skills",
+      "name": "/reload-skills",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Pick up skills added or changed on disk during this session",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/skills",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-reload-skills"
+    },
+    {
+      "id": "cmd-skill-doctor",
+      "name": "/skill-doctor",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Show which loaded skills are unused and costing context",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Registered only when the tengu_lantern_prism feature gate is on. Works with CLAUDE_CODE_LANTERN_PRISM=1 set in the environment.",
+      "docs": "https://code.claude.com/docs/en/skills",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-skill-doctor"
+    },
+    {
+      "id": "cmd-agents",
+      "name": "/agents",
+      "family": "native",
+      "section": "Extensions",
+      "description": "Removed. Ask Claude to create or manage subagents, or edit .claude/agents/ directly",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sub-agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-agents"
+    },
+    {
+      "id": "cmd-background",
+      "name": "/background",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Send this session to the background and free the terminal",
+      "argument": "[prompt]",
+      "aliases": [
+        "bg"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-background"
+    },
+    {
+      "id": "cmd-stop",
+      "name": "/stop",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Stop this background session; transcript and worktree are kept",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-stop"
+    },
+    {
+      "id": "cmd-tasks",
+      "name": "/tasks",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "View and manage everything running in the background",
+      "argument": null,
+      "aliases": [
+        "bashes"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/agent-view",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-tasks"
+    },
+    {
+      "id": "cmd-fork",
+      "name": "/fork",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Spawn a background agent that inherits the full conversation",
+      "argument": "<directive>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fork"
+    },
+    {
+      "id": "cmd-subtask",
+      "name": "/subtask",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Send a subagent off with your full context; its result comes back here",
+      "argument": "<task>",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/sub-agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-subtask"
+    },
+    {
+      "id": "cmd-workflows",
+      "name": "/workflows",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Browse running and completed workflows",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/workflows",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workflows"
+    },
+    {
+      "id": "cmd-loops",
+      "name": "/loops",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "List, create, and delete loops",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/scheduled-tasks",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-loops"
+    },
+    {
+      "id": "cmd-loop",
+      "name": "/loop",
+      "family": "skill",
+      "section": "Background & parallel work",
+      "description": "Repeat a prompt or command on an interval, e.g. /loop 5m /foo",
+      "argument": "[interval] [prompt]",
+      "aliases": [
+        "proactive"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/scheduled-tasks",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-loop"
+    },
+    {
+      "id": "cmd-daemon",
+      "name": "/daemon",
+      "family": "native",
+      "section": "Background & parallel work",
+      "description": "Manage background services and routines",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI; the `claude daemon` subcommand works.",
+      "docs": "https://code.claude.com/docs/en/agent-view",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-daemon"
+    },
+    {
+      "id": "cmd-schedule",
+      "name": "/schedule",
+      "family": "skill",
+      "section": "Background & parallel work",
+      "description": "Create and manage routines: cloud agents on a schedule",
+      "argument": null,
+      "aliases": [
+        "routines"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/routines",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-schedule"
+    },
+    {
+      "id": "cmd-teleport",
+      "name": "/teleport",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Resume a Claude Code session from claude.ai",
+      "argument": null,
+      "aliases": [
+        "tp"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/claude-code-on-the-web",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-teleport"
+    },
+    {
+      "id": "cmd-session",
+      "name": "/session",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Show cloud session URL and QR code",
+      "argument": null,
+      "aliases": [
+        "remote"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/claude-code-on-the-web",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-session"
+    },
+    {
+      "id": "cmd-remote-control",
+      "name": "/remote-control",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Control this session from your phone or claude.ai/code",
+      "argument": null,
+      "aliases": [
+        "rc"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/remote-control",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-control"
+    },
+    {
+      "id": "cmd-remote-env",
+      "name": "/remote-env",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Choose the default environment for cloud agents",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-env"
+    },
+    {
+      "id": "cmd-web-setup",
+      "name": "/web-setup",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Set up Claude Code on the web with your GitHub account",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/web-quickstart",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-web-setup"
+    },
+    {
+      "id": "cmd-desktop",
+      "name": "/desktop",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Continue the current session in Claude Desktop",
+      "argument": null,
+      "aliases": [
+        "app"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/desktop",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-desktop"
+    },
+    {
+      "id": "cmd-ultraplan",
+      "name": "/ultraplan",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Draft an editable plan in Claude Code on the web",
+      "argument": "<prompt>",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/ultraplan",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ultraplan"
+    },
+    {
+      "id": "cmd-ultrareview",
+      "name": "/ultrareview",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Find and verify bugs in your branch using Claude Code on the web",
+      "argument": "[target]",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/ultrareview",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ultrareview"
+    },
+    {
+      "id": "cmd-autofix-pr",
+      "name": "/autofix-pr",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Monitor and autofix any issues with the current PR",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-autofix-pr"
+    },
+    {
+      "id": "cmd-install-github-app",
+      "name": "/install-github-app",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Set up Claude GitHub Actions for a repository",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/github-actions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install-github-app"
+    },
+    {
+      "id": "cmd-install-slack-app",
+      "name": "/install-slack-app",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Install the Claude Slack app",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/slack",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install-slack-app"
+    },
+    {
+      "id": "cmd-chrome",
+      "name": "/chrome",
+      "family": "native",
+      "section": "Cloud, web & devices",
+      "description": "Open Claude in Chrome settings",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/chrome",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-chrome"
+    },
+    {
+      "id": "cmd-claude-in-chrome",
+      "name": "/claude-in-chrome",
+      "family": "skill",
+      "section": "Cloud, web & devices",
+      "description": "Let Claude browse and interact with pages in your Chrome",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/chrome",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-claude-in-chrome"
+    },
+    {
+      "id": "cmd-setup-cowork",
+      "name": "/setup-cowork",
+      "family": "skill",
+      "section": "Cloud, web & devices",
+      "description": "Guided setup — pick a role, install a plugin, try a skill, connect a tool",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-cowork"
+    },
+    {
+      "id": "cmd-artifacts",
+      "name": "/artifacts",
+      "family": "native",
+      "section": "Design & artifacts",
+      "description": "Browse your published and shared artifacts",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifacts"
+    },
+    {
+      "id": "cmd-artifact-design",
+      "name": "/artifact-design",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Design guidance and fundamentals for Artifacts",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifact-design"
+    },
+    {
+      "id": "cmd-artifact-capabilities",
+      "name": "/artifact-capabilities",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Runtime capabilities for published Artifacts",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifact-capabilities"
+    },
+    {
+      "id": "cmd-plan-artifact",
+      "name": "/plan-artifact",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Publish a plan as a shareable Artifact",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plan-artifact"
+    },
+    {
+      "id": "cmd-whiteboard",
+      "name": "/whiteboard",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Sketch on a whiteboard Artifact you can send to Claude",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-whiteboard"
+    },
+    {
+      "id": "cmd-workshop",
+      "name": "/workshop",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Workshop a document through artifact decisions",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workshop"
+    },
+    {
+      "id": "cmd-dataviz",
+      "name": "/dataviz",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Chart, dashboard and palette guidance for any visualization you build",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-dataviz"
+    },
+    {
+      "id": "cmd-design",
+      "name": "/design",
+      "family": "native",
+      "section": "Design & artifacts",
+      "description": "Grant or revoke Claude agent access to your Design projects",
+      "argument": "consent | revoke",
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design"
+    },
+    {
+      "id": "cmd-design-login",
+      "name": "/design-login",
+      "family": "native",
+      "section": "Design & artifacts",
+      "description": "Authorize design-system access for /design-sync with your claude.ai account",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-login"
+    },
+    {
+      "id": "cmd-design-sync",
+      "name": "/design-sync",
+      "family": "skill",
+      "section": "Design & artifacts",
+      "description": "Push your design system components to claude.ai/design",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-sync"
+    },
+    {
+      "id": "cmd-login",
+      "name": "/login",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Sign in with your Anthropic account, or switch accounts",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/authentication",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-login"
+    },
+    {
+      "id": "cmd-logout",
+      "name": "/logout",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Sign out from your Anthropic account",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/authentication",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-logout"
+    },
+    {
+      "id": "cmd-status",
+      "name": "/status",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Show Claude Code status including version, model, account, API connectivity, and tool statuses",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-status"
+    },
+    {
+      "id": "cmd-usage",
+      "name": "/usage",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Show session cost, plan usage, and activity stats",
+      "argument": null,
+      "aliases": [
+        "cost",
+        "stats"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/costs",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-usage"
+    },
+    {
+      "id": "cmd-explain-usage",
+      "name": "/explain-usage",
+      "family": "skill",
+      "section": "Account, usage & install",
+      "description": "See where this session's tokens went, in plain words",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI.",
+      "docs": "https://code.claude.com/docs/en/costs",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-explain-usage"
+    },
+    {
+      "id": "cmd-insights",
+      "name": "/insights",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Generate a report analyzing your Claude Code sessions",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/analytics",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-insights"
+    },
+    {
+      "id": "cmd-usage-credits",
+      "name": "/usage-credits",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Configure usage credits or request them from your admin when you hit a limit",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/costs",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-usage-credits"
+    },
+    {
+      "id": "cmd-upgrade",
+      "name": "/upgrade",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Upgrade to Max for higher rate limits and more Opus",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-upgrade"
+    },
+    {
+      "id": "cmd-passes",
+      "name": "/passes",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Share a free week of Claude Code with friends and earn usage credits",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-passes"
+    },
+    {
+      "id": "cmd-privacy-settings",
+      "name": "/privacy-settings",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "View and update your privacy settings",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/data-usage",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-privacy-settings"
+    },
+    {
+      "id": "cmd-version",
+      "name": "/version",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Show this session's version — autoupdate may have a newer one",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/setup",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-version"
+    },
+    {
+      "id": "cmd-release-notes",
+      "name": "/release-notes",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "View release notes",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/changelog",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-release-notes"
+    },
+    {
+      "id": "cmd-update",
+      "name": "/update",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Switch to the latest version; the conversation continues",
+      "argument": null,
+      "aliases": [
+        "restart"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/setup",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-update"
+    },
+    {
+      "id": "cmd-install",
+      "name": "/install",
+      "family": "native",
+      "section": "Account, usage & install",
+      "description": "Install Claude Code native build",
+      "argument": "[options]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": false,
+      "unregisteredReason": "Not registered by the terminal CLI; the `claude install` subcommand works.",
+      "docs": "https://code.claude.com/docs/en/setup",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install"
+    },
+    {
+      "id": "cmd-claude-api",
+      "name": "/claude-api",
+      "family": "skill",
+      "section": "Help, feedback & extras",
+      "description": "Build and debug apps that use the Claude API",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-claude-api"
+    },
+    {
+      "id": "cmd-powerup",
+      "name": "/powerup",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Discover Claude Code features through quick interactive lessons",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-powerup"
+    },
+    {
+      "id": "cmd-team-onboarding",
+      "name": "/team-onboarding",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Help teammates ramp on Claude Code with a guide from your usage",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-team-onboarding"
+    },
+    {
+      "id": "cmd-mobile",
+      "name": "/mobile",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Show QR code to download the Claude mobile app",
+      "argument": null,
+      "aliases": [
+        "ios",
+        "android"
+      ],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/mobile",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-mobile"
+    },
+    {
+      "id": "cmd-bug",
+      "name": "/bug",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Report a bug or share your conversation",
+      "argument": "[report]",
+      "aliases": [
+        "share"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-bug"
+    },
+    {
+      "id": "cmd-feedback",
+      "name": "/feedback",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Send feedback to Anthropic or report a bug",
+      "argument": "[report]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-feedback"
+    },
+    {
+      "id": "cmd-stickers",
+      "name": "/stickers",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Order Claude Code stickers",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-stickers"
+    },
+    {
+      "id": "cmd-radio",
+      "name": "/radio",
+      "family": "native",
+      "section": "Help, feedback & extras",
+      "description": "Listen to Claude FM lo-fi radio",
+      "argument": null,
+      "aliases": [],
+      "conditional": true,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-radio"
+    },
+    {
+      "id": "cli-claude",
+      "name": "claude",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Start an interactive session in the current directory",
+      "argument": "[prompt]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude"
+    },
+    {
+      "id": "cli-claude-p",
+      "name": "claude -p",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Print mode: run a prompt non-interactively and exit, useful for pipes and scripts",
+      "argument": "<prompt>",
+      "aliases": [
+        "--print"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-p"
+    },
+    {
+      "id": "cli-claude-agents",
+      "name": "claude agents",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Manage background agents",
+      "argument": "[options]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-agents"
+    },
+    {
+      "id": "cli-claude-auth",
+      "name": "claude auth",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Manage authentication",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-auth"
+    },
+    {
+      "id": "cli-claude-auto-mode",
+      "name": "claude auto-mode",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Inspect or reset auto mode classifier configuration",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-auto-mode"
+    },
+    {
+      "id": "cli-claude-doctor",
+      "name": "claude doctor",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Check the health of your installation, reading settings without a trust prompt",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-doctor"
+    },
+    {
+      "id": "cli-claude-gateway",
+      "name": "claude gateway",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Run the enterprise auth/telemetry gateway",
+      "argument": "[options]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-gateway"
+    },
+    {
+      "id": "cli-claude-install",
+      "name": "claude install",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Install the native build — stable, latest, or a specific version",
+      "argument": "[target]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-install"
+    },
+    {
+      "id": "cli-claude-mcp",
+      "name": "claude mcp",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Configure and manage MCP servers",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-mcp"
+    },
+    {
+      "id": "cli-claude-plugin",
+      "name": "claude plugin",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Manage Claude Code plugins",
+      "argument": null,
+      "aliases": [
+        "plugins"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-plugin"
+    },
+    {
+      "id": "cli-claude-project",
+      "name": "claude project",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Manage Claude Code project state",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-project"
+    },
+    {
+      "id": "cli-claude-setup-token",
+      "name": "claude setup-token",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Set up a long-lived authentication token, requires a Claude subscription",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-setup-token"
+    },
+    {
+      "id": "cli-claude-ultrareview",
+      "name": "claude ultrareview",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings",
+      "argument": "[target]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-ultrareview"
+    },
+    {
+      "id": "cli-claude-update",
+      "name": "claude update",
+      "family": "cli",
+      "section": "Terminal CLI",
+      "description": "Check for updates and install if available",
+      "argument": null,
+      "aliases": [
+        "upgrade"
+      ],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/cli-reference",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-update"
+    },
+    {
+      "id": "cmd-btw",
+      "name": "/btw",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Ask a quick side question without interrupting the main conversation",
+      "argument": "[question]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-btw"
+    },
+    {
+      "id": "cmd-auto-mode-setup",
+      "name": "/auto-mode-setup",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Set up and customise auto mode — environment context, plus optional rule tweaks",
+      "argument": "[--wizard ...]",
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/auto-mode-config",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-auto-mode-setup"
+    },
+    {
+      "id": "cmd-heapdump",
+      "name": "/heapdump",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Dump the JS heap to ~/Desktop",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": "https://code.claude.com/docs/en/commands#all-commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-heapdump"
+    },
+    {
+      "id": "cmd-design-consent",
+      "name": "/design-consent",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Grant Claude agent access to your Design projects",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-consent"
+    },
+    {
+      "id": "cmd-design-revoke",
+      "name": "/design-revoke",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Revoke Claude agent access to your Design projects",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-revoke"
+    },
+    {
+      "id": "cmd-extra-usage",
+      "name": "/extra-usage",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Renamed to /usage-credits",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-extra-usage"
+    },
+    {
+      "id": "cmd-pro-trial-expired",
+      "name": "/pro-trial-expired",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Options shown when the Pro plan Claude Code trial has ended",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-pro-trial-expired"
+    },
+    {
+      "id": "cmd-rate-limit-options",
+      "name": "/rate-limit-options",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Show options when rate limit is reached",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rate-limit-options"
+    },
+    {
+      "id": "cmd-remote-workflow",
+      "name": "/__remote-workflow",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Run the workflow script delivered in this session environment — server-launched sessions only",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-workflow"
+    },
+    {
+      "id": "cmd-workflow-launch-exec",
+      "name": "/workflow-launch-exec",
+      "family": "hidden",
+      "section": "Hidden & internal",
+      "description": "Execute a server-launched workflow handoff — workflow_launch event sessions only",
+      "argument": null,
+      "aliases": [],
+      "conditional": false,
+      "registeredInCli": true,
+      "unregisteredReason": null,
+      "docs": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workflow-launch-exec"
+    }
+  ],
+  "flags": [
+    {
+      "flag": "--add-dir <dirs...>",
+      "description": "Additional directories to allow tool access to"
+    },
+    {
+      "flag": "--agent <agent>",
+      "description": "Agent for the current session; overrides the 'agent' setting"
+    },
+    {
+      "flag": "--agents <json>",
+      "description": "JSON object defining custom agents"
+    },
+    {
+      "flag": "--allow-dangerously-skip-permissions",
+      "description": "Make permission bypass available as an option without enabling it by default"
+    },
+    {
+      "flag": "--allowedTools <tools...>",
+      "description": "Comma or space-separated list of tool names to allow, e.g. \"Bash(git *) Edit\""
+    },
+    {
+      "flag": "--append-system-prompt <prompt>",
+      "description": "Append text to the default system prompt"
+    },
+    {
+      "flag": "--ax-screen-reader",
+      "description": "Render screen-reader friendly output: flat text, no borders or animations"
+    },
+    {
+      "flag": "--bg, --background",
+      "description": "Start as a background agent and return immediately"
+    },
+    {
+      "flag": "--bare",
+      "description": "Minimal mode: skip hooks, LSP, plugin sync, auto-memory, keychain reads and CLAUDE.md discovery"
+    },
+    {
+      "flag": "--betas <betas...>",
+      "description": "Beta headers to include in API requests (API key users only)"
+    },
+    {
+      "flag": "--brief",
+      "description": "Enable the SendUserMessage tool for agent-to-user communication"
+    },
+    {
+      "flag": "--chrome / --no-chrome",
+      "description": "Enable or disable the Claude in Chrome integration"
+    },
+    {
+      "flag": "-c, --continue",
+      "description": "Continue the most recent conversation in the current directory"
+    },
+    {
+      "flag": "--dangerously-skip-permissions",
+      "description": "Bypass all permission checks; for sandboxes with no internet access"
+    },
+    {
+      "flag": "-d, --debug [filter]",
+      "description": "Debug mode with optional category filtering, e.g. \"api,hooks\" or \"!1p,!file\""
+    },
+    {
+      "flag": "--debug-file <path>",
+      "description": "Write debug logs to a specific path, implicitly enabling debug mode"
+    },
+    {
+      "flag": "--disable-slash-commands",
+      "description": "Disable all skills"
+    },
+    {
+      "flag": "--disallowedTools <tools...>",
+      "description": "Comma or space-separated list of tool names to deny"
+    },
+    {
+      "flag": "--effort <level>",
+      "description": "Effort level for the session: low, medium, high, xhigh, max"
+    },
+    {
+      "flag": "--exclude-dynamic-system-prompt-sections",
+      "description": "Move per-machine sections into the first user message to improve prompt-cache reuse"
+    },
+    {
+      "flag": "--fallback-model <model>",
+      "description": "Fall back to these models when the default is overloaded (--print only)"
+    },
+    {
+      "flag": "--file <specs...>",
+      "description": "File resources to download at startup, as file_id:relative_path"
+    },
+    {
+      "flag": "--fork-session",
+      "description": "When resuming, create a new session ID instead of reusing the original"
+    },
+    {
+      "flag": "--forward-subagent-text",
+      "description": "Forward subagent text and thinking as messages with parent_tool_use_id set"
+    },
+    {
+      "flag": "--from-pr [value]",
+      "description": "Resume a session linked to a PR by number or URL, or open a picker"
+    },
+    {
+      "flag": "-h, --help",
+      "description": "Display help for command"
+    },
+    {
+      "flag": "--ide",
+      "description": "Automatically connect to the IDE on startup if exactly one is available"
+    },
+    {
+      "flag": "--include-hook-events",
+      "description": "Include all hook lifecycle events in the output stream"
+    },
+    {
+      "flag": "--include-partial-messages",
+      "description": "Include partial message chunks as they arrive"
+    },
+    {
+      "flag": "--input-format <format>",
+      "description": "Input format with --print: text (default) or stream-json"
+    },
+    {
+      "flag": "--json-schema <schema>",
+      "description": "JSON Schema for structured output validation"
+    },
+    {
+      "flag": "--max-budget-usd <amount>",
+      "description": "Maximum dollar amount to spend on API calls (--print only)"
+    },
+    {
+      "flag": "--mcp-config <configs...>",
+      "description": "Load MCP servers from JSON files or strings"
+    },
+    {
+      "flag": "--model <model>",
+      "description": "Model for the session: an alias like 'fable', 'opus', 'sonnet', or a full model name"
+    },
+    {
+      "flag": "-n, --name <name>",
+      "description": "Display name for the session, shown in the prompt box, /resume picker and title"
+    },
+    {
+      "flag": "--no-session-persistence",
+      "description": "Do not save the session to disk; it cannot be resumed (--print only)"
+    },
+    {
+      "flag": "--output-format <format>",
+      "description": "Output format with --print: text, json, or stream-json"
+    },
+    {
+      "flag": "--permission-mode <mode>",
+      "description": "acceptEdits, auto, bypassPermissions, manual, dontAsk, or plan"
+    },
+    {
+      "flag": "--plugin-dir <path>",
+      "description": "Load a plugin from a directory or .zip for this session only (repeatable)"
+    },
+    {
+      "flag": "--plugin-url <url>",
+      "description": "Fetch a plugin .zip from a URL for this session only (repeatable)"
+    },
+    {
+      "flag": "-p, --print",
+      "description": "Print the response and exit; skips the workspace trust dialog"
+    },
+    {
+      "flag": "--prompt-suggestions [value]",
+      "description": "Emit a predicted next user prompt after each turn"
+    },
+    {
+      "flag": "--remote-control [name]",
+      "description": "Start an interactive session with Remote Control enabled"
+    },
+    {
+      "flag": "--remote-control-session-name-prefix <prefix>",
+      "description": "Prefix for auto-generated Remote Control session names"
+    },
+    {
+      "flag": "--replay-user-messages",
+      "description": "Re-emit user messages from stdin back on stdout for acknowledgment"
+    },
+    {
+      "flag": "-r, --resume [value]",
+      "description": "Resume a conversation by session ID, or open a picker with an optional search term"
+    },
+    {
+      "flag": "--safe-mode",
+      "description": "Start with all customizations disabled; useful for troubleshooting a broken config"
+    },
+    {
+      "flag": "--session-id <uuid>",
+      "description": "Use a specific session ID for the conversation"
+    },
+    {
+      "flag": "--setting-sources <sources>",
+      "description": "Comma-separated setting sources to load: user, project, local"
+    },
+    {
+      "flag": "--settings <file-or-json>",
+      "description": "Path to a settings JSON file, or a JSON string of additional settings"
+    },
+    {
+      "flag": "--strict-mcp-config",
+      "description": "Only use MCP servers from --mcp-config, ignoring all other MCP configuration"
+    },
+    {
+      "flag": "--system-prompt <prompt>",
+      "description": "System prompt to use for the session"
+    },
+    {
+      "flag": "--tmux",
+      "description": "Create a tmux session for the worktree; requires --worktree"
+    },
+    {
+      "flag": "--tools <tools...>",
+      "description": "Available tools from the built-in set; \"\" disables all, \"default\" uses all"
+    },
+    {
+      "flag": "--verbose",
+      "description": "Override the verbose mode setting from config"
+    },
+    {
+      "flag": "-v, --version",
+      "description": "Output the version number"
+    },
+    {
+      "flag": "-w, --worktree [name]",
+      "description": "Create a new git worktree for this session"
+    }
+  ]
+}
