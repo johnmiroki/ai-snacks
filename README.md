@@ -44,8 +44,8 @@ Every page ships three ways: as HTML for people, as Markdown and JSON for agents
   crawlers that do not run it — which is most of the ones that feed AI answers. The command index
   is rendered once at build time and baked into the file; its JavaScript only filters what is
   already there.
-- **Every entry has a stable anchor.** `#cmd-compact`, `#cli-mcp-add` — deep-linkable and unchanged
-  between builds.
+- **Every entry has a stable anchor.** `#cmd-compact`, `#cli-claude-mcp` — deep-linkable and
+  unchanged between builds.
 - **`llms.txt`** indexes the site for language models; **`llms-full.txt`** is the whole thing in one
   fetch.
 - **Structured data.** The hub carries `WebSite` + `CollectionPage`; each page carries `TechArticle`,
