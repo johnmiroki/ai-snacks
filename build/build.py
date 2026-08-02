@@ -1504,10 +1504,22 @@ def cmp_resolve(names, index, what, pair_id):
     return picked
 
 
+def cmp_gate(c, which):
+    """Present in the build is not the same as present in your build — say which is which."""
+    if which == "cc" and c.get("conditional"):
+        return (' <span class="gated" title="Registered only when a feature check passes, so it '
+                'may be missing from your build — typing it answers &quot;isn\'t available in this '
+                'environment&quot;">gated</span>')
+    if which == "cx" and c.get("experimental"):
+        return ' <span class="gated" title="The build labels this experimental">experimental</span>'
+    return ""
+
+
 def cmp_side(which, commands, flags):
     label, tone, base = CMP_SIDE[which]
-    rows = ['<p class="said"><a href="%s%s">%s</a> <q>%s</q></p>'
-            % (base, c["id"], esc(c["name"]), esc(c["description"].rstrip(".")))
+    rows = ['<p class="said"><a href="%s%s">%s</a>%s <q>%s</q></p>'
+            % (base, c["id"], esc(c["name"]), cmp_gate(c, which),
+               esc(c["description"].rstrip(".")))
             for c in commands]
     rows += ['<p class="said"><span class="nm">%s</span> <q>%s</q></p>'
              % (esc(f["flag"]), esc(f["description"].rstrip(".")))
@@ -1557,9 +1569,10 @@ def cmp_only(commands, which):
     out = []
     for title, items in groups:
         rows = "".join(
-            '          <div class="only" data-hay="%s"><a href="%s%s">%s</a><p>%s</p></div>\n'
+            '          <div class="only" data-hay="%s"><span><a href="%s%s">%s</a>%s</span>'
+            '<p>%s</p></div>\n'
             % (esc((c["name"] + " " + c["description"]).lower()), base, c["id"],
-               esc(c["name"]), esc(c["description"].rstrip(".")))
+               esc(c["name"]), cmp_gate(c, which), esc(c["description"].rstrip(".")))
             for c in items)
         out.append('        <div class="onlygroup">\n          <h4>%s</h4>\n%s        </div>\n'
                    % (esc(title), rows))

@@ -48,7 +48,7 @@ The capability section was measured separately, from `claude --help`, `codex --h
   - **Codex:**
     - `/compact` — summarize conversation to prevent hitting the context limit
 
-  Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through /status.
+  Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through /status. /autocompact is gated — it exists in build 2.1.220 with the description quoted here, but many installs answer isn't available in this environment when you type it.
 
 ### Pick up an old session
 

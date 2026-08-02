@@ -166,7 +166,7 @@
       "description": "Set how full the context gets before auto-summarizing",
       "argument": "[auto|<tokens>]",
       "aliases": [],
-      "conditional": false,
+      "conditional": true,
       "registeredInCli": true,
       "unregisteredReason": null,
       "docs": "https://code.claude.com/docs/en/context-window",

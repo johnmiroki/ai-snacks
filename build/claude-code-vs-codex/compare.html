@@ -307,6 +307,14 @@
   .said .nm { font-weight:500; opacity:.85; }
   .none { font-family:var(--mono); font-size:12px; color:var(--faint); }
 
+  /* a command that is in the build but only registers when a check passes */
+  .gated {
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--fam-cli); border:1px solid color-mix(in srgb, var(--fam-cli) 40%, var(--rule));
+    border-radius:3px; padding:0 4px; margin-left:2px; white-space:nowrap; cursor:help;
+    vertical-align:1px;
+  }
+
   .pair-note {
     margin:var(--sp-3) 0 0; padding-top:var(--sp-3); border-top:1px solid var(--rule-soft);
     font-size:13px; color:var(--muted); line-height:1.5;
@@ -524,6 +532,13 @@
       <b>not</b> measured is the pairing: deciding that <code>/branch</code> and <code>/fork</code>
       are the same job is a judgement, and printing both sides is how you check it. Where the two
       differ in kind rather than in name, the note says so.
+    </p>
+    <p class="intro">
+      A <span class="gated">gated</span> tag means the command is compiled into the build but
+      registers only when a check passes, so it may not exist in <em>your</em> copy — type it and
+      Claude Code answers <em>isn't available in this environment</em> rather than running it.
+      Codex's equivalent is its feature switchboard, and its own <span class="gated">experimental</span>
+      label is shown the same way. Present in the build is not the same as present in your build.
     </p>
     <main id="pairs"></main>
   </section>

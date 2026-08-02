@@ -492,7 +492,7 @@
       ["help", "Show help and available commands", [], "", "native", ""],
       ["clear", "Start a new session with empty context; the previous session stays on disk and is resumable with /resume", ["reset","new"], "[name]", "native", ""],
       ["compact", "Free up context by summarizing the conversation so far", [], "<optional custom summarization instructions>", "native", ""],
-      ["autocompact", "Set how full the context gets before auto-summarizing", [], "[auto|<tokens>]", "native", ""],
+      ["autocompact", "Set how full the context gets before auto-summarizing", [], "[auto|<tokens>]", "native", "conditional"],
       ["context", "Visualize current context usage as a colored grid", [], "[all]", "native", ""],
       ["resume", "Resume a previous conversation", ["continue"], "[conversation id or search term]", "native", ""],
       ["rewind", "Restore the code and/or conversation to a previous point", ["checkpoint","undo"], "", "native", ""],

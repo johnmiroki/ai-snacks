@@ -466,6 +466,14 @@
   .said .nm { font-weight:500; opacity:.85; }
   .none { font-family:var(--mono); font-size:12px; color:var(--faint); }
 
+  /* a command that is in the build but only registers when a check passes */
+  .gated {
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--fam-cli); border:1px solid color-mix(in srgb, var(--fam-cli) 40%, var(--rule));
+    border-radius:3px; padding:0 4px; margin-left:2px; white-space:nowrap; cursor:help;
+    vertical-align:1px;
+  }
+
   .pair-note {
     margin:var(--sp-3) 0 0; padding-top:var(--sp-3); border-top:1px solid var(--rule-soft);
     font-size:13px; color:var(--muted); line-height:1.5;
@@ -747,6 +755,13 @@
       are the same job is a judgement, and printing both sides is how you check it. Where the two
       differ in kind rather than in name, the note says so.
     </p>
+    <p class="intro">
+      A <span class="gated">gated</span> tag means the command is compiled into the build but
+      registers only when a check passes, so it may not exist in <em>your</em> copy — type it and
+      Claude Code answers <em>isn't available in this environment</em> rather than running it.
+      Codex's equivalent is its feature switchboard, and its own <span class="gated">experimental</span>
+      label is shown the same way. Present in the build is not the same as present in your build.
+    </p>
     <main id="pairs">
       <div class="pairgrid">
       <article class="pair" id="pair-launch" data-hay="start it claude codex start an interactive session in the current directory start an interactive session in the current directory word for word the same sentence in both builds — the only entry on this page where the two descriptions are identical.">
@@ -790,7 +805,7 @@
 
         <p class="pair-note">Codex splits it in two: <code>/new</code> starts the chat over, <code>/clear</code> also wipes the terminal. Claude Code keeps the old session on disk either way.</p>
       </article>
-      <article class="pair" id="pair-compact" data-hay="reclaim context /compact /autocompact /context /compact free up context by summarizing the conversation so far set how full the context gets before auto-summarizing visualize current context usage as a colored grid summarize conversation to prevent hitting the context limit same summarise-and-continue move. claude code additionally lets you set the trigger threshold and draw the context as a grid; codex reports usage through /status.">
+      <article class="pair" id="pair-compact" data-hay="reclaim context /compact /autocompact /context /compact free up context by summarizing the conversation so far set how full the context gets before auto-summarizing visualize current context usage as a colored grid summarize conversation to prevent hitting the context limit same summarise-and-continue move. claude code additionally lets you set the trigger threshold and draw the context as a grid; codex reports usage through /status. /autocompact is gated — it exists in build 2.1.220 with the description quoted here, but many installs answer isn't available in this environment when you type it.">
         <div class="pair-top">
           <h3 class="pair-job">Reclaim context</h3>
           <a class="anchor" href="#pair-compact" aria-label="Link to Reclaim context">#</a>
@@ -799,7 +814,7 @@
           <span class="who">Claude Code</span>
           <div class="body">
             <p class="said"><a href="../claude-code-cheatsheet/#cmd-compact">/compact</a> <q>Free up context by summarizing the conversation so far</q></p>
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-autocompact">/autocompact</a> <q>Set how full the context gets before auto-summarizing</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-autocompact">/autocompact</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Set how full the context gets before auto-summarizing</q></p>
             <p class="said"><a href="../claude-code-cheatsheet/#cmd-context">/context</a> <q>Visualize current context usage as a colored grid</q></p>
           </div>
         </div>
@@ -810,7 +825,7 @@
           </div>
         </div>
 
-        <p class="pair-note">Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through <code>/status</code>.</p>
+        <p class="pair-note">Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through <code>/status</code>. <code>/autocompact</code> is gated — it exists in build 2.1.220 with the description quoted here, but many installs answer <em>isn't available in this environment</em> when you type it.</p>
       </article>
       <article class="pair" id="pair-resume" data-hay="pick up an old session /resume /resume codex resume resume a previous conversation resume a saved chat resume a previous interactive session (picker by default; use --last to continue the most recent) both offer a picker. codex can also do it from the shell before launch, and takes --last to skip the picker.">
         <div class="pair-top">
@@ -999,7 +1014,7 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-fast">/fast</a> <q>Toggle fast mode — Opus with faster output, not a smaller model</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-fast">/fast</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Toggle fast mode — Opus with faster output, not a smaller model</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
@@ -1164,7 +1179,7 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-sandbox">/sandbox</a> <q>Toggle sandbox mode for the Bash tool; available on supported platforms only</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-sandbox">/sandbox</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Toggle sandbox mode for the Bash tool; available on supported platforms only</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
@@ -1311,7 +1326,7 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-import">/import</a> <q>Import config from another AI coding agent</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-import">/import</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Import config from another AI coding agent</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
@@ -1533,7 +1548,7 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-desktop">/desktop</a> <q>Continue the current session in Claude Desktop</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-desktop">/desktop</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Continue the current session in Claude Desktop</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
@@ -1621,15 +1636,15 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-remote-control">/remote-control</a> <q>Control this session from your phone or claude.ai/code</q></p>
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-session">/session</a> <q>Show cloud session URL and QR code</q></p>
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-teleport">/teleport</a> <q>Resume a Claude Code session from claude.ai</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-remote-control">/remote-control</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Control this session from your phone or claude.ai/code</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-session">/session</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Show cloud session URL and QR code</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-teleport">/teleport</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Resume a Claude Code session from claude.ai</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
           <span class="who">Codex CLI</span>
           <div class="body">
-            <p class="said"><a href="../codex-cheatsheet/#cli-codex-remote-control">codex remote-control</a> <q>Manage the app-server daemon with remote control enabled</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-remote-control">codex remote-control</a> <span class="gated" title="The build labels this experimental">experimental</span> <q>Manage the app-server daemon with remote control enabled</q></p>
             <p class="said"><a href="../codex-cheatsheet/#cli-codex-remote-control-pair">codex remote-control pair</a> <q>Create and print a short-lived manual pairing code</q></p>
           </div>
         </div>
@@ -1644,15 +1659,15 @@
         <div class="side" style="--tc:var(--cc)">
           <span class="who">Claude Code</span>
           <div class="body">
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultrareview">/ultrareview</a> <q>Find and verify bugs in your branch using Claude Code on the web</q></p>
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultraplan">/ultraplan</a> <q>Draft an editable plan in Claude Code on the web</q></p>
-            <p class="said"><a href="../claude-code-cheatsheet/#cmd-web-setup">/web-setup</a> <q>Set up Claude Code on the web with your GitHub account</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultrareview">/ultrareview</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Find and verify bugs in your branch using Claude Code on the web</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultraplan">/ultraplan</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Draft an editable plan in Claude Code on the web</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-web-setup">/web-setup</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span> <q>Set up Claude Code on the web with your GitHub account</q></p>
           </div>
         </div>
         <div class="side" style="--tc:var(--cx)">
           <span class="who">Codex CLI</span>
           <div class="body">
-            <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud">codex cloud</a> <q>Browse tasks from Codex Cloud and apply changes locally</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud">codex cloud</a> <span class="gated" title="The build labels this experimental">experimental</span> <q>Browse tasks from Codex Cloud and apply changes locally</q></p>
             <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud-exec">codex cloud exec</a> <q>Submit a new Codex Cloud task without launching the TUI</q></p>
             <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud-apply">codex cloud apply</a> <q>Apply the diff for a Codex Cloud task locally</q></p>
           </div>
@@ -1688,105 +1703,105 @@
         <div id="onlycc">
         <div class="onlygroup">
           <h4>Session &amp; context</h4>
-          <div class="only" data-hay="/help show help and available commands"><a href="../claude-code-cheatsheet/#cmd-help">/help</a><p>Show help and available commands</p></div>
-          <div class="only" data-hay="/rewind restore the code and/or conversation to a previous point"><a href="../claude-code-cheatsheet/#cmd-rewind">/rewind</a><p>Restore the code and/or conversation to a previous point</p></div>
-          <div class="only" data-hay="/export export the current conversation to a file or clipboard"><a href="../claude-code-cheatsheet/#cmd-export">/export</a><p>Export the current conversation to a file or clipboard</p></div>
-          <div class="only" data-hay="/focus toggle focus view: just your prompt, summary, and response"><a href="../claude-code-cheatsheet/#cmd-focus">/focus</a><p>Toggle focus view: just your prompt, summary, and response</p></div>
-          <div class="only" data-hay="/brief toggle brief-only mode"><a href="../claude-code-cheatsheet/#cmd-brief">/brief</a><p>Toggle brief-only mode</p></div>
-          <div class="only" data-hay="/recap generate a one-line session recap now"><a href="../claude-code-cheatsheet/#cmd-recap">/recap</a><p>Generate a one-line session recap now</p></div>
+          <div class="only" data-hay="/help show help and available commands"><span><a href="../claude-code-cheatsheet/#cmd-help">/help</a></span><p>Show help and available commands</p></div>
+          <div class="only" data-hay="/rewind restore the code and/or conversation to a previous point"><span><a href="../claude-code-cheatsheet/#cmd-rewind">/rewind</a></span><p>Restore the code and/or conversation to a previous point</p></div>
+          <div class="only" data-hay="/export export the current conversation to a file or clipboard"><span><a href="../claude-code-cheatsheet/#cmd-export">/export</a></span><p>Export the current conversation to a file or clipboard</p></div>
+          <div class="only" data-hay="/focus toggle focus view: just your prompt, summary, and response"><span><a href="../claude-code-cheatsheet/#cmd-focus">/focus</a></span><p>Toggle focus view: just your prompt, summary, and response</p></div>
+          <div class="only" data-hay="/brief toggle brief-only mode"><span><a href="../claude-code-cheatsheet/#cmd-brief">/brief</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Toggle brief-only mode</p></div>
+          <div class="only" data-hay="/recap generate a one-line session recap now"><span><a href="../claude-code-cheatsheet/#cmd-recap">/recap</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Generate a one-line session recap now</p></div>
         </div>
         <div class="onlygroup">
           <h4>Model &amp; reasoning</h4>
-          <div class="only" data-hay="/advisor let claude consult a stronger model at key moments"><a href="../claude-code-cheatsheet/#cmd-advisor">/advisor</a><p>Let Claude consult a stronger model at key moments</p></div>
+          <div class="only" data-hay="/advisor let claude consult a stronger model at key moments"><span><a href="../claude-code-cheatsheet/#cmd-advisor">/advisor</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Let Claude consult a stronger model at key moments</p></div>
         </div>
         <div class="onlygroup">
           <h4>Workspace &amp; code</h4>
-          <div class="only" data-hay="/review review a github pull request; for your working diff use /code-review"><a href="../claude-code-cheatsheet/#cmd-review">/review</a><p>Review a GitHub pull request; for your working diff use /code-review</p></div>
-          <div class="only" data-hay="/security-review analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure"><a href="../claude-code-cheatsheet/#cmd-security-review">/security-review</a><p>Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure</p></div>
-          <div class="only" data-hay="/batch plan a large change; background agents each open a pr"><a href="../claude-code-cheatsheet/#cmd-batch">/batch</a><p>Plan a large change; background agents each open a PR</p></div>
-          <div class="only" data-hay="/run launch this project's app to see your change working"><a href="../claude-code-cheatsheet/#cmd-run">/run</a><p>Launch this project's app to see your change working</p></div>
-          <div class="only" data-hay="/run-skill-generator create a skill that knows how to run this project's app"><a href="../claude-code-cheatsheet/#cmd-run-skill-generator">/run-skill-generator</a><p>Create a skill that knows how to run this project's app</p></div>
+          <div class="only" data-hay="/review review a github pull request; for your working diff use /code-review"><span><a href="../claude-code-cheatsheet/#cmd-review">/review</a></span><p>Review a GitHub pull request; for your working diff use /code-review</p></div>
+          <div class="only" data-hay="/security-review analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure"><span><a href="../claude-code-cheatsheet/#cmd-security-review">/security-review</a></span><p>Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure</p></div>
+          <div class="only" data-hay="/batch plan a large change; background agents each open a pr"><span><a href="../claude-code-cheatsheet/#cmd-batch">/batch</a></span><p>Plan a large change; background agents each open a PR</p></div>
+          <div class="only" data-hay="/run launch this project's app to see your change working"><span><a href="../claude-code-cheatsheet/#cmd-run">/run</a></span><p>Launch this project's app to see your change working</p></div>
+          <div class="only" data-hay="/run-skill-generator create a skill that knows how to run this project's app"><span><a href="../claude-code-cheatsheet/#cmd-run-skill-generator">/run-skill-generator</a></span><p>Create a skill that knows how to run this project's app</p></div>
         </div>
         <div class="onlygroup">
           <h4>Config &amp; environment</h4>
-          <div class="only" data-hay="/fewer-permission-prompts pre-approve safe read-only commands based on your usage"><a href="../claude-code-cheatsheet/#cmd-fewer-permission-prompts">/fewer-permission-prompts</a><p>Pre-approve safe read-only commands based on your usage</p></div>
-          <div class="only" data-hay="/tui set the terminal ui renderer"><a href="../claude-code-cheatsheet/#cmd-tui">/tui</a><p>Set the terminal UI renderer</p></div>
-          <div class="only" data-hay="/scroll-speed adjust mouse wheel scroll speed"><a href="../claude-code-cheatsheet/#cmd-scroll-speed">/scroll-speed</a><p>Adjust mouse wheel scroll speed</p></div>
-          <div class="only" data-hay="/voice toggle voice mode"><a href="../claude-code-cheatsheet/#cmd-voice">/voice</a><p>Toggle voice mode</p></div>
-          <div class="only" data-hay="/wellbeing configure optional break reminders and quiet-hours nudges"><a href="../claude-code-cheatsheet/#cmd-wellbeing">/wellbeing</a><p>Configure optional break reminders and quiet-hours nudges</p></div>
-          <div class="only" data-hay="/debug turn on debug logging and investigate problems"><a href="../claude-code-cheatsheet/#cmd-debug">/debug</a><p>Turn on debug logging and investigate problems</p></div>
-          <div class="only" data-hay="/setup-bedrock reconfigure amazon bedrock authentication, region, or model pins"><a href="../claude-code-cheatsheet/#cmd-setup-bedrock">/setup-bedrock</a><p>Reconfigure Amazon Bedrock authentication, region, or model pins</p></div>
-          <div class="only" data-hay="/setup-vertex reconfigure google vertex ai authentication, project, region, or model pins"><a href="../claude-code-cheatsheet/#cmd-setup-vertex">/setup-vertex</a><p>Reconfigure Google Vertex AI authentication, project, region, or model pins</p></div>
+          <div class="only" data-hay="/fewer-permission-prompts pre-approve safe read-only commands based on your usage"><span><a href="../claude-code-cheatsheet/#cmd-fewer-permission-prompts">/fewer-permission-prompts</a></span><p>Pre-approve safe read-only commands based on your usage</p></div>
+          <div class="only" data-hay="/tui set the terminal ui renderer"><span><a href="../claude-code-cheatsheet/#cmd-tui">/tui</a></span><p>Set the terminal UI renderer</p></div>
+          <div class="only" data-hay="/scroll-speed adjust mouse wheel scroll speed"><span><a href="../claude-code-cheatsheet/#cmd-scroll-speed">/scroll-speed</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Adjust mouse wheel scroll speed</p></div>
+          <div class="only" data-hay="/voice toggle voice mode"><span><a href="../claude-code-cheatsheet/#cmd-voice">/voice</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Toggle voice mode</p></div>
+          <div class="only" data-hay="/wellbeing configure optional break reminders and quiet-hours nudges"><span><a href="../claude-code-cheatsheet/#cmd-wellbeing">/wellbeing</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Configure optional break reminders and quiet-hours nudges</p></div>
+          <div class="only" data-hay="/debug turn on debug logging and investigate problems"><span><a href="../claude-code-cheatsheet/#cmd-debug">/debug</a></span><p>Turn on debug logging and investigate problems</p></div>
+          <div class="only" data-hay="/setup-bedrock reconfigure amazon bedrock authentication, region, or model pins"><span><a href="../claude-code-cheatsheet/#cmd-setup-bedrock">/setup-bedrock</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Reconfigure Amazon Bedrock authentication, region, or model pins</p></div>
+          <div class="only" data-hay="/setup-vertex reconfigure google vertex ai authentication, project, region, or model pins"><span><a href="../claude-code-cheatsheet/#cmd-setup-vertex">/setup-vertex</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Reconfigure Google Vertex AI authentication, project, region, or model pins</p></div>
         </div>
         <div class="onlygroup">
           <h4>Background &amp; parallel work</h4>
-          <div class="only" data-hay="/workflows browse running and completed workflows"><a href="../claude-code-cheatsheet/#cmd-workflows">/workflows</a><p>Browse running and completed workflows</p></div>
-          <div class="only" data-hay="/loops list, create, and delete loops"><a href="../claude-code-cheatsheet/#cmd-loops">/loops</a><p>List, create, and delete loops</p></div>
-          <div class="only" data-hay="/loop repeat a prompt or command on an interval, e.g. /loop 5m /foo"><a href="../claude-code-cheatsheet/#cmd-loop">/loop</a><p>Repeat a prompt or command on an interval, e.g. /loop 5m /foo</p></div>
-          <div class="only" data-hay="/daemon manage background services and routines"><a href="../claude-code-cheatsheet/#cmd-daemon">/daemon</a><p>Manage background services and routines</p></div>
-          <div class="only" data-hay="/schedule create and manage routines: cloud agents on a schedule"><a href="../claude-code-cheatsheet/#cmd-schedule">/schedule</a><p>Create and manage routines: cloud agents on a schedule</p></div>
+          <div class="only" data-hay="/workflows browse running and completed workflows"><span><a href="../claude-code-cheatsheet/#cmd-workflows">/workflows</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Browse running and completed workflows</p></div>
+          <div class="only" data-hay="/loops list, create, and delete loops"><span><a href="../claude-code-cheatsheet/#cmd-loops">/loops</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>List, create, and delete loops</p></div>
+          <div class="only" data-hay="/loop repeat a prompt or command on an interval, e.g. /loop 5m /foo"><span><a href="../claude-code-cheatsheet/#cmd-loop">/loop</a></span><p>Repeat a prompt or command on an interval, e.g. /loop 5m /foo</p></div>
+          <div class="only" data-hay="/daemon manage background services and routines"><span><a href="../claude-code-cheatsheet/#cmd-daemon">/daemon</a></span><p>Manage background services and routines</p></div>
+          <div class="only" data-hay="/schedule create and manage routines: cloud agents on a schedule"><span><a href="../claude-code-cheatsheet/#cmd-schedule">/schedule</a></span><p>Create and manage routines: cloud agents on a schedule</p></div>
         </div>
         <div class="onlygroup">
           <h4>Cloud, web &amp; devices</h4>
-          <div class="only" data-hay="/remote-env choose the default environment for cloud agents"><a href="../claude-code-cheatsheet/#cmd-remote-env">/remote-env</a><p>Choose the default environment for cloud agents</p></div>
-          <div class="only" data-hay="/autofix-pr monitor and autofix any issues with the current pr"><a href="../claude-code-cheatsheet/#cmd-autofix-pr">/autofix-pr</a><p>Monitor and autofix any issues with the current PR</p></div>
-          <div class="only" data-hay="/install-github-app set up claude github actions for a repository"><a href="../claude-code-cheatsheet/#cmd-install-github-app">/install-github-app</a><p>Set up Claude GitHub Actions for a repository</p></div>
-          <div class="only" data-hay="/install-slack-app install the claude slack app"><a href="../claude-code-cheatsheet/#cmd-install-slack-app">/install-slack-app</a><p>Install the Claude Slack app</p></div>
-          <div class="only" data-hay="/chrome open claude in chrome settings"><a href="../claude-code-cheatsheet/#cmd-chrome">/chrome</a><p>Open Claude in Chrome settings</p></div>
-          <div class="only" data-hay="/claude-in-chrome let claude browse and interact with pages in your chrome"><a href="../claude-code-cheatsheet/#cmd-claude-in-chrome">/claude-in-chrome</a><p>Let Claude browse and interact with pages in your Chrome</p></div>
-          <div class="only" data-hay="/setup-cowork guided setup — pick a role, install a plugin, try a skill, connect a tool"><a href="../claude-code-cheatsheet/#cmd-setup-cowork">/setup-cowork</a><p>Guided setup — pick a role, install a plugin, try a skill, connect a tool</p></div>
+          <div class="only" data-hay="/remote-env choose the default environment for cloud agents"><span><a href="../claude-code-cheatsheet/#cmd-remote-env">/remote-env</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Choose the default environment for cloud agents</p></div>
+          <div class="only" data-hay="/autofix-pr monitor and autofix any issues with the current pr"><span><a href="../claude-code-cheatsheet/#cmd-autofix-pr">/autofix-pr</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Monitor and autofix any issues with the current PR</p></div>
+          <div class="only" data-hay="/install-github-app set up claude github actions for a repository"><span><a href="../claude-code-cheatsheet/#cmd-install-github-app">/install-github-app</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Set up Claude GitHub Actions for a repository</p></div>
+          <div class="only" data-hay="/install-slack-app install the claude slack app"><span><a href="../claude-code-cheatsheet/#cmd-install-slack-app">/install-slack-app</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Install the Claude Slack app</p></div>
+          <div class="only" data-hay="/chrome open claude in chrome settings"><span><a href="../claude-code-cheatsheet/#cmd-chrome">/chrome</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Open Claude in Chrome settings</p></div>
+          <div class="only" data-hay="/claude-in-chrome let claude browse and interact with pages in your chrome"><span><a href="../claude-code-cheatsheet/#cmd-claude-in-chrome">/claude-in-chrome</a></span><p>Let Claude browse and interact with pages in your Chrome</p></div>
+          <div class="only" data-hay="/setup-cowork guided setup — pick a role, install a plugin, try a skill, connect a tool"><span><a href="../claude-code-cheatsheet/#cmd-setup-cowork">/setup-cowork</a></span><p>Guided setup — pick a role, install a plugin, try a skill, connect a tool</p></div>
         </div>
         <div class="onlygroup">
           <h4>Design &amp; artifacts</h4>
-          <div class="only" data-hay="/artifacts browse your published and shared artifacts"><a href="../claude-code-cheatsheet/#cmd-artifacts">/artifacts</a><p>Browse your published and shared artifacts</p></div>
-          <div class="only" data-hay="/artifact-design design guidance and fundamentals for artifacts"><a href="../claude-code-cheatsheet/#cmd-artifact-design">/artifact-design</a><p>Design guidance and fundamentals for Artifacts</p></div>
-          <div class="only" data-hay="/artifact-capabilities runtime capabilities for published artifacts"><a href="../claude-code-cheatsheet/#cmd-artifact-capabilities">/artifact-capabilities</a><p>Runtime capabilities for published Artifacts</p></div>
-          <div class="only" data-hay="/plan-artifact publish a plan as a shareable artifact"><a href="../claude-code-cheatsheet/#cmd-plan-artifact">/plan-artifact</a><p>Publish a plan as a shareable Artifact</p></div>
-          <div class="only" data-hay="/whiteboard sketch on a whiteboard artifact you can send to claude"><a href="../claude-code-cheatsheet/#cmd-whiteboard">/whiteboard</a><p>Sketch on a whiteboard Artifact you can send to Claude</p></div>
-          <div class="only" data-hay="/workshop workshop a document through artifact decisions"><a href="../claude-code-cheatsheet/#cmd-workshop">/workshop</a><p>Workshop a document through artifact decisions</p></div>
-          <div class="only" data-hay="/dataviz chart, dashboard and palette guidance for any visualization you build"><a href="../claude-code-cheatsheet/#cmd-dataviz">/dataviz</a><p>Chart, dashboard and palette guidance for any visualization you build</p></div>
-          <div class="only" data-hay="/design grant or revoke claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design">/design</a><p>Grant or revoke Claude agent access to your Design projects</p></div>
-          <div class="only" data-hay="/design-login authorize design-system access for /design-sync with your claude.ai account"><a href="../claude-code-cheatsheet/#cmd-design-login">/design-login</a><p>Authorize design-system access for /design-sync with your claude.ai account</p></div>
-          <div class="only" data-hay="/design-sync push your design system components to claude.ai/design"><a href="../claude-code-cheatsheet/#cmd-design-sync">/design-sync</a><p>Push your design system components to claude.ai/design</p></div>
+          <div class="only" data-hay="/artifacts browse your published and shared artifacts"><span><a href="../claude-code-cheatsheet/#cmd-artifacts">/artifacts</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Browse your published and shared artifacts</p></div>
+          <div class="only" data-hay="/artifact-design design guidance and fundamentals for artifacts"><span><a href="../claude-code-cheatsheet/#cmd-artifact-design">/artifact-design</a></span><p>Design guidance and fundamentals for Artifacts</p></div>
+          <div class="only" data-hay="/artifact-capabilities runtime capabilities for published artifacts"><span><a href="../claude-code-cheatsheet/#cmd-artifact-capabilities">/artifact-capabilities</a></span><p>Runtime capabilities for published Artifacts</p></div>
+          <div class="only" data-hay="/plan-artifact publish a plan as a shareable artifact"><span><a href="../claude-code-cheatsheet/#cmd-plan-artifact">/plan-artifact</a></span><p>Publish a plan as a shareable Artifact</p></div>
+          <div class="only" data-hay="/whiteboard sketch on a whiteboard artifact you can send to claude"><span><a href="../claude-code-cheatsheet/#cmd-whiteboard">/whiteboard</a></span><p>Sketch on a whiteboard Artifact you can send to Claude</p></div>
+          <div class="only" data-hay="/workshop workshop a document through artifact decisions"><span><a href="../claude-code-cheatsheet/#cmd-workshop">/workshop</a></span><p>Workshop a document through artifact decisions</p></div>
+          <div class="only" data-hay="/dataviz chart, dashboard and palette guidance for any visualization you build"><span><a href="../claude-code-cheatsheet/#cmd-dataviz">/dataviz</a></span><p>Chart, dashboard and palette guidance for any visualization you build</p></div>
+          <div class="only" data-hay="/design grant or revoke claude agent access to your design projects"><span><a href="../claude-code-cheatsheet/#cmd-design">/design</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Grant or revoke Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/design-login authorize design-system access for /design-sync with your claude.ai account"><span><a href="../claude-code-cheatsheet/#cmd-design-login">/design-login</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Authorize design-system access for /design-sync with your claude.ai account</p></div>
+          <div class="only" data-hay="/design-sync push your design system components to claude.ai/design"><span><a href="../claude-code-cheatsheet/#cmd-design-sync">/design-sync</a></span><p>Push your design system components to claude.ai/design</p></div>
         </div>
         <div class="onlygroup">
           <h4>Account, usage &amp; install</h4>
-          <div class="only" data-hay="/usage-credits configure usage credits or request them from your admin when you hit a limit"><a href="../claude-code-cheatsheet/#cmd-usage-credits">/usage-credits</a><p>Configure usage credits or request them from your admin when you hit a limit</p></div>
-          <div class="only" data-hay="/upgrade upgrade to max for higher rate limits and more opus"><a href="../claude-code-cheatsheet/#cmd-upgrade">/upgrade</a><p>Upgrade to Max for higher rate limits and more Opus</p></div>
-          <div class="only" data-hay="/passes share a free week of claude code with friends and earn usage credits"><a href="../claude-code-cheatsheet/#cmd-passes">/passes</a><p>Share a free week of Claude Code with friends and earn usage credits</p></div>
-          <div class="only" data-hay="/privacy-settings view and update your privacy settings"><a href="../claude-code-cheatsheet/#cmd-privacy-settings">/privacy-settings</a><p>View and update your privacy settings</p></div>
-          <div class="only" data-hay="/release-notes view release notes"><a href="../claude-code-cheatsheet/#cmd-release-notes">/release-notes</a><p>View release notes</p></div>
-          <div class="only" data-hay="/install install claude code native build"><a href="../claude-code-cheatsheet/#cmd-install">/install</a><p>Install Claude Code native build</p></div>
+          <div class="only" data-hay="/usage-credits configure usage credits or request them from your admin when you hit a limit"><span><a href="../claude-code-cheatsheet/#cmd-usage-credits">/usage-credits</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Configure usage credits or request them from your admin when you hit a limit</p></div>
+          <div class="only" data-hay="/upgrade upgrade to max for higher rate limits and more opus"><span><a href="../claude-code-cheatsheet/#cmd-upgrade">/upgrade</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Upgrade to Max for higher rate limits and more Opus</p></div>
+          <div class="only" data-hay="/passes share a free week of claude code with friends and earn usage credits"><span><a href="../claude-code-cheatsheet/#cmd-passes">/passes</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Share a free week of Claude Code with friends and earn usage credits</p></div>
+          <div class="only" data-hay="/privacy-settings view and update your privacy settings"><span><a href="../claude-code-cheatsheet/#cmd-privacy-settings">/privacy-settings</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>View and update your privacy settings</p></div>
+          <div class="only" data-hay="/release-notes view release notes"><span><a href="../claude-code-cheatsheet/#cmd-release-notes">/release-notes</a></span><p>View release notes</p></div>
+          <div class="only" data-hay="/install install claude code native build"><span><a href="../claude-code-cheatsheet/#cmd-install">/install</a></span><p>Install Claude Code native build</p></div>
         </div>
         <div class="onlygroup">
           <h4>Help, feedback &amp; extras</h4>
-          <div class="only" data-hay="/claude-api build and debug apps that use the claude api"><a href="../claude-code-cheatsheet/#cmd-claude-api">/claude-api</a><p>Build and debug apps that use the Claude API</p></div>
-          <div class="only" data-hay="/powerup discover claude code features through quick interactive lessons"><a href="../claude-code-cheatsheet/#cmd-powerup">/powerup</a><p>Discover Claude Code features through quick interactive lessons</p></div>
-          <div class="only" data-hay="/team-onboarding help teammates ramp on claude code with a guide from your usage"><a href="../claude-code-cheatsheet/#cmd-team-onboarding">/team-onboarding</a><p>Help teammates ramp on Claude Code with a guide from your usage</p></div>
-          <div class="only" data-hay="/mobile show qr code to download the claude mobile app"><a href="../claude-code-cheatsheet/#cmd-mobile">/mobile</a><p>Show QR code to download the Claude mobile app</p></div>
-          <div class="only" data-hay="/stickers order claude code stickers"><a href="../claude-code-cheatsheet/#cmd-stickers">/stickers</a><p>Order Claude Code stickers</p></div>
-          <div class="only" data-hay="/radio listen to claude fm lo-fi radio"><a href="../claude-code-cheatsheet/#cmd-radio">/radio</a><p>Listen to Claude FM lo-fi radio</p></div>
+          <div class="only" data-hay="/claude-api build and debug apps that use the claude api"><span><a href="../claude-code-cheatsheet/#cmd-claude-api">/claude-api</a></span><p>Build and debug apps that use the Claude API</p></div>
+          <div class="only" data-hay="/powerup discover claude code features through quick interactive lessons"><span><a href="../claude-code-cheatsheet/#cmd-powerup">/powerup</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Discover Claude Code features through quick interactive lessons</p></div>
+          <div class="only" data-hay="/team-onboarding help teammates ramp on claude code with a guide from your usage"><span><a href="../claude-code-cheatsheet/#cmd-team-onboarding">/team-onboarding</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Help teammates ramp on Claude Code with a guide from your usage</p></div>
+          <div class="only" data-hay="/mobile show qr code to download the claude mobile app"><span><a href="../claude-code-cheatsheet/#cmd-mobile">/mobile</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Show QR code to download the Claude mobile app</p></div>
+          <div class="only" data-hay="/stickers order claude code stickers"><span><a href="../claude-code-cheatsheet/#cmd-stickers">/stickers</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Order Claude Code stickers</p></div>
+          <div class="only" data-hay="/radio listen to claude fm lo-fi radio"><span><a href="../claude-code-cheatsheet/#cmd-radio">/radio</a> <span class="gated" title="Registered only when a feature check passes, so it may be missing from your build — typing it answers &quot;isn't available in this environment&quot;">gated</span></span><p>Listen to Claude FM lo-fi radio</p></div>
         </div>
         <div class="onlygroup">
           <h4>Terminal CLI</h4>
-          <div class="only" data-hay="claude auto-mode inspect or reset auto mode classifier configuration"><a href="../claude-code-cheatsheet/#cli-claude-auto-mode">claude auto-mode</a><p>Inspect or reset auto mode classifier configuration</p></div>
-          <div class="only" data-hay="claude gateway run the enterprise auth/telemetry gateway"><a href="../claude-code-cheatsheet/#cli-claude-gateway">claude gateway</a><p>Run the enterprise auth/telemetry gateway</p></div>
-          <div class="only" data-hay="claude install install the native build — stable, latest, or a specific version"><a href="../claude-code-cheatsheet/#cli-claude-install">claude install</a><p>Install the native build — stable, latest, or a specific version</p></div>
-          <div class="only" data-hay="claude project manage claude code project state"><a href="../claude-code-cheatsheet/#cli-claude-project">claude project</a><p>Manage Claude Code project state</p></div>
-          <div class="only" data-hay="claude setup-token set up a long-lived authentication token, requires a claude subscription"><a href="../claude-code-cheatsheet/#cli-claude-setup-token">claude setup-token</a><p>Set up a long-lived authentication token, requires a Claude subscription</p></div>
-          <div class="only" data-hay="claude ultrareview run a cloud-hosted multi-agent code review of the current branch or a pr and print the findings"><a href="../claude-code-cheatsheet/#cli-claude-ultrareview">claude ultrareview</a><p>Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings</p></div>
+          <div class="only" data-hay="claude auto-mode inspect or reset auto mode classifier configuration"><span><a href="../claude-code-cheatsheet/#cli-claude-auto-mode">claude auto-mode</a></span><p>Inspect or reset auto mode classifier configuration</p></div>
+          <div class="only" data-hay="claude gateway run the enterprise auth/telemetry gateway"><span><a href="../claude-code-cheatsheet/#cli-claude-gateway">claude gateway</a></span><p>Run the enterprise auth/telemetry gateway</p></div>
+          <div class="only" data-hay="claude install install the native build — stable, latest, or a specific version"><span><a href="../claude-code-cheatsheet/#cli-claude-install">claude install</a></span><p>Install the native build — stable, latest, or a specific version</p></div>
+          <div class="only" data-hay="claude project manage claude code project state"><span><a href="../claude-code-cheatsheet/#cli-claude-project">claude project</a></span><p>Manage Claude Code project state</p></div>
+          <div class="only" data-hay="claude setup-token set up a long-lived authentication token, requires a claude subscription"><span><a href="../claude-code-cheatsheet/#cli-claude-setup-token">claude setup-token</a></span><p>Set up a long-lived authentication token, requires a Claude subscription</p></div>
+          <div class="only" data-hay="claude ultrareview run a cloud-hosted multi-agent code review of the current branch or a pr and print the findings"><span><a href="../claude-code-cheatsheet/#cli-claude-ultrareview">claude ultrareview</a></span><p>Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings</p></div>
         </div>
         <div class="onlygroup">
           <h4>Hidden &amp; internal</h4>
-          <div class="only" data-hay="/auto-mode-setup set up and customise auto mode — environment context, plus optional rule tweaks"><a href="../claude-code-cheatsheet/#cmd-auto-mode-setup">/auto-mode-setup</a><p>Set up and customise auto mode — environment context, plus optional rule tweaks</p></div>
-          <div class="only" data-hay="/heapdump dump the js heap to ~/desktop"><a href="../claude-code-cheatsheet/#cmd-heapdump">/heapdump</a><p>Dump the JS heap to ~/Desktop</p></div>
-          <div class="only" data-hay="/design-consent grant claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design-consent">/design-consent</a><p>Grant Claude agent access to your Design projects</p></div>
-          <div class="only" data-hay="/design-revoke revoke claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design-revoke">/design-revoke</a><p>Revoke Claude agent access to your Design projects</p></div>
-          <div class="only" data-hay="/extra-usage renamed to /usage-credits"><a href="../claude-code-cheatsheet/#cmd-extra-usage">/extra-usage</a><p>Renamed to /usage-credits</p></div>
-          <div class="only" data-hay="/pro-trial-expired options shown when the pro plan claude code trial has ended"><a href="../claude-code-cheatsheet/#cmd-pro-trial-expired">/pro-trial-expired</a><p>Options shown when the Pro plan Claude Code trial has ended</p></div>
-          <div class="only" data-hay="/rate-limit-options show options when rate limit is reached"><a href="../claude-code-cheatsheet/#cmd-rate-limit-options">/rate-limit-options</a><p>Show options when rate limit is reached</p></div>
-          <div class="only" data-hay="/__remote-workflow run the workflow script delivered in this session environment — server-launched sessions only"><a href="../claude-code-cheatsheet/#cmd-remote-workflow">/__remote-workflow</a><p>Run the workflow script delivered in this session environment — server-launched sessions only</p></div>
-          <div class="only" data-hay="/workflow-launch-exec execute a server-launched workflow handoff — workflow_launch event sessions only"><a href="../claude-code-cheatsheet/#cmd-workflow-launch-exec">/workflow-launch-exec</a><p>Execute a server-launched workflow handoff — workflow_launch event sessions only</p></div>
+          <div class="only" data-hay="/auto-mode-setup set up and customise auto mode — environment context, plus optional rule tweaks"><span><a href="../claude-code-cheatsheet/#cmd-auto-mode-setup">/auto-mode-setup</a></span><p>Set up and customise auto mode — environment context, plus optional rule tweaks</p></div>
+          <div class="only" data-hay="/heapdump dump the js heap to ~/desktop"><span><a href="../claude-code-cheatsheet/#cmd-heapdump">/heapdump</a></span><p>Dump the JS heap to ~/Desktop</p></div>
+          <div class="only" data-hay="/design-consent grant claude agent access to your design projects"><span><a href="../claude-code-cheatsheet/#cmd-design-consent">/design-consent</a></span><p>Grant Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/design-revoke revoke claude agent access to your design projects"><span><a href="../claude-code-cheatsheet/#cmd-design-revoke">/design-revoke</a></span><p>Revoke Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/extra-usage renamed to /usage-credits"><span><a href="../claude-code-cheatsheet/#cmd-extra-usage">/extra-usage</a></span><p>Renamed to /usage-credits</p></div>
+          <div class="only" data-hay="/pro-trial-expired options shown when the pro plan claude code trial has ended"><span><a href="../claude-code-cheatsheet/#cmd-pro-trial-expired">/pro-trial-expired</a></span><p>Options shown when the Pro plan Claude Code trial has ended</p></div>
+          <div class="only" data-hay="/rate-limit-options show options when rate limit is reached"><span><a href="../claude-code-cheatsheet/#cmd-rate-limit-options">/rate-limit-options</a></span><p>Show options when rate limit is reached</p></div>
+          <div class="only" data-hay="/__remote-workflow run the workflow script delivered in this session environment — server-launched sessions only"><span><a href="../claude-code-cheatsheet/#cmd-remote-workflow">/__remote-workflow</a></span><p>Run the workflow script delivered in this session environment — server-launched sessions only</p></div>
+          <div class="only" data-hay="/workflow-launch-exec execute a server-launched workflow handoff — workflow_launch event sessions only"><span><a href="../claude-code-cheatsheet/#cmd-workflow-launch-exec">/workflow-launch-exec</a></span><p>Execute a server-launched workflow handoff — workflow_launch event sessions only</p></div>
         </div>
         </div>
       </div>
@@ -1798,88 +1813,88 @@
         <div id="onlycx">
         <div class="onlygroup">
           <h4>Session &amp; context</h4>
-          <div class="only" data-hay="/archive archive this session and exit"><a href="../codex-cheatsheet/#cmd-archive">/archive</a><p>archive this session and exit</p></div>
-          <div class="only" data-hay="/delete permanently delete this session and exit"><a href="../codex-cheatsheet/#cmd-delete">/delete</a><p>permanently delete this session and exit</p></div>
-          <div class="only" data-hay="/raw toggle raw scrollback mode for copy-friendly terminal selection"><a href="../codex-cheatsheet/#cmd-raw">/raw</a><p>toggle raw scrollback mode for copy-friendly terminal selection</p></div>
+          <div class="only" data-hay="/archive archive this session and exit"><span><a href="../codex-cheatsheet/#cmd-archive">/archive</a></span><p>archive this session and exit</p></div>
+          <div class="only" data-hay="/delete permanently delete this session and exit"><span><a href="../codex-cheatsheet/#cmd-delete">/delete</a></span><p>permanently delete this session and exit</p></div>
+          <div class="only" data-hay="/raw toggle raw scrollback mode for copy-friendly terminal selection"><span><a href="../codex-cheatsheet/#cmd-raw">/raw</a></span><p>toggle raw scrollback mode for copy-friendly terminal selection</p></div>
         </div>
         <div class="onlygroup">
           <h4>Model &amp; reasoning</h4>
-          <div class="only" data-hay="/personality choose a communication style for codex"><a href="../codex-cheatsheet/#cmd-personality">/personality</a><p>choose a communication style for Codex</p></div>
+          <div class="only" data-hay="/personality choose a communication style for codex"><span><a href="../codex-cheatsheet/#cmd-personality">/personality</a></span><p>choose a communication style for Codex</p></div>
         </div>
         <div class="onlygroup">
           <h4>Workspace &amp; code</h4>
-          <div class="only" data-hay="/mention mention a file"><a href="../codex-cheatsheet/#cmd-mention">/mention</a><p>mention a file</p></div>
-          <div class="only" data-hay="/approve approve one retry of a recent auto-review denial"><a href="../codex-cheatsheet/#cmd-approve">/approve</a><p>approve one retry of a recent auto-review denial</p></div>
+          <div class="only" data-hay="/mention mention a file"><span><a href="../codex-cheatsheet/#cmd-mention">/mention</a></span><p>mention a file</p></div>
+          <div class="only" data-hay="/approve approve one retry of a recent auto-review denial"><span><a href="../codex-cheatsheet/#cmd-approve">/approve</a></span><p>approve one retry of a recent auto-review denial</p></div>
         </div>
         <div class="onlygroup">
           <h4>Config &amp; environment</h4>
-          <div class="only" data-hay="/pets choose or hide the terminal pet"><a href="../codex-cheatsheet/#cmd-pets">/pets</a><p>choose or hide the terminal pet</p></div>
-          <div class="only" data-hay="/experimental toggle experimental features"><a href="../codex-cheatsheet/#cmd-experimental">/experimental</a><p>toggle experimental features</p></div>
+          <div class="only" data-hay="/pets choose or hide the terminal pet"><span><a href="../codex-cheatsheet/#cmd-pets">/pets</a></span><p>choose or hide the terminal pet</p></div>
+          <div class="only" data-hay="/experimental toggle experimental features"><span><a href="../codex-cheatsheet/#cmd-experimental">/experimental</a></span><p>toggle experimental features</p></div>
         </div>
         <div class="onlygroup">
           <h4>Hidden &amp; internal</h4>
-          <div class="only" data-hay="/apps manage apps"><a href="../codex-cheatsheet/#cmd-apps">/apps</a><p>manage apps</p></div>
-          <div class="only" data-hay="/rollout print the rollout file path"><a href="../codex-cheatsheet/#cmd-rollout">/rollout</a><p>print the rollout file path</p></div>
-          <div class="only" data-hay="/test-approval test approval request"><a href="../codex-cheatsheet/#cmd-test-approval">/test-approval</a><p>test approval request</p></div>
-          <div class="only" data-hay="/debug-m-drop do not use"><a href="../codex-cheatsheet/#cmd-debug-m-drop">/debug-m-drop</a><p>DO NOT USE</p></div>
-          <div class="only" data-hay="/debug-m-update do not use"><a href="../codex-cheatsheet/#cmd-debug-m-update">/debug-m-update</a><p>DO NOT USE</p></div>
+          <div class="only" data-hay="/apps manage apps"><span><a href="../codex-cheatsheet/#cmd-apps">/apps</a></span><p>manage apps</p></div>
+          <div class="only" data-hay="/rollout print the rollout file path"><span><a href="../codex-cheatsheet/#cmd-rollout">/rollout</a></span><p>print the rollout file path</p></div>
+          <div class="only" data-hay="/test-approval test approval request"><span><a href="../codex-cheatsheet/#cmd-test-approval">/test-approval</a></span><p>test approval request</p></div>
+          <div class="only" data-hay="/debug-m-drop do not use"><span><a href="../codex-cheatsheet/#cmd-debug-m-drop">/debug-m-drop</a></span><p>DO NOT USE</p></div>
+          <div class="only" data-hay="/debug-m-update do not use"><span><a href="../codex-cheatsheet/#cmd-debug-m-update">/debug-m-update</a></span><p>DO NOT USE</p></div>
         </div>
         <div class="onlygroup">
           <h4>Terminal CLI — core</h4>
-          <div class="only" data-hay="codex apply apply the latest diff produced by codex agent as a `git apply` to your local working tree"><a href="../codex-cheatsheet/#cli-codex-apply">codex apply</a><p>Apply the latest diff produced by Codex agent as a `git apply` to your local working tree</p></div>
-          <div class="only" data-hay="codex archive archive a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-archive">codex archive</a><p>Archive a saved session by id or session name</p></div>
-          <div class="only" data-hay="codex unarchive unarchive a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-unarchive">codex unarchive</a><p>Unarchive a saved session by id or session name</p></div>
-          <div class="only" data-hay="codex delete permanently delete a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-delete">codex delete</a><p>Permanently delete a saved session by id or session name</p></div>
-          <div class="only" data-hay="codex completion generate shell completion scripts"><a href="../codex-cheatsheet/#cli-codex-completion">codex completion</a><p>Generate shell completion scripts</p></div>
+          <div class="only" data-hay="codex apply apply the latest diff produced by codex agent as a `git apply` to your local working tree"><span><a href="../codex-cheatsheet/#cli-codex-apply">codex apply</a></span><p>Apply the latest diff produced by Codex agent as a `git apply` to your local working tree</p></div>
+          <div class="only" data-hay="codex archive archive a saved session by id or session name"><span><a href="../codex-cheatsheet/#cli-codex-archive">codex archive</a></span><p>Archive a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex unarchive unarchive a saved session by id or session name"><span><a href="../codex-cheatsheet/#cli-codex-unarchive">codex unarchive</a></span><p>Unarchive a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex delete permanently delete a saved session by id or session name"><span><a href="../codex-cheatsheet/#cli-codex-delete">codex delete</a></span><p>Permanently delete a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex completion generate shell completion scripts"><span><a href="../codex-cheatsheet/#cli-codex-completion">codex completion</a></span><p>Generate shell completion scripts</p></div>
         </div>
         <div class="onlygroup">
           <h4>MCP &amp; plugins</h4>
-          <div class="only" data-hay="codex mcp get show one configured mcp server"><a href="../codex-cheatsheet/#cli-codex-mcp-get">codex mcp get</a><p>Show one configured MCP server</p></div>
-          <div class="only" data-hay="codex mcp login sign in to an mcp server that needs auth"><a href="../codex-cheatsheet/#cli-codex-mcp-login">codex mcp login</a><p>Sign in to an MCP server that needs auth</p></div>
-          <div class="only" data-hay="codex mcp logout sign out of an mcp server"><a href="../codex-cheatsheet/#cli-codex-mcp-logout">codex mcp logout</a><p>Sign out of an MCP server</p></div>
-          <div class="only" data-hay="codex mcp-server start codex as an mcp server (stdio)"><a href="../codex-cheatsheet/#cli-codex-mcp-server">codex mcp-server</a><p>Start Codex as an MCP server (stdio)</p></div>
-          <div class="only" data-hay="codex plugin list list plugins available from configured marketplace snapshots"><a href="../codex-cheatsheet/#cli-codex-plugin-list">codex plugin list</a><p>List plugins available from configured marketplace snapshots</p></div>
-          <div class="only" data-hay="codex plugin remove remove an installed plugin from local config and cache"><a href="../codex-cheatsheet/#cli-codex-plugin-remove">codex plugin remove</a><p>Remove an installed plugin from local config and cache</p></div>
-          <div class="only" data-hay="codex plugin marketplace add add a local or git marketplace to the configured marketplace sources"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-add">codex plugin marketplace add</a><p>Add a local or Git marketplace to the configured marketplace sources</p></div>
-          <div class="only" data-hay="codex plugin marketplace list list plugin marketplaces codex is currently considering and their roots"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-list">codex plugin marketplace list</a><p>List plugin marketplaces Codex is currently considering and their roots</p></div>
-          <div class="only" data-hay="codex plugin marketplace remove remove a configured marketplace source by name"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-remove">codex plugin marketplace remove</a><p>Remove a configured marketplace source by name</p></div>
-          <div class="only" data-hay="codex plugin marketplace upgrade refresh configured git marketplace snapshots"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-upgrade">codex plugin marketplace upgrade</a><p>Refresh configured Git marketplace snapshots</p></div>
+          <div class="only" data-hay="codex mcp get show one configured mcp server"><span><a href="../codex-cheatsheet/#cli-codex-mcp-get">codex mcp get</a></span><p>Show one configured MCP server</p></div>
+          <div class="only" data-hay="codex mcp login sign in to an mcp server that needs auth"><span><a href="../codex-cheatsheet/#cli-codex-mcp-login">codex mcp login</a></span><p>Sign in to an MCP server that needs auth</p></div>
+          <div class="only" data-hay="codex mcp logout sign out of an mcp server"><span><a href="../codex-cheatsheet/#cli-codex-mcp-logout">codex mcp logout</a></span><p>Sign out of an MCP server</p></div>
+          <div class="only" data-hay="codex mcp-server start codex as an mcp server (stdio)"><span><a href="../codex-cheatsheet/#cli-codex-mcp-server">codex mcp-server</a></span><p>Start Codex as an MCP server (stdio)</p></div>
+          <div class="only" data-hay="codex plugin list list plugins available from configured marketplace snapshots"><span><a href="../codex-cheatsheet/#cli-codex-plugin-list">codex plugin list</a></span><p>List plugins available from configured marketplace snapshots</p></div>
+          <div class="only" data-hay="codex plugin remove remove an installed plugin from local config and cache"><span><a href="../codex-cheatsheet/#cli-codex-plugin-remove">codex plugin remove</a></span><p>Remove an installed plugin from local config and cache</p></div>
+          <div class="only" data-hay="codex plugin marketplace add add a local or git marketplace to the configured marketplace sources"><span><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-add">codex plugin marketplace add</a></span><p>Add a local or Git marketplace to the configured marketplace sources</p></div>
+          <div class="only" data-hay="codex plugin marketplace list list plugin marketplaces codex is currently considering and their roots"><span><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-list">codex plugin marketplace list</a></span><p>List plugin marketplaces Codex is currently considering and their roots</p></div>
+          <div class="only" data-hay="codex plugin marketplace remove remove a configured marketplace source by name"><span><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-remove">codex plugin marketplace remove</a></span><p>Remove a configured marketplace source by name</p></div>
+          <div class="only" data-hay="codex plugin marketplace upgrade refresh configured git marketplace snapshots"><span><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-upgrade">codex plugin marketplace upgrade</a></span><p>Refresh configured Git marketplace snapshots</p></div>
         </div>
         <div class="onlygroup">
           <h4>App server, daemon &amp; remote control</h4>
-          <div class="only" data-hay="codex app-server run the app server or related tooling"><a href="../codex-cheatsheet/#cli-codex-app-server">codex app-server</a><p>Run the app server or related tooling</p></div>
-          <div class="only" data-hay="codex app-server daemon manage the local app-server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon">codex app-server daemon</a><p>Manage the local app-server daemon</p></div>
-          <div class="only" data-hay="codex app-server daemon start start the local app server daemon if it is not already running"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-start">codex app-server daemon start</a><p>Start the local app server daemon if it is not already running</p></div>
-          <div class="only" data-hay="codex app-server daemon stop stop the local app server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-stop">codex app-server daemon stop</a><p>Stop the local app server daemon</p></div>
-          <div class="only" data-hay="codex app-server daemon restart restart the local app server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-restart">codex app-server daemon restart</a><p>Restart the local app server daemon</p></div>
-          <div class="only" data-hay="codex app-server daemon bootstrap install durable local app-server management for ssh-driven use"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-bootstrap">codex app-server daemon bootstrap</a><p>Install durable local app-server management for SSH-driven use</p></div>
-          <div class="only" data-hay="codex app-server daemon version print local cli and running app-server versions as json"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-version">codex app-server daemon version</a><p>Print local CLI and running app-server versions as JSON</p></div>
-          <div class="only" data-hay="codex app-server daemon enable-remote-control enable remote control for future starts and a currently running managed daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-enable-remote-control">codex app-server daemon enable-remote-control</a><p>Enable remote control for future starts and a currently running managed daemon</p></div>
-          <div class="only" data-hay="codex app-server daemon disable-remote-control disable remote control for future starts and a currently running managed daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-disable-remote-control">codex app-server daemon disable-remote-control</a><p>Disable remote control for future starts and a currently running managed daemon</p></div>
-          <div class="only" data-hay="codex app-server generate-json-schema generate json schema for the app server protocol"><a href="../codex-cheatsheet/#cli-codex-app-server-generate-json-schema">codex app-server generate-json-schema</a><p>Generate JSON Schema for the app server protocol</p></div>
-          <div class="only" data-hay="codex app-server generate-ts generate typescript bindings for the app server protocol"><a href="../codex-cheatsheet/#cli-codex-app-server-generate-ts">codex app-server generate-ts</a><p>Generate TypeScript bindings for the app server protocol</p></div>
-          <div class="only" data-hay="codex app-server proxy proxy stdio bytes to the running app-server control socket"><a href="../codex-cheatsheet/#cli-codex-app-server-proxy">codex app-server proxy</a><p>Proxy stdio bytes to the running app-server control socket</p></div>
-          <div class="only" data-hay="codex remote-control start start the app-server daemon with remote control enabled"><a href="../codex-cheatsheet/#cli-codex-remote-control-start">codex remote-control start</a><p>Start the app-server daemon with remote control enabled</p></div>
-          <div class="only" data-hay="codex remote-control stop stop the app-server daemon"><a href="../codex-cheatsheet/#cli-codex-remote-control-stop">codex remote-control stop</a><p>Stop the app-server daemon</p></div>
-          <div class="only" data-hay="codex exec-server run the standalone exec-server service"><a href="../codex-cheatsheet/#cli-codex-exec-server">codex exec-server</a><p>Run the standalone exec-server service</p></div>
+          <div class="only" data-hay="codex app-server run the app server or related tooling"><span><a href="../codex-cheatsheet/#cli-codex-app-server">codex app-server</a> <span class="gated" title="The build labels this experimental">experimental</span></span><p>Run the app server or related tooling</p></div>
+          <div class="only" data-hay="codex app-server daemon manage the local app-server daemon"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon">codex app-server daemon</a></span><p>Manage the local app-server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon start start the local app server daemon if it is not already running"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-start">codex app-server daemon start</a></span><p>Start the local app server daemon if it is not already running</p></div>
+          <div class="only" data-hay="codex app-server daemon stop stop the local app server daemon"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-stop">codex app-server daemon stop</a></span><p>Stop the local app server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon restart restart the local app server daemon"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-restart">codex app-server daemon restart</a></span><p>Restart the local app server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon bootstrap install durable local app-server management for ssh-driven use"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-bootstrap">codex app-server daemon bootstrap</a></span><p>Install durable local app-server management for SSH-driven use</p></div>
+          <div class="only" data-hay="codex app-server daemon version print local cli and running app-server versions as json"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-version">codex app-server daemon version</a></span><p>Print local CLI and running app-server versions as JSON</p></div>
+          <div class="only" data-hay="codex app-server daemon enable-remote-control enable remote control for future starts and a currently running managed daemon"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-enable-remote-control">codex app-server daemon enable-remote-control</a></span><p>Enable remote control for future starts and a currently running managed daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon disable-remote-control disable remote control for future starts and a currently running managed daemon"><span><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-disable-remote-control">codex app-server daemon disable-remote-control</a></span><p>Disable remote control for future starts and a currently running managed daemon</p></div>
+          <div class="only" data-hay="codex app-server generate-json-schema generate json schema for the app server protocol"><span><a href="../codex-cheatsheet/#cli-codex-app-server-generate-json-schema">codex app-server generate-json-schema</a> <span class="gated" title="The build labels this experimental">experimental</span></span><p>Generate JSON Schema for the app server protocol</p></div>
+          <div class="only" data-hay="codex app-server generate-ts generate typescript bindings for the app server protocol"><span><a href="../codex-cheatsheet/#cli-codex-app-server-generate-ts">codex app-server generate-ts</a> <span class="gated" title="The build labels this experimental">experimental</span></span><p>Generate TypeScript bindings for the app server protocol</p></div>
+          <div class="only" data-hay="codex app-server proxy proxy stdio bytes to the running app-server control socket"><span><a href="../codex-cheatsheet/#cli-codex-app-server-proxy">codex app-server proxy</a></span><p>Proxy stdio bytes to the running app-server control socket</p></div>
+          <div class="only" data-hay="codex remote-control start start the app-server daemon with remote control enabled"><span><a href="../codex-cheatsheet/#cli-codex-remote-control-start">codex remote-control start</a></span><p>Start the app-server daemon with remote control enabled</p></div>
+          <div class="only" data-hay="codex remote-control stop stop the app-server daemon"><span><a href="../codex-cheatsheet/#cli-codex-remote-control-stop">codex remote-control stop</a></span><p>Stop the app-server daemon</p></div>
+          <div class="only" data-hay="codex exec-server run the standalone exec-server service"><span><a href="../codex-cheatsheet/#cli-codex-exec-server">codex exec-server</a> <span class="gated" title="The build labels this experimental">experimental</span></span><p>Run the standalone exec-server service</p></div>
         </div>
         <div class="onlygroup">
           <h4>Codex Cloud</h4>
-          <div class="only" data-hay="codex cloud list list codex cloud tasks"><a href="../codex-cheatsheet/#cli-codex-cloud-list">codex cloud list</a><p>List Codex Cloud tasks</p></div>
-          <div class="only" data-hay="codex cloud status show the status of a codex cloud task"><a href="../codex-cheatsheet/#cli-codex-cloud-status">codex cloud status</a><p>Show the status of a Codex Cloud task</p></div>
-          <div class="only" data-hay="codex cloud diff show the unified diff for a codex cloud task"><a href="../codex-cheatsheet/#cli-codex-cloud-diff">codex cloud diff</a><p>Show the unified diff for a Codex Cloud task</p></div>
+          <div class="only" data-hay="codex cloud list list codex cloud tasks"><span><a href="../codex-cheatsheet/#cli-codex-cloud-list">codex cloud list</a></span><p>List Codex Cloud tasks</p></div>
+          <div class="only" data-hay="codex cloud status show the status of a codex cloud task"><span><a href="../codex-cheatsheet/#cli-codex-cloud-status">codex cloud status</a></span><p>Show the status of a Codex Cloud task</p></div>
+          <div class="only" data-hay="codex cloud diff show the unified diff for a codex cloud task"><span><a href="../codex-cheatsheet/#cli-codex-cloud-diff">codex cloud diff</a></span><p>Show the unified diff for a Codex Cloud task</p></div>
         </div>
         <div class="onlygroup">
           <h4>Debug &amp; feature flags</h4>
-          <div class="only" data-hay="codex debug debugging tools"><a href="../codex-cheatsheet/#cli-codex-debug">codex debug</a><p>Debugging tools</p></div>
-          <div class="only" data-hay="codex debug models render the raw model catalog as json"><a href="../codex-cheatsheet/#cli-codex-debug-models">codex debug models</a><p>Render the raw model catalog as JSON</p></div>
-          <div class="only" data-hay="codex debug prompt-input render the model-visible prompt input list as json"><a href="../codex-cheatsheet/#cli-codex-debug-prompt-input">codex debug prompt-input</a><p>Render the model-visible prompt input list as JSON</p></div>
-          <div class="only" data-hay="codex debug app-server tooling: helps debug the app server"><a href="../codex-cheatsheet/#cli-codex-debug-app-server">codex debug app-server</a><p>Tooling: helps debug the app server</p></div>
-          <div class="only" data-hay="codex debug app-server send-message-v2 send one user message to the app server"><a href="../codex-cheatsheet/#cli-codex-debug-app-server-send-message-v2">codex debug app-server send-message-v2</a><p>Send one user message to the app server</p></div>
-          <div class="only" data-hay="codex features inspect feature flags"><a href="../codex-cheatsheet/#cli-codex-features">codex features</a><p>Inspect feature flags</p></div>
-          <div class="only" data-hay="codex features list list known features with their stage and effective state"><a href="../codex-cheatsheet/#cli-codex-features-list">codex features list</a><p>List known features with their stage and effective state</p></div>
-          <div class="only" data-hay="codex features enable enable a feature in config.toml"><a href="../codex-cheatsheet/#cli-codex-features-enable">codex features enable</a><p>Enable a feature in config.toml</p></div>
-          <div class="only" data-hay="codex features disable disable a feature in config.toml"><a href="../codex-cheatsheet/#cli-codex-features-disable">codex features disable</a><p>Disable a feature in config.toml</p></div>
+          <div class="only" data-hay="codex debug debugging tools"><span><a href="../codex-cheatsheet/#cli-codex-debug">codex debug</a></span><p>Debugging tools</p></div>
+          <div class="only" data-hay="codex debug models render the raw model catalog as json"><span><a href="../codex-cheatsheet/#cli-codex-debug-models">codex debug models</a></span><p>Render the raw model catalog as JSON</p></div>
+          <div class="only" data-hay="codex debug prompt-input render the model-visible prompt input list as json"><span><a href="../codex-cheatsheet/#cli-codex-debug-prompt-input">codex debug prompt-input</a></span><p>Render the model-visible prompt input list as JSON</p></div>
+          <div class="only" data-hay="codex debug app-server tooling: helps debug the app server"><span><a href="../codex-cheatsheet/#cli-codex-debug-app-server">codex debug app-server</a></span><p>Tooling: helps debug the app server</p></div>
+          <div class="only" data-hay="codex debug app-server send-message-v2 send one user message to the app server"><span><a href="../codex-cheatsheet/#cli-codex-debug-app-server-send-message-v2">codex debug app-server send-message-v2</a></span><p>Send one user message to the app server</p></div>
+          <div class="only" data-hay="codex features inspect feature flags"><span><a href="../codex-cheatsheet/#cli-codex-features">codex features</a></span><p>Inspect feature flags</p></div>
+          <div class="only" data-hay="codex features list list known features with their stage and effective state"><span><a href="../codex-cheatsheet/#cli-codex-features-list">codex features list</a></span><p>List known features with their stage and effective state</p></div>
+          <div class="only" data-hay="codex features enable enable a feature in config.toml"><span><a href="../codex-cheatsheet/#cli-codex-features-enable">codex features enable</a></span><p>Enable a feature in config.toml</p></div>
+          <div class="only" data-hay="codex features disable disable a feature in config.toml"><span><a href="../codex-cheatsheet/#cli-codex-features-disable">codex features disable</a></span><p>Disable a feature in config.toml</p></div>
         </div>
         </div>
       </div>

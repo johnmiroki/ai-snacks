@@ -39,7 +39,7 @@ Steering the conversation you are in right now. 19 entries.
 - **`/help`** — Show help and available commands. [docs](https://code.claude.com/docs/en/commands#all-commands)
 - **`/clear`** `[name]` *(aliases: `reset`, `new`)* — Start a new session with empty context; the previous session stays on disk and is resumable with /resume. [docs](https://code.claude.com/docs/en/sessions)
 - **`/compact`** `<optional custom summarization instructions>` — Free up context by summarizing the conversation so far. [docs](https://code.claude.com/docs/en/context-window)
-- **`/autocompact`** `[auto|<tokens>]` — Set how full the context gets before auto-summarizing. [docs](https://code.claude.com/docs/en/context-window)
+- **`/autocompact`** `[auto|<tokens>]` — Set how full the context gets before auto-summarizing. *(registered only under a feature gate)* [docs](https://code.claude.com/docs/en/context-window)
 - **`/context`** `[all]` — Visualize current context usage as a colored grid. [docs](https://code.claude.com/docs/en/context-window)
 - **`/resume`** `[conversation id or search term]` *(aliases: `continue`)* — Resume a previous conversation. [docs](https://code.claude.com/docs/en/sessions)
 - **`/rewind`** *(aliases: `checkpoint`, `undo`)* — Restore the code and/or conversation to a previous point. [docs](https://code.claude.com/docs/en/checkpointing)
@@ -6315,7 +6315,7 @@ The capability section was measured separately, from `claude --help`, `codex --h
   - **Codex:**
     - `/compact` — summarize conversation to prevent hitting the context limit
 
-  Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through /status.
+  Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through /status. /autocompact is gated — it exists in build 2.1.220 with the description quoted here, but many installs answer isn't available in this environment when you type it.
 
 ### Pick up an old session
 
