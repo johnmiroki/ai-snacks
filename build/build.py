@@ -23,6 +23,10 @@ SK_SRC = BUILD / "claude-code-built-in-skills"
 SK_OUT = ROOT / "claude-code-built-in-skills"
 CX_SRC = BUILD / "codex-cheatsheet"
 CX_OUT = ROOT / "codex-cheatsheet"
+MEM_SRC = BUILD / "agent-memory"
+MEM_OUT = ROOT / "agent-memory"
+CMP_SRC = BUILD / "claude-code-vs-codex"
+CMP_OUT = ROOT / "claude-code-vs-codex"
 
 
 def swap(text, old, new, label):
@@ -34,6 +38,34 @@ def swap(text, old, new, label):
 def esc(text):
     return (str(text).replace("&", "&amp;").replace("<", "&lt;")
             .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+# The memory page's prose is authored as HTML in memory-data.json so it can carry inline markup,
+# and the Markdown twin is derived from it rather than written a second time. Only this subset is
+# allowed, so the conversion stays exact: <p>, <code>, <b>, <em>, <a href>, <ul>/<li>.
+MD_INLINE = [("<code>", "`"), ("</code>", "`"), ("<b>", "**"), ("</b>", "**"),
+             ("<em>", "*"), ("</em>", "*")]
+
+
+def to_md(html):
+    import re
+    unknown = sorted({t.lower() for t in re.findall(r"</?([a-zA-Z]+)", html)}
+                     - {"p", "code", "b", "em", "a", "ul", "li"})
+    if unknown:
+        raise SystemExit("memory prose uses unsupported tags: %s" % ", ".join(unknown))
+
+    text = re.sub(r'<a href="([^"]+)">(.*?)</a>', r"[\2](\1)", html, flags=re.S)
+    for tag, mark in MD_INLINE:
+        text = text.replace(tag, mark)
+    text = text.replace("<ul>", "\n").replace("</ul>", "\n")
+    text = re.sub(r"\s*<li>\s*", "\n- ", text)
+    text = text.replace("</li>", "")
+    text = re.sub(r"\s*</p>\s*<p>\s*", "\n\n", text)
+    text = re.sub(r"\s*</?p>\s*", "", text)
+    text = (text.replace("&mdash;", "\u2014").replace("&ndash;", "\u2013")
+            .replace("&hellip;", "\u2026").replace("&lt;", "<").replace("&gt;", ">")
+            .replace("&quot;", '"').replace("&nbsp;", " ").replace("&amp;", "&"))
+    return re.sub(r"\n{3,}", "\n\n", re.sub(r"[ \t]+", " ", text)).strip()
 
 
 # ============================================================ chrome shared by every page
@@ -87,16 +119,17 @@ COFFEE_CSS = """
 # Both anchors carry the page's build number rather than a literal, so bumping it in siteconf
 # fails the swap loudly instead of quietly publishing a masthead that still names the old one.
 # The fix when it fires is to update the eyebrow in that page source to match.
-def masthead(build):
+def masthead(build, tail="extracted from the installed binary"):
     old = """  <header class="masthead">
-    <p class="eyebrow">Reference &middot; build {build} &middot; extracted from the installed binary</p>""".format(build=build)
+    <p class="eyebrow">Reference &middot; build {build} &middot; {tail}</p>""".format(
+        build=build, tail=tail)
 
     new = """  <header class="masthead">
     <div class="masthead-top">
-      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build {build} &middot; extracted from the installed binary</p>
+      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build {build} &middot; {tail}</p>
       <a class="coffee" href="{bmc}" target="_blank" rel="noopener noreferrer">
         <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
-    </div>""".format(build=build, bmc=S.BMC)
+    </div>""".format(build=build, tail=tail, bmc=S.BMC)
     return old, new
 
 
@@ -625,6 +658,342 @@ def build_codex_page(prerender, counts):
     return head + frag[:cut] + "\n</head>\n<body>\n" + frag[cut:].lstrip("\n") + "\n</body>\n</html>\n"
 
 
+# ============================================================ the auto-memory page
+
+MEM_SUPPORT = support(
+    """<b>Found this useful?</b> Both mechanisms here were read out of the installed binaries and
+      checked against the stores they actually write on disk, because neither tool's documentation
+      describes the file layout. If it saved you an afternoon of guessing where your agent's memory
+      goes, you can put a coffee toward keeping it current with the next build.""")
+
+MEM_MACHINE = machine([("memory.json", "memory.json"), ("memory.md", "memory.md"),
+                       ("llms.txt", "../llms.txt")],
+                      "the same comparison, for scripts and agents.")
+
+
+def evidence_html(items):
+    out = []
+    for ev in items:
+        out.append("""        <div class="ev">
+          <div class="ev-body">
+            <button class="copy" type="button">Copy</button>
+            <pre>{quote}</pre>
+          </div>
+          <span class="src"><b>Source</b> {source}</span>
+        </div>
+""".format(quote=esc(ev["quote"]), source=esc(ev["source"])))
+    return "".join(out)
+
+
+def tool_html(tool):
+    steps = []
+    for n, stage in enumerate(tool["stages"], 1):
+        steps.append("""      <article class="step" id="{sid}">
+        <div class="step-top">
+          <span class="step-n">{n:02d}</span>
+          <h3>{title}</h3>
+          <a class="anchor" href="#{sid}" aria-label="Link to {title}">#</a>
+        </div>
+        {body}
+{ev}      </article>
+""".format(sid=stage["id"], n=n, title=esc(stage["title"]), body=stage["body"],
+           ev=evidence_html(stage.get("evidence", []))))
+
+    rows = "".join(
+        """          <tr><td class="p">{path}</td><td class="r">{role}</td>
+            <td class="r">{writer}</td><td class="r">{loaded}</td></tr>
+""".format(path=esc(f["path"]), role=f["role"], writer=f["writer"], loaded=f["loaded"])
+        for f in tool["files"])
+
+    return """    <section class="tool" id="{key}" style="--tc:var(--fam-{key})">
+      <div class="tool-head">
+        <p class="kicker">{kicker}</p>
+        <h2>{title}</h2>
+        {intro}
+      </div>
+{steps}
+      <div class="files">
+        <table>
+          <thead>
+            <tr><th scope="col">Path</th><th scope="col">What it holds</th>
+              <th scope="col">Written by</th><th scope="col">Reaches the model</th></tr>
+          </thead>
+          <tbody>
+{rows}          </tbody>
+        </table>
+      </div>
+    </section>
+""".format(key=tool["key"], kicker=esc(tool["kicker"]), title=esc(tool["title"]),
+           intro=tool["intro"], steps="".join(steps), rows=rows)
+
+
+def comparison_html(rows):
+    body = "".join(
+        """          <tr id="{rid}">
+            <th scope="row">{aspect}<span class="q">{question}</span></th>
+            <td class="cc">{claude}</td>
+            <td class="cx">{codex}</td>
+          </tr>
+{note}""".format(rid=r["id"], aspect=esc(r["aspect"]), question=esc(r["question"]),
+                 claude=r["claude"], codex=r["codex"],
+                 note=('          <tr class="noterow"><td colspan="3">%s</td></tr>\n' % r["note"])
+                 if r.get("note") else "")
+        for r in rows)
+
+    return """    <section class="closing" id="side-by-side">
+      <h2>Side by side</h2>
+      <div class="cmp">
+        <table>
+          <thead>
+            <tr><th scope="col" class="as">Dimension</th>
+              <th scope="col" class="cc">Claude Code</th>
+              <th scope="col" class="cx">Codex CLI</th></tr>
+          </thead>
+          <tbody>
+{body}          </tbody>
+        </table>
+      </div>
+    </section>
+""".format(body=body)
+
+
+def build_memory_page(data):
+    frag = (MEM_SRC / "memory.html").read_text(encoding="utf-8")
+
+    if len(data["tools"]) != 2:
+        raise SystemExit("memory-data.json describes %d tools, expected 2" % len(data["tools"]))
+
+    toc = ['      <li><a href="#%s">%s</a></li>' % (t["key"], esc(t["name"])) for t in data["tools"]]
+    toc.append('      <li><a href="#side-by-side">Side by side</a></li>')
+    toc.append('      <li><a href="#what-it-means">What it means in practice</a></li>')
+
+    takeaways = "".join(
+        """      <div class="take" id="{tid}">
+        <h3>{title}</h3>
+        {body}
+      </div>
+""".format(tid=t["id"], title=esc(t["title"]), body=t["body"]) for t in data["takeaways"])
+
+    method = "".join("      %s</p>\n" % para
+                     for para in data["method"].split("</p>") if para.strip())
+
+    body = ('    <div class="method">\n      <h2>How this was established</h2>\n'
+            + method + "    </div>\n\n"
+            + '    <ul class="toc">\n%s\n    </ul>\n\n' % "\n".join(toc)
+            + "\n".join(tool_html(t) for t in data["tools"])
+            + "\n" + comparison_html(data["comparison"])
+            + """
+    <section class="closing" id="what-it-means">
+      <h2>What it means in practice</h2>
+{takeaways}    </section>
+""".format(takeaways=takeaways))
+
+    frag = swap(frag, '<main id="memory"></main>',
+                '<main id="memory">\n' + body + "  </main>", "memory host")
+    frag = swap(frag, *masthead("%s + codex %s" % (S.BUILD, S.CODEX_BUILD),
+                                "read out of both installed binaries"), label="masthead")
+    frag = swap(frag, "\n  <footer>", MEM_SUPPORT, "footer")
+    frag = swap(frag, "\n  </footer>", MEM_MACHINE, "machine-readable")
+    frag = swap(frag, "\n  @media (prefers-reduced-motion",
+                COFFEE_CSS + "  @media (prefers-reduced-motion", "css")
+    frag = swap(frag, "<title>Agent Memory — v%s + %s</title>\n" % (S.BUILD, S.CODEX_BUILD), "",
+                "old title")
+
+    head = page_head(
+        title=S.MEM_TITLE, desc=S.MEM_DESC, url=S.MEMORY, ld=memory_ld(data),
+        ogtitle="Auto-memory in Claude Code and Codex — how each one remembers",
+        ogalt="Auto-memory compared — Claude Code %s and Codex CLI %s, read from both binaries"
+              % (S.BUILD, S.CODEX_BUILD),
+        icon="%F0%9F%A7%A0", updated=S.MEM_UPDATED,
+        alts=[("text/markdown", "memory.md", "Markdown version of this page"),
+              ("application/json", "memory.json",
+               "JSON dataset of both mechanisms and the comparison")])
+
+    cut = frag.index("</style>") + len("</style>")
+    return head + frag[:cut] + "\n</head>\n<body>\n" + frag[cut:].lstrip("\n") + "\n</body>\n</html>\n"
+
+
+def memory_ld(data):
+    return [
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "@id": S.MEMORY + "#article",
+            "headline": "Auto-Memory in Claude Code and Codex",
+            "name": S.MEM_TITLE,
+            "description": S.MEM_DESC,
+            "url": S.MEMORY,
+            "mainEntityOfPage": {"@type": "WebPage", "@id": S.MEMORY},
+            "inLanguage": "en",
+            "datePublished": S.MEM_UPDATED,
+            "dateModified": S.MEM_UPDATED,
+            "author": {"@type": "Person", "name": S.AUTHOR,
+                       "url": "https://github.com/" + S.AUTHOR},
+            "publisher": {"@type": "Organization", "name": S.SITE_NAME, "url": S.BASE},
+            "isPartOf": {"@type": "CollectionPage", "@id": S.BASE + "#collection"},
+            "image": S.MEMORY + "og.png",
+            "about": [
+                {"@type": "SoftwareApplication", "name": "Claude Code",
+                 "applicationCategory": "DeveloperApplication",
+                 "operatingSystem": "macOS, Linux, Windows", "softwareVersion": S.BUILD,
+                 "url": "https://code.claude.com/docs/",
+                 "publisher": {"@type": "Organization", "name": "Anthropic"}},
+                {"@type": "SoftwareApplication", "name": "OpenAI Codex CLI",
+                 "applicationCategory": "DeveloperApplication",
+                 "operatingSystem": "macOS, Linux, Windows", "softwareVersion": S.CODEX_BUILD,
+                 "url": "https://learn.chatgpt.com/docs/codex/cli",
+                 "publisher": {"@type": "Organization", "name": "OpenAI"}},
+            ],
+            "keywords": ("agent memory, auto memory, Claude Code memory, Codex memories, "
+                         "MEMORY.md, AGENTS.md, CLAUDE.md, persistent context, AI coding agent"),
+            "articleSection": [t["name"] for t in data["tools"]] + ["Side by side",
+                                                                   "What it means in practice"],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "@id": S.MEMORY + "#dataset",
+            "name": "Auto-memory mechanisms of Claude Code %s and Codex CLI %s"
+                    % (S.BUILD, S.CODEX_BUILD),
+            "description": ("Structured description of how each tool writes, stores and recalls "
+                            "memory across sessions — the on-disk artefacts, the prompt text that "
+                            "governs them, and a dimension-by-dimension comparison."),
+            "url": S.MEMORY,
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "creator": {"@type": "Person", "name": S.AUTHOR},
+            "dateModified": S.MEM_UPDATED,
+            "isAccessibleForFree": True,
+            "measurementTechnique": ("Static extraction of prompt and path literals from both "
+                                     "installed binaries, corroborated against the stores each "
+                                     "tool writes on disk"),
+            "variableMeasured": ["storage location", "what writes a memory", "when it is written",
+                                 "what is loaded at session start", "how a memory is recalled",
+                                 "scope", "user control", "file format"],
+            "distribution": [
+                {"@type": "DataDownload", "encodingFormat": "application/json",
+                 "contentUrl": S.MEMORY + "memory.json"},
+                {"@type": "DataDownload", "encodingFormat": "text/markdown",
+                 "contentUrl": S.MEMORY + "memory.md"},
+            ],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": S.SITE_NAME, "item": S.BASE},
+                {"@type": "ListItem", "position": 2, "name": "Auto-Memory in Claude Code and Codex",
+                 "item": S.MEMORY},
+            ],
+        },
+    ]
+
+
+def build_memory_data(data):
+    payload = {
+        "name": "Auto-memory mechanisms compared",
+        "description": ("How Claude Code build %s and OpenAI Codex CLI build %s each write, store "
+                        "and recall memory across sessions." % (S.BUILD, S.CODEX_BUILD)),
+        "claudeCodeBuild": S.BUILD,
+        "codexBuild": S.CODEX_BUILD,
+        "generated": S.MEM_UPDATED,
+        "license": "CC BY 4.0",
+        "canonicalPage": S.MEMORY,
+        "source": {
+            "method": to_md(data["method"]),
+            "claudeBinary": "~/.local/share/claude/versions/%s" % S.BUILD,
+            "codexBinary": "codex %s (Homebrew cask)" % S.CODEX_BUILD,
+        },
+        "counts": {
+            "dimensions": len(data["comparison"]),
+            "stages": sum(len(t["stages"]) for t in data["tools"]),
+            "artefacts": sum(len(t["files"]) for t in data["tools"]),
+            "quotes": sum(len(s.get("evidence", []))
+                          for t in data["tools"] for s in t["stages"]),
+        },
+        "fields": {
+            "stages": "The lifecycle of one memory, in the order the tool performs it",
+            "evidence": ("Verbatim strings from the binary or the on-disk store, with where each "
+                         "was found; nothing here is paraphrased"),
+            "files": "Every artefact the tool writes, what writes it, and whether the model sees it",
+            "comparison": "One row per dimension the two mechanisms can actually be compared on",
+        },
+        "tools": [{
+            "key": t["key"], "name": t["name"], "build": t["build"],
+            "summary": to_md(t["intro"]),
+            "stages": [{"id": s["id"], "title": s["title"], "body": to_md(s["body"]),
+                        "evidence": s.get("evidence", []),
+                        "url": S.MEMORY + "#" + s["id"]} for s in t["stages"]],
+            "files": [{"path": f["path"], "holds": to_md(f["role"]),
+                       "writtenBy": to_md(f["writer"]), "reachesTheModel": to_md(f["loaded"])}
+                      for f in t["files"]],
+        } for t in data["tools"]],
+        "comparison": [{"id": r["id"], "dimension": r["aspect"], "question": r["question"],
+                        "claudeCode": to_md(r["claude"]), "codexCli": to_md(r["codex"]),
+                        "note": to_md(r["note"]) if r.get("note") else None,
+                        "url": S.MEMORY + "#" + r["id"]} for r in data["comparison"]],
+        "takeaways": [{"id": t["id"], "title": t["title"], "body": to_md(t["body"]),
+                       "url": S.MEMORY + "#" + t["id"]} for t in data["takeaways"]],
+    }
+
+    md = [
+        "# Auto-Memory in Claude Code and Codex",
+        "",
+        "> How Claude Code build %s and OpenAI Codex CLI build %s each write, store and recall "
+        "memory between sessions. Both mechanisms were read out of the installed binaries and "
+        "checked against the stores they actually write on disk, rather than taken from the "
+        "documentation." % (S.BUILD, S.CODEX_BUILD),
+        "",
+        "- Canonical page: %s" % S.MEMORY,
+        "- Machine-readable: %smemory.json" % S.MEMORY,
+        "- Claude Code build: %s" % S.BUILD,
+        "- Codex CLI build: %s" % S.CODEX_BUILD,
+        "- Last updated: %s" % S.MEM_UPDATED,
+        "- License: CC BY 4.0",
+        "",
+        "## How this was established",
+        "",
+        to_md(data["method"]),
+        "",
+    ]
+    for t in data["tools"]:
+        md += ["## %s" % t["title"], "", to_md(t["intro"]), ""]
+        for n, s in enumerate(t["stages"], 1):
+            md += ["### %d. %s" % (n, s["title"]), "", to_md(s["body"]), ""]
+            for ev in s.get("evidence", []):
+                md += ["```text", ev["quote"].replace("```", "​```"), "```",
+                       "", "*Source: %s*" % to_md(ev["source"]), ""]
+            md += ["Anchor: %s#%s" % (S.MEMORY, s["id"]), ""]
+        md += ["### Where %s keeps the bytes" % t["name"], "",
+               "| Path | What it holds | Written by | Reaches the model |",
+               "| --- | --- | --- | --- |"]
+        md += ["| `%s` | %s | %s | %s |"
+               % (f["path"], to_md(f["role"]).replace("|", "\\|"),
+                  to_md(f["writer"]).replace("|", "\\|"), to_md(f["loaded"]).replace("|", "\\|"))
+               for f in t["files"]]
+        md += [""]
+
+    md += ["## Side by side", "",
+           "| Dimension | Claude Code %s | Codex CLI %s |" % (S.BUILD, S.CODEX_BUILD),
+           "| --- | --- | --- |"]
+    for r in data["comparison"]:
+        flat = lambda html: to_md(html).replace("\n", " ").replace("|", "\\|")  # noqa: E731
+        dimension = "**%s** — %s" % (r["aspect"], r["question"].rstrip("?"))
+        if r.get("note"):
+            dimension += " *(%s)*" % flat(r["note"])
+        md += ["| %s | %s | %s |" % (dimension, flat(r["claude"]), flat(r["codex"]))]
+    md += [""]
+
+    md += ["## What it means in practice", ""]
+    for t in data["takeaways"]:
+        md += ["### %s" % t["title"], "", to_md(t["body"]), ""]
+
+    md += ["---", "",
+           "From [%s](%s) by %s. If it saved you time, [buy me a coffee](%s)."
+           % (S.SITE_NAME, S.BASE, S.AUTHOR, S.BMC), ""]
+
+    return payload, "\n".join(md)
+
+
 # ============================================================ the data twins
 
 FAMILY_DESC = {
@@ -1086,6 +1455,513 @@ def build_skills_data(data):
     return payload, "\n".join(md)
 
 
+# ============================================================ the comparison page
+
+CMP_SUPPORT = support(
+    """<b>Found this useful?</b> Both halves of this page were measured rather than looked up — the
+      pairing against the two inventories on this site, the capability table against
+      <code>--help</code> on the two installed builds. If it saved you from installing both just to
+      find out how they differ, you can put a coffee toward keeping it current.""")
+
+CMP_MACHINE = machine([("compare.json", "compare.json"), ("compare.md", "compare.md"),
+                       ("llms.txt", "../llms.txt")],
+                      "every pairing and both leftovers, for scripts and agents.")
+
+# label, CSS tone, the page each side's names link back to
+CMP_SIDE = {"cc": ("Claude Code", "cc", "../claude-code-cheatsheet/#"),
+            "cx": ("Codex CLI", "cx", "../codex-cheatsheet/#")}
+
+# the two inventories slice themselves differently, so the bar has different segments per side
+CMP_SEGMENTS = {"cc": [("native", "native slash"), ("skills", "bundled skills"),
+                       ("cli", "shell subcommands"), ("hidden", "hidden")],
+                "cx": [("slash", "slash commands"), ("cli", "shell subcommands"),
+                       ("hidden", "hidden")]}
+CMP_MIX = [100, 62, 38, 20]
+
+
+def strip_tags(text):
+    """Editorial fields carry inline HTML; the search index wants only the words."""
+    out, depth = [], 0
+    for ch in text:
+        if ch == "<":
+            depth += 1
+        elif ch == ">":
+            depth = max(0, depth - 1)
+        elif depth == 0:
+            out.append(ch)
+    return "".join(out)
+
+
+def cmp_resolve(names, index, what, pair_id):
+    """A pairing that names a command the tool no longer has fails the build, rather than
+    publishing a dead half-row that still looks authoritative."""
+    picked = []
+    for name in names:
+        if name not in index:
+            raise SystemExit("compare-data.json: %s names %s %r, which is not in the inventory"
+                             % (pair_id, what, name))
+        picked.append(index[name])
+    return picked
+
+
+def cmp_side(which, commands, flags):
+    label, tone, base = CMP_SIDE[which]
+    rows = ['<p class="said"><a href="%s%s">%s</a> <q>%s</q></p>'
+            % (base, c["id"], esc(c["name"]), esc(c["description"].rstrip(".")))
+            for c in commands]
+    rows += ['<p class="said"><span class="nm">%s</span> <q>%s</q></p>'
+             % (esc(f["flag"]), esc(f["description"].rstrip(".")))
+             for f in flags]
+    if not rows:
+        rows = ['<p class="none">&mdash; no counterpart</p>']
+    return ('        <div class="side" style="--tc:var(--%s)">\n'
+            '          <span class="who">%s</span>\n'
+            '          <div class="body">\n%s\n          </div>\n'
+            '        </div>\n'
+            % (tone, label, "\n".join("            " + r for r in rows)))
+
+
+def cmp_pair(p, cc_idx, cx_idx, cc_flags, cx_flags):
+    cc = cmp_resolve(p["cc"], cc_idx, "Claude Code command", p["id"])
+    cx = cmp_resolve(p["cx"], cx_idx, "Codex command", p["id"])
+    ccf = cmp_resolve(p.get("ccFlags", []), cc_flags, "Claude Code flag", p["id"])
+    cxf = cmp_resolve(p.get("cxFlags", []), cx_flags, "Codex flag", p["id"])
+
+    hay = " ".join([p["job"]]
+                   + [c["name"] for c in cc + cx] + [f["flag"] for f in ccf + cxf]
+                   + [c["description"] for c in cc + cx]
+                   + [f["description"] for f in ccf + cxf]
+                   + [strip_tags(p["note"])]).lower()
+    note = '\n        <p class="pair-note">%s</p>' % p["note"] if p["note"] else ""
+
+    return """      <article class="pair" id="{id}" data-hay="{hay}">
+        <div class="pair-top">
+          <h3 class="pair-job">{job}</h3>
+          <a class="anchor" href="#{id}" aria-label="Link to {job}">#</a>
+        </div>
+{cc}{cx}{note}
+      </article>
+""".format(id=p["id"], hay=esc(hay), job=esc(p["job"]),
+           cc=cmp_side("cc", cc, ccf), cx=cmp_side("cx", cx, cxf), note=note)
+
+
+def cmp_only(commands, which):
+    """Grouped by the section the command sits in on its own page, in that page's order."""
+    _, _, base = CMP_SIDE[which]
+    groups = []
+    for c in commands:
+        if not groups or groups[-1][0] != c["section"]:
+            groups.append((c["section"], []))
+        groups[-1][1].append(c)
+
+    out = []
+    for title, items in groups:
+        rows = "".join(
+            '          <div class="only" data-hay="%s"><a href="%s%s">%s</a><p>%s</p></div>\n'
+            % (esc((c["name"] + " " + c["description"]).lower()), base, c["id"],
+               esc(c["name"]), esc(c["description"].rstrip(".")))
+            for c in items)
+        out.append('        <div class="onlygroup">\n          <h4>%s</h4>\n%s        </div>\n'
+                   % (esc(title), rows))
+    return "".join(out)
+
+
+def cmp_caps(caps):
+    return "".join(
+        '        <tr id="%s" data-hay="%s"><td class="topic">%s</td><td class="body">%s</td>'
+        '<td class="body">%s</td><td class="how">%s</td></tr>\n'
+        % (c["id"],
+           esc(strip_tags(" ".join([c["topic"], c["cc"], c["cx"], c["evidence"]])).lower()),
+           esc(c["topic"]), c["cc"], c["cx"], c["evidence"])
+        for c in caps)
+
+
+def cmp_verdict(v):
+    def col(title, tone, items):
+        return ('      <div class="vcol" style="--tc:var(--%s)">\n        <h3>%s</h3>\n'
+                '        <ul>\n%s        </ul>\n      </div>\n'
+                % (tone, title, "".join("          <li>%s</li>\n" % i for i in items)))
+
+    return (col("Reach for Claude Code when", "cc", v["cc"])
+            + col("Reach for Codex when", "cx", v["cx"])
+            + col("And mostly", "fam-cli", [v["both"]]))
+
+
+def cmp_shape(cc_counts, cx_counts, shape):
+    def one(which, title, counts, blurb):
+        _, tone, _ = CMP_SIDE[which]
+        bars, legend = [], []
+        for i, (key, name) in enumerate(CMP_SEGMENTS[which]):
+            fill = ("var(--%s)" % tone if i == 0 else
+                    "color-mix(in srgb, var(--%s) %d%%, var(--surface-2))" % (tone, CMP_MIX[i]))
+            bars.append('<i style="width:%.2f%%;background:%s"></i>'
+                        % (100.0 * counts[key] / counts["total"], fill))
+            legend.append('<li><i style="background:%s"></i><b>%d</b> %s</li>'
+                          % (fill, counts[key], name))
+        return """      <div class="surface" style="--tc:var(--{tone})">
+        <h3>{title}</h3>
+        <p class="tot">{total} <span>commands</span></p>
+        <div class="bar">{bars}</div>
+        <ul class="legend">{legend}</ul>
+        <p class="say">{blurb}</p>
+      </div>
+""".format(tone=tone, title=esc(title), total=counts["total"], bars="".join(bars),
+           legend="".join(legend), blurb=blurb)
+
+    return (one("cc", "Claude Code %s" % S.BUILD, cc_counts, shape["cc"])
+            + one("cx", "Codex CLI %s" % S.CODEX_BUILD, cx_counts, shape["cx"]))
+
+
+def compare_split(data, cc_payload, cx_payload):
+    """Pair what the data names, and leave everything else as the computed complement."""
+    cc_idx = {c["name"]: c for c in cc_payload["commands"]}
+    cx_idx = {c["name"]: c for c in cx_payload["commands"]}
+    cc_flags = {f["flag"]: f for f in cc_payload["flags"]}
+    cx_flags = {f["flag"]: f for f in cx_payload["flags"]}
+
+    cards, used_cc, used_cx = [], set(), set()
+    for p in data["pairs"]:
+        cards.append(cmp_pair(p, cc_idx, cx_idx, cc_flags, cx_flags))
+        used_cc.update(p["cc"])
+        used_cx.update(p["cx"])
+
+    only_cc = [c for c in cc_payload["commands"] if c["name"] not in used_cc]
+    only_cx = [c for c in cx_payload["commands"] if c["name"] not in used_cx]
+
+    # The page claims every command appears exactly once, paired or left over. Hold it to that.
+    for label, used, only, total in [("Claude Code", used_cc, only_cc, len(cc_payload["commands"])),
+                                     ("Codex", used_cx, only_cx, len(cx_payload["commands"]))]:
+        if len(used) + len(only) != total:
+            raise SystemExit("compare: %s splits %d paired + %d left over, but the inventory has %d"
+                             % (label, len(used), len(only), total))
+
+    return cards, only_cc, only_cx
+
+
+def build_compare_page(data, cc_payload, cx_payload, cc_counts, cx_counts):
+    frag = (CMP_SRC / "compare.html").read_text(encoding="utf-8")
+    cards, only_cc, only_cx = compare_split(data, cc_payload, cx_payload)
+
+    stats = {"pairs": len(data["pairs"]), "onlycc": len(only_cc), "onlycx": len(only_cx),
+             "caps": len(data["capabilities"]),
+             "verdict": len(data["verdict"]["cc"]) + len(data["verdict"]["cx"]) + 1}
+
+    frag = swap(frag, '<div class="shape" id="shape"></div>',
+                '<div class="shape" id="shape">\n%s    </div>'
+                % cmp_shape(cc_counts, cx_counts, data["shape"]), "shape host")
+    frag = swap(frag, '<main id="pairs"></main>',
+                '<main id="pairs">\n      <div class="pairgrid">\n%s      </div>\n    </main>'
+                % "".join(cards), "pairs host")
+    frag = swap(frag, '<div id="onlycc"></div>',
+                '<div id="onlycc">\n%s        </div>' % cmp_only(only_cc, "cc"), "only-cc host")
+    frag = swap(frag, '<div id="onlycx"></div>',
+                '<div id="onlycx">\n%s        </div>' % cmp_only(only_cx, "cx"), "only-cx host")
+    frag = swap(frag, '<tbody id="capbody"></tbody>',
+                '<tbody id="capbody">\n%s      </tbody>' % cmp_caps(data["capabilities"]),
+                "capabilities host")
+    frag = swap(frag, '<div class="verdict" id="verdict"></div>',
+                '<div class="verdict" id="verdict">\n%s    </div>'
+                % cmp_verdict(data["verdict"]), "verdict host")
+
+    for key, value in stats.items():
+        frag = swap(frag, '<b id="s-%s">0</b>' % key,
+                    '<b id="s-%s">%s</b>' % (key, value), "stat " + key)
+    # Baked so the counts read correctly with JavaScript off; the page's own script re-derives
+    # them as soon as a filter moves.
+    for key, value in [("paircount", stats["pairs"]), ("cccount", stats["onlycc"]),
+                       ("cxcount", stats["onlycx"]),
+                       ("onlycount", stats["onlycc"] + stats["onlycx"]),
+                       ("capcount", stats["caps"]), ("verdictcount", stats["verdict"])]:
+        frag = swap(frag, '<span class="n" id="%s"></span>' % key,
+                    '<span class="n" id="%s">%s</span>' % (key, value), "count " + key)
+
+    frag = swap(frag, *masthead("%s + codex %s" % (S.BUILD, S.CODEX_BUILD),
+                                "both read from the installed binaries"), label="masthead")
+    frag = swap(frag, "\n  <footer>", CMP_SUPPORT, "footer")
+    frag = swap(frag, "\n  </footer>", CMP_MACHINE, "machine-readable")
+    frag = swap(frag, "\n  @media (prefers-reduced-motion",
+                COFFEE_CSS + "  @media (prefers-reduced-motion", "css")
+    frag = swap(frag, "<title>Claude Code vs Codex CLI — %s vs %s</title>\n"
+                % (S.BUILD, S.CODEX_BUILD), "", "old title")
+
+    head = page_head(
+        title=S.CMP_TITLE, desc=S.CMP_DESC, url=S.COMPARE,
+        ld=compare_ld(stats), updated=S.COMPARE_UPDATED,
+        ogtitle="Claude Code vs Codex CLI — %d jobs both do, %d neither shares"
+                % (stats["pairs"], stats["onlycc"] + stats["onlycx"]),
+        ogalt="Claude Code %s against Codex CLI %s, command for command"
+              % (S.BUILD, S.CODEX_BUILD),
+        icon="%E2%9A%96",
+        alts=[("text/markdown", "compare.md", "Markdown version of this page"),
+              ("application/json", "compare.json",
+               "JSON dataset of every pairing and both leftovers")])
+
+    cut = frag.index("</style>") + len("</style>")
+    return head + frag[:cut] + "\n</head>\n<body>\n" + frag[cut:].lstrip("\n") + "\n</body>\n</html>\n"
+
+
+def compare_ld(stats):
+    return [
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "@id": S.COMPARE + "#article",
+            "headline": "Claude Code vs Codex CLI",
+            "name": S.CMP_TITLE,
+            "description": S.CMP_DESC,
+            "url": S.COMPARE,
+            "mainEntityOfPage": {"@type": "WebPage", "@id": S.COMPARE},
+            "inLanguage": "en",
+            "datePublished": S.COMPARE_UPDATED,
+            "dateModified": S.COMPARE_UPDATED,
+            "author": {"@type": "Person", "name": S.AUTHOR,
+                       "url": "https://github.com/" + S.AUTHOR},
+            "publisher": {"@type": "Organization", "name": S.SITE_NAME, "url": S.BASE},
+            "isPartOf": {"@type": "CollectionPage", "@id": S.BASE + "#collection"},
+            "image": S.COMPARE + "og.png",
+            "about": [
+                {"@type": "SoftwareApplication", "name": "Claude Code",
+                 "applicationCategory": "DeveloperApplication",
+                 "operatingSystem": "macOS, Linux, Windows", "softwareVersion": S.BUILD,
+                 "url": "https://code.claude.com/docs/",
+                 "publisher": {"@type": "Organization", "name": "Anthropic"}},
+                {"@type": "SoftwareApplication", "name": "OpenAI Codex CLI",
+                 "applicationCategory": "DeveloperApplication",
+                 "operatingSystem": "macOS, Linux, Windows", "softwareVersion": S.CODEX_BUILD,
+                 "url": "https://learn.chatgpt.com/docs/codex/cli",
+                 "publisher": {"@type": "Organization", "name": "OpenAI"}},
+            ],
+            "keywords": ("Claude Code vs Codex, Codex CLI comparison, AI coding agent comparison, "
+                         "slash commands, sandboxing, approval policy, hooks, CLAUDE.md, AGENTS.md"),
+            "articleSection": ["The shape of each surface", "The same job, both tools",
+                               "Only in one of them", "Capabilities", "Which one to reach for"],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "@id": S.COMPARE + "#dataset",
+            "name": "Claude Code %s and Codex CLI %s command comparison" % (S.BUILD, S.CODEX_BUILD),
+            "description": ("%d jobs both tools ship a command for, with each build's own "
+                            "description of its command, plus the %d Claude Code commands and %d "
+                            "Codex commands that have no counterpart, and %d capability "
+                            "comparisons sourced from the running CLIs."
+                            % (stats["pairs"], stats["onlycc"], stats["onlycx"], stats["caps"])),
+            "url": S.COMPARE,
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "creator": {"@type": "Person", "name": S.AUTHOR},
+            "dateModified": S.COMPARE_UPDATED,
+            "isAccessibleForFree": True,
+            "measurementTechnique": ("Set operations over the two published command inventories, "
+                                     "plus `claude --help`, `codex --help` and the on-disk config "
+                                     "layout of both tools"),
+            "variableMeasured": ["job", "Claude Code commands", "Codex commands",
+                                 "each build's own description", "unpaired commands",
+                                 "capability topic", "how each capability was established"],
+            "distribution": [
+                {"@type": "DataDownload", "encodingFormat": "application/json",
+                 "contentUrl": S.COMPARE + "compare.json"},
+                {"@type": "DataDownload", "encodingFormat": "text/markdown",
+                 "contentUrl": S.COMPARE + "compare.md"},
+            ],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": S.SITE_NAME, "item": S.BASE},
+                {"@type": "ListItem", "position": 2, "name": "Claude Code vs Codex CLI",
+                 "item": S.COMPARE},
+            ],
+        },
+    ]
+
+
+def build_compare_data(data, cc_payload, cx_payload):
+    _, only_cc, only_cx = compare_split(data, cc_payload, cx_payload)
+    cc_idx = {c["name"]: c for c in cc_payload["commands"]}
+    cx_idx = {c["name"]: c for c in cx_payload["commands"]}
+    cc_flags = {f["flag"]: f for f in cc_payload["flags"]}
+    cx_flags = {f["flag"]: f for f in cx_payload["flags"]}
+
+    def side(names, flag_names, index, flag_index, base):
+        return {
+            "commands": [{"name": n, "description": index[n]["description"],
+                          "url": base + "#" + index[n]["id"]} for n in names],
+            "flags": [{"flag": f, "description": flag_index[f]["description"]}
+                      for f in flag_names],
+        }
+
+    pairs = [{
+        "id": p["id"],
+        "job": p["job"],
+        "claudeCode": side(p["cc"], p.get("ccFlags", []), cc_idx, cc_flags, S.CHEATSHEET),
+        "codex": side(p["cx"], p.get("cxFlags", []), cx_idx, cx_flags, S.CODEX),
+        "note": strip_tags(p["note"]) or None,
+        "url": S.COMPARE + "#" + p["id"],
+    } for p in data["pairs"]]
+
+    def leftover(items, base):
+        return [{"name": c["name"], "section": c["section"], "description": c["description"],
+                 "url": base + "#" + c["id"]} for c in items]
+
+    payload = {
+        "name": "Claude Code and Codex CLI, compared command for command",
+        "description": ("Where Claude Code %s and OpenAI Codex CLI %s ship a command for the same "
+                        "job, what only one of them has, and how they differ on sandboxing, "
+                        "permissions, hooks and configuration." % (S.BUILD, S.CODEX_BUILD)),
+        "claudeCodeBuild": S.BUILD,
+        "codexBuild": S.CODEX_BUILD,
+        "generated": S.COMPARE_UPDATED,
+        "license": "CC BY 4.0",
+        "canonicalPage": S.COMPARE,
+        "source": {
+            "method": ("The command halves are set operations over the two inventories published "
+                       "on this site, which were themselves read out of the installed builds. "
+                       "Descriptions are each build's own string, unedited. Which two commands "
+                       "count as the same job is a hand-made judgement — that is the one part of "
+                       "this file that was not measured — and the unpaired lists are then the "
+                       "computed complement, so every command appears exactly once. The capability "
+                       "rows come from `claude --help`, `codex --help` and the on-disk config "
+                       "layout of both tools; each carries how it was established."),
+            "claudeCodeInventory": S.CHEATSHEET + "commands.json",
+            "codexInventory": S.CODEX + "codex-commands.json",
+        },
+        "counts": {
+            "pairedJobs": len(pairs),
+            "claudeCodeCommands": len(cc_payload["commands"]),
+            "codexCommands": len(cx_payload["commands"]),
+            "onlyClaudeCode": len(only_cc),
+            "onlyCodex": len(only_cx),
+            "capabilities": len(data["capabilities"]),
+        },
+        "fields": {
+            "id": "Stable anchor on the canonical page; append as #id to deep-link",
+            "job": "The shared job, named by hand — this is the editorial part",
+            "claudeCode": "The Claude Code commands and launch flags that do it, with their own "
+                          "descriptions and a link to the full entry",
+            "codex": "The same for Codex",
+            "note": "Where the two differ in kind rather than in name",
+            "onlyClaudeCode": "Every Claude Code command no pairing claimed",
+            "onlyCodex": "Every Codex command no pairing claimed",
+            "capabilities": "Differences a command list cannot show, each with its evidence",
+            "verdict": "Opinion, derived from the rows above and marked as such",
+        },
+        "pairs": pairs,
+        "onlyClaudeCode": leftover(only_cc, S.CHEATSHEET),
+        "onlyCodex": leftover(only_cx, S.CODEX),
+        "capabilities": [{"id": c["id"], "topic": c["topic"],
+                          "claudeCode": strip_tags(c["cc"]), "codex": strip_tags(c["cx"]),
+                          "establishedBy": strip_tags(c["evidence"]),
+                          "url": S.COMPARE + "#" + c["id"]} for c in data["capabilities"]],
+        "verdict": {
+            "disclaimer": "Opinion, not measurement. Everything else in this file was measured.",
+            "reachForClaudeCode": [strip_tags(x) for x in data["verdict"]["cc"]],
+            "reachForCodex": [strip_tags(x) for x in data["verdict"]["cx"]],
+            "andMostly": strip_tags(data["verdict"]["both"]),
+        },
+    }
+
+    def md_side(label, entry):
+        bits = ["  - **%s:**" % label]
+        if not entry["commands"] and not entry["flags"]:
+            return "  - **%s:** *no counterpart.*" % label
+        parts = ["`%s` — %s" % (c["name"], c["description"].rstrip("."))
+                 for c in entry["commands"]]
+        parts += ["`%s` *(launch flag)* — %s" % (f["flag"], f["description"].rstrip("."))
+                  for f in entry["flags"]]
+        return "\n".join(bits + ["    - " + p for p in parts])
+
+    md = [
+        "# Claude Code vs Codex CLI",
+        "",
+        "> Claude Code %s and OpenAI Codex CLI %s, command for command. %d jobs both ship a command "
+        "for, quoted in each build's own words; %d Claude Code commands and %d Codex commands with "
+        "no counterpart; and %d capability differences a command list cannot show."
+        % (S.BUILD, S.CODEX_BUILD, len(pairs), len(only_cc), len(only_cx),
+           len(data["capabilities"])),
+        "",
+        "- Canonical page: %s" % S.COMPARE,
+        "- Machine-readable: %scompare.json" % S.COMPARE,
+        "- Claude Code build: %s · Codex CLI build: %s" % (S.BUILD, S.CODEX_BUILD),
+        "- Last updated: %s" % S.COMPARE_UPDATED,
+        "- License: CC BY 4.0",
+        "",
+        "## How this was established",
+        "",
+        "The command halves are set operations over the two inventories published on this site, "
+        "each read out of its installed build rather than its documentation. Every description "
+        "below is the string that build carries, unedited.",
+        "",
+        "What was **not** measured is the pairing: deciding that two commands do the same job is a "
+        "judgement made by hand, which is why both descriptions are printed rather than "
+        "summarised — so the judgement can be checked. The two unpaired lists are then the "
+        "computed complement of the pairing, so every command in either inventory appears exactly "
+        "once, and a bad pairing shows up as a missing entry rather than a silent one.",
+        "",
+        "The capability section was measured separately, from `claude --help`, `codex --help` and "
+        "the on-disk config layout of both tools on one machine. Each row names its evidence. The "
+        "closing section is opinion and says so.",
+        "",
+        "## The same job, both tools",
+        "",
+        "%d jobs. Each tool's own description of its own command." % len(pairs),
+        "",
+    ]
+    for p in pairs:
+        md += ["### %s" % p["job"], ""]
+        md += [md_side("Claude Code", p["claudeCode"]), md_side("Codex", p["codex"])]
+        if p["note"]:
+            md += ["", "  %s" % p["note"]]
+        md += [""]
+
+    for title, items, blurb in [
+            ("Only in Claude Code", only_cc,
+             "Claude Code commands no pairing above claimed. %d of %d."
+             % (len(only_cc), len(cc_payload["commands"]))),
+            ("Only in Codex", only_cx,
+             "Codex commands no pairing above claimed. %d of %d."
+             % (len(only_cx), len(cx_payload["commands"])))]:
+        md += ["## %s" % title, "", blurb, ""]
+        section = None
+        for c in items:
+            if c["section"] != section:
+                section = c["section"]
+                md += ["", "**%s**" % section, ""]
+            md += ["- **`%s`** — %s" % (c["name"], c["description"].rstrip("."))]
+        md += [""]
+
+    md += ["## Capabilities, not commands", "",
+           "Differences a command list cannot show. Nothing here comes from either vendor's "
+           "documentation; each row names how it was established.", "",
+           "| Topic | Claude Code %s | Codex CLI %s | How this was established |"
+           % (S.BUILD, S.CODEX_BUILD),
+           "| --- | --- | --- | --- |"]
+    md += ["| %s | %s | %s | %s |"
+           % (c["topic"], strip_tags(c["cc"]).replace("|", "\\|"),
+              strip_tags(c["cx"]).replace("|", "\\|"),
+              strip_tags(c["evidence"]).replace("|", "\\|"))
+           for c in data["capabilities"]]
+    md += ["",
+           "One row is weaker than the others, and it is the hooks row. Both binaries carry the "
+           "same eleven event names, which settles it for Claude Code — they are the keys its "
+           "`settings.json` takes — but not for Codex, which also ships an importer for Claude "
+           "Code setups and so has a reason to know those names either way. Which of the eleven "
+           "Codex actually fires was not established here, and is not claimed.",
+           "",
+           "## Which one to reach for", "",
+           "*Opinion. Everything above this line was measured; this is a reading of it.*", ""]
+    md += ["**Reach for Claude Code when**", ""]
+    md += ["- %s" % strip_tags(x) for x in data["verdict"]["cc"]]
+    md += ["", "**Reach for Codex when**", ""]
+    md += ["- %s" % strip_tags(x) for x in data["verdict"]["cx"]]
+    md += ["", "**And mostly**", "", strip_tags(data["verdict"]["both"]), "",
+           "---", "",
+           "From [%s](%s) by %s. If it saved you time, [buy me a coffee](%s)."
+           % (S.SITE_NAME, S.BASE, S.AUTHOR, S.BMC), ""]
+
+    return payload, "\n".join(md)
+
+
 # ============================================================ site-wide files
 
 AI_AGENTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-User",
@@ -1097,10 +1973,12 @@ AI_AGENTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Use
 PAGES = [(S.BASE, "1.0", S.SITE_UPDATED),
          (S.CHEATSHEET, "0.9", S.UPDATED),
          (S.SKILLS, "0.9", S.UPDATED),
-         (S.CODEX, "0.9", S.CODEX_UPDATED)]
+         (S.CODEX, "0.9", S.CODEX_UPDATED),
+         (S.COMPARE, "0.9", S.COMPARE_UPDATED),
+         (S.MEMORY, "0.9", S.MEM_UPDATED)]
 
 
-def build_site_files(markdown, counts, skill_counts, codex_counts):
+def build_site_files(markdown, counts, skill_counts, codex_counts, compare_counts, memory_counts):
     llms = """# {site}
 
 > {desc}
@@ -1120,6 +1998,12 @@ follows the tool and says so.
 - [Codex CLI Command Index]({cx}): every slash command, `codex` subcommand, launch flag and feature
   flag in OpenAI Codex CLI build {cxbuild} — {cxtotal} commands, {cxflags} flags and {cxfeat}
   feature switches, read out of the running CLI and probed for availability.
+- [Claude Code vs Codex CLI]({cmp}): the two agents side by side — {cmppairs} jobs both ship a
+  command for, quoted in each build's own words, {cmpcc} commands only Claude Code has and {cmpcx}
+  only Codex has, plus {cmpcaps} capability differences measured from the running CLIs.
+- [Auto-Memory in Claude Code and Codex]({mem}): how each tool writes, stores and recalls memory
+  between sessions — the on-disk layout, the prompt text that governs it and the switches that turn
+  it off, read out of both installed binaries and compared across {memdims} dimensions.
 
 ## Machine-readable data
 
@@ -1132,6 +2016,12 @@ follows the tool and says so.
 - [Codex CLI commands as Markdown]({cx}codex-commands.md): the full Codex index as plain Markdown.
 - [Codex CLI commands as JSON]({cx}codex-commands.json): the same inventory as structured data,
   with how each command's availability was established, plus the whole feature table.
+- [The comparison as Markdown]({cmp}compare.md): every pairing and both leftovers as plain Markdown.
+- [The comparison as JSON]({cmp}compare.json): the same as structured data — each pairing with both
+  builds' own descriptions, the unpaired commands on each side, and the capability rows.
+- [Auto-memory as Markdown]({mem}memory.md): both mechanisms and the comparison as plain Markdown.
+- [Auto-memory as JSON]({mem}memory.json): the same as structured data — each lifecycle stage with
+  the verbatim strings behind it, the artefacts each tool writes, and every comparison row.
 - [Everything as one file]({base}llms-full.txt): every page's Markdown concatenated.
 
 ## About
@@ -1143,7 +2033,11 @@ follows the tool and says so.
            flags=counts["flags"], skills=skill_counts["total"],
            words=format(skill_counts["promptWords"], ","), cxbuild=S.CODEX_BUILD,
            cxtotal=codex_counts["total"], cxflags=codex_counts["flags"],
-           cxfeat=codex_counts["features"])
+           cxfeat=codex_counts["features"],
+           cmp=S.COMPARE, cmppairs=compare_counts["pairedJobs"],
+           cmpcc=compare_counts["onlyClaudeCode"], cmpcx=compare_counts["onlyCodex"],
+           cmpcaps=compare_counts["capabilities"],
+           mem=S.MEMORY, memdims=memory_counts["dimensions"])
     (ROOT / "llms.txt").write_text(llms, encoding="utf-8")
 
     (ROOT / "llms-full.txt").write_text(
@@ -1207,14 +2101,36 @@ def main():
         json.dumps(cx_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (CX_OUT / "codex-commands.md").write_text(cx_markdown, encoding="utf-8")
 
-    build_site_files(markdown + "\n\n---\n\n" + sk_markdown + "\n\n---\n\n" + cx_markdown,
-                     counts, sk_payload["counts"], cx_counts)
+    cmp_data = json.loads((CMP_SRC / "compare-data.json").read_text(encoding="utf-8"))
+    CMP_OUT.mkdir(parents=True, exist_ok=True)
+    (CMP_OUT / "index.html").write_text(
+        build_compare_page(cmp_data, payload, cx_payload, counts, cx_counts), encoding="utf-8")
+    cmp_payload, cmp_markdown = build_compare_data(cmp_data, payload, cx_payload)
+    (CMP_OUT / "compare.json").write_text(
+        json.dumps(cmp_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (CMP_OUT / "compare.md").write_text(cmp_markdown, encoding="utf-8")
+
+    mem_data = json.loads((MEM_SRC / "memory-data.json").read_text(encoding="utf-8"))
+    MEM_OUT.mkdir(parents=True, exist_ok=True)
+    (MEM_OUT / "index.html").write_text(build_memory_page(mem_data), encoding="utf-8")
+    mem_payload, mem_markdown = build_memory_data(mem_data)
+    (MEM_OUT / "memory.json").write_text(
+        json.dumps(mem_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (MEM_OUT / "memory.md").write_text(mem_markdown, encoding="utf-8")
+
+    build_site_files(markdown + "\n\n---\n\n" + sk_markdown + "\n\n---\n\n" + cx_markdown
+                     + "\n\n---\n\n" + cmp_markdown + "\n\n---\n\n" + mem_markdown,
+                     counts, sk_payload["counts"], cx_counts, cmp_payload["counts"],
+                     mem_payload["counts"])
 
     written = ["claude-code-cheatsheet/index.html", "claude-code-cheatsheet/commands.json",
                "claude-code-cheatsheet/commands.md", "claude-code-built-in-skills/index.html",
                "claude-code-built-in-skills/skills.json", "claude-code-built-in-skills/skills.md",
                "codex-cheatsheet/index.html", "codex-cheatsheet/codex-commands.json",
                "codex-cheatsheet/codex-commands.md",
+               "claude-code-vs-codex/index.html", "claude-code-vs-codex/compare.json",
+               "claude-code-vs-codex/compare.md",
+               "agent-memory/index.html", "agent-memory/memory.json", "agent-memory/memory.md",
                "llms.txt", "llms-full.txt", "robots.txt", "sitemap.xml", ".nojekyll"]
     for f in written:
         print("  %-42s %8d bytes" % (f, (ROOT / f).stat().st_size))
@@ -1225,6 +2141,12 @@ def main():
     print("codex %s: %d commands, %d flags, %d feature switches (%d on), %d linked to docs"
           % (S.CODEX_BUILD, cx_counts["total"], cx_counts["flags"], cx_counts["features"],
              cx_counts["featuresOn"], cx_counts["documented"]))
+    print("memory: %d lifecycle stages, %d artefacts, %d verbatim quotes, %d dimensions compared"
+          % (mem_payload["counts"]["stages"], mem_payload["counts"]["artefacts"],
+             mem_payload["counts"]["quotes"], mem_payload["counts"]["dimensions"]))
+    print("compare: %d paired jobs, %d only Claude Code, %d only Codex, %d capabilities"
+          % (cmp_payload["counts"]["pairedJobs"], cmp_payload["counts"]["onlyClaudeCode"],
+             cmp_payload["counts"]["onlyCodex"], cmp_payload["counts"]["capabilities"]))
     print("index.html and 404.html are hand-maintained — this script does not touch them.")
 
 

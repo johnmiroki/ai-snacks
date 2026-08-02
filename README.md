@@ -10,6 +10,8 @@ server.
 
 | Snack | What it is | Also as |
 | --- | --- | --- |
+| [Auto-Memory in Claude Code and Codex](https://johnmiroki.github.io/ai-snacks/agent-memory/) | How each tool writes, stores and recalls memory between sessions — the on-disk layout, the prompt text that governs it and the switches that turn it off, read out of both installed binaries and compared across 15 dimensions | [json](https://johnmiroki.github.io/ai-snacks/agent-memory/memory.json) · [md](https://johnmiroki.github.io/ai-snacks/agent-memory/memory.md) |
+| [Claude Code vs Codex CLI](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/) | The two agents command for command — 43 jobs both ship a command for, quoted in each build's own words, 69 commands only Claude Code has and 55 only Codex has, plus 13 capability differences measured from the running CLIs | [json](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.md) |
 | [Claude Code Bundled Skills](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/) | The full prompt behind all 35 skills bundled inside Claude Code 2.1.220 — read out of the shipped binary and reproduced verbatim, not summarised | [json](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.md) |
 | [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/) | Every slash command, bundled skill, `claude` subcommand and CLI flag in Claude Code 2.1.220 — extracted from the installed binary, probed for availability, linked to the official docs | [json](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.md) |
 | [Codex CLI Command Index](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/) | Every slash command, `codex` subcommand, launch flag and feature switch in OpenAI Codex CLI 0.146.0 — slash commands read off the running `/` picker, availability settled by probing | [json](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json) · [md](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.md) |
@@ -41,6 +43,16 @@ ai-snacks/
 │   ├── codex-commands.json             commands, flags and features, structured
 │   ├── codex-commands.md               the same page, plain Markdown
 │   └── og.png
+├── claude-code-vs-codex/
+│   ├── index.html                      the page, every pairing baked in
+│   ├── compare.json                    pairings, leftovers and capabilities, structured
+│   ├── compare.md                      the same page, plain Markdown
+│   └── og.png
+├── agent-memory/
+│   ├── index.html                      the page, both walkthroughs baked in
+│   ├── memory.json                     stages, evidence and comparison rows, structured
+│   ├── memory.md                       the same page, plain Markdown
+│   └── og.png
 ├── build/                              what everything above is built from
 │   ├── build.py                        assembles the site into the repo root
 │   ├── capture.mjs                     pre-renders the cards, shoots the OG images
@@ -56,12 +68,20 @@ ai-snacks/
 │   │   ├── og.html                     OG template for the page
 │   │   ├── extract_skills.py           mines the prompts out of the CLI binary
 │   │   └── skills-data.json            what it mined — the page's source of truth
-│   └── codex-cheatsheet/
-│       ├── codex-commands.html         the page source — edit this, not the output
+│   ├── codex-cheatsheet/
+│   │   ├── codex-commands.html         the page source — edit this, not the output
+│   │   ├── og.html                     OG template for the page
+│   │   ├── probe_codex.py              re-measures the CLI: TUI picker, help tree, features
+│   │   ├── extract.json                captured command, flag and feature data
+│   │   └── prerender.json              captured HTML for the cards and tables
+│   ├── claude-code-vs-codex/
+│   │   ├── compare.html                the page source — edit this, not the output
+│   │   ├── og.html                     OG template for the page
+│   │   └── compare-data.json           the pairings, capabilities and verdict — hand-authored
+│   └── agent-memory/
+│       ├── memory.html                 the page source — chrome only, edit this
 │       ├── og.html                     OG template for the page
-│       ├── probe_codex.py              re-measures the CLI: TUI picker, help tree, features
-│       ├── extract.json                captured command, flag and feature data
-│       └── prerender.json              captured HTML for the cards and tables
+│       └── memory-data.json            both walkthroughs, the evidence and the comparison
 └── README.md
 ```
 
@@ -117,6 +137,24 @@ against a deliberately nonsensical control command, which separates *runs but is
 picker* from *"Unrecognized command"*. Three commands that would have done real work are declared in
 `DO_NOT_RUN` and reported as not probed rather than executed. Diff its report against the page
 source; it does not write the page.
+
+The comparison page needs no script of its own either. `build/claude-code-vs-codex/compare-data.json`
+names which commands on each side count as the same job, and `build.py` resolves every one of those
+names against the two published inventories — a pairing that names a command the tool no longer
+ships fails the build rather than publishing a dead half-row. The two *only in* lists are then the
+computed complement of the pairing, and the build asserts that paired + unpaired equals each
+inventory exactly, so every command lands on the page precisely once. The capability table and the
+closing verdict are prose in the same file; the verdict is the one section on the site that is
+opinion, and it says so.
+
+The auto-memory page needs no script of its own, and its prose lives in the data rather than the
+page source: `build/agent-memory/memory-data.json` carries both walkthroughs, every verbatim quote
+with its provenance, and the comparison rows, while `memory.html` is chrome only. That is what lets
+the Markdown twin carry the whole argument instead of a hollowed-out version of it — `to_md()` in
+`build.py` derives it from the same HTML the page renders, and rejects any tag outside the small
+allowed subset rather than emitting Markdown with stray markup in it. Both mechanisms were read out
+of the two installed binaries; a path is only attributed to a tool when the literal also appears
+inside that tool's binary, because plugins and extensions write under the same directories.
 
 ## Readable by people, machines and crawlers
 

@@ -22,6 +22,10 @@ const SK_SRC = join(BUILD, "claude-code-built-in-skills");
 const SK_OUT = join(ROOT, "claude-code-built-in-skills");
 const CX_SRC = join(BUILD, "codex-cheatsheet");
 const CX_OUT = join(ROOT, "codex-cheatsheet");
+const MEM_SRC = join(BUILD, "agent-memory");
+const MEM_OUT = join(ROOT, "agent-memory");
+const CMP_SRC = join(BUILD, "claude-code-vs-codex");
+const CMP_OUT = join(ROOT, "claude-code-vs-codex");
 
 const EXPECTED_COMMANDS = 143;
 const EXPECTED_FLAGS = 57;
@@ -219,6 +223,8 @@ for (const [template, out] of [
   [join(CS_SRC, "og.html"), join(CS_OUT, "og.png")],
   [join(SK_SRC, "og.html"), join(SK_OUT, "og.png")],
   [join(CX_SRC, "og.html"), join(CX_OUT, "og.png")],
+  [join(MEM_SRC, "og.html"), join(MEM_OUT, "og.png")],
+  [join(CMP_SRC, "og.html"), join(CMP_OUT, "og.png")],
 ]) {
   await page.setContent(await readFile(template, "utf8"), { waitUntil: "load" });
   await page.screenshot({ path: out, type: "png" });

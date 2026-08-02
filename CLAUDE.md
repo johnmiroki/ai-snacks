@@ -5,8 +5,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A GitHub Pages site (`johnmiroki.github.io/ai-snacks/`) hosting single-page HTML references for AI
-developer tools. One folder per page, served straight from the repo root. Three pages:
-`claude-code-cheatsheet/`, `claude-code-built-in-skills/` and `codex-cheatsheet/`.
+developer tools. One folder per page, served straight from the repo root. Five pages:
+`claude-code-cheatsheet/`, `claude-code-built-in-skills/`, `codex-cheatsheet/`,
+`claude-code-vs-codex/` and `agent-memory/`.
 
 ## Build
 
@@ -66,6 +67,8 @@ in the JSON rather than `false`, because unestablished is not the same claim as 
 | `build/claude-code-cheatsheet/claude-code-commands.html` | `claude-code-cheatsheet/index.html` (190KB, assembled) |
 | `build/claude-code-built-in-skills/skills.html` (chrome) and `skills-data.json` (content) | `claude-code-built-in-skills/index.html` (500KB, assembled) |
 | `build/codex-cheatsheet/codex-commands.html` | `codex-cheatsheet/index.html` (190KB, assembled) |
+| `build/claude-code-vs-codex/compare.html` (chrome) and `compare-data.json` (pairings, capabilities, verdict) | `claude-code-vs-codex/index.html` (160KB, assembled) |
+| `build/agent-memory/memory.html` (chrome only) and `memory-data.json` (**all** the prose) | `agent-memory/index.html` (80KB, assembled) |
 | `build/build.py` (the `llms.txt` template, `PAGES`) | `llms.txt`, `llms-full.txt`, `sitemap.xml`, `robots.txt` |
 | `build/og-hub.html`, `build/<slug>/og.html` | any `og.png` |
 | `build/siteconf.py` | any URL, build number or date repeated in output |
@@ -74,8 +77,8 @@ Two exceptions, both hand-maintained and untouched by the build: the hub `index.
 
 `build/siteconf.py` is the only place URLs, build numbers and dates are defined — change them there,
 never in a generated file. Dates are **per page**, not site-wide: `UPDATED` stamps the two Claude
-pages, `CODEX_UPDATED` the Codex page, and `SITE_UPDATED` (the newer of the two) only the hub and the
-site-level files. That is deliberate — a single shared date would restamp every page's
+pages, `CODEX_UPDATED` the Codex page, `COMPARE_UPDATED` the comparison, `MEM_UPDATED` the
+auto-memory page, and `SITE_UPDATED` (the newest of them) only the hub and the site-level files. That is deliberate — a single shared date would restamp every page's
 `dateModified` as changed whenever any one page was touched, claiming an edit that did not happen.
 Adding a page means giving it its own date and its own `PAGES` entry, which carries `lastmod`.
 
@@ -88,7 +91,9 @@ callout, and a machine-readable footer injected at literal anchors like `\n  <fo
 both command indexes, `<main id="skills"></main>` for the skills page).
 
 The masthead anchor embeds the page's own build number, so `masthead()` takes it as an argument —
-`S.BUILD` for the Claude pages, `S.CODEX_BUILD` for the Codex one. Bumping a build number in
+`S.BUILD` for the Claude pages, `S.CODEX_BUILD` for the Codex one, and `"2.1.220 + codex 0.146.0"`
+for the two-tool pages, which name both. Its second argument is the trailing clause, since a page
+comparing two tools cannot claim it came from *the* installed binary. Bumping a build number in
 siteconf therefore fails that page's swap loudly instead of publishing a masthead naming the old
 build; the fix is to update the eyebrow in that page source to match.
 
@@ -112,7 +117,20 @@ claude-code CLI binary    ──extract_skills.py──▶  skills-data.json  �
 
 codex-commands.html        ──capture.mjs──▶  extract.json    ──build.py──▶  codex-commands.json, codex-commands.md, llms-full.txt
      (builds cards in JS)                    prerender.json              ▶  codex-cheatsheet/index.html
+
+commands.json + codex-commands.json ──┐
+                                      ├──build.py──▶  compare.json, compare.md, llms-full.txt
+compare-data.json (the pairing) ──────┘             ▶  claude-code-vs-codex/index.html
 ```
+
+The comparison page is downstream of the other two: it reads no binary, only the payloads
+`build_data()` and `build_codex_data()` have already produced in the same run, so it can never
+disagree with them. `compare-data.json` supplies the one thing that is not measured — which two
+commands count as the same job — and `cmp_resolve()` raises `SystemExit` if it names a command
+either inventory no longer has, so a rename upstream fails the build instead of publishing a dead
+half-row. `compare_split()` then asserts that paired + unpaired equals each inventory exactly, which
+is what lets the page claim every command appears on it precisely once. Adding a pairing therefore
+*removes* entries from the two "only in" lists automatically; nothing lists them by hand.
 
 `capture.mjs` throws unless it finds exactly `EXPECTED_COMMANDS = 143` and `EXPECTED_FLAGS = 57`,
 and `EXPECTED_CX_COMMANDS = 122`, `EXPECTED_CX_FLAGS = 21`, `EXPECTED_CX_FEATURES = 100` on the
@@ -123,8 +141,21 @@ inventory means updating those constants.**
 The Codex page carries two tables rather than one, so it has two extra hosts —
 `<tbody id="featbody">` and `<span class="n" id="featcount">` — alongside the flag pair.
 
+`agent-memory/` inverts where the prose lives. On every other page the page source carries the
+writing and the JSON carries the data; here `memory.html` is chrome only — masthead, lede, CSS,
+footer — and **all** of the prose is in `memory-data.json`, including the "How this was established"
+box. That is deliberate: the page's value is the argument, so the argument has to reach `memory.md`
+and `llms-full.txt` too, and writing it twice would guarantee the two drift. `to_md()` derives the
+Markdown from the same HTML the page renders. It accepts only `<p>`, `<code>`, `<b>`, `<em>`,
+`<a href>`, `<ul>` and `<li>`, and raises `SystemExit` on anything else, so a stray tag fails the
+build rather than leaking markup into the Markdown twin. Consequence: literal `<` and `>` in prose
+must be written `&lt;` / `&gt;` — an unescaped `<system-reminder>` reads as a tag and fails the tag
+check. Verbatim evidence quotes bypass all of this and are reproduced exactly.
+
 Re-running `capture.mjs` rewrites every `og.png` with different bytes for a pixel-identical image,
-because PNG output varies between Chromium versions. Don't commit that churn.
+because PNG output varies between Chromium versions. Don't commit that churn. To add one page's OG
+without touching the others, screenshot `build/<slug>/og.html` on its own at 1200x630 rather than
+running the whole script.
 
 ## Adding another page
 
@@ -178,3 +209,28 @@ and only changes the palette, the families and the extra feature table.
   interpolation chose between two phrasings it shows both and says so in "How this was read". If
   extraction ever gets lossier, update that section instead of quietly shipping a cleaner-looking
   page than the evidence supports.
+- **A file on this machine is not evidence the tool wrote it.** `~/.codex/` and `~/.claude/` both
+  collect directories from plugins, extensions and other agents, so the auto-memory page attributes
+  a path to a tool only when the literal also appears inside that tool's binary — for Codex that is
+  the compiled-in Rust source paths under `ext/memories/` and `memories/write/`. Corroborate the
+  same way before adding a path, and never publish anything read *out of* those stores: the page
+  describes the structures both tools define, never a line of the user's own memory.
+- **Defaults that live in code are unestablished.** The memory page names Codex's twelve
+  `[memories]` config keys because the binary names them, and deliberately states no default
+  values, because serde defaults compile to code rather than strings. Same for the Claude Code
+  team-memory branch and `autoDreamEnabled`: both are described as present in the binary, with what
+  enables them marked as not established. Reading a binary settles what exists far more often than
+  it settles what happens — keep the two apart.
+- **Fence the opinion.** The comparison page is the only one carrying a judgement call, and it
+  carries two of them. The pairing is editorial, so the page prints both builds' own descriptions
+  side by side rather than one summary of both — the reader checks the pairing instead of trusting
+  it. The closing "which one to reach for" is opinion outright, sits below everything measured, is
+  labelled as opinion on the page, and ships in `compare.json` under a `verdict` key with its own
+  `disclaimer`. Keep the two separated; the moment a preference leaks up into a pair note or a
+  capability row, the measured half stops being worth anything.
+- **A gap in the inventory is not a gap in the tool.** The comparison's "only in" lists are the
+  computed complement of the pairing, so anything the source inventory never captured lands there
+  looking like an absence. `/help` is the live example — Codex's `/` picker has no such row, but
+  `codex --help` and `codex help` plainly exist — and the page calls that case out by name under
+  the lists rather than letting the arithmetic imply something false. If another such artefact
+  appears, name it there too.

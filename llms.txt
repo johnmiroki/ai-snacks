@@ -17,6 +17,12 @@ follows the tool and says so.
 - [Codex CLI Command Index](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/): every slash command, `codex` subcommand, launch flag and feature
   flag in OpenAI Codex CLI build 0.146.0 — 122 commands, 21 flags and 100
   feature switches, read out of the running CLI and probed for availability.
+- [Claude Code vs Codex CLI](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/): the two agents side by side — 43 jobs both ship a
+  command for, quoted in each build's own words, 69 commands only Claude Code has and 55
+  only Codex has, plus 13 capability differences measured from the running CLIs.
+- [Auto-Memory in Claude Code and Codex](https://johnmiroki.github.io/ai-snacks/agent-memory/): how each tool writes, stores and recalls memory
+  between sessions — the on-disk layout, the prompt text that governs it and the switches that turn
+  it off, read out of both installed binaries and compared across 15 dimensions.
 
 ## Machine-readable data
 
@@ -29,6 +35,12 @@ follows the tool and says so.
 - [Codex CLI commands as Markdown](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.md): the full Codex index as plain Markdown.
 - [Codex CLI commands as JSON](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json): the same inventory as structured data,
   with how each command's availability was established, plus the whole feature table.
+- [The comparison as Markdown](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.md): every pairing and both leftovers as plain Markdown.
+- [The comparison as JSON](https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.json): the same as structured data — each pairing with both
+  builds' own descriptions, the unpaired commands on each side, and the capability rows.
+- [Auto-memory as Markdown](https://johnmiroki.github.io/ai-snacks/agent-memory/memory.md): both mechanisms and the comparison as plain Markdown.
+- [Auto-memory as JSON](https://johnmiroki.github.io/ai-snacks/agent-memory/memory.json): the same as structured data — each lifecycle stage with
+  the verbatim strings behind it, the artefacts each tool writes, and every comparison row.
 - [Everything as one file](https://johnmiroki.github.io/ai-snacks/llms-full.txt): every page's Markdown concatenated.
 
 ## About

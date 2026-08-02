@@ -58,12 +58,36 @@
     "mainEntity": {
       "@type": "ItemList",
       "name": "Reference pages",
-      "numberOfItems": 3,
+      "numberOfItems": 5,
       "itemListOrder": "https://schema.org/ItemListOrderDescending",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
+          "url": "https://johnmiroki.github.io/ai-snacks/agent-memory/",
+          "item": {
+            "@type": "TechArticle",
+            "@id": "https://johnmiroki.github.io/ai-snacks/agent-memory/#article",
+            "name": "Auto-Memory in Claude Code and Codex",
+            "url": "https://johnmiroki.github.io/ai-snacks/agent-memory/",
+            "description": "How Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 each write, store and recall memory between sessions — the on-disk layout, the prompt text that governs it and the switches that turn it off, read out of both installed binaries and compared across 15 dimensions."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/",
+          "item": {
+            "@type": "TechArticle",
+            "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#article",
+            "name": "Claude Code vs Codex CLI",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/",
+            "description": "Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 command for command — 43 jobs both ship a command for, quoted in each build's own words, 69 commands only Claude Code has and 55 only Codex has, plus 13 capability differences measured from the running CLIs."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/",
           "item": {
             "@type": "TechArticle",
@@ -75,7 +99,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": 4,
           "url": "https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/",
           "item": {
             "@type": "TechArticle",
@@ -87,7 +111,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 3,
+          "position": 5,
           "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
           "item": {
             "@type": "TechArticle",
@@ -268,6 +292,49 @@
 
   <main class="shelf">
     <!-- To add a snack: create <slug>/index.html, then copy this <a class="snack"> block and edit it. -->
+    <a class="snack" href="agent-memory/">
+      <span class="snack-top">
+        <span class="snack-title">Auto-Memory: Claude Code vs Codex</span>
+        <span class="go" aria-hidden="true">&#8594;</span>
+      </span>
+      <p>
+        Both tools now keep notes on you between sessions, and they did it in almost opposite ways.
+        Claude Code writes one file per fact while it works, scoped to the project; Codex sends a
+        separate agent through your transcripts afterwards and folds the result into one global
+        handbook the working model is forbidden to edit. Each mechanism end to end &mdash; where the
+        bytes land, what reaches the model, what turns it off &mdash; with the prompt text behind it
+        quoted in full.
+      </p>
+      <span class="facts">
+        <span class="fact">2 mechanisms</span>
+        <span class="fact">15 dimensions</span>
+        <span class="fact">34 verbatim quotes</span>
+        <span class="fact">both binaries</span>
+        <span class="fact stamp">updated 2026-08-02</span>
+      </span>
+    </a>
+
+    <a class="snack" href="claude-code-vs-codex/">
+      <span class="snack-top">
+        <span class="snack-title">Claude Code vs Codex CLI</span>
+        <span class="go" aria-hidden="true">&#8594;</span>
+      </span>
+      <p>
+        The two of them, command for command. Where both do the same job it prints each tool's own
+        description of itself side by side, so you can check the pairing instead of taking it on
+        trust — then everything neither shares, computed rather than cherry-picked. Plus the
+        differences a command list can't show: sandbox and approval policies, hooks,
+        <code>CLAUDE.md</code> against <code>AGENTS.md</code>, and where each keeps its config.
+      </p>
+      <span class="facts">
+        <span class="fact">43 jobs both do</span>
+        <span class="fact">69 Claude only</span>
+        <span class="fact">55 Codex only</span>
+        <span class="fact">13 capabilities</span>
+        <span class="fact stamp">updated 2026-08-02</span>
+      </span>
+    </a>
+
     <a class="snack" href="codex-cheatsheet/">
       <span class="snack-top">
         <span class="snack-title">Codex CLI Command Index</span>
@@ -338,6 +405,8 @@
       <a href="claude-code-cheatsheet/commands.json">commands.json</a>
       <a href="claude-code-built-in-skills/skills.json">skills.json</a>
       <a href="codex-cheatsheet/codex-commands.json">codex-commands.json</a>
+      <a href="claude-code-vs-codex/compare.json">compare.json</a>
+      <a href="agent-memory/memory.json">memory.json</a>
       <span>&mdash; every page also exists as plain text and structured data.</span>
     </p>
   </main>
