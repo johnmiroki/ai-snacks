@@ -20,9 +20,14 @@ const CS_SRC = join(BUILD, "claude-code-cheatsheet");
 const CS_OUT = join(ROOT, "claude-code-cheatsheet");
 const SK_SRC = join(BUILD, "claude-code-built-in-skills");
 const SK_OUT = join(ROOT, "claude-code-built-in-skills");
+const CX_SRC = join(BUILD, "codex-cheatsheet");
+const CX_OUT = join(ROOT, "codex-cheatsheet");
 
 const EXPECTED_COMMANDS = 143;
 const EXPECTED_FLAGS = 57;
+const EXPECTED_CX_COMMANDS = 122;
+const EXPECTED_CX_FLAGS = 21;
+const EXPECTED_CX_FEATURES = 100;
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
 const page = await browser.newPage();
@@ -106,6 +111,105 @@ if (new Set(ids).size !== ids.length) {
 await writeFile(join(CS_SRC, "extract.json"), JSON.stringify(extract, null, 2));
 await writeFile(join(CS_SRC, "prerender.json"), JSON.stringify(prerender, null, 2));
 
+// ---------------------------------------------------------------- the Codex page data
+
+await page.setContent(await readFile(join(CX_SRC, "codex-commands.html"), "utf8"), {
+  waitUntil: "load",
+});
+
+const cxCaptured = await page.evaluate(() => {
+  const t = (el) => (el ? el.textContent.trim() : null);
+
+  const sections = [...document.querySelectorAll("#sections section")].map((s) => ({
+    id: s.id,
+    title: t(s.querySelector("h2")),
+    blurb: t(s.querySelector(".sec-head p")),
+    commands: [...s.querySelectorAll(".cmd")].map((c) => {
+      const link = c.querySelector("a.cmd-name");
+      const tags = [...c.querySelectorAll(".tags .tag")];
+      const probe = c.dataset.probe;
+      return {
+        id: c.id,
+        name: c.dataset.name,
+        family: c.dataset.fam,
+        description: t(c.querySelector(".cmd-desc")),
+        argument: t(c.querySelector(".cmd-arg")),
+        aliases: tags.filter((x) => !x.className.replace("tag", "").replace("alias", "").trim())
+          .map((x) => t(x)),
+        experimental: c.dataset.exp === "1",
+        registered: probe === "not probed" ? null : probe !== "unrecognized",
+        probe,
+        probeNote: c.dataset.probeNote || null,
+        docs: link ? link.href : null,
+      };
+    }),
+  }));
+
+  const flags = [...document.querySelectorAll("#flagbody tr")].map((r) => ({
+    flag: t(r.querySelector(".f")),
+    description: t(r.querySelector(".d")),
+  }));
+
+  const features = [...document.querySelectorAll("#featbody tr")].map((r) => ({
+    name: t(r.querySelector(".k")),
+    stage: t(r.querySelector(".s")),
+    enabled: r.querySelector(".v").classList.contains("on"),
+  }));
+
+  return {
+    extract: {
+      sections,
+      flags,
+      features,
+      totals: {
+        commands: document.querySelectorAll(".cmd").length,
+        flags: flags.length,
+        features: features.length,
+      },
+    },
+    prerender: {
+      sections: document.getElementById("sections").innerHTML,
+      flagbody: document.getElementById("flagbody").innerHTML,
+      featbody: document.getElementById("featbody").innerHTML,
+      flagcount: document.getElementById("flagcount").textContent,
+      featcount: document.getElementById("featcount").textContent,
+      stats: Object.fromEntries(
+        ["slash", "cli", "hidden", "flags", "features", "linked", "unreg"].map((k) => [
+          k,
+          document.getElementById("s-" + k).textContent,
+        ])
+      ),
+      cardCount: document.querySelectorAll(".cmd").length,
+      hiddenCount: [...document.querySelectorAll(".cmd")].filter(
+        (c) => c.style.display === "none"
+      ).length,
+    },
+    ids: [...document.querySelectorAll(".cmd")].map((c) => c.id),
+  };
+});
+
+const cx = cxCaptured;
+
+if (
+  cx.extract.totals.commands !== EXPECTED_CX_COMMANDS ||
+  cx.extract.totals.flags !== EXPECTED_CX_FLAGS ||
+  cx.extract.totals.features !== EXPECTED_CX_FEATURES
+) {
+  throw new Error(
+    `codex: expected ${EXPECTED_CX_COMMANDS} commands, ${EXPECTED_CX_FLAGS} flags and ` +
+      `${EXPECTED_CX_FEATURES} features, got ${cx.extract.totals.commands}, ` +
+      `${cx.extract.totals.flags} and ${cx.extract.totals.features}`
+  );
+}
+if (new Set(cx.ids).size !== cx.ids.length) {
+  throw new Error(
+    "duplicate codex command anchors: " + cx.ids.filter((v, i) => cx.ids.indexOf(v) !== i)
+  );
+}
+
+await writeFile(join(CX_SRC, "extract.json"), JSON.stringify(cx.extract, null, 2));
+await writeFile(join(CX_SRC, "prerender.json"), JSON.stringify(cx.prerender, null, 2));
+
 // ---------------------------------------------------------------- the OG images
 
 await page.setViewportSize({ width: 1200, height: 630 });
@@ -114,6 +218,7 @@ for (const [template, out] of [
   [join(BUILD, "og-hub.html"), join(ROOT, "og.png")],
   [join(CS_SRC, "og.html"), join(CS_OUT, "og.png")],
   [join(SK_SRC, "og.html"), join(SK_OUT, "og.png")],
+  [join(CX_SRC, "og.html"), join(CX_OUT, "og.png")],
 ]) {
   await page.setContent(await readFile(template, "utf8"), { waitUntil: "load" });
   await page.screenshot({ path: out, type: "png" });
@@ -123,6 +228,8 @@ await browser.close();
 
 console.log(`  ${extract.totals.commands} commands, ${extract.totals.flags} flags, ` +
   `${prerender.hiddenCount} hidden by the default filter`);
+console.log(`  codex: ${cx.extract.totals.commands} commands, ${cx.extract.totals.flags} flags, ` +
+  `${cx.extract.totals.features} features`);
 console.log("  wrote extract.json, prerender.json, og.png, claude-code-cheatsheet/og.png, " +
-  "claude-code-built-in-skills/og.png");
+  "claude-code-built-in-skills/og.png, codex-cheatsheet/og.png");
 console.log("\nnow run: python3 build/build.py");

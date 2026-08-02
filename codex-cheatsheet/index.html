@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codex CLI Command Index — 122 Commands, Flags & Feature Switches</title>
+<meta name="description" content="Every OpenAI Codex CLI command in build 0.146.0: 46 slash commands, 68 subcommands, 21 launch flags and 100 feature flags. Read from the running CLI, not the docs.">
+<link rel="canonical" href="https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/">
+<meta name="author" content="johnmiroki">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F6F7FA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1117" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AI Snacks">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Codex CLI Command Index — every command in build 0.146.0">
+<meta property="og:description" content="Every OpenAI Codex CLI command in build 0.146.0: 46 slash commands, 68 subcommands, 21 launch flags and 100 feature flags. Read from the running CLI, not the docs.">
+<meta property="og:url" content="https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/">
+<meta property="og:image" content="https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Codex CLI Command Index — 122 commands, 21 flags, build 0.146.0">
+<meta property="article:published_time" content="2026-08-02">
+<meta property="article:modified_time" content="2026-08-02">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Codex CLI Command Index — every command in build 0.146.0">
+<meta name="twitter:description" content="Every OpenAI Codex CLI command in build 0.146.0: 46 slash commands, 68 subcommands, 21 launch flags and 100 feature flags. Read from the running CLI, not the docs.">
+<meta name="twitter:image" content="https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/og.png">
+
+<link rel="alternate" type="text/markdown" href="codex-commands.md" title="Markdown version of this page">
+<link rel="alternate" type="application/json" href="codex-commands.json" title="JSON dataset of every command, flag and feature">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='54' font-size='76' text-anchor='middle' dominant-baseline='central'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#article",
+    "headline": "Codex CLI Command Index",
+    "name": "Codex CLI Command Index — 122 Commands, Flags & Feature Switches",
+    "description": "Every OpenAI Codex CLI command in build 0.146.0: 46 slash commands, 68 subcommands, 21 launch flags and 100 feature flags. Read from the running CLI, not the docs.",
+    "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/"
+    },
+    "inLanguage": "en",
+    "datePublished": "2026-08-02",
+    "dateModified": "2026-08-02",
+    "author": {
+      "@type": "Person",
+      "name": "johnmiroki",
+      "url": "https://github.com/johnmiroki"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Snacks",
+      "url": "https://johnmiroki.github.io/ai-snacks/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "@id": "https://johnmiroki.github.io/ai-snacks/#collection"
+    },
+    "image": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/og.png",
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "OpenAI Codex CLI",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "softwareVersion": "0.146.0",
+      "url": "https://learn.chatgpt.com/docs/codex/cli",
+      "publisher": {
+        "@type": "Organization",
+        "name": "OpenAI"
+      }
+    },
+    "keywords": "Codex CLI, OpenAI Codex, slash commands, CLI flags, feature flags, command reference, cheat sheet, terminal, AI coding agent",
+    "articleSection": [
+      "Slash commands",
+      "CLI subcommands",
+      "Launch flags",
+      "Feature flags"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#dataset",
+    "name": "OpenAI Codex CLI 0.146.0 command, flag and feature inventory",
+    "description": "Structured inventory of every slash command, subcommand, launch flag and feature flag in OpenAI Codex CLI build 0.146.0, with descriptions, aliases, availability and documentation links.",
+    "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": {
+      "@type": "Person",
+      "name": "johnmiroki"
+    },
+    "dateModified": "2026-08-02",
+    "isAccessibleForFree": true,
+    "measurementTechnique": "Runtime probing of the installed CLI: the TUI slash-command picker driven in a pseudo-terminal, a recursive walk of `codex --help`, and `codex features list`",
+    "variableMeasured": [
+      "command name",
+      "family",
+      "description",
+      "aliases",
+      "argument hint",
+      "registration status",
+      "documentation URL",
+      "feature stage",
+      "feature enabled state"
+    ],
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json"
+      },
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "text/markdown",
+        "contentUrl": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.md"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AI Snacks",
+        "item": "https://johnmiroki.github.io/ai-snacks/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Codex CLI Command Index",
+        "item": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/"
+      }
+    ]
+  }
+]
+</script>
+
+<style>
+  :root {
+    --ground:#F5F7F6;
+    --surface:#FFFFFF;
+    --surface-2:#EAEFEC;
+    --ink:#141A18;
+    --muted:#556059;
+    --faint:#87938B;
+    --rule:#DEE5E1;
+    --rule-soft:#EBF0ED;
+    --accent:#0E7C5A;
+    --accent-soft:#E4F2EC;
+    --fam-slash:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --fam-feat:#5B4BAE;
+    --shadow:0 1px 2px rgba(20,26,24,.05), 0 6px 16px -10px rgba(20,26,24,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0E1211;
+      --surface:#161B19;
+      --surface-2:#1E2523;
+      --ink:#E2E8E5;
+      --muted:#94A19A;
+      --faint:#6B7873;
+      --rule:#252E2B;
+      --rule-soft:#1E2523;
+      --accent:#4FC3A1;
+      --accent-soft:#122C24;
+      --fam-slash:#4FC3A1;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --fam-feat:#A99BF0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0E1211;
+    --surface:#161B19;
+    --surface-2:#1E2523;
+    --ink:#E2E8E5;
+    --muted:#94A19A;
+    --faint:#6B7873;
+    --rule:#252E2B;
+    --rule-soft:#1E2523;
+    --accent:#4FC3A1;
+    --accent-soft:#122C24;
+    --fam-slash:#4FC3A1;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --fam-feat:#A99BF0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F5F7F6;
+    --surface:#FFFFFF;
+    --surface-2:#EAEFEC;
+    --ink:#141A18;
+    --muted:#556059;
+    --faint:#87938B;
+    --rule:#DEE5E1;
+    --rule-soft:#EBF0ED;
+    --accent:#0E7C5A;
+    --accent-soft:#E4F2EC;
+    --fam-slash:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --fam-feat:#5B4BAE;
+    --shadow:0 1px 2px rgba(20,26,24,.05), 0 6px 16px -10px rgba(20,26,24,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,4.4vw,44px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .slash { color:var(--accent); }
+  .lede { margin:0; max-width:64ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .stats {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(224px,1fr));
+    gap:var(--sp-2); margin-top:var(--sp-5);
+  }
+  .stat {
+    appearance:none; font:inherit; color:inherit; text-align:left; width:100%; cursor:pointer;
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4);
+    border-left:2px solid var(--sc, var(--accent));
+    transition:background .12s ease, box-shadow .12s ease;
+  }
+  .stat:hover { box-shadow:var(--shadow); }
+  .stat:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .stat[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--sc) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--sc) 45%, var(--rule));
+    border-left-color:var(--sc);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:22px; font-weight:600;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.2;
+  }
+  .stat .lbl {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .stat .lbl::after {
+    content:"filter"; margin-left:auto; letter-spacing:.1em;
+    opacity:0; transition:opacity .12s ease; color:var(--sc);
+  }
+  .stat:hover .lbl::after, .stat:focus-visible .lbl::after { opacity:.85; }
+  .stat[aria-pressed="true"] .lbl::after { content:"filtering"; opacity:1; }
+  .stat .stat-note {
+    display:block; margin-top:var(--sp-2); font-size:12.5px; line-height:1.5;
+    color:var(--muted); max-width:38ch;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .stat .stat-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+  }
+  .toolbar-inner { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+
+  .search { position:relative; flex:1 1 260px; min-width:0; }
+  .search input {
+    width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px 34px 9px 30px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .search .prefix {
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); color:var(--accent); font-size:14px; pointer-events:none;
+  }
+  .search kbd {
+    position:absolute; right:9px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); font-size:10px; color:var(--faint);
+    border:1px solid var(--rule); border-radius:3px; padding:1px 5px; background:var(--ground);
+  }
+
+  .filters { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-1); }
+  .chip {
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--surface); color:var(--muted);
+    border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .chip .dot { width:7px; height:7px; border-radius:50%; background:var(--cc, var(--accent)); }
+  .chip.st .dot { background:transparent; border:1.5px solid var(--cc, var(--muted)); }
+  .chip[aria-pressed="true"] { background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .chip.st[aria-pressed="true"] .dot { background:var(--cc, var(--accent)); }
+  .chips-sep { width:1px; align-self:stretch; background:var(--rule); margin:0 var(--sp-1); }
+  .reset { display:none; }
+  .reset.show { display:inline-flex; }
+
+  .count {
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top:var(--sp-6); }
+  .sec-head {
+    display:flex; align-items:baseline; gap:var(--sp-3);
+    border-bottom:1px solid var(--rule); padding-bottom:var(--sp-2); margin-bottom:var(--sp-4);
+  }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; margin:0; color:var(--ink);
+  }
+  .sec-head .n {
+    font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums;
+  }
+  .sec-head p { margin:0 0 0 auto; font-size:13px; color:var(--muted); text-align:right; }
+  .sec-head p code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(330px,1fr)); gap:var(--sp-2); }
+
+  .cmd {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-left:2px solid var(--fc, var(--accent));
+    padding:var(--sp-3) var(--sp-4);
+    transition:box-shadow .12s ease;
+  }
+  .cmd:hover { box-shadow:var(--shadow); }
+
+  .cmd-top { display:flex; align-items:baseline; gap:var(--sp-2); }
+  .cmd-id {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2);
+    flex:1 1 auto; min-width:0;
+  }
+  .cmd-name {
+    font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:-.01em;
+    color:var(--fc, var(--accent)); text-decoration:none;
+  }
+  a.cmd-name { border-bottom:1px solid transparent; }
+  a.cmd-name:hover { border-bottom-color:currentColor; }
+  a.cmd-name:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+  .cmd-name .ext { font-size:10px; margin-left:2px; opacity:.5; vertical-align:1px; }
+  a.cmd-name:hover .ext { opacity:1; }
+  .cmd-name.plain { color:var(--ink); }
+
+  .sr {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  .copy {
+    flex:0 0 auto; margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--faint); background:transparent;
+    border:1px solid transparent; border-radius:3px; padding:2px 6px; cursor:pointer;
+    opacity:0; transition:opacity .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .cmd:hover .copy, .copy:focus-visible { opacity:1; }
+  .copy:hover { color:var(--accent); border-color:var(--rule); }
+  .copy:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  @media (hover:none) { .copy { opacity:1; } }
+
+  .cmd-arg { font-family:var(--mono); font-size:11.5px; color:var(--faint); overflow-wrap:anywhere; }
+  .cmd-desc { margin:var(--sp-1) 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+
+  .tags { display:flex; flex-wrap:wrap; gap:var(--sp-1); margin-top:var(--sp-2); }
+  .tag {
+    font-family:var(--mono); font-size:10px; letter-spacing:.05em;
+    border:1px solid var(--rule); border-radius:3px; padding:1px 6px; color:var(--faint);
+    background:var(--surface-2);
+  }
+  .tag.alias::before { content:"/"; opacity:.55; }
+  .tag.gate { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); background:transparent; }
+  .tag.unreg {
+    color:var(--fam-hidden); background:transparent;
+    border-color:color-mix(in srgb, var(--fam-hidden) 45%, var(--rule));
+    font-weight:600; cursor:help;
+  }
+  .tag.hidden-t { color:var(--fam-hidden); border-color:color-mix(in srgb, var(--fam-hidden) 35%, var(--rule)); background:transparent; }
+
+  .empty {
+    display:none; padding:var(--sp-6); text-align:center; color:var(--muted);
+    border:1px dashed var(--rule); border-radius:3px; font-family:var(--mono); font-size:13px;
+  }
+  .empty.show { display:block; }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:640px; }
+  th, td { text-align:left; padding:9px var(--sp-4); border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; border-bottom:1px solid var(--rule);
+    background:var(--surface);
+  }
+  tbody tr:last-child td { border-bottom:none; }
+  td.f { font-family:var(--mono); font-size:12.5px; color:var(--fam-cli); white-space:nowrap; }
+  td.d { font-size:13.5px; color:var(--muted); }
+  td.k { font-family:var(--mono); font-size:12.5px; color:var(--fam-feat); white-space:nowrap; }
+  td.s { font-family:var(--mono); font-size:11.5px; color:var(--muted); white-space:nowrap; }
+  td.v { font-family:var(--mono); font-size:11.5px; white-space:nowrap; }
+  td.v.on { color:var(--fam-slash); }
+  td.v.off { color:var(--faint); }
+  .stage {
+    font-family:var(--mono); font-size:10px; letter-spacing:.05em; border-radius:3px;
+    padding:1px 6px; border:1px solid var(--rule); background:var(--surface-2); color:var(--faint);
+  }
+  .stage.stable { color:var(--fam-slash); border-color:color-mix(in srgb, var(--fam-slash) 35%, var(--rule)); background:transparent; }
+  .stage.removed { color:var(--fam-hidden); border-color:color-mix(in srgb, var(--fam-hidden) 35%, var(--rule)); background:transparent; }
+  .stage.under { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); background:transparent; }
+
+  /* ---------- notes / footer ---------- */
+  .note {
+    background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--fam-hidden);
+    border-radius:3px; padding:var(--sp-3) var(--sp-4); margin-top:var(--sp-4);
+    font-size:13.5px; color:var(--muted);
+  }
+  .note b { color:var(--ink); font-weight:600; }
+
+  footer {
+    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    border-top:1px solid var(--rule); color:var(--faint); font-size:12.5px;
+  }
+  footer code { font-family:var(--mono); font-size:.9em; }
+  footer p { margin:0 0 var(--sp-2); max-width:70ch; }
+
+  .toast {
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+    background:var(--ink); color:var(--ground);
+    font-family:var(--mono); font-size:12px; padding:9px 14px; border-radius:3px;
+    opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; z-index:60;
+  }
+  .toast.show { opacity:1; transform:translate(-50%, 0); }
+
+  /* ---------- support ---------- */
+  .masthead-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-3); }
+  .masthead-top .eyebrow { flex:1 1 260px; margin-bottom:0; }
+
+  .coffee {
+    display:inline-flex; align-items:center; gap:7px; flex:0 0 auto;
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--fam-cli); text-decoration:none; white-space:nowrap;
+    border:1px solid color-mix(in srgb, var(--fam-cli) 40%, var(--rule));
+    background:color-mix(in srgb, var(--fam-cli) 7%, var(--surface));
+    border-radius:3px; padding:7px 11px;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .coffee:hover {
+    background:color-mix(in srgb, var(--fam-cli) 16%, var(--surface));
+    border-color:var(--fam-cli);
+  }
+  .coffee:focus-visible { outline:2px solid var(--fam-cli); outline-offset:2px; }
+  .coffee .cup { font-size:13px; }
+
+  .support {
+    display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-4);
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-cli); border-radius:3px;
+    padding:var(--sp-4); margin-top:var(--sp-6);
+  }
+  .support p { margin:0; flex:1 1 340px; font-size:13.5px; color:var(--muted); }
+  .support b { color:var(--ink); font-weight:600; }
+  .support code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .support .coffee { font-size:12px; padding:9px 14px; }
+
+  .machine {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2) var(--sp-3);
+    margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid var(--rule);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--faint);
+  }
+  .machine b { color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.12em; }
+  .machine a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .machine a:hover { border-bottom-color:currentColor; }
+
+
+  .eyebrow .home { color:var(--muted); text-decoration:none; border-bottom:1px solid var(--rule); }
+  .eyebrow .home:hover { color:var(--accent); border-bottom-color:currentColor; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; animation:none !important; }
+  }
+
+  @media (max-width:640px) {
+    .wrap { padding:0 var(--sp-4); }
+    .masthead { padding-top:var(--sp-5); }
+    .sec-head p { display:none; }
+    .search kbd { display:none; }
+    .search input { padding-right:12px; }
+    .toolbar-inner { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-2); }
+    .search { flex:0 0 auto; }
+    .filters {
+      flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain;
+      scrollbar-width:none; -ms-overflow-style:none; gap:var(--sp-2);
+    }
+    .filters::-webkit-scrollbar { display:none; }
+    .chips { flex-wrap:nowrap; }
+    .chip { white-space:nowrap; }
+    .chips-sep { align-self:auto; height:20px; }
+    .count { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="masthead-top">
+      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build 0.146.0 &middot; extracted from the installed binary</p>
+      <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+        <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+    </div>
+    <h1><span class="slash">/</span>Codex CLI Command Index</h1>
+    <p class="lede">
+      Every command the latest OpenAI Codex CLI build ships with — the slash commands the TUI
+      registers, the whole <code>codex</code> subcommand tree, the launch flags, and the feature
+      switchboard behind them. Every tile below is also a filter — click one to isolate that group.
+      Search to find a command, follow its name through to the official documentation, or hover a
+      card to copy it.
+    </p>
+    <div class="stats">
+      <button class="stat" type="button" data-iso="slash" aria-pressed="false" style="--sc:var(--fam-slash)">
+        <b id="s-slash">46</b><span class="lbl">Slash commands</span>
+        <span class="stat-note">Typed at the Codex prompt and offered by the <code>/</code> picker. Compiled
+           into the binary, not loaded from a skills directory.</span>
+      </button>
+      <button class="stat" type="button" data-iso="cli" aria-pressed="false" style="--sc:var(--fam-cli)">
+        <b id="s-cli">68</b><span class="lbl">CLI commands</span>
+        <span class="stat-note">The <code>codex</code> executable and its whole subcommand tree —
+           <code>codex exec</code>, <code>codex mcp add</code>. Run in your shell, not at the prompt.</span>
+      </button>
+      <button class="stat" type="button" data-iso="hidden" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-hidden">8</b><span class="lbl">Hidden</span>
+        <span class="stat-note">In the binary but never offered by the <code>/</code> picker. Some still run;
+           some answer <em>Unrecognized command</em>. Off by default in the filter below.</span>
+      </button>
+      <button class="stat" type="button" data-iso="flags" aria-pressed="false" style="--sc:var(--muted)">
+        <b id="s-flags">21</b><span class="lbl">Launch flags</span>
+        <span class="stat-note">Options passed to <code>codex</code> at startup, from
+           <code>codex --help</code>. Tabulated at the foot of this page.</span>
+      </button>
+      <button class="stat" type="button" data-iso="features" aria-pressed="false" style="--sc:var(--fam-feat)">
+        <b id="s-features">100</b><span class="lbl">Feature flags</span>
+        <span class="stat-note">The switchboard from <code>codex features list</code>, each with its stage and
+           whether this build has it on. Tabulated below.</span>
+      </button>
+      <button class="stat" type="button" data-iso="linked" aria-pressed="false" style="--sc:var(--accent)">
+        <b id="s-linked">110</b><span class="lbl">Linked to docs</span>
+        <span class="stat-note">Entries whose name links through to its page on
+           <code>learn.chatgpt.com</code>. The rest have no official page.</span>
+      </button>
+      <button class="stat" type="button" data-iso="unreg" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-unreg">3</b><span class="lbl">Not registered</span>
+        <span class="stat-note">Named in the binary but rejected when typed — <em>Unrecognized command</em>,
+           the same answer a nonsense command gets.</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <span class="prefix">/</span>
+        <input id="q" type="search" placeholder="search name, alias, description&hellip;"
+               autocomplete="off" spellcheck="false" aria-label="Search commands" />
+        <kbd>/</kbd>
+      </div>
+      <div class="filters">
+      <div class="chips" id="fams" role="group" aria-label="Filter by family">
+        <button class="chip" type="button" data-fam="slash"    aria-pressed="true" style="--cc:var(--fam-slash)"><i class="dot"></i>Slash</button>
+        <button class="chip" type="button" data-fam="cli"      aria-pressed="true" style="--cc:var(--fam-cli)"><i class="dot"></i>CLI</button>
+        <button class="chip" type="button" data-fam="hidden"   aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Hidden</button>
+        <button class="chip" type="button" data-fam="flags"    aria-pressed="true" style="--cc:var(--muted)"><i class="dot"></i>Flags</button>
+        <button class="chip" type="button" data-fam="features" aria-pressed="true" style="--cc:var(--fam-feat)"><i class="dot"></i>Features</button>
+      </div>
+      <div class="chips-sep" aria-hidden="true"></div>
+      <div class="chips" id="stats-f" role="group" aria-label="Narrow by documentation and availability">
+        <button class="chip st" type="button" data-st="linked" aria-pressed="false" style="--cc:var(--accent)"><i class="dot"></i>Linked</button>
+        <button class="chip st" type="button" data-st="unreg"  aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Not registered</button>
+        <button class="chip reset" type="button" id="reset">Reset</button>
+      </div>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+
+  <main id="sections"><section id="sec-session-context" data-sec="0"><div class="sec-head"><h2>Session &amp; context</h2><span class="n" data-n="0">15</span><p>Steering the conversation you are in right now</p></div><div class="grid"><article class="cmd" id="cmd-new" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/new" data-hay="/new  start a new chat during a conversation"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/new<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/new" aria-label="Copy /new">copy</button></div><p class="cmd-desc">start a new chat during a conversation</p></article><article class="cmd" id="cmd-clear" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/clear" data-hay="/clear  clear the terminal and start a new chat"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/clear<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/clear" aria-label="Copy /clear">copy</button></div><p class="cmd-desc">clear the terminal and start a new chat</p></article><article class="cmd" id="cmd-compact" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/compact" data-hay="/compact  summarize conversation to prevent hitting the context limit"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/compact<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/compact" aria-label="Copy /compact">copy</button></div><p class="cmd-desc">summarize conversation to prevent hitting the context limit</p></article><article class="cmd" id="cmd-resume" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/resume" data-hay="/resume  resume a saved chat"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/resume<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/resume" aria-label="Copy /resume">copy</button></div><p class="cmd-desc">resume a saved chat</p></article><article class="cmd" id="cmd-fork" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/fork" data-hay="/fork  fork the current chat"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/fork<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/fork" aria-label="Copy /fork">copy</button></div><p class="cmd-desc">fork the current chat</p></article><article class="cmd" id="cmd-rename" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/rename" data-hay="/rename  rename the current thread"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/rename<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/rename" aria-label="Copy /rename">copy</button></div><p class="cmd-desc">rename the current thread</p></article><article class="cmd" id="cmd-archive" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/archive" data-hay="/archive  archive this session and exit"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/archive<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/archive" aria-label="Copy /archive">copy</button></div><p class="cmd-desc">archive this session and exit</p></article><article class="cmd" id="cmd-delete" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/delete" data-hay="/delete  permanently delete this session and exit"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/delete<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/delete" aria-label="Copy /delete">copy</button></div><p class="cmd-desc">permanently delete this session and exit</p></article><article class="cmd" id="cmd-status" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/status" data-hay="/status  show current session configuration and token usage"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/status<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/status" aria-label="Copy /status">copy</button></div><p class="cmd-desc">show current session configuration and token usage</p></article><article class="cmd" id="cmd-copy" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/copy" data-hay="/copy  copy last response as markdown"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/copy<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/copy" aria-label="Copy /copy">copy</button></div><p class="cmd-desc">copy last response as markdown</p></article><article class="cmd" id="cmd-raw" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="0" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/raw" data-hay="/raw  toggle raw scrollback mode for copy-friendly terminal selection"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/raw</span></span><button class="copy" type="button" data-copy="/raw" aria-label="Copy /raw">copy</button></div><p class="cmd-desc">toggle raw scrollback mode for copy-friendly terminal selection</p></article><article class="cmd" id="cmd-side" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/side" data-hay="/side btw start a side conversation in an ephemeral fork"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/side<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/side" aria-label="Copy /side">copy</button></div><p class="cmd-desc">start a side conversation in an ephemeral fork</p><span class="tags"><span class="tag alias">btw</span></span></article><article class="cmd" id="cmd-agent" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/agent" data-hay="/agent  switch the active agent thread"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/agent-configuration/subagents" target="_blank" rel="noopener noreferrer">/agent<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/agent" aria-label="Copy /agent">copy</button></div><p class="cmd-desc">switch the active agent thread</p></article><article class="cmd" id="cmd-subagents" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/subagents" data-hay="/subagents  switch the active agent thread"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/agent-configuration/subagents" target="_blank" rel="noopener noreferrer">/subagents<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/subagents" aria-label="Copy /subagents">copy</button></div><p class="cmd-desc">switch the active agent thread</p></article><article class="cmd" id="cmd-exit" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/exit" data-hay="/exit quit exit codex"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/exit<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/exit" aria-label="Copy /exit">copy</button></div><p class="cmd-desc">exit Codex</p><span class="tags"><span class="tag alias">quit</span></span></article></div></section><section id="sec-model-reasoning" data-sec="1"><div class="sec-head"><h2>Model &amp; reasoning</h2><span class="n" data-n="1">5</span><p>How much horsepower each turn gets, and how it talks back</p></div><div class="grid"><article class="cmd" id="cmd-model" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/model" data-hay="/model  choose what model and reasoning effort to use"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/models" target="_blank" rel="noopener noreferrer">/model<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/model" aria-label="Copy /model">copy</button></div><p class="cmd-desc">choose what model and reasoning effort to use</p></article><article class="cmd" id="cmd-fast" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/fast" data-hay="/fast  1.5x speed, increased usage"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/fast<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/fast" aria-label="Copy /fast">copy</button></div><p class="cmd-desc">1.5x speed, increased usage</p></article><article class="cmd" id="cmd-plan" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/plan" data-hay="/plan  switch to plan mode"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/permission-modes" target="_blank" rel="noopener noreferrer">/plan<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/plan" aria-label="Copy /plan">copy</button></div><p class="cmd-desc">switch to Plan mode</p></article><article class="cmd" id="cmd-goal" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/goal" data-hay="/goal  set or view the goal for a long-running task"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/goal<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/goal" aria-label="Copy /goal">copy</button></div><p class="cmd-desc">set or view the goal for a long-running task</p></article><article class="cmd" id="cmd-personality" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/personality" data-hay="/personality  choose a communication style for codex"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/customization/overview" target="_blank" rel="noopener noreferrer">/personality<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/personality" aria-label="Copy /personality">copy</button></div><p class="cmd-desc">choose a communication style for Codex</p></article></div></section><section id="sec-workspace-code" data-sec="2"><div class="sec-head"><h2>Workspace &amp; code</h2><span class="n" data-n="2">5</span><p>Project instructions, your working diff, and review</p></div><div class="grid"><article class="cmd" id="cmd-init" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/init" data-hay="/init  create an agents.md file with instructions for codex"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">/init<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/init" aria-label="Copy /init">copy</button></div><p class="cmd-desc">create an AGENTS.md file with instructions for Codex</p></article><article class="cmd" id="cmd-review" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/review" data-hay="/review  review my current changes and find issues"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/code-review" target="_blank" rel="noopener noreferrer">/review<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/review" aria-label="Copy /review">copy</button></div><p class="cmd-desc">review my current changes and find issues</p></article><article class="cmd" id="cmd-diff" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/diff" data-hay="/diff  show git diff (including untracked files)"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/diff<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/diff" aria-label="Copy /diff">copy</button></div><p class="cmd-desc">show git diff (including untracked files)</p></article><article class="cmd" id="cmd-mention" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/mention" data-hay="/mention  mention a file"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/mention<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/mention" aria-label="Copy /mention">copy</button></div><p class="cmd-desc">mention a file</p></article><article class="cmd" id="cmd-approve" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/approve" data-hay="/approve  approve one retry of a recent auto-review denial"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/sandboxing/auto-review" target="_blank" rel="noopener noreferrer">/approve<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/approve" aria-label="Copy /approve">copy</button></div><p class="cmd-desc">approve one retry of a recent auto-review denial</p></article></div></section><section id="sec-config-environment" data-sec="3"><div class="sec-head"><h2>Config &amp; environment</h2><span class="n" data-n="3">13</span><p>Settings, permissions, hooks, and how the terminal behaves</p></div><div class="grid"><article class="cmd" id="cmd-permissions" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/permissions" data-hay="/permissions  choose what codex is allowed to do"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/permissions" target="_blank" rel="noopener noreferrer">/permissions<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/permissions" aria-label="Copy /permissions">copy</button></div><p class="cmd-desc">choose what Codex is allowed to do</p></article><article class="cmd" id="cmd-keymap" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/keymap" data-hay="/keymap  remap tui shortcuts"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/keymap<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/keymap" aria-label="Copy /keymap">copy</button></div><p class="cmd-desc">remap TUI shortcuts</p></article><article class="cmd" id="cmd-vim" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/vim" data-hay="/vim  toggle vim mode for the composer"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/vim<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/vim" aria-label="Copy /vim">copy</button></div><p class="cmd-desc">toggle Vim mode for the composer</p></article><article class="cmd" id="cmd-theme" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/theme" data-hay="/theme  choose a syntax highlighting theme"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/theme<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/theme" aria-label="Copy /theme">copy</button></div><p class="cmd-desc">choose a syntax highlighting theme</p></article><article class="cmd" id="cmd-statusline" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/statusline" data-hay="/statusline  configure which items appear in the status line"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/statusline<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/statusline" aria-label="Copy /statusline">copy</button></div><p class="cmd-desc">configure which items appear in the status line</p></article><article class="cmd" id="cmd-title" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/title" data-hay="/title  configure which items appear in the terminal title"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/title<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/title" aria-label="Copy /title">copy</button></div><p class="cmd-desc">configure which items appear in the terminal title</p></article><article class="cmd" id="cmd-pets" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/pets" data-hay="/pets  choose or hide the terminal pet"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cli-customization" target="_blank" rel="noopener noreferrer">/pets<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/pets" aria-label="Copy /pets">copy</button></div><p class="cmd-desc">choose or hide the terminal pet</p></article><article class="cmd" id="cmd-experimental" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/experimental" data-hay="/experimental  toggle experimental features"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/experimental<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/experimental" aria-label="Copy /experimental">copy</button></div><p class="cmd-desc">toggle experimental features</p></article><article class="cmd" id="cmd-import" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="0" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/import" data-hay="/import  import setup, this project, and recent chats from claude code"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/import</span></span><button class="copy" type="button" data-copy="/import" aria-label="Copy /import">copy</button></div><p class="cmd-desc">import setup, this project, and recent chats from Claude Code</p></article><article class="cmd" id="cmd-hooks" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/hooks" data-hay="/hooks  view and manage lifecycle hooks"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/hooks" target="_blank" rel="noopener noreferrer">/hooks<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/hooks" aria-label="Copy /hooks">copy</button></div><p class="cmd-desc">view and manage lifecycle hooks</p></article><article class="cmd" id="cmd-memories" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/memories" data-hay="/memories  configure memory use and generation"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/customization/memories" target="_blank" rel="noopener noreferrer">/memories<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/memories" aria-label="Copy /memories">copy</button></div><p class="cmd-desc">configure memory use and generation</p></article><article class="cmd" id="cmd-skills" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/skills" data-hay="/skills  use skills to improve how codex performs specific tasks"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">/skills<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/skills" aria-label="Copy /skills">copy</button></div><p class="cmd-desc">use skills to improve how Codex performs specific tasks</p></article><article class="cmd" id="cmd-ide" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/ide" data-hay="/ide  include current selection, open files, and other context from your ide"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/codex/ide" target="_blank" rel="noopener noreferrer">/ide<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/ide" aria-label="Copy /ide">copy</button></div><p class="cmd-desc">include current selection, open files, and other context from your IDE</p></article></div></section><section id="sec-extensions" data-sec="4"><div class="sec-head"><h2>Extensions</h2><span class="n" data-n="4">2</span><p>MCP servers and plugins</p></div><div class="grid"><article class="cmd" id="cmd-mcp" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/mcp" data-hay="/mcp  list configured mcp tools; use /mcp verbose for details"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">/mcp<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/mcp" aria-label="Copy /mcp">copy</button></div><p class="cmd-desc">list configured MCP tools; use /mcp verbose for details</p></article><article class="cmd" id="cmd-plugins" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/plugins" data-hay="/plugins  browse plugins"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/plugins" target="_blank" rel="noopener noreferrer">/plugins<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/plugins" aria-label="Copy /plugins">copy</button></div><p class="cmd-desc">browse plugins</p></article></div></section><section id="sec-account-usage" data-sec="5"><div class="sec-head"><h2>Account &amp; usage</h2><span class="n" data-n="5">4</span><p>Who you are signed in as, what it costs, and the desktop app</p></div><div class="grid"><article class="cmd" id="cmd-usage" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/usage" data-hay="/usage  view account usage or use a usage limit reset"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/reference/troubleshooting" target="_blank" rel="noopener noreferrer">/usage<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/usage" aria-label="Copy /usage">copy</button></div><p class="cmd-desc">view account usage or use a usage limit reset</p></article><article class="cmd" id="cmd-logout" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/logout" data-hay="/logout  log out of codex"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/auth" target="_blank" rel="noopener noreferrer">/logout<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/logout" aria-label="Copy /logout">copy</button></div><p class="cmd-desc">log out of Codex</p></article><article class="cmd" id="cmd-feedback" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/feedback" data-hay="/feedback  send logs to maintainers"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands" target="_blank" rel="noopener noreferrer">/feedback<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/feedback" aria-label="Copy /feedback">copy</button></div><p class="cmd-desc">send logs to maintainers</p></article><article class="cmd" id="cmd-app" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="1" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/app" data-hay="/app  continue this session in the desktop app"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/web" target="_blank" rel="noopener noreferrer">/app<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="/app" aria-label="Copy /app">copy</button></div><p class="cmd-desc">continue this session in the Desktop app</p></article></div></section><section id="sec-background-terminals" data-sec="6"><div class="sec-head"><h2>Background terminals</h2><span class="n" data-n="6">2</span><p>Long-running shells the agent started</p></div><div class="grid"><article class="cmd" id="cmd-ps" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="0" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/ps" data-hay="/ps  list background terminals"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/ps</span></span><button class="copy" type="button" data-copy="/ps" aria-label="Copy /ps">copy</button></div><p class="cmd-desc">list background terminals</p></article><article class="cmd" id="cmd-stop" style="--fc:var(--fam-slash)" data-fam="slash" data-doc="0" data-unreg="0" data-probe="picker" data-probe-note="" data-exp="0" data-name="/stop" data-hay="/stop  stop all background terminals"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/stop</span></span><button class="copy" type="button" data-copy="/stop" aria-label="Copy /stop">copy</button></div><p class="cmd-desc">stop all background terminals</p></article></div></section><section id="sec-hidden-internal" data-sec="7" style="display: none;"><div class="sec-head"><h2>Hidden &amp; internal</h2><span class="n" data-n="7">0</span><p>In the binary but not offered by the <code>/</code> picker — listed for completeness</p></div><div class="grid"><article class="cmd" id="cmd-apps" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="0" data-probe="ran" data-probe-note="" data-exp="0" data-name="/apps" data-hay="/apps  manage apps"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/apps</span></span><button class="copy" type="button" data-copy="/apps" aria-label="Copy /apps">copy</button></div><p class="cmd-desc">manage apps</p><span class="tags"><span class="tag hidden-t">not in the picker</span></span></article><article class="cmd" id="cmd-debug-config" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="0" data-probe="ran" data-probe-note="" data-exp="0" data-name="/debug-config" data-hay="/debug-config  show config layers and requirement sources for debugging"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/debug-config</span></span><button class="copy" type="button" data-copy="/debug-config" aria-label="Copy /debug-config">copy</button></div><p class="cmd-desc">show config layers and requirement sources for debugging</p><span class="tags"><span class="tag hidden-t">not in the picker</span></span></article><article class="cmd" id="cmd-rollout" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="1" data-probe="unrecognized" data-probe-note="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does." data-exp="0" data-name="/rollout" data-hay="/rollout  print the rollout file path"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/rollout</span></span><button class="copy" type="button" data-copy="/rollout" aria-label="Copy /rollout">copy</button></div><p class="cmd-desc">print the rollout file path</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.">not registered — “Unrecognized command”</span></span></article><article class="cmd" id="cmd-sandbox-add-read-dir" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="1" data-probe="unrecognized" data-probe-note="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does." data-exp="0" data-name="/sandbox-add-read-dir" data-hay="/sandbox-add-read-dir  let sandbox read a directory: /sandbox-add-read-dir &lt;absolute_path&gt;"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/sandbox-add-read-dir</span></span><button class="copy" type="button" data-copy="/sandbox-add-read-dir" aria-label="Copy /sandbox-add-read-dir">copy</button></div><p class="cmd-desc">let sandbox read a directory: /sandbox-add-read-dir &lt;absolute_path&gt;</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.">not registered — “Unrecognized command”</span></span></article><article class="cmd" id="cmd-test-approval" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="1" data-probe="unrecognized" data-probe-note="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does." data-exp="0" data-name="/test-approval" data-hay="/test-approval  test approval request"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/test-approval</span></span><button class="copy" type="button" data-copy="/test-approval" aria-label="Copy /test-approval">copy</button></div><p class="cmd-desc">test approval request</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.">not registered — “Unrecognized command”</span></span></article><article class="cmd" id="cmd-setup-default-sandbox" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="0" data-probe="not probed" data-probe-note="Not run: it would have reconfigured the agent sandbox. Availability unestablished." data-exp="0" data-name="/setup-default-sandbox" data-hay="/setup-default-sandbox  set up elevated agent sandbox"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/setup-default-sandbox</span></span><button class="copy" type="button" data-copy="/setup-default-sandbox" aria-label="Copy /setup-default-sandbox">copy</button></div><p class="cmd-desc">set up elevated agent sandbox</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Not run: it would have reconfigured the agent sandbox. Availability unestablished.">not probed</span></span></article><article class="cmd" id="cmd-debug-m-drop" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="0" data-probe="not probed" data-probe-note="Not run: the binary labels this DO NOT USE. Availability unestablished." data-exp="0" data-name="/debug-m-drop" data-hay="/debug-m-drop  do not use"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/debug-m-drop</span></span><button class="copy" type="button" data-copy="/debug-m-drop" aria-label="Copy /debug-m-drop">copy</button></div><p class="cmd-desc">DO NOT USE</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Not run: the binary labels this DO NOT USE. Availability unestablished.">not probed</span></span></article><article class="cmd" id="cmd-debug-m-update" style="--fc: var(--fam-hidden); display: none;" data-fam="hidden" data-doc="0" data-unreg="0" data-probe="not probed" data-probe-note="Not run: the binary labels this DO NOT USE. Availability unestablished." data-exp="0" data-name="/debug-m-update" data-hay="/debug-m-update  do not use"><div class="cmd-top"><span class="cmd-id"><span class="cmd-name plain">/debug-m-update</span></span><button class="copy" type="button" data-copy="/debug-m-update" aria-label="Copy /debug-m-update">copy</button></div><p class="cmd-desc">DO NOT USE</p><span class="tags"><span class="tag hidden-t">not in the picker</span><span class="tag unreg" title="Not run: the binary labels this DO NOT USE. Availability unestablished.">not probed</span></span></article></div></section><section id="sec-terminal-cli-core" data-sec="8"><div class="sec-head"><h2>Terminal CLI — core</h2><span class="n" data-n="8">19</span><p>The <code>codex</code> executable itself, run from your shell</p></div><div class="grid"><article class="cmd" id="cli-codex" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex" data-hay="codex  start an interactive session in the current directory"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener noreferrer">codex<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PROMPT]</span></span><button class="copy" type="button" data-copy="codex" aria-label="Copy codex">copy</button></div><p class="cmd-desc">Start an interactive session in the current directory</p></article><article class="cmd" id="cli-codex-exec" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex exec" data-hay="codex exec e run codex non-interactively"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">codex exec<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PROMPT] codex exec &lt;COMMAND&gt; [ARGS]</span></span><button class="copy" type="button" data-copy="codex exec" aria-label="Copy codex exec">copy</button></div><p class="cmd-desc">Run Codex non-interactively</p><span class="tags"><span class="tag">e</span></span></article><article class="cmd" id="cli-codex-exec-resume" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex exec resume" data-hay="codex exec resume  resume a previous session by id or pick the most recent with --last"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">codex exec resume<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[SESSION_ID] [PROMPT]</span></span><button class="copy" type="button" data-copy="codex exec resume" aria-label="Copy codex exec resume">copy</button></div><p class="cmd-desc">Resume a previous session by id or pick the most recent with --last</p></article><article class="cmd" id="cli-codex-exec-review" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex exec review" data-hay="codex exec review  run a code review against the current repository"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">codex exec review<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PROMPT]</span></span><button class="copy" type="button" data-copy="codex exec review" aria-label="Copy codex exec review">copy</button></div><p class="cmd-desc">Run a code review against the current repository</p></article><article class="cmd" id="cli-codex-review" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex review" data-hay="codex review  run a code review non-interactively"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/code-review" target="_blank" rel="noopener noreferrer">codex review<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PROMPT]</span></span><button class="copy" type="button" data-copy="codex review" aria-label="Copy codex review">copy</button></div><p class="cmd-desc">Run a code review non-interactively</p></article><article class="cmd" id="cli-codex-resume" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex resume" data-hay="codex resume  resume a previous interactive session (picker by default; use --last to continue the most recent)"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-resume" target="_blank" rel="noopener noreferrer">codex resume<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[SESSION_ID] [PROMPT]</span></span><button class="copy" type="button" data-copy="codex resume" aria-label="Copy codex resume">copy</button></div><p class="cmd-desc">Resume a previous interactive session (picker by default; use --last to continue the most recent)</p></article><article class="cmd" id="cli-codex-fork" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex fork" data-hay="codex fork  fork a previous interactive session (picker by default; use --last to fork the most recent)"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-fork" target="_blank" rel="noopener noreferrer">codex fork<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[SESSION_ID] [PROMPT]</span></span><button class="copy" type="button" data-copy="codex fork" aria-label="Copy codex fork">copy</button></div><p class="cmd-desc">Fork a previous interactive session (picker by default; use --last to fork the most recent)</p></article><article class="cmd" id="cli-codex-apply" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex apply" data-hay="codex apply a apply the latest diff produced by codex agent as a `git apply` to your local working tree"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex apply<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;TASK_ID&gt;</span></span><button class="copy" type="button" data-copy="codex apply" aria-label="Copy codex apply">copy</button></div><p class="cmd-desc">Apply the latest diff produced by Codex agent as a `git apply` to your local working tree</p><span class="tags"><span class="tag">a</span></span></article><article class="cmd" id="cli-codex-archive" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex archive" data-hay="codex archive  archive a saved session by id or session name"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex archive<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;SESSION&gt;</span></span><button class="copy" type="button" data-copy="codex archive" aria-label="Copy codex archive">copy</button></div><p class="cmd-desc">Archive a saved session by id or session name</p></article><article class="cmd" id="cli-codex-unarchive" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex unarchive" data-hay="codex unarchive  unarchive a saved session by id or session name"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex unarchive<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;SESSION&gt;</span></span><button class="copy" type="button" data-copy="codex unarchive" aria-label="Copy codex unarchive">copy</button></div><p class="cmd-desc">Unarchive a saved session by id or session name</p></article><article class="cmd" id="cli-codex-delete" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex delete" data-hay="codex delete  permanently delete a saved session by id or session name"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex delete<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;SESSION&gt;</span></span><button class="copy" type="button" data-copy="codex delete" aria-label="Copy codex delete">copy</button></div><p class="cmd-desc">Permanently delete a saved session by id or session name</p></article><article class="cmd" id="cli-codex-login" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex login" data-hay="codex login  manage login"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/auth" target="_blank" rel="noopener noreferrer">codex login<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[COMMAND]</span></span><button class="copy" type="button" data-copy="codex login" aria-label="Copy codex login">copy</button></div><p class="cmd-desc">Manage login</p></article><article class="cmd" id="cli-codex-login-status" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex login status" data-hay="codex login status  show login status"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/auth" target="_blank" rel="noopener noreferrer">codex login status<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex login status" aria-label="Copy codex login status">copy</button></div><p class="cmd-desc">Show login status</p></article><article class="cmd" id="cli-codex-logout" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex logout" data-hay="codex logout  remove stored authentication credentials"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/auth" target="_blank" rel="noopener noreferrer">codex logout<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex logout" aria-label="Copy codex logout">copy</button></div><p class="cmd-desc">Remove stored authentication credentials</p></article><article class="cmd" id="cli-codex-update" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex update" data-hay="codex update  update codex to the latest version"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-update" target="_blank" rel="noopener noreferrer">codex update<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex update" aria-label="Copy codex update">copy</button></div><p class="cmd-desc">Update Codex to the latest version</p></article><article class="cmd" id="cli-codex-doctor" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex doctor" data-hay="codex doctor  diagnose local codex installation, config, auth, and runtime health"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/reference/troubleshooting" target="_blank" rel="noopener noreferrer">codex doctor<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex doctor" aria-label="Copy codex doctor">copy</button></div><p class="cmd-desc">Diagnose local Codex installation, config, auth, and runtime health</p></article><article class="cmd" id="cli-codex-completion" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex completion" data-hay="codex completion  generate shell completion scripts"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex completion<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[SHELL]</span></span><button class="copy" type="button" data-copy="codex completion" aria-label="Copy codex completion">copy</button></div><p class="cmd-desc">Generate shell completion scripts</p></article><article class="cmd" id="cli-codex-sandbox" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex sandbox" data-hay="codex sandbox  run commands within a codex-provided sandbox"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/sandboxing" target="_blank" rel="noopener noreferrer">codex sandbox<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[COMMAND]...</span></span><button class="copy" type="button" data-copy="codex sandbox" aria-label="Copy codex sandbox">copy</button></div><p class="cmd-desc">Run commands within a Codex-provided sandbox</p></article><article class="cmd" id="cli-codex-app" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app" data-hay="codex app  launch the desktop app (opens the app installer if missing)"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/web" target="_blank" rel="noopener noreferrer">codex app<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PATH]</span></span><button class="copy" type="button" data-copy="codex app" aria-label="Copy codex app">copy</button></div><p class="cmd-desc">Launch the Desktop app (opens the app installer if missing)</p></article></div></section><section id="sec-mcp-plugins" data-sec="9"><div class="sec-head"><h2>MCP &amp; plugins</h2><span class="n" data-n="9">17</span><p>External tool servers, and the plugin marketplace</p></div><div class="grid"><article class="cmd" id="cli-codex-mcp" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp" data-hay="codex mcp  manage external mcp servers for codex"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex mcp" aria-label="Copy codex mcp">copy</button></div><p class="cmd-desc">Manage external MCP servers for Codex</p></article><article class="cmd" id="cli-codex-mcp-add" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp add" data-hay="codex mcp add  add an mcp server by url or launch command"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp add<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;NAME&gt; (--url &lt;URL&gt; | -- &lt;COMMAND&gt;...)</span></span><button class="copy" type="button" data-copy="codex mcp add" aria-label="Copy codex mcp add">copy</button></div><p class="cmd-desc">Add an MCP server by URL or launch command</p></article><article class="cmd" id="cli-codex-mcp-get" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp get" data-hay="codex mcp get  show one configured mcp server"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp get<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;NAME&gt;</span></span><button class="copy" type="button" data-copy="codex mcp get" aria-label="Copy codex mcp get">copy</button></div><p class="cmd-desc">Show one configured MCP server</p></article><article class="cmd" id="cli-codex-mcp-list" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp list" data-hay="codex mcp list  list configured mcp servers"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp list<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex mcp list" aria-label="Copy codex mcp list">copy</button></div><p class="cmd-desc">List configured MCP servers</p></article><article class="cmd" id="cli-codex-mcp-login" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp login" data-hay="codex mcp login  sign in to an mcp server that needs auth"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp login<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;NAME&gt;</span></span><button class="copy" type="button" data-copy="codex mcp login" aria-label="Copy codex mcp login">copy</button></div><p class="cmd-desc">Sign in to an MCP server that needs auth</p></article><article class="cmd" id="cli-codex-mcp-logout" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp logout" data-hay="codex mcp logout  sign out of an mcp server"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp logout<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;NAME&gt;</span></span><button class="copy" type="button" data-copy="codex mcp logout" aria-label="Copy codex mcp logout">copy</button></div><p class="cmd-desc">Sign out of an MCP server</p></article><article class="cmd" id="cli-codex-mcp-remove" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp remove" data-hay="codex mcp remove  remove a configured mcp server"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">codex mcp remove<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;NAME&gt;</span></span><button class="copy" type="button" data-copy="codex mcp remove" aria-label="Copy codex mcp remove">copy</button></div><p class="cmd-desc">Remove a configured MCP server</p></article><article class="cmd" id="cli-codex-mcp-server" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex mcp-server" data-hay="codex mcp-server  start codex as an mcp server (stdio)"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/mcp-server" target="_blank" rel="noopener noreferrer">codex mcp-server<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex mcp-server" aria-label="Copy codex mcp-server">copy</button></div><p class="cmd-desc">Start Codex as an MCP server (stdio)</p></article><article class="cmd" id="cli-codex-plugin" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin" data-hay="codex plugin  manage codex plugins"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/plugins" target="_blank" rel="noopener noreferrer">codex plugin<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex plugin" aria-label="Copy codex plugin">copy</button></div><p class="cmd-desc">Manage Codex plugins</p></article><article class="cmd" id="cli-codex-plugin-add" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin add" data-hay="codex plugin add  install a plugin from a configured marketplace snapshot"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/plugins" target="_blank" rel="noopener noreferrer">codex plugin add<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;PLUGIN[@MARKETPLACE]&gt;</span></span><button class="copy" type="button" data-copy="codex plugin add" aria-label="Copy codex plugin add">copy</button></div><p class="cmd-desc">Install a plugin from a configured marketplace snapshot</p></article><article class="cmd" id="cli-codex-plugin-list" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin list" data-hay="codex plugin list  list plugins available from configured marketplace snapshots"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/plugins" target="_blank" rel="noopener noreferrer">codex plugin list<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex plugin list" aria-label="Copy codex plugin list">copy</button></div><p class="cmd-desc">List plugins available from configured marketplace snapshots</p></article><article class="cmd" id="cli-codex-plugin-remove" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin remove" data-hay="codex plugin remove  remove an installed plugin from local config and cache"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/plugins" target="_blank" rel="noopener noreferrer">codex plugin remove<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;PLUGIN[@MARKETPLACE]&gt;</span></span><button class="copy" type="button" data-copy="codex plugin remove" aria-label="Copy codex plugin remove">copy</button></div><p class="cmd-desc">Remove an installed plugin from local config and cache</p></article><article class="cmd" id="cli-codex-plugin-marketplace" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin marketplace" data-hay="codex plugin marketplace  add, list, upgrade, or remove configured plugin marketplaces"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-plugins" target="_blank" rel="noopener noreferrer">codex plugin marketplace<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex plugin marketplace" aria-label="Copy codex plugin marketplace">copy</button></div><p class="cmd-desc">Add, list, upgrade, or remove configured plugin marketplaces</p></article><article class="cmd" id="cli-codex-plugin-marketplace-add" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin marketplace add" data-hay="codex plugin marketplace add  add a local or git marketplace to the configured marketplace sources"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-plugins" target="_blank" rel="noopener noreferrer">codex plugin marketplace add<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;SOURCE&gt;</span></span><button class="copy" type="button" data-copy="codex plugin marketplace add" aria-label="Copy codex plugin marketplace add">copy</button></div><p class="cmd-desc">Add a local or Git marketplace to the configured marketplace sources</p></article><article class="cmd" id="cli-codex-plugin-marketplace-list" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin marketplace list" data-hay="codex plugin marketplace list  list plugin marketplaces codex is currently considering and their roots"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-plugins" target="_blank" rel="noopener noreferrer">codex plugin marketplace list<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex plugin marketplace list" aria-label="Copy codex plugin marketplace list">copy</button></div><p class="cmd-desc">List plugin marketplaces Codex is currently considering and their roots</p></article><article class="cmd" id="cli-codex-plugin-marketplace-remove" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin marketplace remove" data-hay="codex plugin marketplace remove  remove a configured marketplace source by name"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-plugins" target="_blank" rel="noopener noreferrer">codex plugin marketplace remove<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;MARKETPLACE_NAME&gt;</span></span><button class="copy" type="button" data-copy="codex plugin marketplace remove" aria-label="Copy codex plugin marketplace remove">copy</button></div><p class="cmd-desc">Remove a configured marketplace source by name</p></article><article class="cmd" id="cli-codex-plugin-marketplace-upgrade" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex plugin marketplace upgrade" data-hay="codex plugin marketplace upgrade  refresh configured git marketplace snapshots"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/build-plugins" target="_blank" rel="noopener noreferrer">codex plugin marketplace upgrade<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[MARKETPLACE_NAME]</span></span><button class="copy" type="button" data-copy="codex plugin marketplace upgrade" aria-label="Copy codex plugin marketplace upgrade">copy</button></div><p class="cmd-desc">Refresh configured Git marketplace snapshots</p></article></div></section><section id="sec-app-server-daemon-remote-control" data-sec="10"><div class="sec-head"><h2>App server, daemon &amp; remote control</h2><span class="n" data-n="10">17</span><p>The long-running service other front-ends talk to</p></div><div class="grid"><article class="cmd" id="cli-codex-app-server" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex app-server" data-hay="codex app-server  run the app server or related tooling"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/app-server" target="_blank" rel="noopener noreferrer">codex app-server<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[COMMAND]</span></span><button class="copy" type="button" data-copy="codex app-server" aria-label="Copy codex app-server">copy</button></div><p class="cmd-desc">Run the app server or related tooling</p><span class="tags"><span class="tag gate">experimental</span></span></article><article class="cmd" id="cli-codex-app-server-daemon" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon" data-hay="codex app-server daemon  manage the local app-server daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/app-server" target="_blank" rel="noopener noreferrer">codex app-server daemon<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex app-server daemon" aria-label="Copy codex app-server daemon">copy</button></div><p class="cmd-desc">Manage the local app-server daemon</p></article><article class="cmd" id="cli-codex-app-server-daemon-start" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon start" data-hay="codex app-server daemon start  start the local app server daemon if it is not already running"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon start<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon start" aria-label="Copy codex app-server daemon start">copy</button></div><p class="cmd-desc">Start the local app server daemon if it is not already running</p></article><article class="cmd" id="cli-codex-app-server-daemon-stop" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon stop" data-hay="codex app-server daemon stop  stop the local app server daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon stop<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon stop" aria-label="Copy codex app-server daemon stop">copy</button></div><p class="cmd-desc">Stop the local app server daemon</p></article><article class="cmd" id="cli-codex-app-server-daemon-restart" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon restart" data-hay="codex app-server daemon restart  restart the local app server daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon restart<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon restart" aria-label="Copy codex app-server daemon restart">copy</button></div><p class="cmd-desc">Restart the local app server daemon</p></article><article class="cmd" id="cli-codex-app-server-daemon-bootstrap" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon bootstrap" data-hay="codex app-server daemon bootstrap  install durable local app-server management for ssh-driven use"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon bootstrap<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon bootstrap" aria-label="Copy codex app-server daemon bootstrap">copy</button></div><p class="cmd-desc">Install durable local app-server management for SSH-driven use</p></article><article class="cmd" id="cli-codex-app-server-daemon-version" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon version" data-hay="codex app-server daemon version  print local cli and running app-server versions as json"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon version<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon version" aria-label="Copy codex app-server daemon version">copy</button></div><p class="cmd-desc">Print local CLI and running app-server versions as JSON</p></article><article class="cmd" id="cli-codex-app-server-daemon-enable-remote-control" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon enable-remote-control" data-hay="codex app-server daemon enable-remote-control  enable remote control for future starts and a currently running managed daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon enable-remote-control<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon enable-remote-control" aria-label="Copy codex app-server daemon enable-remote-control">copy</button></div><p class="cmd-desc">Enable remote control for future starts and a currently running managed daemon</p></article><article class="cmd" id="cli-codex-app-server-daemon-disable-remote-control" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server daemon disable-remote-control" data-hay="codex app-server daemon disable-remote-control  disable remote control for future starts and a currently running managed daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex app-server daemon disable-remote-control<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server daemon disable-remote-control" aria-label="Copy codex app-server daemon disable-remote-control">copy</button></div><p class="cmd-desc">Disable remote control for future starts and a currently running managed daemon</p></article><article class="cmd" id="cli-codex-app-server-generate-json-schema" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex app-server generate-json-schema" data-hay="codex app-server generate-json-schema  generate json schema for the app server protocol"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/app-server" target="_blank" rel="noopener noreferrer">codex app-server generate-json-schema<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">--out &lt;DIR&gt;</span></span><button class="copy" type="button" data-copy="codex app-server generate-json-schema" aria-label="Copy codex app-server generate-json-schema">copy</button></div><p class="cmd-desc">Generate JSON Schema for the app server protocol</p><span class="tags"><span class="tag gate">experimental</span></span></article><article class="cmd" id="cli-codex-app-server-generate-ts" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex app-server generate-ts" data-hay="codex app-server generate-ts  generate typescript bindings for the app server protocol"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/app-server" target="_blank" rel="noopener noreferrer">codex app-server generate-ts<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">--out &lt;DIR&gt;</span></span><button class="copy" type="button" data-copy="codex app-server generate-ts" aria-label="Copy codex app-server generate-ts">copy</button></div><p class="cmd-desc">Generate TypeScript bindings for the app server protocol</p><span class="tags"><span class="tag gate">experimental</span></span></article><article class="cmd" id="cli-codex-app-server-proxy" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex app-server proxy" data-hay="codex app-server proxy  proxy stdio bytes to the running app-server control socket"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/app-server" target="_blank" rel="noopener noreferrer">codex app-server proxy<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex app-server proxy" aria-label="Copy codex app-server proxy">copy</button></div><p class="cmd-desc">Proxy stdio bytes to the running app-server control socket</p></article><article class="cmd" id="cli-codex-remote-control" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex remote-control" data-hay="codex remote-control  manage the app-server daemon with remote control enabled"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex remote-control<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[COMMAND]</span></span><button class="copy" type="button" data-copy="codex remote-control" aria-label="Copy codex remote-control">copy</button></div><p class="cmd-desc">Manage the app-server daemon with remote control enabled</p><span class="tags"><span class="tag gate">experimental</span></span></article><article class="cmd" id="cli-codex-remote-control-start" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex remote-control start" data-hay="codex remote-control start  start the app-server daemon with remote control enabled"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex remote-control start<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex remote-control start" aria-label="Copy codex remote-control start">copy</button></div><p class="cmd-desc">Start the app-server daemon with remote control enabled</p></article><article class="cmd" id="cli-codex-remote-control-stop" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex remote-control stop" data-hay="codex remote-control stop  stop the app-server daemon"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex remote-control stop<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex remote-control stop" aria-label="Copy codex remote-control stop">copy</button></div><p class="cmd-desc">Stop the app-server daemon</p></article><article class="cmd" id="cli-codex-remote-control-pair" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex remote-control pair" data-hay="codex remote-control pair  create and print a short-lived manual pairing code"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex remote-control pair<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex remote-control pair" aria-label="Copy codex remote-control pair">copy</button></div><p class="cmd-desc">Create and print a short-lived manual pairing code</p></article><article class="cmd" id="cli-codex-exec-server" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex exec-server" data-hay="codex exec-server  run the standalone exec-server service"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex exec-server<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex exec-server" aria-label="Copy codex exec-server">copy</button></div><p class="cmd-desc">Run the standalone exec-server service</p><span class="tags"><span class="tag gate">experimental</span></span></article></div></section><section id="sec-codex-cloud" data-sec="11"><div class="sec-head"><h2>Codex Cloud</h2><span class="n" data-n="11">6</span><p>Tasks running on OpenAI's infrastructure, driven from your shell</p></div><div class="grid"><article class="cmd" id="cli-codex-cloud" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="1" data-name="codex cloud" data-hay="codex cloud  browse tasks from codex cloud and apply changes locally"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[COMMAND]</span></span><button class="copy" type="button" data-copy="codex cloud" aria-label="Copy codex cloud">copy</button></div><p class="cmd-desc">Browse tasks from Codex Cloud and apply changes locally</p><span class="tags"><span class="tag gate">experimental</span></span></article><article class="cmd" id="cli-codex-cloud-list" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex cloud list" data-hay="codex cloud list  list codex cloud tasks"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud list<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex cloud list" aria-label="Copy codex cloud list">copy</button></div><p class="cmd-desc">List Codex Cloud tasks</p></article><article class="cmd" id="cli-codex-cloud-status" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex cloud status" data-hay="codex cloud status  show the status of a codex cloud task"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud status<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;TASK_ID&gt;</span></span><button class="copy" type="button" data-copy="codex cloud status" aria-label="Copy codex cloud status">copy</button></div><p class="cmd-desc">Show the status of a Codex Cloud task</p></article><article class="cmd" id="cli-codex-cloud-diff" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex cloud diff" data-hay="codex cloud diff  show the unified diff for a codex cloud task"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud diff<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;TASK_ID&gt;</span></span><button class="copy" type="button" data-copy="codex cloud diff" aria-label="Copy codex cloud diff">copy</button></div><p class="cmd-desc">Show the unified diff for a Codex Cloud task</p></article><article class="cmd" id="cli-codex-cloud-exec" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex cloud exec" data-hay="codex cloud exec  submit a new codex cloud task without launching the tui"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud exec<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">--env &lt;ENV_ID&gt; [QUERY]</span></span><button class="copy" type="button" data-copy="codex cloud exec" aria-label="Copy codex cloud exec">copy</button></div><p class="cmd-desc">Submit a new Codex Cloud task without launching the TUI</p></article><article class="cmd" id="cli-codex-cloud-apply" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex cloud apply" data-hay="codex cloud apply  apply the diff for a codex cloud task locally"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/cloud" target="_blank" rel="noopener noreferrer">codex cloud apply<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;TASK_ID&gt;</span></span><button class="copy" type="button" data-copy="codex cloud apply" aria-label="Copy codex cloud apply">copy</button></div><p class="cmd-desc">Apply the diff for a Codex Cloud task locally</p></article></div></section><section id="sec-debug-feature-flags" data-sec="12"><div class="sec-head"><h2>Debug &amp; feature flags</h2><span class="n" data-n="12">9</span><p>Diagnostics, and the switchboard behind the build</p></div><div class="grid"><article class="cmd" id="cli-codex-debug" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex debug" data-hay="codex debug  debugging tools"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex debug<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex debug" aria-label="Copy codex debug">copy</button></div><p class="cmd-desc">Debugging tools</p></article><article class="cmd" id="cli-codex-debug-models" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex debug models" data-hay="codex debug models  render the raw model catalog as json"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex debug models<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex debug models" aria-label="Copy codex debug models">copy</button></div><p class="cmd-desc">Render the raw model catalog as JSON</p></article><article class="cmd" id="cli-codex-debug-prompt-input" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex debug prompt-input" data-hay="codex debug prompt-input  render the model-visible prompt input list as json"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex debug prompt-input<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">[PROMPT]</span></span><button class="copy" type="button" data-copy="codex debug prompt-input" aria-label="Copy codex debug prompt-input">copy</button></div><p class="cmd-desc">Render the model-visible prompt input list as JSON</p></article><article class="cmd" id="cli-codex-debug-app-server" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex debug app-server" data-hay="codex debug app-server  tooling: helps debug the app server"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex debug app-server<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex debug app-server" aria-label="Copy codex debug app-server">copy</button></div><p class="cmd-desc">Tooling: helps debug the app server</p></article><article class="cmd" id="cli-codex-debug-app-server-send-message-v2" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex debug app-server send-message-v2" data-hay="codex debug app-server send-message-v2  send one user message to the app server"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex debug app-server send-message-v2<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">2 &lt;USER_MESSAGE&gt;</span></span><button class="copy" type="button" data-copy="codex debug app-server send-message-v2" aria-label="Copy codex debug app-server send-message-v2">copy</button></div><p class="cmd-desc">Send one user message to the app server</p></article><article class="cmd" id="cli-codex-features" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex features" data-hay="codex features  inspect feature flags"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex features<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;COMMAND&gt;</span></span><button class="copy" type="button" data-copy="codex features" aria-label="Copy codex features">copy</button></div><p class="cmd-desc">Inspect feature flags</p></article><article class="cmd" id="cli-codex-features-list" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex features list" data-hay="codex features list  list known features with their stage and effective state"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex features list<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a></span><button class="copy" type="button" data-copy="codex features list" aria-label="Copy codex features list">copy</button></div><p class="cmd-desc">List known features with their stage and effective state</p></article><article class="cmd" id="cli-codex-features-enable" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex features enable" data-hay="codex features enable  enable a feature in config.toml"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex features enable<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;FEATURE&gt;</span></span><button class="copy" type="button" data-copy="codex features enable" aria-label="Copy codex features enable">copy</button></div><p class="cmd-desc">Enable a feature in config.toml</p></article><article class="cmd" id="cli-codex-features-disable" style="--fc:var(--fam-cli)" data-fam="cli" data-doc="1" data-unreg="0" data-probe="help" data-probe-note="" data-exp="0" data-name="codex features disable" data-hay="codex features disable  disable a feature in config.toml"><div class="cmd-top"><span class="cmd-id"><a class="cmd-name" href="https://learn.chatgpt.com/docs/developer-commands?surface=cli" target="_blank" rel="noopener noreferrer">codex features disable<span class="ext" aria-hidden="true">↗</span><span class="sr">&nbsp;(opens the official documentation)</span></a><span class="cmd-arg">&lt;FEATURE&gt;</span></span><button class="copy" type="button" data-copy="codex features disable" aria-label="Copy codex features disable">copy</button></div><p class="cmd-desc">Disable a feature in config.toml</p></article></div></section></main>
+
+  <div class="empty" id="empty">No command matches that search.</div>
+
+  <section id="flags-sec">
+    <div class="sec-head">
+      <h2>Launch flags</h2>
+      <span class="n" id="flagcount">21</span>
+      <p>Passed to <code>codex</code> at launch</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Flag</th><th scope="col">What it does</th></tr></thead>
+        <tbody id="flagbody"><tr data-hay="-c, --config &lt;key=value&gt; override a configuration value that would otherwise be loaded from `~/.codex/config.toml`. use a dotted path (`foo.bar.baz`) to override nested values. the `value` portion is parsed as toml. if it fails to parse as toml, the raw string is used as a literal"><td class="f">-c, --config &lt;key=value&gt;</td><td class="d">Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`. Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal</td></tr><tr data-hay="--enable &lt;feature&gt; enable a feature (repeatable). equivalent to `-c features.&lt;name&gt;=true`"><td class="f">--enable &lt;FEATURE&gt;</td><td class="d">Enable a feature (repeatable). Equivalent to `-c features.&lt;name&gt;=true`</td></tr><tr data-hay="--disable &lt;feature&gt; disable a feature (repeatable). equivalent to `-c features.&lt;name&gt;=false`"><td class="f">--disable &lt;FEATURE&gt;</td><td class="d">Disable a feature (repeatable). Equivalent to `-c features.&lt;name&gt;=false`</td></tr><tr data-hay="--remote &lt;addr&gt; connect the tui to a remote app server endpoint. accepted forms: `ws://host:port`, `wss://host:port`, `unix://`, or `unix://path`"><td class="f">--remote &lt;ADDR&gt;</td><td class="d">Connect the TUI to a remote app server endpoint. Accepted forms: `ws://host:port`, `wss://host:port`, `unix://`, or `unix://PATH`</td></tr><tr data-hay="--remote-auth-token-env &lt;env_var&gt; name of the environment variable containing the bearer token to send to a remote app server websocket"><td class="f">--remote-auth-token-env &lt;ENV_VAR&gt;</td><td class="d">Name of the environment variable containing the bearer token to send to a remote app server websocket</td></tr><tr data-hay="--strict-config error out when config.toml contains fields that are not recognized by this version of codex"><td class="f">--strict-config</td><td class="d">Error out when config.toml contains fields that are not recognized by this version of Codex</td></tr><tr data-hay="-i, --image &lt;file&gt;... optional image(s) to attach to the initial prompt"><td class="f">-i, --image &lt;FILE&gt;...</td><td class="d">Optional image(s) to attach to the initial prompt</td></tr><tr data-hay="-m, --model &lt;model&gt; model the agent should use"><td class="f">-m, --model &lt;MODEL&gt;</td><td class="d">Model the agent should use</td></tr><tr data-hay="--oss use open-source provider"><td class="f">--oss</td><td class="d">Use open-source provider</td></tr><tr data-hay="--local-provider &lt;oss_provider&gt; specify which local provider to use (lmstudio or ollama). if not specified with --oss, will use config default or show selection"><td class="f">--local-provider &lt;OSS_PROVIDER&gt;</td><td class="d">Specify which local provider to use (lmstudio or ollama). If not specified with --oss, will use config default or show selection</td></tr><tr data-hay="-p, --profile &lt;config_profile_v2&gt; layer $codex_home/&lt;name&gt;.config.toml on top of the base user config"><td class="f">-p, --profile &lt;CONFIG_PROFILE_V2&gt;</td><td class="d">Layer $CODEX_HOME/&lt;name&gt;.config.toml on top of the base user config</td></tr><tr data-hay="-s, --sandbox &lt;sandbox_mode&gt; select the sandbox policy to use when executing model-generated shell commands [possible values: read-only, workspace-write, danger-full-access]"><td class="f">-s, --sandbox &lt;SANDBOX_MODE&gt;</td><td class="d">Select the sandbox policy to use when executing model-generated shell commands [possible values: read-only, workspace-write, danger-full-access]</td></tr><tr data-hay="--dangerously-bypass-approvals-and-sandbox skip all confirmation prompts and execute commands without sandboxing. extremely dangerous. intended solely for running in environments that are externally sandboxed"><td class="f">--dangerously-bypass-approvals-and-sandbox</td><td class="d">Skip all confirmation prompts and execute commands without sandboxing. EXTREMELY DANGEROUS. Intended solely for running in environments that are externally sandboxed</td></tr><tr data-hay="--dangerously-bypass-hook-trust run enabled hooks without requiring persisted hook trust for this invocation. dangerous. intended only for automation that already vets hook sources"><td class="f">--dangerously-bypass-hook-trust</td><td class="d">Run enabled hooks without requiring persisted hook trust for this invocation. DANGEROUS. Intended only for automation that already vets hook sources</td></tr><tr data-hay="-c, --cd &lt;dir&gt; tell the agent to use the specified directory as its working root"><td class="f">-C, --cd &lt;DIR&gt;</td><td class="d">Tell the agent to use the specified directory as its working root</td></tr><tr data-hay="--add-dir &lt;dir&gt; additional directories that should be writable alongside the primary workspace"><td class="f">--add-dir &lt;DIR&gt;</td><td class="d">Additional directories that should be writable alongside the primary workspace</td></tr><tr data-hay="-a, --ask-for-approval &lt;approval_policy&gt; configure when the model requires human approval before executing a command"><td class="f">-a, --ask-for-approval &lt;APPROVAL_POLICY&gt;</td><td class="d">Configure when the model requires human approval before executing a command</td></tr><tr data-hay="--search enable live web search. when enabled, the native responses `web_search` tool is available to the model (no per‑call approval)"><td class="f">--search</td><td class="d">Enable live web search. When enabled, the native Responses `web_search` tool is available to the model (no per‑call approval)</td></tr><tr data-hay="--no-alt-screen disable alternate screen mode runs the tui in inline mode, preserving terminal scrollback history"><td class="f">--no-alt-screen</td><td class="d">Disable alternate screen mode Runs the TUI in inline mode, preserving terminal scrollback history</td></tr><tr data-hay="-h, --help print help (see a summary with '-h')"><td class="f">-h, --help</td><td class="d">Print help (see a summary with '-h')</td></tr><tr data-hay="-v, --version print version"><td class="f">-V, --version</td><td class="d">Print version</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="features-sec">
+    <div class="sec-head">
+      <h2>Feature flags</h2>
+      <span class="n" id="featcount">100</span>
+      <p>From <code>codex features list</code></p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Feature</th><th scope="col">Stage</th><th scope="col">On in this build</th></tr></thead>
+        <tbody id="featbody"><tr data-hay="apply_patch_freeform removed false"><td class="k">apply_patch_freeform</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="apply_patch_streaming_events under development false"><td class="k">apply_patch_streaming_events</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="apps stable true"><td class="k">apps</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="apps_mcp_path_override removed false"><td class="k">apps_mcp_path_override</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="artifact under development false"><td class="k">artifact</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="auth_elicitation stable true"><td class="k">auth_elicitation</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="browser_use stable true"><td class="k">browser_use</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="browser_use_external stable true"><td class="k">browser_use_external</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="browser_use_full_cdp_access stable true"><td class="k">browser_use_full_cdp_access</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="chronicle under development true"><td class="k">chronicle</td><td class="s"><span class="stage under">under development</span></td><td class="v on">on</td></tr><tr data-hay="code_mode under development false"><td class="k">code_mode</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="code_mode_buffered_exec under development false"><td class="k">code_mode_buffered_exec</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="code_mode_host stable true"><td class="k">code_mode_host</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="code_mode_only under development false"><td class="k">code_mode_only</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="codex_git_commit removed false"><td class="k">codex_git_commit</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="collaboration_modes removed true"><td class="k">collaboration_modes</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="computer_use stable true"><td class="k">computer_use</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="concurrent_reasoning_summaries under development false"><td class="k">concurrent_reasoning_summaries</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="current_time_reminder under development false"><td class="k">current_time_reminder</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="default_mode_request_user_input under development false"><td class="k">default_mode_request_user_input</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="deferred_executor under development false"><td class="k">deferred_executor</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="deferred_tool_world_state under development false"><td class="k">deferred_tool_world_state</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="elevated_windows_sandbox removed false"><td class="k">elevated_windows_sandbox</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="enable_fanout removed false"><td class="k">enable_fanout</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="enable_mcp_apps under development false"><td class="k">enable_mcp_apps</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="enable_request_compression stable true"><td class="k">enable_request_compression</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="exec_permission_approvals under development false"><td class="k">exec_permission_approvals</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="executor_capability_discovery under development false"><td class="k">executor_capability_discovery</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="experimental_windows_sandbox removed false"><td class="k">experimental_windows_sandbox</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="external_agent_memory_import under development false"><td class="k">external_agent_memory_import</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="external_migration removed false"><td class="k">external_migration</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="fast_mode stable true"><td class="k">fast_mode</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="goals stable true"><td class="k">goals</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="guardian_approval stable true"><td class="k">guardian_approval</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="guardianv2 under development false"><td class="k">guardianv2</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="hooks stable true"><td class="k">hooks</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="image_detail_original removed false"><td class="k">image_detail_original</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="image_generation stable true"><td class="k">image_generation</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="in_app_browser stable true"><td class="k">in_app_browser</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="in_app_updates stable true"><td class="k">in_app_updates</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="item_ids removed true"><td class="k">item_ids</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="js_repl removed false"><td class="k">js_repl</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="js_repl_tools_only removed false"><td class="k">js_repl_tools_only</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="local_thread_store_compression under development false"><td class="k">local_thread_store_compression</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="mcp_2026_07_28 under development false"><td class="k">mcp_2026_07_28</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="memories stable true"><td class="k">memories</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="mentions_v2 stable true"><td class="k">mentions_v2</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="multi_agent stable true"><td class="k">multi_agent</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="multi_agent_mode removed false"><td class="k">multi_agent_mode</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="multi_agent_v2 stable false"><td class="k">multi_agent_v2</td><td class="s"><span class="stage stable">stable</span></td><td class="v off">off</td></tr><tr data-hay="network_proxy experimental false"><td class="k">network_proxy</td><td class="s"><span class="stage ">experimental</span></td><td class="v off">off</td></tr><tr data-hay="non_prefixed_mcp_tool_names under development false"><td class="k">non_prefixed_mcp_tool_names</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="personality stable true"><td class="k">personality</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="plugin_hooks removed false"><td class="k">plugin_hooks</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="plugin_sharing stable true"><td class="k">plugin_sharing</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="plugins stable true"><td class="k">plugins</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="prevent_idle_sleep experimental false"><td class="k">prevent_idle_sleep</td><td class="s"><span class="stage ">experimental</span></td><td class="v off">off</td></tr><tr data-hay="realtime_conversation under development false"><td class="k">realtime_conversation</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="remote_compaction_v2 stable true"><td class="k">remote_compaction_v2</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="remote_control removed false"><td class="k">remote_control</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="remote_models removed false"><td class="k">remote_models</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="remote_plugin stable true"><td class="k">remote_plugin</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="request_permissions_tool under development false"><td class="k">request_permissions_tool</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="request_rule removed false"><td class="k">request_rule</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="resize_all_images removed true"><td class="k">resize_all_images</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="respect_system_proxy under development false"><td class="k">respect_system_proxy</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="responses_websockets removed false"><td class="k">responses_websockets</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="responses_websockets_v2 removed false"><td class="k">responses_websockets_v2</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="rollout_budget under development false"><td class="k">rollout_budget</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="runtime_metrics under development false"><td class="k">runtime_metrics</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="search_tool removed false"><td class="k">search_tool</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="secret_auth_storage stable false"><td class="k">secret_auth_storage</td><td class="s"><span class="stage stable">stable</span></td><td class="v off">off</td></tr><tr data-hay="shell_snapshot stable true"><td class="k">shell_snapshot</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="shell_tool stable true"><td class="k">shell_tool</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="shell_zsh_fork under development false"><td class="k">shell_zsh_fork</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="skill_env_var_dependency_prompt removed false"><td class="k">skill_env_var_dependency_prompt</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="skill_mcp_dependency_install stable true"><td class="k">skill_mcp_dependency_install</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="skill_search stable true"><td class="k">skill_search</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="sqlite removed true"><td class="k">sqlite</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="standalone_web_search under development false"><td class="k">standalone_web_search</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="steer removed true"><td class="k">steer</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="terminal_resize_reflow removed true"><td class="k">terminal_resize_reflow</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="terminal_visualization_instructions under development false"><td class="k">terminal_visualization_instructions</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="token_budget under development false"><td class="k">token_budget</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="tool_call_mcp_elicitation stable true"><td class="k">tool_call_mcp_elicitation</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="tool_search removed false"><td class="k">tool_search</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="tool_search_always_defer_mcp_tools removed true"><td class="k">tool_search_always_defer_mcp_tools</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="tool_suggest stable true"><td class="k">tool_suggest</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="tui_app_server removed true"><td class="k">tui_app_server</td><td class="s"><span class="stage removed">removed</span></td><td class="v on">on</td></tr><tr data-hay="unavailable_dummy_tools removed false"><td class="k">unavailable_dummy_tools</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="undo removed false"><td class="k">undo</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="unified_exec stable true"><td class="k">unified_exec</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="unified_exec_zsh_fork under development false"><td class="k">unified_exec_zsh_fork</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="use_agent_identity under development false"><td class="k">use_agent_identity</td><td class="s"><span class="stage under">under development</span></td><td class="v off">off</td></tr><tr data-hay="use_legacy_landlock deprecated false"><td class="k">use_legacy_landlock</td><td class="s"><span class="stage ">deprecated</span></td><td class="v off">off</td></tr><tr data-hay="use_linux_sandbox_bwrap removed false"><td class="k">use_linux_sandbox_bwrap</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr><tr data-hay="web_search_cached deprecated false"><td class="k">web_search_cached</td><td class="s"><span class="stage ">deprecated</span></td><td class="v off">off</td></tr><tr data-hay="web_search_request deprecated false"><td class="k">web_search_request</td><td class="s"><span class="stage ">deprecated</span></td><td class="v off">off</td></tr><tr data-hay="workspace_dependencies stable true"><td class="k">workspace_dependencies</td><td class="s"><span class="stage stable">stable</span></td><td class="v on">on</td></tr><tr data-hay="workspace_owner_usage_nudge removed false"><td class="k">workspace_owner_usage_nudge</td><td class="s"><span class="stage removed">removed</span></td><td class="v off">off</td></tr></tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>Read the state, not just the name.</b> <code>stage</code> is what OpenAI calls the feature's
+      maturity; the third column is whether it resolved to on for this machine, which depends on your
+      <code>config.toml</code>, your account and the build's own defaults. A <em>removed</em> feature
+      still listed as on is a flag whose code path is gone but whose default was never cleaned up.
+      Toggle any of them with <code>codex --enable &lt;name&gt;</code>, <code>--disable &lt;name&gt;</code>,
+      or persist the change with <code>codex features enable &lt;name&gt;</code>.
+    </div>
+  </section>
+
+  <div class="support">
+    <p><b>Found this useful?</b> Every entry here was read out of the running CLI — the slash
+      commands off the picker itself, the subcommand tree off <code>codex --help</code>, and the
+      feature table off <code>codex features list</code>. If it saved you a lap through
+      <code>--help</code>, you can put a coffee toward keeping it current with the next build.</p>
+    <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+      <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+  </div>
+
+  <footer>
+    <p>
+      <b>Source of truth.</b> Slash-command names and descriptions were read from the running TUI, not
+      from published documentation: build 0.146.0 was driven in a pseudo-terminal, the <code>/</code>
+      picker was opened and paged to its end, and every row it rendered was captured. Subcommands,
+      arguments and launch flags come from <code>codex --help</code> walked recursively over all 68
+      subcommands on the same build, and the feature table is <code>codex features list</code> verbatim.
+    </p>
+    <p>
+      <b>Defined is not the same as available.</b> Reading the binary as text turns up slash-command
+      names the picker never offers. That is two different states, and this page separates them by
+      testing rather than assuming. <code>/apps</code> and <code>/debug-config</code> are withheld from
+      the picker but run normally when typed. <code>/rollout</code>, <code>/sandbox-add-read-dir</code>
+      and <code>/test-approval</code> answer <em>Unrecognized command &mdash; type "/" for a list of
+      supported commands</em>, which is the identical response a deliberately nonsensical control
+      command got, so they are not registered in this build at all.
+    </p>
+    <p>
+      <b>Three were not run.</b> <code>/setup-default-sandbox</code> would have reconfigured the
+      sandbox, and the binary labels <code>/debug-m-drop</code> and <code>/debug-m-update</code>
+      <em>DO NOT USE</em>. They are listed as present in the binary and carry a
+      <span class="tag unreg">not probed</span> tag; their availability is genuinely unestablished here
+      rather than quietly guessed at.
+    </p>
+    <p>
+      <b>Where the links go.</b> Each name links to the most specific page that explains it on
+      <code>learn.chatgpt.com/docs</code> — the host OpenAI's Codex documentation moved to, and where
+      the older <code>developers.openai.com/codex/*</code> URLs now redirect. Subcommands link to their
+      own anchor in the developer-commands reference where one exists. A name shown without a link has
+      no official page: those exist only in the build.
+    </p>
+    <p>
+      <b>One build, one machine.</b> Codex resolves parts of its surface at run time — feature flags,
+      account entitlements, and <code>config.toml</code> all move it. <code>/fast</code>,
+      <code>/memories</code>, <code>/personality</code>, <code>/plugins</code> and <code>/subagents</code>
+      each correspond to a feature flag in the table above, so a build with those switched off will
+      offer fewer commands than are listed here.
+    </p>
+    <p class="machine">
+      <b>Machine-readable</b>
+      <a href="codex-commands.json">codex-commands.json</a>
+      <a href="codex-commands.md">codex-commands.md</a>
+      <a href="../llms.txt">llms.txt</a>
+      <span>&mdash; the same data, for scripts and agents.</span>
+    </p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // family: slash | cli | hidden
+  var C = [
+    ["Session &amp; context", "Steering the conversation you are in right now", [
+      ["new", "start a new chat during a conversation", [], "", "slash", ""],
+      ["clear", "clear the terminal and start a new chat", [], "", "slash", ""],
+      ["compact", "summarize conversation to prevent hitting the context limit", [], "", "slash", ""],
+      ["resume", "resume a saved chat", [], "", "slash", ""],
+      ["fork", "fork the current chat", [], "", "slash", ""],
+      ["rename", "rename the current thread", [], "", "slash", ""],
+      ["archive", "archive this session and exit", [], "", "slash", ""],
+      ["delete", "permanently delete this session and exit", [], "", "slash", ""],
+      ["status", "show current session configuration and token usage", [], "", "slash", ""],
+      ["copy", "copy last response as markdown", [], "", "slash", ""],
+      ["raw", "toggle raw scrollback mode for copy-friendly terminal selection", [], "", "slash", ""],
+      ["side", "start a side conversation in an ephemeral fork", ["btw"], "", "slash", ""],
+      ["agent", "switch the active agent thread", [], "", "slash", ""],
+      ["subagents", "switch the active agent thread", [], "", "slash", ""],
+      ["exit", "exit Codex", ["quit"], "", "slash", ""]
+    ]],
+
+    ["Model &amp; reasoning", "How much horsepower each turn gets, and how it talks back", [
+      ["model", "choose what model and reasoning effort to use", [], "", "slash", ""],
+      ["fast", "1.5x speed, increased usage", [], "", "slash", ""],
+      ["plan", "switch to Plan mode", [], "", "slash", ""],
+      ["goal", "set or view the goal for a long-running task", [], "", "slash", ""],
+      ["personality", "choose a communication style for Codex", [], "", "slash", ""]
+    ]],
+
+    ["Workspace &amp; code", "Project instructions, your working diff, and review", [
+      ["init", "create an AGENTS.md file with instructions for Codex", [], "", "slash", ""],
+      ["review", "review my current changes and find issues", [], "", "slash", ""],
+      ["diff", "show git diff (including untracked files)", [], "", "slash", ""],
+      ["mention", "mention a file", [], "", "slash", ""],
+      ["approve", "approve one retry of a recent auto-review denial", [], "", "slash", ""]
+    ]],
+
+    ["Config &amp; environment", "Settings, permissions, hooks, and how the terminal behaves", [
+      ["permissions", "choose what Codex is allowed to do", [], "", "slash", ""],
+      ["keymap", "remap TUI shortcuts", [], "", "slash", ""],
+      ["vim", "toggle Vim mode for the composer", [], "", "slash", ""],
+      ["theme", "choose a syntax highlighting theme", [], "", "slash", ""],
+      ["statusline", "configure which items appear in the status line", [], "", "slash", ""],
+      ["title", "configure which items appear in the terminal title", [], "", "slash", ""],
+      ["pets", "choose or hide the terminal pet", [], "", "slash", ""],
+      ["experimental", "toggle experimental features", [], "", "slash", ""],
+      ["import", "import setup, this project, and recent chats from Claude Code", [], "", "slash", ""],
+      ["hooks", "view and manage lifecycle hooks", [], "", "slash", ""],
+      ["memories", "configure memory use and generation", [], "", "slash", ""],
+      ["skills", "use skills to improve how Codex performs specific tasks", [], "", "slash", ""],
+      ["ide", "include current selection, open files, and other context from your IDE", [], "", "slash", ""]
+    ]],
+
+    ["Extensions", "MCP servers and plugins", [
+      ["mcp", "list configured MCP tools; use /mcp verbose for details", [], "", "slash", ""],
+      ["plugins", "browse plugins", [], "", "slash", ""]
+    ]],
+
+    ["Account &amp; usage", "Who you are signed in as, what it costs, and the desktop app", [
+      ["usage", "view account usage or use a usage limit reset", [], "", "slash", ""],
+      ["logout", "log out of Codex", [], "", "slash", ""],
+      ["feedback", "send logs to maintainers", [], "", "slash", ""],
+      ["app", "continue this session in the Desktop app", [], "", "slash", ""]
+    ]],
+
+    ["Background terminals", "Long-running shells the agent started", [
+      ["ps", "list background terminals", [], "", "slash", ""],
+      ["stop", "stop all background terminals", [], "", "slash", ""]
+    ]],
+
+    ["Hidden &amp; internal", "In the binary but not offered by the <code>/</code> picker &mdash; listed for completeness", [
+      ["apps", "manage apps", [], "", "hidden", "hidden"],
+      ["debug-config", "show config layers and requirement sources for debugging", [], "", "hidden", "hidden"],
+      ["rollout", "print the rollout file path", [], "", "hidden", "unreg"],
+      ["sandbox-add-read-dir", "let sandbox read a directory: /sandbox-add-read-dir <absolute_path>", [], "", "hidden", "unreg"],
+      ["test-approval", "test approval request", [], "", "hidden", "unreg"],
+      ["setup-default-sandbox", "set up elevated agent sandbox", [], "", "hidden", "unprobed"],
+      ["debug-m-drop", "DO NOT USE", [], "", "hidden", "unprobed"],
+      ["debug-m-update", "DO NOT USE", [], "", "hidden", "unprobed"]
+    ]],
+
+    ["Terminal CLI &mdash; core", "The <code>codex</code> executable itself, run from your shell", [
+      ["codex", "Start an interactive session in the current directory", [], "[PROMPT]", "cli", ""],
+      ["codex exec", "Run Codex non-interactively", ["e"], "[PROMPT] codex exec <COMMAND> [ARGS]", "cli", ""],
+      ["codex exec resume", "Resume a previous session by id or pick the most recent with --last", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex exec review", "Run a code review against the current repository", [], "[PROMPT]", "cli", ""],
+      ["codex review", "Run a code review non-interactively", [], "[PROMPT]", "cli", ""],
+      ["codex resume", "Resume a previous interactive session (picker by default; use --last to continue the most recent)", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex fork", "Fork a previous interactive session (picker by default; use --last to fork the most recent)", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex apply", "Apply the latest diff produced by Codex agent as a `git apply` to your local working tree", ["a"], "<TASK_ID>", "cli", ""],
+      ["codex archive", "Archive a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex unarchive", "Unarchive a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex delete", "Permanently delete a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex login", "Manage login", [], "[COMMAND]", "cli", ""],
+      ["codex login status", "Show login status", [], "", "cli", ""],
+      ["codex logout", "Remove stored authentication credentials", [], "", "cli", ""],
+      ["codex update", "Update Codex to the latest version", [], "", "cli", ""],
+      ["codex doctor", "Diagnose local Codex installation, config, auth, and runtime health", [], "", "cli", ""],
+      ["codex completion", "Generate shell completion scripts", [], "[SHELL]", "cli", ""],
+      ["codex sandbox", "Run commands within a Codex-provided sandbox", [], "[COMMAND]...", "cli", ""],
+      ["codex app", "Launch the Desktop app (opens the app installer if missing)", [], "[PATH]", "cli", ""]
+    ]],
+
+    ["MCP &amp; plugins", "External tool servers, and the plugin marketplace", [
+      ["codex mcp", "Manage external MCP servers for Codex", [], "<COMMAND>", "cli", ""],
+      ["codex mcp add", "Add an MCP server by URL or launch command", [], "<NAME> (--url <URL> | -- <COMMAND>...)", "cli", ""],
+      ["codex mcp get", "Show one configured MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp list", "List configured MCP servers", [], "", "cli", ""],
+      ["codex mcp login", "Sign in to an MCP server that needs auth", [], "<NAME>", "cli", ""],
+      ["codex mcp logout", "Sign out of an MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp remove", "Remove a configured MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp-server", "Start Codex as an MCP server (stdio)", [], "", "cli", ""],
+      ["codex plugin", "Manage Codex plugins", [], "<COMMAND>", "cli", ""],
+      ["codex plugin add", "Install a plugin from a configured marketplace snapshot", [], "<PLUGIN[@MARKETPLACE]>", "cli", ""],
+      ["codex plugin list", "List plugins available from configured marketplace snapshots", [], "", "cli", ""],
+      ["codex plugin remove", "Remove an installed plugin from local config and cache", [], "<PLUGIN[@MARKETPLACE]>", "cli", ""],
+      ["codex plugin marketplace", "Add, list, upgrade, or remove configured plugin marketplaces", [], "<COMMAND>", "cli", ""],
+      ["codex plugin marketplace add", "Add a local or Git marketplace to the configured marketplace sources", [], "<SOURCE>", "cli", ""],
+      ["codex plugin marketplace list", "List plugin marketplaces Codex is currently considering and their roots", [], "", "cli", ""],
+      ["codex plugin marketplace remove", "Remove a configured marketplace source by name", [], "<MARKETPLACE_NAME>", "cli", ""],
+      ["codex plugin marketplace upgrade", "Refresh configured Git marketplace snapshots", [], "[MARKETPLACE_NAME]", "cli", ""]
+    ]],
+
+    ["App server, daemon &amp; remote control", "The long-running service other front-ends talk to", [
+      ["codex app-server", "Run the app server or related tooling", [], "[COMMAND]", "cli", "experimental"],
+      ["codex app-server daemon", "Manage the local app-server daemon", [], "<COMMAND>", "cli", ""],
+      ["codex app-server daemon start", "Start the local app server daemon if it is not already running", [], "", "cli", ""],
+      ["codex app-server daemon stop", "Stop the local app server daemon", [], "", "cli", ""],
+      ["codex app-server daemon restart", "Restart the local app server daemon", [], "", "cli", ""],
+      ["codex app-server daemon bootstrap", "Install durable local app-server management for SSH-driven use", [], "", "cli", ""],
+      ["codex app-server daemon version", "Print local CLI and running app-server versions as JSON", [], "", "cli", ""],
+      ["codex app-server daemon enable-remote-control", "Enable remote control for future starts and a currently running managed daemon", [], "", "cli", ""],
+      ["codex app-server daemon disable-remote-control", "Disable remote control for future starts and a currently running managed daemon", [], "", "cli", ""],
+      ["codex app-server generate-json-schema", "Generate JSON Schema for the app server protocol", [], "--out <DIR>", "cli", "experimental"],
+      ["codex app-server generate-ts", "Generate TypeScript bindings for the app server protocol", [], "--out <DIR>", "cli", "experimental"],
+      ["codex app-server proxy", "Proxy stdio bytes to the running app-server control socket", [], "", "cli", ""],
+      ["codex remote-control", "Manage the app-server daemon with remote control enabled", [], "[COMMAND]", "cli", "experimental"],
+      ["codex remote-control start", "Start the app-server daemon with remote control enabled", [], "", "cli", ""],
+      ["codex remote-control stop", "Stop the app-server daemon", [], "", "cli", ""],
+      ["codex remote-control pair", "Create and print a short-lived manual pairing code", [], "", "cli", ""],
+      ["codex exec-server", "Run the standalone exec-server service", [], "", "cli", "experimental"]
+    ]],
+
+    ["Codex Cloud", "Tasks running on OpenAI's infrastructure, driven from your shell", [
+      ["codex cloud", "Browse tasks from Codex Cloud and apply changes locally", [], "[COMMAND]", "cli", "experimental"],
+      ["codex cloud list", "List Codex Cloud tasks", [], "", "cli", ""],
+      ["codex cloud status", "Show the status of a Codex Cloud task", [], "<TASK_ID>", "cli", ""],
+      ["codex cloud diff", "Show the unified diff for a Codex Cloud task", [], "<TASK_ID>", "cli", ""],
+      ["codex cloud exec", "Submit a new Codex Cloud task without launching the TUI", [], "--env <ENV_ID> [QUERY]", "cli", ""],
+      ["codex cloud apply", "Apply the diff for a Codex Cloud task locally", [], "<TASK_ID>", "cli", ""]
+    ]],
+
+    ["Debug &amp; feature flags", "Diagnostics, and the switchboard behind the build", [
+      ["codex debug", "Debugging tools", [], "<COMMAND>", "cli", ""],
+      ["codex debug models", "Render the raw model catalog as JSON", [], "", "cli", ""],
+      ["codex debug prompt-input", "Render the model-visible prompt input list as JSON", [], "[PROMPT]", "cli", ""],
+      ["codex debug app-server", "Tooling: helps debug the app server", [], "<COMMAND>", "cli", ""],
+      ["codex debug app-server send-message-v2", "Send one user message to the app server", [], "2 <USER_MESSAGE>", "cli", ""],
+      ["codex features", "Inspect feature flags", [], "<COMMAND>", "cli", ""],
+      ["codex features list", "List known features with their stage and effective state", [], "", "cli", ""],
+      ["codex features enable", "Enable a feature in config.toml", [], "<FEATURE>", "cli", ""],
+      ["codex features disable", "Disable a feature in config.toml", [], "<FEATURE>", "cli", ""]
+    ]]
+  ];
+
+  var FLAGS = [
+    ["-c, --config <key=value>", "Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`. Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal"],
+    ["--enable <FEATURE>", "Enable a feature (repeatable). Equivalent to `-c features.<name>=true`"],
+    ["--disable <FEATURE>", "Disable a feature (repeatable). Equivalent to `-c features.<name>=false`"],
+    ["--remote <ADDR>", "Connect the TUI to a remote app server endpoint. Accepted forms: `ws://host:port`, `wss://host:port`, `unix://`, or `unix://PATH`"],
+    ["--remote-auth-token-env <ENV_VAR>", "Name of the environment variable containing the bearer token to send to a remote app server websocket"],
+    ["--strict-config", "Error out when config.toml contains fields that are not recognized by this version of Codex"],
+    ["-i, --image <FILE>...", "Optional image(s) to attach to the initial prompt"],
+    ["-m, --model <MODEL>", "Model the agent should use"],
+    ["--oss", "Use open-source provider"],
+    ["--local-provider <OSS_PROVIDER>", "Specify which local provider to use (lmstudio or ollama). If not specified with --oss, will use config default or show selection"],
+    ["-p, --profile <CONFIG_PROFILE_V2>", "Layer $CODEX_HOME/<name>.config.toml on top of the base user config"],
+    ["-s, --sandbox <SANDBOX_MODE>", "Select the sandbox policy to use when executing model-generated shell commands [possible values: read-only, workspace-write, danger-full-access]"],
+    ["--dangerously-bypass-approvals-and-sandbox", "Skip all confirmation prompts and execute commands without sandboxing. EXTREMELY DANGEROUS. Intended solely for running in environments that are externally sandboxed"],
+    ["--dangerously-bypass-hook-trust", "Run enabled hooks without requiring persisted hook trust for this invocation. DANGEROUS. Intended only for automation that already vets hook sources"],
+    ["-C, --cd <DIR>", "Tell the agent to use the specified directory as its working root"],
+    ["--add-dir <DIR>", "Additional directories that should be writable alongside the primary workspace"],
+    ["-a, --ask-for-approval <APPROVAL_POLICY>", "Configure when the model requires human approval before executing a command"],
+    ["--search", "Enable live web search. When enabled, the native Responses `web_search` tool is available to the model (no per‑call approval)"],
+    ["--no-alt-screen", "Disable alternate screen mode Runs the TUI in inline mode, preserving terminal scrollback history"],
+    ["-h, --help", "Print help (see a summary with '-h')"],
+    ["-V, --version", "Print version"]
+  ];
+
+  var FEATURES = [
+    ["apply_patch_freeform", "removed", "false"],
+    ["apply_patch_streaming_events", "under development", "false"],
+    ["apps", "stable", "true"],
+    ["apps_mcp_path_override", "removed", "false"],
+    ["artifact", "under development", "false"],
+    ["auth_elicitation", "stable", "true"],
+    ["browser_use", "stable", "true"],
+    ["browser_use_external", "stable", "true"],
+    ["browser_use_full_cdp_access", "stable", "true"],
+    ["chronicle", "under development", "true"],
+    ["code_mode", "under development", "false"],
+    ["code_mode_buffered_exec", "under development", "false"],
+    ["code_mode_host", "stable", "true"],
+    ["code_mode_only", "under development", "false"],
+    ["codex_git_commit", "removed", "false"],
+    ["collaboration_modes", "removed", "true"],
+    ["computer_use", "stable", "true"],
+    ["concurrent_reasoning_summaries", "under development", "false"],
+    ["current_time_reminder", "under development", "false"],
+    ["default_mode_request_user_input", "under development", "false"],
+    ["deferred_executor", "under development", "false"],
+    ["deferred_tool_world_state", "under development", "false"],
+    ["elevated_windows_sandbox", "removed", "false"],
+    ["enable_fanout", "removed", "false"],
+    ["enable_mcp_apps", "under development", "false"],
+    ["enable_request_compression", "stable", "true"],
+    ["exec_permission_approvals", "under development", "false"],
+    ["executor_capability_discovery", "under development", "false"],
+    ["experimental_windows_sandbox", "removed", "false"],
+    ["external_agent_memory_import", "under development", "false"],
+    ["external_migration", "removed", "false"],
+    ["fast_mode", "stable", "true"],
+    ["goals", "stable", "true"],
+    ["guardian_approval", "stable", "true"],
+    ["guardianv2", "under development", "false"],
+    ["hooks", "stable", "true"],
+    ["image_detail_original", "removed", "false"],
+    ["image_generation", "stable", "true"],
+    ["in_app_browser", "stable", "true"],
+    ["in_app_updates", "stable", "true"],
+    ["item_ids", "removed", "true"],
+    ["js_repl", "removed", "false"],
+    ["js_repl_tools_only", "removed", "false"],
+    ["local_thread_store_compression", "under development", "false"],
+    ["mcp_2026_07_28", "under development", "false"],
+    ["memories", "stable", "true"],
+    ["mentions_v2", "stable", "true"],
+    ["multi_agent", "stable", "true"],
+    ["multi_agent_mode", "removed", "false"],
+    ["multi_agent_v2", "stable", "false"],
+    ["network_proxy", "experimental", "false"],
+    ["non_prefixed_mcp_tool_names", "under development", "false"],
+    ["personality", "stable", "true"],
+    ["plugin_hooks", "removed", "false"],
+    ["plugin_sharing", "stable", "true"],
+    ["plugins", "stable", "true"],
+    ["prevent_idle_sleep", "experimental", "false"],
+    ["realtime_conversation", "under development", "false"],
+    ["remote_compaction_v2", "stable", "true"],
+    ["remote_control", "removed", "false"],
+    ["remote_models", "removed", "false"],
+    ["remote_plugin", "stable", "true"],
+    ["request_permissions_tool", "under development", "false"],
+    ["request_rule", "removed", "false"],
+    ["resize_all_images", "removed", "true"],
+    ["respect_system_proxy", "under development", "false"],
+    ["responses_websockets", "removed", "false"],
+    ["responses_websockets_v2", "removed", "false"],
+    ["rollout_budget", "under development", "false"],
+    ["runtime_metrics", "under development", "false"],
+    ["search_tool", "removed", "false"],
+    ["secret_auth_storage", "stable", "false"],
+    ["shell_snapshot", "stable", "true"],
+    ["shell_tool", "stable", "true"],
+    ["shell_zsh_fork", "under development", "false"],
+    ["skill_env_var_dependency_prompt", "removed", "false"],
+    ["skill_mcp_dependency_install", "stable", "true"],
+    ["skill_search", "stable", "true"],
+    ["sqlite", "removed", "true"],
+    ["standalone_web_search", "under development", "false"],
+    ["steer", "removed", "true"],
+    ["terminal_resize_reflow", "removed", "true"],
+    ["terminal_visualization_instructions", "under development", "false"],
+    ["token_budget", "under development", "false"],
+    ["tool_call_mcp_elicitation", "stable", "true"],
+    ["tool_search", "removed", "false"],
+    ["tool_search_always_defer_mcp_tools", "removed", "true"],
+    ["tool_suggest", "stable", "true"],
+    ["tui_app_server", "removed", "true"],
+    ["unavailable_dummy_tools", "removed", "false"],
+    ["undo", "removed", "false"],
+    ["unified_exec", "stable", "true"],
+    ["unified_exec_zsh_fork", "under development", "false"],
+    ["use_agent_identity", "under development", "false"],
+    ["use_legacy_landlock", "deprecated", "false"],
+    ["use_linux_sandbox_bwrap", "removed", "false"],
+    ["web_search_cached", "deprecated", "false"],
+    ["web_search_request", "deprecated", "false"],
+    ["workspace_dependencies", "stable", "true"],
+    ["workspace_owner_usage_nudge", "removed", "false"]
+  ];
+
+  var esc = function (s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+
+  // Official docs. OpenAI's Codex documentation now lives on learn.chatgpt.com;
+  // the developers.openai.com/codex/* paths 308-redirect here.
+  var BASE = "https://learn.chatgpt.com/docs/";
+  var CMDS_PAGE = "developer-commands?surface=cli";
+  var SLASH_PAGE = CMDS_PAGE + "#built-in-slash-commands";
+
+  // Commands with no official page get no link (see the note in the footer).
+  var DOCS = {
+    // slash commands with a dedicated topic page
+    permissions: "permissions", plan: "permission-modes", approve: "sandboxing/auto-review",
+    review: "code-review", init: "agent-configuration/agents-md",
+    agent: "agent-configuration/subagents", subagents: "agent-configuration/subagents",
+    hooks: "hooks", skills: "build-skills", plugins: "plugins", mcp: "extend/mcp",
+    memories: "customization/memories", model: "models", app: "web",
+    ide: "codex/ide", theme: "cli-customization", statusline: "cli-customization",
+    keymap: "cli-customization", vim: "cli-customization", title: "cli-customization",
+    pets: "cli-customization", personality: "customization/overview",
+    usage: "reference/troubleshooting", logout: "auth",
+
+    // slash commands the reference lists but gives no page of their own
+    "new": SLASH_PAGE, clear: SLASH_PAGE, compact: SLASH_PAGE, resume: SLASH_PAGE,
+    fork: SLASH_PAGE, rename: SLASH_PAGE, archive: SLASH_PAGE, "delete": SLASH_PAGE,
+    status: SLASH_PAGE, copy: SLASH_PAGE, diff: SLASH_PAGE, mention: SLASH_PAGE,
+    exit: SLASH_PAGE, side: SLASH_PAGE, fast: SLASH_PAGE, goal: SLASH_PAGE,
+    experimental: SLASH_PAGE, feedback: SLASH_PAGE,
+
+    // CLI subcommands with their own anchor in the developer-commands reference
+    "codex exec": "non-interactive-mode",
+    "codex exec resume": "non-interactive-mode",
+    "codex exec review": "non-interactive-mode",
+    "codex review": "code-review",
+    "codex resume": CMDS_PAGE + "#codex-resume",
+    "codex fork": CMDS_PAGE + "#codex-fork",
+    "codex login": "auth",
+    "codex login status": "auth",
+    "codex logout": "auth",
+    "codex mcp": "extend/mcp",
+    "codex mcp add": "extend/mcp",
+    "codex mcp get": "extend/mcp",
+    "codex mcp list": "extend/mcp",
+    "codex mcp login": "extend/mcp",
+    "codex mcp logout": "extend/mcp",
+    "codex mcp remove": "extend/mcp",
+    "codex mcp-server": "mcp-server",
+    "codex plugin": "plugins",
+    "codex plugin add": "plugins",
+    "codex plugin list": "plugins",
+    "codex plugin remove": "plugins",
+    "codex plugin marketplace": "build-plugins",
+    "codex plugin marketplace add": "build-plugins",
+    "codex plugin marketplace list": "build-plugins",
+    "codex plugin marketplace remove": "build-plugins",
+    "codex plugin marketplace upgrade": "build-plugins",
+    "codex sandbox": "sandboxing",
+    "codex doctor": "reference/troubleshooting",
+    "codex cloud": "cloud",
+    "codex cloud list": "cloud",
+    "codex cloud status": "cloud",
+    "codex cloud diff": "cloud",
+    "codex cloud exec": "cloud",
+    "codex cloud apply": "cloud",
+    "codex app-server": "app-server",
+    "codex app-server daemon": "app-server",
+    "codex app-server generate-json-schema": "app-server",
+    "codex app-server generate-ts": "app-server",
+    "codex app-server proxy": "app-server",
+    "codex update": CMDS_PAGE + "#codex-update",
+    "codex app": "web",
+    "codex": "codex/cli"
+  };
+
+  // Named in the binary but rejected when typed at the prompt: the response is
+  // "Unrecognized command", identical to what a nonsense control command gets.
+  // Established by probing build 0.146.0 in a pseudo-terminal.
+  var UNREG = {
+    "rollout": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+    "sandbox-add-read-dir": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+    "test-approval": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does."
+  };
+
+  // Present in the binary, never offered by the picker, and deliberately not executed:
+  // running them would have changed sandbox setup or is marked DO NOT USE in the build.
+  var UNPROBED = {
+    "setup-default-sandbox": "Not run: it would have reconfigured the agent sandbox. Availability unestablished.",
+    "debug-m-drop": "Not run: the binary labels this DO NOT USE. Availability unestablished.",
+    "debug-m-update": "Not run: the binary labels this DO NOT USE. Availability unestablished."
+  };
+
+  function docFor(name, fam) {
+    var p = DOCS[name];
+    if (p) return BASE + p;
+    if (fam === "cli") return BASE + CMDS_PAGE;
+    return null;
+  }
+
+  function slugify(s) {
+    return s.toLowerCase().replace(/&[a-z]+;/g, " ")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
+
+  var usedIds = {};
+  function anchor(name, fam) {
+    var base = (fam === "cli" ? "cli-" : "cmd-") + slugify(name);
+    usedIds[base] = (usedIds[base] || 0) + 1;
+    return usedIds[base] > 1 ? base + "-" + usedIds[base] : base;
+  }
+
+  // ---- build DOM ----
+  var host = document.getElementById("sections");
+  var counts = { slash: 0, cli: 0, hidden: 0 };
+  var linked = 0;
+  var unreg = 0;
+  var html = [];
+
+  C.forEach(function (sec, si) {
+    var rows = sec[2];
+    var items = rows.map(function (r) {
+      var name = r[0], desc = r[1], aliases = r[2], arg = r[3], fam = r[4], flag = r[5];
+      counts[fam] = (counts[fam] || 0) + 1;
+
+      var isCli = fam === "cli";
+      var display = isCli ? name : "/" + name;
+      var tags = aliases.map(function (a) {
+        return '<span class="tag' + (isCli ? "" : " alias") + '">' + esc(a) + "</span>";
+      });
+      if (flag === "experimental") tags.push('<span class="tag gate">experimental</span>');
+      if (fam === "hidden") tags.push('<span class="tag hidden-t">not in the picker</span>');
+      var isUnreg = !!UNREG[name];
+      if (isUnreg) {
+        unreg++;
+        tags.push('<span class="tag unreg" title="' + esc(UNREG[name]) +
+          '">not registered &mdash; &ldquo;Unrecognized command&rdquo;</span>');
+      }
+      if (UNPROBED[name]) {
+        tags.push('<span class="tag unreg" title="' + esc(UNPROBED[name]) +
+          '">not probed</span>');
+      }
+
+      // How this entry's availability was established, so the extract can carry it verbatim.
+      var probe = isCli ? "help"
+        : UNREG[name] ? "unrecognized"
+        : UNPROBED[name] ? "not probed"
+        : fam === "hidden" ? "ran" : "picker";
+      var probeNote = UNREG[name] || UNPROBED[name] || "";
+
+      var hay = (display + " " + aliases.join(" ") + " " + desc).toLowerCase();
+      var href = docFor(name, fam);
+      if (href) linked++;
+
+      var nameHtml = href
+        ? '<a class="cmd-name" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(display) + '<span class="ext" aria-hidden="true">&#8599;</span>' +
+          '<span class="sr">&nbsp;(opens the official documentation)</span></a>'
+        : '<span class="cmd-name plain">' + esc(display) + "</span>";
+
+      return '<article class="cmd" id="' + anchor(name, fam) +
+        '" style="--fc:var(--fam-' + fam + ')" data-fam="' + fam +
+        '" data-doc="' + (href ? "1" : "0") + '" data-unreg="' + (isUnreg ? "1" : "0") +
+        '" data-probe="' + probe + '" data-probe-note="' + esc(probeNote) +
+        '" data-exp="' + (flag === "experimental" ? "1" : "0") +
+        '" data-name="' + esc(display) + '" data-hay="' + esc(hay) + '">' +
+        '<div class="cmd-top"><span class="cmd-id">' + nameHtml +
+        (arg ? '<span class="cmd-arg">' + esc(arg) + "</span>" : "") +
+        "</span>" +
+        '<button class="copy" type="button" data-copy="' + esc(display) +
+        '" aria-label="Copy ' + esc(display) + '">copy</button>' +
+        "</div>" +
+        '<p class="cmd-desc">' + esc(desc) + "</p>" +
+        (tags.length ? '<span class="tags">' + tags.join("") + "</span>" : "") +
+        "</article>";
+    });
+
+    html.push(
+      '<section id="sec-' + slugify(sec[0]) + '" data-sec="' + si + '">' +
+      '<div class="sec-head"><h2>' + sec[0] + '</h2>' +
+      '<span class="n" data-n="' + si + '">' + rows.length + "</span>" +
+      "<p>" + sec[1] + "</p></div>" +
+      '<div class="grid">' + items.join("") + "</div></section>"
+    );
+  });
+
+  host.innerHTML = html.join("");
+
+  // flags table
+  document.getElementById("flagbody").innerHTML = FLAGS.map(function (f) {
+    return "<tr data-hay=\"" + esc((f[0] + " " + f[1]).toLowerCase()) + "\">" +
+      "<td class=\"f\">" + esc(f[0]) + "</td><td class=\"d\">" + esc(f[1]) + "</td></tr>";
+  }).join("");
+  document.getElementById("flagcount").textContent = FLAGS.length;
+
+  // features table
+  document.getElementById("featbody").innerHTML = FEATURES.map(function (f) {
+    var cls = f[1] === "stable" ? "stable" : f[1] === "removed" ? "removed"
+      : f[1] === "under development" ? "under" : "";
+    var on = f[2] === "true";
+    return "<tr data-hay=\"" + esc((f[0] + " " + f[1] + " " + f[2]).toLowerCase()) + "\">" +
+      "<td class=\"k\">" + esc(f[0]) + "</td>" +
+      "<td class=\"s\"><span class=\"stage " + cls + "\">" + esc(f[1]) + "</span></td>" +
+      "<td class=\"v " + (on ? "on" : "off") + "\">" + (on ? "on" : "off") + "</td></tr>";
+  }).join("");
+  document.getElementById("featcount").textContent = FEATURES.length;
+
+  // stats
+  document.getElementById("s-slash").textContent = counts.slash;
+  document.getElementById("s-cli").textContent = counts.cli;
+  document.getElementById("s-hidden").textContent = counts.hidden;
+  document.getElementById("s-flags").textContent = FLAGS.length;
+  document.getElementById("s-features").textContent = FEATURES.length;
+  document.getElementById("s-linked").textContent = linked;
+  document.getElementById("s-unreg").textContent = unreg;
+
+  // ---- filtering ----
+  var q = document.getElementById("q");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".cmd"));
+  var secs = Array.prototype.slice.call(document.querySelectorAll("#sections section"));
+  var flagRows = Array.prototype.slice.call(document.querySelectorAll("#flagbody tr"));
+  var featRows = Array.prototype.slice.call(document.querySelectorAll("#featbody tr"));
+  var flagSec = document.getElementById("flags-sec");
+  var featSec = document.getElementById("features-sec");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+
+  var FAMS = ["slash", "cli", "hidden", "flags", "features"];
+  var STS = ["linked", "unreg"];
+  var DEFAULTS = { slash: true, cli: true, hidden: false, flags: true, features: true, linked: false, unreg: false };
+  var state = Object.assign({}, DEFAULTS);
+
+  function stateFor(key) {
+    var s = {};
+    if (STS.indexOf(key) !== -1) {
+      FAMS.forEach(function (f) { s[f] = f !== "flags" && f !== "features"; });
+      STS.forEach(function (t) { s[t] = t === key; });
+    } else {
+      FAMS.forEach(function (f) { s[f] = f === key; });
+      STS.forEach(function (t) { s[t] = false; });
+    }
+    return s;
+  }
+
+  function equals(a, b) {
+    return FAMS.concat(STS).every(function (k) { return !!a[k] === !!b[k]; });
+  }
+
+  function sync() {
+    document.querySelectorAll("#fams .chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.fam]));
+    });
+    document.querySelectorAll("#stats-f .chip.st").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.st]));
+    });
+    document.querySelectorAll(".stat").forEach(function (t) {
+      t.setAttribute("aria-pressed", String(equals(state, stateFor(t.dataset.iso))));
+    });
+    resetBtn.classList.toggle("show", !equals(state, DEFAULTS) || q.value.trim() !== "");
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase().replace(/^\//, "");
+    var narrowing = STS.some(function (t) { return state[t]; });
+    var shown = 0;
+    var perSec = {};
+
+    cards.forEach(function (el) {
+      var ok = state[el.dataset.fam] &&
+        (!term || el.dataset.hay.indexOf(term) !== -1) &&
+        (!narrowing ||
+          (state.linked && el.dataset.doc === "1") ||
+          (state.unreg && el.dataset.unreg === "1"));
+      el.style.display = ok ? "" : "none";
+      if (ok) {
+        shown++;
+        var si = el.closest("section").dataset.sec;
+        perSec[si] = (perSec[si] || 0) + 1;
+      }
+    });
+
+    secs.forEach(function (s) {
+      var any = perSec[s.dataset.sec] || 0;
+      s.style.display = any ? "" : "none";
+      var n = s.querySelector(".n");
+      if (n) n.textContent = any;
+    });
+
+    var flagsShown = 0;
+    if (state.flags) {
+      flagRows.forEach(function (r) {
+        var ok = !term || r.dataset.hay.indexOf(term) !== -1;
+        r.style.display = ok ? "" : "none";
+        if (ok) flagsShown++;
+      });
+    }
+    flagSec.style.display = flagsShown ? "" : "none";
+    document.getElementById("flagcount").textContent = flagsShown;
+
+    var featShown = 0;
+    if (state.features) {
+      featRows.forEach(function (r) {
+        var ok = !term || r.dataset.hay.indexOf(term) !== -1;
+        r.style.display = ok ? "" : "none";
+        if (ok) featShown++;
+      });
+    }
+    featSec.style.display = featShown ? "" : "none";
+    document.getElementById("featcount").textContent = featShown;
+
+    countEl.textContent = shown + " shown" +
+      (flagsShown ? " · " + flagsShown + " flags" : "") +
+      (featShown ? " · " + featShown + " features" : "");
+    emptyEl.classList.toggle("show", shown === 0 && flagsShown === 0 && featShown === 0);
+    sync();
+  }
+
+  q.addEventListener("input", apply);
+
+  function onChip(e) {
+    var btn = e.target.closest(".chip");
+    if (!btn || btn.id === "reset") return;
+    var key = btn.dataset.fam || btn.dataset.st;
+    state[key] = !state[key];
+    if (btn.dataset.st && state[key]) { state.flags = false; state.features = false; }
+    apply();
+  }
+  document.getElementById("fams").addEventListener("click", onChip);
+  document.getElementById("stats-f").addEventListener("click", onChip);
+
+  document.querySelector(".stats").addEventListener("click", function (e) {
+    var tile = e.target.closest(".stat");
+    if (!tile) return;
+    var iso = stateFor(tile.dataset.iso);
+    state = equals(state, iso) ? Object.assign({}, DEFAULTS) : iso;
+    apply();
+    document.querySelector(".toolbar").scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = Object.assign({}, DEFAULTS);
+    q.value = "";
+    apply();
+  });
+
+  // ---- copy ----
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+  function flash(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1400);
+  }
+
+  host.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var text = btn.dataset.copy;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { flash("Copied  " + text); },
+        function () { flash(text); }
+      );
+    } else {
+      flash(text);
+    }
+  });
+
+  // ---- "/" focuses search ----
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+      q.blur();
+    }
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>

@@ -54,16 +54,28 @@
     "url": "https://johnmiroki.github.io/ai-snacks/",
     "description": "Reference pages for AI developer tools, each a single self-contained HTML file.",
     "isPartOf": { "@id": "https://johnmiroki.github.io/ai-snacks/#website" },
-    "dateModified": "2026-07-26",
+    "dateModified": "2026-08-02",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Reference pages",
-      "numberOfItems": 2,
+      "numberOfItems": 3,
       "itemListOrder": "https://schema.org/ItemListOrderDescending",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
+          "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/",
+          "item": {
+            "@type": "TechArticle",
+            "@id": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#article",
+            "name": "Codex CLI Command Index",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/",
+            "description": "Every slash command, codex subcommand, launch flag and feature flag in OpenAI Codex CLI build 0.146.0 — 122 commands, 21 flags and 100 feature switches, read out of the running CLI and probed for availability."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
           "url": "https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/",
           "item": {
             "@type": "TechArticle",
@@ -75,7 +87,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": 3,
           "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/",
           "item": {
             "@type": "TechArticle",
@@ -256,6 +268,26 @@
 
   <main class="shelf">
     <!-- To add a snack: create <slug>/index.html, then copy this <a class="snack"> block and edit it. -->
+    <a class="snack" href="codex-cheatsheet/">
+      <span class="snack-top">
+        <span class="snack-title">Codex CLI Command Index</span>
+        <span class="go" aria-hidden="true">&#8594;</span>
+      </span>
+      <p>
+        The same treatment for OpenAI's Codex CLI. Every slash command read off the running
+        <code>/</code> picker rather than a doc page, the whole <code>codex</code> subcommand tree,
+        the launch flags, and the 100-switch feature table the build actually resolves against —
+        including the commands that are in the binary but answer <em>Unrecognized command</em>.
+      </p>
+      <span class="facts">
+        <span class="fact">122 commands</span>
+        <span class="fact">21 flags</span>
+        <span class="fact">100 feature switches</span>
+        <span class="fact">build 0.146.0</span>
+        <span class="fact stamp">updated 2026-08-02</span>
+      </span>
+    </a>
+
     <a class="snack" href="claude-code-built-in-skills/">
       <span class="snack-top">
         <span class="snack-title">Claude Code Bundled Skills</span>
@@ -305,6 +337,7 @@
       <a href="llms-full.txt">llms-full.txt</a>
       <a href="claude-code-cheatsheet/commands.json">commands.json</a>
       <a href="claude-code-built-in-skills/skills.json">skills.json</a>
+      <a href="codex-cheatsheet/codex-commands.json">codex-commands.json</a>
       <span>&mdash; every page also exists as plain text and structured data.</span>
     </p>
   </main>

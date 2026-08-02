@@ -21,6 +21,8 @@ CS_SRC = BUILD / "claude-code-cheatsheet"
 CS_OUT = ROOT / "claude-code-cheatsheet"
 SK_SRC = BUILD / "claude-code-built-in-skills"
 SK_OUT = ROOT / "claude-code-built-in-skills"
+CX_SRC = BUILD / "codex-cheatsheet"
+CX_OUT = ROOT / "codex-cheatsheet"
 
 
 def swap(text, old, new, label):
@@ -82,18 +84,20 @@ COFFEE_CSS = """
   .eyebrow .home:hover { color:var(--accent); border-bottom-color:currentColor; }
 """
 
-# Both anchors carry S.BUILD rather than a literal, so bumping the build number in siteconf
+# Both anchors carry the page's build number rather than a literal, so bumping it in siteconf
 # fails the swap loudly instead of quietly publishing a masthead that still names the old one.
-# The fix when it fires is to update the eyebrow in each page source to match.
-MASTHEAD_OLD = """  <header class="masthead">
-    <p class="eyebrow">Reference &middot; build {build} &middot; extracted from the installed binary</p>""".format(build=S.BUILD)
+# The fix when it fires is to update the eyebrow in that page source to match.
+def masthead(build):
+    old = """  <header class="masthead">
+    <p class="eyebrow">Reference &middot; build {build} &middot; extracted from the installed binary</p>""".format(build=build)
 
-MASTHEAD_NEW = """  <header class="masthead">
+    new = """  <header class="masthead">
     <div class="masthead-top">
       <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build {build} &middot; extracted from the installed binary</p>
       <a class="coffee" href="{bmc}" target="_blank" rel="noopener noreferrer">
         <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
-    </div>""".format(build=S.BUILD, bmc=S.BMC)
+    </div>""".format(build=build, bmc=S.BMC)
+    return old, new
 
 
 def support(pitch):
@@ -238,11 +242,11 @@ HEAD = """<!doctype html>
 {ld}"""
 
 
-def page_head(title, desc, url, ld, ogtitle, ogalt, icon, alts):
+def page_head(title, desc, url, ld, ogtitle, ogalt, icon, alts, updated=S.UPDATED):
     links = "\n".join('<link rel="alternate" type="%s" href="%s" title="%s">' % a for a in alts)
     body = json.dumps(ld, indent=2, ensure_ascii=False).replace("</", "<\\/")
     return HEAD.format(title=title, desc=desc, url=url, author=S.AUTHOR, site=S.SITE_NAME,
-                       build=S.BUILD, updated=S.UPDATED, ogtitle=ogtitle, ogalt=ogalt,
+                       build=S.BUILD, updated=updated, ogtitle=ogtitle, ogalt=ogalt,
                        icon=icon, alts=links,
                        ld='<script type="application/ld+json">\n%s\n</script>\n' % body)
 
@@ -264,7 +268,7 @@ def build_cheatsheet_page(prerender):
         frag = swap(frag, '<b id="s-%s">0</b>' % key,
                     '<b id="s-%s">%s</b>' % (key, value), "stat " + key)
 
-    frag = swap(frag, MASTHEAD_OLD, MASTHEAD_NEW, "masthead")
+    frag = swap(frag, *masthead(S.BUILD), label="masthead")
     frag = swap(frag, "\n  <footer>", SUPPORT, "footer")
     frag = swap(frag, "\n  </footer>", MACHINE, "machine-readable")
     frag = swap(frag, "\n  @media (prefers-reduced-motion",
@@ -396,7 +400,7 @@ def build_skills_page(data):
         frag = swap(frag, '<b id="s-%s">0</b>' % key,
                     '<b id="s-%s">%s</b>' % (key, value), "stat " + key)
 
-    frag = swap(frag, MASTHEAD_OLD, MASTHEAD_NEW, "masthead")
+    frag = swap(frag, *masthead(S.BUILD), label="masthead")
     frag = swap(frag, "\n  <footer>", SK_SUPPORT, "footer")
     frag = swap(frag, "\n  </footer>", SK_MACHINE, "machine-readable")
     frag = swap(frag, "\n  @media (prefers-reduced-motion",
@@ -487,6 +491,138 @@ def skills_ld(data):
             ],
         },
     ]
+
+
+# ============================================================ the Codex CLI page
+
+CX_SUPPORT = support(
+    """<b>Found this useful?</b> Every entry here was read out of the running CLI — the slash
+      commands off the picker itself, the subcommand tree off <code>codex --help</code>, and the
+      feature table off <code>codex features list</code>. If it saved you a lap through
+      <code>--help</code>, you can put a coffee toward keeping it current with the next build.""")
+
+CX_MACHINE = machine([("codex-commands.json", "codex-commands.json"),
+                      ("codex-commands.md", "codex-commands.md"),
+                      ("llms.txt", "../llms.txt")],
+                     "the same data, for scripts and agents.")
+
+
+def codex_ld(counts):
+    return [
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "@id": S.CODEX + "#article",
+            "headline": "Codex CLI Command Index",
+            "name": S.CX_TITLE,
+            "description": S.CX_DESC,
+            "url": S.CODEX,
+            "mainEntityOfPage": {"@type": "WebPage", "@id": S.CODEX},
+            "inLanguage": "en",
+            "datePublished": S.CODEX_UPDATED,
+            "dateModified": S.CODEX_UPDATED,
+            "author": {"@type": "Person", "name": S.AUTHOR,
+                       "url": "https://github.com/" + S.AUTHOR},
+            "publisher": {"@type": "Organization", "name": S.SITE_NAME, "url": S.BASE},
+            "isPartOf": {"@type": "CollectionPage", "@id": S.BASE + "#collection"},
+            "image": S.CODEX + "og.png",
+            "about": {
+                "@type": "SoftwareApplication",
+                "name": "OpenAI Codex CLI",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "macOS, Linux, Windows",
+                "softwareVersion": S.CODEX_BUILD,
+                "url": "https://learn.chatgpt.com/docs/codex/cli",
+                "publisher": {"@type": "Organization", "name": "OpenAI"},
+            },
+            "keywords": ("Codex CLI, OpenAI Codex, slash commands, CLI flags, feature flags, "
+                         "command reference, cheat sheet, terminal, AI coding agent"),
+            "articleSection": ["Slash commands", "CLI subcommands", "Launch flags",
+                               "Feature flags"],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "@id": S.CODEX + "#dataset",
+            "name": "OpenAI Codex CLI %s command, flag and feature inventory" % S.CODEX_BUILD,
+            "description": ("Structured inventory of every slash command, subcommand, launch flag "
+                            "and feature flag in OpenAI Codex CLI build %s, with descriptions, "
+                            "aliases, availability and documentation links."
+                            % S.CODEX_BUILD),
+            "url": S.CODEX,
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "creator": {"@type": "Person", "name": S.AUTHOR},
+            "dateModified": S.CODEX_UPDATED,
+            "isAccessibleForFree": True,
+            "measurementTechnique": ("Runtime probing of the installed CLI: the TUI slash-command "
+                                     "picker driven in a pseudo-terminal, a recursive walk of "
+                                     "`codex --help`, and `codex features list`"),
+            "variableMeasured": ["command name", "family", "description", "aliases",
+                                 "argument hint", "registration status", "documentation URL",
+                                 "feature stage", "feature enabled state"],
+            "distribution": [
+                {"@type": "DataDownload", "encodingFormat": "application/json",
+                 "contentUrl": S.CODEX + "codex-commands.json"},
+                {"@type": "DataDownload", "encodingFormat": "text/markdown",
+                 "contentUrl": S.CODEX + "codex-commands.md"},
+            ],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": S.SITE_NAME, "item": S.BASE},
+                {"@type": "ListItem", "position": 2, "name": "Codex CLI Command Index",
+                 "item": S.CODEX},
+            ],
+        },
+    ]
+
+
+def build_codex_page(prerender, counts):
+    frag = (CX_SRC / "codex-commands.html").read_text(encoding="utf-8")
+
+    if prerender["cardCount"] != 122 or prerender["flagcount"] != "21" \
+            or prerender["featcount"] != "100":
+        raise SystemExit("codex prerender.json looks wrong: %d cards, %s flags, %s features"
+                         % (prerender["cardCount"], prerender["flagcount"],
+                            prerender["featcount"]))
+
+    frag = swap(frag, '<main id="sections"></main>',
+                '<main id="sections">' + prerender["sections"] + "</main>", "sections host")
+    frag = swap(frag, '<tbody id="flagbody"></tbody>',
+                '<tbody id="flagbody">' + prerender["flagbody"] + "</tbody>", "flags host")
+    frag = swap(frag, '<tbody id="featbody"></tbody>',
+                '<tbody id="featbody">' + prerender["featbody"] + "</tbody>", "features host")
+    frag = swap(frag, '<span class="n" id="flagcount"></span>',
+                '<span class="n" id="flagcount">%s</span>' % prerender["flagcount"], "flag count")
+    frag = swap(frag, '<span class="n" id="featcount"></span>',
+                '<span class="n" id="featcount">%s</span>' % prerender["featcount"],
+                "feature count")
+    for key, value in prerender["stats"].items():
+        frag = swap(frag, '<b id="s-%s">0</b>' % key,
+                    '<b id="s-%s">%s</b>' % (key, value), "stat " + key)
+
+    frag = swap(frag, *masthead(S.CODEX_BUILD), label="masthead")
+    frag = swap(frag, "\n  <footer>", CX_SUPPORT, "footer")
+    frag = swap(frag, "\n  </footer>", CX_MACHINE, "machine-readable")
+    frag = swap(frag, "\n  @media (prefers-reduced-motion",
+                COFFEE_CSS + "  @media (prefers-reduced-motion", "css")
+    frag = swap(frag, "<title>Codex CLI Command Index — v%s</title>\n" % S.CODEX_BUILD, "",
+                "old title")
+
+    head = page_head(
+        title=S.CX_TITLE, desc=S.CX_DESC, url=S.CODEX, ld=codex_ld(counts),
+        ogtitle="Codex CLI Command Index — every command in build %s" % S.CODEX_BUILD,
+        ogalt="Codex CLI Command Index — %d commands, %d flags, build %s"
+              % (counts["total"], counts["flags"], S.CODEX_BUILD),
+        icon="%E2%9A%A1", updated=S.CODEX_UPDATED,
+        alts=[("text/markdown", "codex-commands.md", "Markdown version of this page"),
+              ("application/json", "codex-commands.json",
+               "JSON dataset of every command, flag and feature")])
+
+    cut = frag.index("</style>") + len("</style>")
+    return head + frag[:cut] + "\n</head>\n<body>\n" + frag[cut:].lstrip("\n") + "\n</body>\n</html>\n"
 
 
 # ============================================================ the data twins
@@ -628,6 +764,171 @@ def build_data(extract):
            % (S.SITE_NAME, S.BASE, S.AUTHOR, S.BMC), ""]
 
     return payload, "\n".join(md), counts
+
+
+CX_FAMILY_DESC = {
+    "slash": "Slash command typed at the Codex prompt and offered by the / picker",
+    "cli": "Subcommand of the codex executable, run in the shell",
+    "hidden": "Named in the binary but never offered by the / picker",
+}
+
+
+def build_codex_data(extract):
+    sections, flags, features = extract["sections"], extract["flags"], extract["features"]
+    commands = [dict(c, section=s["title"], sectionId=s["id"])
+                for s in sections for c in s["commands"]]
+
+    counts = {
+        "total": len(commands),
+        "slash": sum(1 for c in commands if c["family"] == "slash"),
+        "cli": sum(1 for c in commands if c["family"] == "cli"),
+        "hidden": sum(1 for c in commands if c["family"] == "hidden"),
+        "flags": len(flags),
+        "features": len(features),
+        "featuresOn": sum(1 for f in features if f["enabled"]),
+        "documented": sum(1 for c in commands if c["docs"]),
+        # null means unestablished, which is not the same claim as false — see `probe`.
+        "notRegistered": sum(1 for c in commands if c["registered"] is False),
+        "notProbed": sum(1 for c in commands if c["probe"] == "not probed"),
+    }
+
+    payload = {
+        "name": "OpenAI Codex CLI command, flag and feature inventory",
+        "description": ("Every slash command, subcommand, launch flag and feature flag in OpenAI "
+                        "Codex CLI build %s." % S.CODEX_BUILD),
+        "codexBuild": S.CODEX_BUILD,
+        "generated": S.CODEX_UPDATED,
+        "license": "CC BY 4.0",
+        "canonicalPage": S.CODEX,
+        "source": {
+            "method": ("Slash-command names and descriptions were read from the running TUI: the "
+                       "CLI was driven in a pseudo-terminal, the / picker opened and paged to its "
+                       "end, and every row it rendered captured. Subcommands, arguments and launch "
+                       "flags come from a recursive walk of `codex --help` on the same build, and "
+                       "the feature table is `codex features list` verbatim. Availability was "
+                       "established by probing, not by reading the documentation."),
+            "binary": "codex %s (Homebrew cask)" % S.CODEX_BUILD,
+            "officialDocs": "https://learn.chatgpt.com/docs/codex/cli",
+        },
+        "counts": counts,
+        "families": CX_FAMILY_DESC,
+        "fields": {
+            "id": "Stable anchor on the canonical page; append as #id to deep-link",
+            "name": "How the command is typed (/name for slash commands, bare for subcommands)",
+            "family": "One of slash, cli, hidden — see families",
+            "description": "Description string the build itself carries",
+            "argument": "Argument hint the CLI shows, when it has one",
+            "aliases": "Other names that resolve to the same command",
+            "experimental": "The build labels the subcommand experimental",
+            "registered": ("false means the name exists in the binary but typing it returns "
+                           "Unrecognized command"),
+            "probe": ("How availability was established: 'picker' listed by the / picker, 'ran' "
+                      "runs but is withheld from the picker, 'unrecognized' rejected when typed, "
+                      "'not probed' deliberately not executed"),
+            "probeNote": "Why, where the classification needs one",
+            "docs": "Most specific official documentation page, or null if none exists",
+        },
+        "sections": [{"id": s["id"], "title": s["title"], "description": s["blurb"],
+                      "commandCount": len(s["commands"])} for s in sections],
+        "commands": [{
+            "id": c["id"], "name": c["name"], "family": c["family"], "section": c["section"],
+            "description": c["description"], "argument": c["argument"], "aliases": c["aliases"],
+            "experimental": c["experimental"], "registered": c["registered"],
+            "probe": c["probe"], "probeNote": c["probeNote"], "docs": c["docs"],
+            "url": S.CODEX + "#" + c["id"],
+        } for c in commands],
+        "flags": flags,
+        "features": features,
+    }
+
+    md = [
+        "# Codex CLI Command Index",
+        "",
+        "> Every slash command, `codex` subcommand, launch flag and feature flag in OpenAI Codex "
+        "CLI build %s. Read out of the running CLI rather than the documentation: the slash "
+        "commands off the picker itself, the subcommand tree off `codex --help`, and the feature "
+        "table off `codex features list`." % S.CODEX_BUILD,
+        "",
+        "- Canonical page: %s" % S.CODEX,
+        "- Machine-readable: %scodex-commands.json" % S.CODEX,
+        "- Codex CLI build: %s" % S.CODEX_BUILD,
+        "- Last updated: %s" % S.CODEX_UPDATED,
+        "- License: CC BY 4.0",
+        "",
+        "## Totals",
+        "",
+        "| Group | Count | What it means |",
+        "| --- | ---: | --- |",
+        "| Slash commands | %d | Offered by the `/` picker at the Codex prompt |" % counts["slash"],
+        "| CLI subcommands | %d | The `codex` executable and its whole subcommand tree |" % counts["cli"],
+        "| Hidden | %d | In the binary, never offered by the picker |" % counts["hidden"],
+        "| Launch flags | %d | Options passed to `codex` at startup |" % counts["flags"],
+        "| Feature flags | %d | From `codex features list`; %d on in this build |"
+        % (counts["features"], counts["featuresOn"]),
+        "| Linked to official docs | %d | The rest have no official page |" % counts["documented"],
+        "| Named but not registered | %d | Typing them returns `Unrecognized command` |" % counts["notRegistered"],
+        "| Deliberately not probed | %d | Running them would have done real work |" % counts["notProbed"],
+        "",
+        "## How this was established",
+        "",
+        "Slash commands were read from the running TUI, not from a string dump: build %s was "
+        "driven in a pseudo-terminal, the `/` picker opened and paged to its end, and every row it "
+        "rendered captured with its description. Reading the binary as text additionally turns up "
+        "names the picker never offers, and those were each typed at the prompt and classified by "
+        "the response — running normally means registered but withheld, while *Unrecognized "
+        "command* is the identical answer a deliberately nonsensical control command got. Commands "
+        "that would have executed real work were excluded from the probe rather than run, and are "
+        "marked as not probed rather than guessed at. Subcommands, arguments and launch flags come "
+        "from a recursive walk of `codex --help` across every subcommand on the same build."
+        % S.CODEX_BUILD,
+        "",
+    ]
+    for s in sections:
+        md += ["## %s" % s["title"], "",
+               "%s. %d entries." % (s["blurb"].rstrip("."), len(s["commands"])), ""]
+        md += [cx_md_command(c) for c in s["commands"]]
+        md += [""]
+    md += ["## Launch flags", "",
+           "Passed to `codex` at launch. %d in total." % len(flags), "",
+           "| Flag | What it does |", "| --- | --- |"]
+    md += ["| `%s` | %s |" % (f["flag"], f["description"].replace("|", "\\|")) for f in flags]
+    md += ["", "## Feature flags", "",
+           "From `codex features list`. %d in total, %d on in this build. The stage is what the "
+           "build calls the feature's maturity; the state depends on your `config.toml`, your "
+           "account and the build's own defaults."
+           % (len(features), counts["featuresOn"]), "",
+           "| Feature | Stage | On in this build |", "| --- | --- | --- |"]
+    md += ["| `%s` | %s | %s |" % (f["name"], f["stage"], "yes" if f["enabled"] else "no")
+           for f in features]
+    md += ["", "---", "",
+           "From [%s](%s) by %s. If it saved you time, [buy me a coffee](%s)."
+           % (S.SITE_NAME, S.BASE, S.AUTHOR, S.BMC), ""]
+
+    return payload, "\n".join(md), counts
+
+
+def cx_md_command(c):
+    bits = ["- **`%s`**" % c["name"]]
+    if c["argument"]:
+        bits.append("`%s`" % c["argument"])
+    if c["aliases"]:
+        bits.append("*(aliases: %s)*" % ", ".join("`%s`" % a for a in c["aliases"]))
+    line = " ".join(bits) + " — " + c["description"].rstrip(".") + "."
+    notes = []
+    if c["experimental"]:
+        notes.append("the build labels this experimental")
+    if c["probe"] == "ran":
+        notes.append("withheld from the `/` picker, but runs when typed")
+    elif c["probe"] == "unrecognized":
+        notes.append("**typing it returns `Unrecognized command`** — " +
+                     (c["probeNote"] or "").rstrip("."))
+    elif c["probe"] == "not probed":
+        notes.append("**not probed** — " + (c["probeNote"] or "").rstrip("."))
+    if notes:
+        line += " *(" + "; ".join(notes) + ")*"
+    if c["docs"]:
+        line += " [docs](%s)" % c["docs"]
+    return line
 
 
 METHOD_DESC = {
@@ -792,10 +1093,14 @@ AI_AGENTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Use
              "Applebot-Extended", "CCBot", "Bingbot", "DuckAssistBot", "cohere-ai",
              "Meta-ExternalAgent", "Amazonbot", "YouBot"]
 
-PAGES = [(S.BASE, "1.0"), (S.CHEATSHEET, "0.9"), (S.SKILLS, "0.9")]
+# url, sitemap priority, lastmod — each page carries the day its own content last changed.
+PAGES = [(S.BASE, "1.0", S.SITE_UPDATED),
+         (S.CHEATSHEET, "0.9", S.UPDATED),
+         (S.SKILLS, "0.9", S.UPDATED),
+         (S.CODEX, "0.9", S.CODEX_UPDATED)]
 
 
-def build_site_files(markdown, counts, skill_counts):
+def build_site_files(markdown, counts, skill_counts, codex_counts):
     llms = """# {site}
 
 > {desc}
@@ -812,6 +1117,9 @@ follows the tool and says so.
 - [Claude Code Bundled Skills]({sk}): the complete prompt behind every skill bundled inside build
   {build} — all {skills} of them, {words} words in total, read out of the shipped binary and
   reproduced verbatim rather than summarised.
+- [Codex CLI Command Index]({cx}): every slash command, `codex` subcommand, launch flag and feature
+  flag in OpenAI Codex CLI build {cxbuild} — {cxtotal} commands, {cxflags} flags and {cxfeat}
+  feature switches, read out of the running CLI and probed for availability.
 
 ## Machine-readable data
 
@@ -821,20 +1129,26 @@ follows the tool and says so.
 - [Claude Code skill prompts as Markdown]({sk}skills.md): every bundled skill's prompt in full.
 - [Claude Code skill prompts as JSON]({sk}skills.json): the same prompts as structured data, with
   the description, trigger hint, gating and assembly method per skill.
+- [Codex CLI commands as Markdown]({cx}codex-commands.md): the full Codex index as plain Markdown.
+- [Codex CLI commands as JSON]({cx}codex-commands.json): the same inventory as structured data,
+  with how each command's availability was established, plus the whole feature table.
 - [Everything as one file]({base}llms-full.txt): every page's Markdown concatenated.
 
 ## About
 
 - [Source repository]({repo}): all pages, hand-built, no framework.
 - [Support the work]({bmc}).
-""".format(site=S.SITE_NAME, desc=S.SITE_DESC, cs=S.CHEATSHEET, sk=S.SKILLS, base=S.BASE,
-           repo=S.REPO, bmc=S.BMC, build=S.BUILD, total=counts["total"], flags=counts["flags"],
-           skills=skill_counts["total"], words=format(skill_counts["promptWords"], ","))
+""".format(site=S.SITE_NAME, desc=S.SITE_DESC, cs=S.CHEATSHEET, sk=S.SKILLS, cx=S.CODEX,
+           base=S.BASE, repo=S.REPO, bmc=S.BMC, build=S.BUILD, total=counts["total"],
+           flags=counts["flags"], skills=skill_counts["total"],
+           words=format(skill_counts["promptWords"], ","), cxbuild=S.CODEX_BUILD,
+           cxtotal=codex_counts["total"], cxflags=codex_counts["flags"],
+           cxfeat=codex_counts["features"])
     (ROOT / "llms.txt").write_text(llms, encoding="utf-8")
 
     (ROOT / "llms-full.txt").write_text(
         "# %s — full text\n\n> %s\n\nGenerated %s. Canonical site: %s\n\n---\n\n%s"
-        % (S.SITE_NAME, S.SITE_DESC, S.UPDATED, S.BASE, markdown), encoding="utf-8")
+        % (S.SITE_NAME, S.SITE_DESC, S.SITE_UPDATED, S.BASE, markdown), encoding="utf-8")
 
     robots = ["User-agent: *", "Allow: /", ""]
     for agent in AI_AGENTS:
@@ -844,9 +1158,9 @@ follows the tool and says so.
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for loc, priority in PAGES:
+    for loc, priority, lastmod in PAGES:
         sitemap += ["  <url>", "    <loc>%s</loc>" % loc,
-                    "    <lastmod>%s</lastmod>" % S.UPDATED,
+                    "    <lastmod>%s</lastmod>" % lastmod,
                     "    <changefreq>monthly</changefreq>",
                     "    <priority>%s</priority>" % priority, "  </url>"]
     sitemap += ["</urlset>", ""]
@@ -858,9 +1172,11 @@ follows the tool and says so.
 # ============================================================ run
 
 def main():
-    for required in ["extract.json", "prerender.json"]:
-        if not (CS_SRC / required).exists():
-            raise SystemExit("missing %s — run `node build/capture.mjs` first" % required)
+    for src in [CS_SRC, CX_SRC]:
+        for required in ["extract.json", "prerender.json"]:
+            if not (src / required).exists():
+                raise SystemExit("missing %s/%s — run `node build/capture.mjs` first"
+                                 % (src.name, required))
 
     extract = json.loads((CS_SRC / "extract.json").read_text(encoding="utf-8"))
     prerender = json.loads((CS_SRC / "prerender.json").read_text(encoding="utf-8"))
@@ -881,11 +1197,24 @@ def main():
                                         encoding="utf-8")
     (SK_OUT / "skills.md").write_text(sk_markdown, encoding="utf-8")
 
-    build_site_files(markdown + "\n\n---\n\n" + sk_markdown, counts, sk_payload["counts"])
+    cx_extract = json.loads((CX_SRC / "extract.json").read_text(encoding="utf-8"))
+    cx_prerender = json.loads((CX_SRC / "prerender.json").read_text(encoding="utf-8"))
+    cx_payload, cx_markdown, cx_counts = build_codex_data(cx_extract)
+    CX_OUT.mkdir(parents=True, exist_ok=True)
+    (CX_OUT / "index.html").write_text(build_codex_page(cx_prerender, cx_counts),
+                                       encoding="utf-8")
+    (CX_OUT / "codex-commands.json").write_text(
+        json.dumps(cx_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (CX_OUT / "codex-commands.md").write_text(cx_markdown, encoding="utf-8")
+
+    build_site_files(markdown + "\n\n---\n\n" + sk_markdown + "\n\n---\n\n" + cx_markdown,
+                     counts, sk_payload["counts"], cx_counts)
 
     written = ["claude-code-cheatsheet/index.html", "claude-code-cheatsheet/commands.json",
                "claude-code-cheatsheet/commands.md", "claude-code-built-in-skills/index.html",
                "claude-code-built-in-skills/skills.json", "claude-code-built-in-skills/skills.md",
+               "codex-cheatsheet/index.html", "codex-cheatsheet/codex-commands.json",
+               "codex-cheatsheet/codex-commands.md",
                "llms.txt", "llms-full.txt", "robots.txt", "sitemap.xml", ".nojekyll"]
     for f in written:
         print("  %-42s %8d bytes" % (f, (ROOT / f).stat().st_size))
@@ -893,6 +1222,9 @@ def main():
           % (counts["total"], counts["flags"], counts["documented"]))
     print("%d bundled skills, %s words of prompt"
           % (sk_payload["counts"]["total"], format(sk_payload["counts"]["promptWords"], ",")))
+    print("codex %s: %d commands, %d flags, %d feature switches (%d on), %d linked to docs"
+          % (S.CODEX_BUILD, cx_counts["total"], cx_counts["flags"], cx_counts["features"],
+             cx_counts["featuresOn"], cx_counts["documented"]))
     print("index.html and 404.html are hand-maintained — this script does not touch them.")
 
 

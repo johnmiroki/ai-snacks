@@ -14,6 +14,9 @@ follows the tool and says so.
 - [Claude Code Bundled Skills](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/): the complete prompt behind every skill bundled inside build
   2.1.220 — all 35 of them, 62,010 words in total, read out of the shipped binary and
   reproduced verbatim rather than summarised.
+- [Codex CLI Command Index](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/): every slash command, `codex` subcommand, launch flag and feature
+  flag in OpenAI Codex CLI build 0.146.0 — 122 commands, 21 flags and 100
+  feature switches, read out of the running CLI and probed for availability.
 
 ## Machine-readable data
 
@@ -23,6 +26,9 @@ follows the tool and says so.
 - [Claude Code skill prompts as Markdown](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.md): every bundled skill's prompt in full.
 - [Claude Code skill prompts as JSON](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.json): the same prompts as structured data, with
   the description, trigger hint, gating and assembly method per skill.
+- [Codex CLI commands as Markdown](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.md): the full Codex index as plain Markdown.
+- [Codex CLI commands as JSON](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json): the same inventory as structured data,
+  with how each command's availability was established, plus the whole feature table.
 - [Everything as one file](https://johnmiroki.github.io/ai-snacks/llms-full.txt): every page's Markdown concatenated.
 
 ## About

@@ -1,0 +1,2282 @@
+{
+  "sections": [
+    {
+      "id": "sec-session-context",
+      "title": "Session & context",
+      "blurb": "Steering the conversation you are in right now",
+      "commands": [
+        {
+          "id": "cmd-new",
+          "name": "/new",
+          "family": "slash",
+          "description": "start a new chat during a conversation",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-clear",
+          "name": "/clear",
+          "family": "slash",
+          "description": "clear the terminal and start a new chat",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-compact",
+          "name": "/compact",
+          "family": "slash",
+          "description": "summarize conversation to prevent hitting the context limit",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-resume",
+          "name": "/resume",
+          "family": "slash",
+          "description": "resume a saved chat",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-fork",
+          "name": "/fork",
+          "family": "slash",
+          "description": "fork the current chat",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-rename",
+          "name": "/rename",
+          "family": "slash",
+          "description": "rename the current thread",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-archive",
+          "name": "/archive",
+          "family": "slash",
+          "description": "archive this session and exit",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-delete",
+          "name": "/delete",
+          "family": "slash",
+          "description": "permanently delete this session and exit",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-status",
+          "name": "/status",
+          "family": "slash",
+          "description": "show current session configuration and token usage",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-copy",
+          "name": "/copy",
+          "family": "slash",
+          "description": "copy last response as markdown",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-raw",
+          "name": "/raw",
+          "family": "slash",
+          "description": "toggle raw scrollback mode for copy-friendly terminal selection",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": null
+        },
+        {
+          "id": "cmd-side",
+          "name": "/side",
+          "family": "slash",
+          "description": "start a side conversation in an ephemeral fork",
+          "argument": null,
+          "aliases": [
+            "btw"
+          ],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-agent",
+          "name": "/agent",
+          "family": "slash",
+          "description": "switch the active agent thread",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/agent-configuration/subagents"
+        },
+        {
+          "id": "cmd-subagents",
+          "name": "/subagents",
+          "family": "slash",
+          "description": "switch the active agent thread",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/agent-configuration/subagents"
+        },
+        {
+          "id": "cmd-exit",
+          "name": "/exit",
+          "family": "slash",
+          "description": "exit Codex",
+          "argument": null,
+          "aliases": [
+            "quit"
+          ],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        }
+      ]
+    },
+    {
+      "id": "sec-model-reasoning",
+      "title": "Model & reasoning",
+      "blurb": "How much horsepower each turn gets, and how it talks back",
+      "commands": [
+        {
+          "id": "cmd-model",
+          "name": "/model",
+          "family": "slash",
+          "description": "choose what model and reasoning effort to use",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/models"
+        },
+        {
+          "id": "cmd-fast",
+          "name": "/fast",
+          "family": "slash",
+          "description": "1.5x speed, increased usage",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-plan",
+          "name": "/plan",
+          "family": "slash",
+          "description": "switch to Plan mode",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/permission-modes"
+        },
+        {
+          "id": "cmd-goal",
+          "name": "/goal",
+          "family": "slash",
+          "description": "set or view the goal for a long-running task",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-personality",
+          "name": "/personality",
+          "family": "slash",
+          "description": "choose a communication style for Codex",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/customization/overview"
+        }
+      ]
+    },
+    {
+      "id": "sec-workspace-code",
+      "title": "Workspace & code",
+      "blurb": "Project instructions, your working diff, and review",
+      "commands": [
+        {
+          "id": "cmd-init",
+          "name": "/init",
+          "family": "slash",
+          "description": "create an AGENTS.md file with instructions for Codex",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/agent-configuration/agents-md"
+        },
+        {
+          "id": "cmd-review",
+          "name": "/review",
+          "family": "slash",
+          "description": "review my current changes and find issues",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/code-review"
+        },
+        {
+          "id": "cmd-diff",
+          "name": "/diff",
+          "family": "slash",
+          "description": "show git diff (including untracked files)",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-mention",
+          "name": "/mention",
+          "family": "slash",
+          "description": "mention a file",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-approve",
+          "name": "/approve",
+          "family": "slash",
+          "description": "approve one retry of a recent auto-review denial",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/sandboxing/auto-review"
+        }
+      ]
+    },
+    {
+      "id": "sec-config-environment",
+      "title": "Config & environment",
+      "blurb": "Settings, permissions, hooks, and how the terminal behaves",
+      "commands": [
+        {
+          "id": "cmd-permissions",
+          "name": "/permissions",
+          "family": "slash",
+          "description": "choose what Codex is allowed to do",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/permissions"
+        },
+        {
+          "id": "cmd-keymap",
+          "name": "/keymap",
+          "family": "slash",
+          "description": "remap TUI shortcuts",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-vim",
+          "name": "/vim",
+          "family": "slash",
+          "description": "toggle Vim mode for the composer",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-theme",
+          "name": "/theme",
+          "family": "slash",
+          "description": "choose a syntax highlighting theme",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-statusline",
+          "name": "/statusline",
+          "family": "slash",
+          "description": "configure which items appear in the status line",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-title",
+          "name": "/title",
+          "family": "slash",
+          "description": "configure which items appear in the terminal title",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-pets",
+          "name": "/pets",
+          "family": "slash",
+          "description": "choose or hide the terminal pet",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cli-customization"
+        },
+        {
+          "id": "cmd-experimental",
+          "name": "/experimental",
+          "family": "slash",
+          "description": "toggle experimental features",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-import",
+          "name": "/import",
+          "family": "slash",
+          "description": "import setup, this project, and recent chats from Claude Code",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": null
+        },
+        {
+          "id": "cmd-hooks",
+          "name": "/hooks",
+          "family": "slash",
+          "description": "view and manage lifecycle hooks",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/hooks"
+        },
+        {
+          "id": "cmd-memories",
+          "name": "/memories",
+          "family": "slash",
+          "description": "configure memory use and generation",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/customization/memories"
+        },
+        {
+          "id": "cmd-skills",
+          "name": "/skills",
+          "family": "slash",
+          "description": "use skills to improve how Codex performs specific tasks",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-skills"
+        },
+        {
+          "id": "cmd-ide",
+          "name": "/ide",
+          "family": "slash",
+          "description": "include current selection, open files, and other context from your IDE",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/codex/ide"
+        }
+      ]
+    },
+    {
+      "id": "sec-extensions",
+      "title": "Extensions",
+      "blurb": "MCP servers and plugins",
+      "commands": [
+        {
+          "id": "cmd-mcp",
+          "name": "/mcp",
+          "family": "slash",
+          "description": "list configured MCP tools; use /mcp verbose for details",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cmd-plugins",
+          "name": "/plugins",
+          "family": "slash",
+          "description": "browse plugins",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/plugins"
+        }
+      ]
+    },
+    {
+      "id": "sec-account-usage",
+      "title": "Account & usage",
+      "blurb": "Who you are signed in as, what it costs, and the desktop app",
+      "commands": [
+        {
+          "id": "cmd-usage",
+          "name": "/usage",
+          "family": "slash",
+          "description": "view account usage or use a usage limit reset",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/reference/troubleshooting"
+        },
+        {
+          "id": "cmd-logout",
+          "name": "/logout",
+          "family": "slash",
+          "description": "log out of Codex",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/auth"
+        },
+        {
+          "id": "cmd-feedback",
+          "name": "/feedback",
+          "family": "slash",
+          "description": "send logs to maintainers",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#built-in-slash-commands"
+        },
+        {
+          "id": "cmd-app",
+          "name": "/app",
+          "family": "slash",
+          "description": "continue this session in the Desktop app",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/web"
+        }
+      ]
+    },
+    {
+      "id": "sec-background-terminals",
+      "title": "Background terminals",
+      "blurb": "Long-running shells the agent started",
+      "commands": [
+        {
+          "id": "cmd-ps",
+          "name": "/ps",
+          "family": "slash",
+          "description": "list background terminals",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": null
+        },
+        {
+          "id": "cmd-stop",
+          "name": "/stop",
+          "family": "slash",
+          "description": "stop all background terminals",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "picker",
+          "probeNote": null,
+          "docs": null
+        }
+      ]
+    },
+    {
+      "id": "sec-hidden-internal",
+      "title": "Hidden & internal",
+      "blurb": "In the binary but not offered by the / picker — listed for completeness",
+      "commands": [
+        {
+          "id": "cmd-apps",
+          "name": "/apps",
+          "family": "hidden",
+          "description": "manage apps",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "ran",
+          "probeNote": null,
+          "docs": null
+        },
+        {
+          "id": "cmd-debug-config",
+          "name": "/debug-config",
+          "family": "hidden",
+          "description": "show config layers and requirement sources for debugging",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "ran",
+          "probeNote": null,
+          "docs": null
+        },
+        {
+          "id": "cmd-rollout",
+          "name": "/rollout",
+          "family": "hidden",
+          "description": "print the rollout file path",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": false,
+          "probe": "unrecognized",
+          "probeNote": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+          "docs": null
+        },
+        {
+          "id": "cmd-sandbox-add-read-dir",
+          "name": "/sandbox-add-read-dir",
+          "family": "hidden",
+          "description": "let sandbox read a directory: /sandbox-add-read-dir <absolute_path>",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": false,
+          "probe": "unrecognized",
+          "probeNote": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+          "docs": null
+        },
+        {
+          "id": "cmd-test-approval",
+          "name": "/test-approval",
+          "family": "hidden",
+          "description": "test approval request",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": false,
+          "probe": "unrecognized",
+          "probeNote": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+          "docs": null
+        },
+        {
+          "id": "cmd-setup-default-sandbox",
+          "name": "/setup-default-sandbox",
+          "family": "hidden",
+          "description": "set up elevated agent sandbox",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": null,
+          "probe": "not probed",
+          "probeNote": "Not run: it would have reconfigured the agent sandbox. Availability unestablished.",
+          "docs": null
+        },
+        {
+          "id": "cmd-debug-m-drop",
+          "name": "/debug-m-drop",
+          "family": "hidden",
+          "description": "DO NOT USE",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": null,
+          "probe": "not probed",
+          "probeNote": "Not run: the binary labels this DO NOT USE. Availability unestablished.",
+          "docs": null
+        },
+        {
+          "id": "cmd-debug-m-update",
+          "name": "/debug-m-update",
+          "family": "hidden",
+          "description": "DO NOT USE",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": null,
+          "probe": "not probed",
+          "probeNote": "Not run: the binary labels this DO NOT USE. Availability unestablished.",
+          "docs": null
+        }
+      ]
+    },
+    {
+      "id": "sec-terminal-cli-core",
+      "title": "Terminal CLI — core",
+      "blurb": "The codex executable itself, run from your shell",
+      "commands": [
+        {
+          "id": "cli-codex",
+          "name": "codex",
+          "family": "cli",
+          "description": "Start an interactive session in the current directory",
+          "argument": "[PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/codex/cli"
+        },
+        {
+          "id": "cli-codex-exec",
+          "name": "codex exec",
+          "family": "cli",
+          "description": "Run Codex non-interactively",
+          "argument": "[PROMPT] codex exec <COMMAND> [ARGS]",
+          "aliases": [
+            "e"
+          ],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/non-interactive-mode"
+        },
+        {
+          "id": "cli-codex-exec-resume",
+          "name": "codex exec resume",
+          "family": "cli",
+          "description": "Resume a previous session by id or pick the most recent with --last",
+          "argument": "[SESSION_ID] [PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/non-interactive-mode"
+        },
+        {
+          "id": "cli-codex-exec-review",
+          "name": "codex exec review",
+          "family": "cli",
+          "description": "Run a code review against the current repository",
+          "argument": "[PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/non-interactive-mode"
+        },
+        {
+          "id": "cli-codex-review",
+          "name": "codex review",
+          "family": "cli",
+          "description": "Run a code review non-interactively",
+          "argument": "[PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/code-review"
+        },
+        {
+          "id": "cli-codex-resume",
+          "name": "codex resume",
+          "family": "cli",
+          "description": "Resume a previous interactive session (picker by default; use --last to continue the most recent)",
+          "argument": "[SESSION_ID] [PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-resume"
+        },
+        {
+          "id": "cli-codex-fork",
+          "name": "codex fork",
+          "family": "cli",
+          "description": "Fork a previous interactive session (picker by default; use --last to fork the most recent)",
+          "argument": "[SESSION_ID] [PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-fork"
+        },
+        {
+          "id": "cli-codex-apply",
+          "name": "codex apply",
+          "family": "cli",
+          "description": "Apply the latest diff produced by Codex agent as a `git apply` to your local working tree",
+          "argument": "<TASK_ID>",
+          "aliases": [
+            "a"
+          ],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-archive",
+          "name": "codex archive",
+          "family": "cli",
+          "description": "Archive a saved session by id or session name",
+          "argument": "<SESSION>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-unarchive",
+          "name": "codex unarchive",
+          "family": "cli",
+          "description": "Unarchive a saved session by id or session name",
+          "argument": "<SESSION>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-delete",
+          "name": "codex delete",
+          "family": "cli",
+          "description": "Permanently delete a saved session by id or session name",
+          "argument": "<SESSION>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-login",
+          "name": "codex login",
+          "family": "cli",
+          "description": "Manage login",
+          "argument": "[COMMAND]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/auth"
+        },
+        {
+          "id": "cli-codex-login-status",
+          "name": "codex login status",
+          "family": "cli",
+          "description": "Show login status",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/auth"
+        },
+        {
+          "id": "cli-codex-logout",
+          "name": "codex logout",
+          "family": "cli",
+          "description": "Remove stored authentication credentials",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/auth"
+        },
+        {
+          "id": "cli-codex-update",
+          "name": "codex update",
+          "family": "cli",
+          "description": "Update Codex to the latest version",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-update"
+        },
+        {
+          "id": "cli-codex-doctor",
+          "name": "codex doctor",
+          "family": "cli",
+          "description": "Diagnose local Codex installation, config, auth, and runtime health",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/reference/troubleshooting"
+        },
+        {
+          "id": "cli-codex-completion",
+          "name": "codex completion",
+          "family": "cli",
+          "description": "Generate shell completion scripts",
+          "argument": "[SHELL]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-sandbox",
+          "name": "codex sandbox",
+          "family": "cli",
+          "description": "Run commands within a Codex-provided sandbox",
+          "argument": "[COMMAND]...",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/sandboxing"
+        },
+        {
+          "id": "cli-codex-app",
+          "name": "codex app",
+          "family": "cli",
+          "description": "Launch the Desktop app (opens the app installer if missing)",
+          "argument": "[PATH]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/web"
+        }
+      ]
+    },
+    {
+      "id": "sec-mcp-plugins",
+      "title": "MCP & plugins",
+      "blurb": "External tool servers, and the plugin marketplace",
+      "commands": [
+        {
+          "id": "cli-codex-mcp",
+          "name": "codex mcp",
+          "family": "cli",
+          "description": "Manage external MCP servers for Codex",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-add",
+          "name": "codex mcp add",
+          "family": "cli",
+          "description": "Add an MCP server by URL or launch command",
+          "argument": "<NAME> (--url <URL> | -- <COMMAND>...)",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-get",
+          "name": "codex mcp get",
+          "family": "cli",
+          "description": "Show one configured MCP server",
+          "argument": "<NAME>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-list",
+          "name": "codex mcp list",
+          "family": "cli",
+          "description": "List configured MCP servers",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-login",
+          "name": "codex mcp login",
+          "family": "cli",
+          "description": "Sign in to an MCP server that needs auth",
+          "argument": "<NAME>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-logout",
+          "name": "codex mcp logout",
+          "family": "cli",
+          "description": "Sign out of an MCP server",
+          "argument": "<NAME>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-remove",
+          "name": "codex mcp remove",
+          "family": "cli",
+          "description": "Remove a configured MCP server",
+          "argument": "<NAME>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/extend/mcp"
+        },
+        {
+          "id": "cli-codex-mcp-server",
+          "name": "codex mcp-server",
+          "family": "cli",
+          "description": "Start Codex as an MCP server (stdio)",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/mcp-server"
+        },
+        {
+          "id": "cli-codex-plugin",
+          "name": "codex plugin",
+          "family": "cli",
+          "description": "Manage Codex plugins",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/plugins"
+        },
+        {
+          "id": "cli-codex-plugin-add",
+          "name": "codex plugin add",
+          "family": "cli",
+          "description": "Install a plugin from a configured marketplace snapshot",
+          "argument": "<PLUGIN[@MARKETPLACE]>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/plugins"
+        },
+        {
+          "id": "cli-codex-plugin-list",
+          "name": "codex plugin list",
+          "family": "cli",
+          "description": "List plugins available from configured marketplace snapshots",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/plugins"
+        },
+        {
+          "id": "cli-codex-plugin-remove",
+          "name": "codex plugin remove",
+          "family": "cli",
+          "description": "Remove an installed plugin from local config and cache",
+          "argument": "<PLUGIN[@MARKETPLACE]>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/plugins"
+        },
+        {
+          "id": "cli-codex-plugin-marketplace",
+          "name": "codex plugin marketplace",
+          "family": "cli",
+          "description": "Add, list, upgrade, or remove configured plugin marketplaces",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-plugins"
+        },
+        {
+          "id": "cli-codex-plugin-marketplace-add",
+          "name": "codex plugin marketplace add",
+          "family": "cli",
+          "description": "Add a local or Git marketplace to the configured marketplace sources",
+          "argument": "<SOURCE>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-plugins"
+        },
+        {
+          "id": "cli-codex-plugin-marketplace-list",
+          "name": "codex plugin marketplace list",
+          "family": "cli",
+          "description": "List plugin marketplaces Codex is currently considering and their roots",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-plugins"
+        },
+        {
+          "id": "cli-codex-plugin-marketplace-remove",
+          "name": "codex plugin marketplace remove",
+          "family": "cli",
+          "description": "Remove a configured marketplace source by name",
+          "argument": "<MARKETPLACE_NAME>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-plugins"
+        },
+        {
+          "id": "cli-codex-plugin-marketplace-upgrade",
+          "name": "codex plugin marketplace upgrade",
+          "family": "cli",
+          "description": "Refresh configured Git marketplace snapshots",
+          "argument": "[MARKETPLACE_NAME]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/build-plugins"
+        }
+      ]
+    },
+    {
+      "id": "sec-app-server-daemon-remote-control",
+      "title": "App server, daemon & remote control",
+      "blurb": "The long-running service other front-ends talk to",
+      "commands": [
+        {
+          "id": "cli-codex-app-server",
+          "name": "codex app-server",
+          "family": "cli",
+          "description": "Run the app server or related tooling",
+          "argument": "[COMMAND]",
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/app-server"
+        },
+        {
+          "id": "cli-codex-app-server-daemon",
+          "name": "codex app-server daemon",
+          "family": "cli",
+          "description": "Manage the local app-server daemon",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/app-server"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-start",
+          "name": "codex app-server daemon start",
+          "family": "cli",
+          "description": "Start the local app server daemon if it is not already running",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-stop",
+          "name": "codex app-server daemon stop",
+          "family": "cli",
+          "description": "Stop the local app server daemon",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-restart",
+          "name": "codex app-server daemon restart",
+          "family": "cli",
+          "description": "Restart the local app server daemon",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-bootstrap",
+          "name": "codex app-server daemon bootstrap",
+          "family": "cli",
+          "description": "Install durable local app-server management for SSH-driven use",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-version",
+          "name": "codex app-server daemon version",
+          "family": "cli",
+          "description": "Print local CLI and running app-server versions as JSON",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-enable-remote-control",
+          "name": "codex app-server daemon enable-remote-control",
+          "family": "cli",
+          "description": "Enable remote control for future starts and a currently running managed daemon",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-daemon-disable-remote-control",
+          "name": "codex app-server daemon disable-remote-control",
+          "family": "cli",
+          "description": "Disable remote control for future starts and a currently running managed daemon",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-app-server-generate-json-schema",
+          "name": "codex app-server generate-json-schema",
+          "family": "cli",
+          "description": "Generate JSON Schema for the app server protocol",
+          "argument": "--out <DIR>",
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/app-server"
+        },
+        {
+          "id": "cli-codex-app-server-generate-ts",
+          "name": "codex app-server generate-ts",
+          "family": "cli",
+          "description": "Generate TypeScript bindings for the app server protocol",
+          "argument": "--out <DIR>",
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/app-server"
+        },
+        {
+          "id": "cli-codex-app-server-proxy",
+          "name": "codex app-server proxy",
+          "family": "cli",
+          "description": "Proxy stdio bytes to the running app-server control socket",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/app-server"
+        },
+        {
+          "id": "cli-codex-remote-control",
+          "name": "codex remote-control",
+          "family": "cli",
+          "description": "Manage the app-server daemon with remote control enabled",
+          "argument": "[COMMAND]",
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-remote-control-start",
+          "name": "codex remote-control start",
+          "family": "cli",
+          "description": "Start the app-server daemon with remote control enabled",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-remote-control-stop",
+          "name": "codex remote-control stop",
+          "family": "cli",
+          "description": "Stop the app-server daemon",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-remote-control-pair",
+          "name": "codex remote-control pair",
+          "family": "cli",
+          "description": "Create and print a short-lived manual pairing code",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-exec-server",
+          "name": "codex exec-server",
+          "family": "cli",
+          "description": "Run the standalone exec-server service",
+          "argument": null,
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        }
+      ]
+    },
+    {
+      "id": "sec-codex-cloud",
+      "title": "Codex Cloud",
+      "blurb": "Tasks running on OpenAI's infrastructure, driven from your shell",
+      "commands": [
+        {
+          "id": "cli-codex-cloud",
+          "name": "codex cloud",
+          "family": "cli",
+          "description": "Browse tasks from Codex Cloud and apply changes locally",
+          "argument": "[COMMAND]",
+          "aliases": [],
+          "experimental": true,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        },
+        {
+          "id": "cli-codex-cloud-list",
+          "name": "codex cloud list",
+          "family": "cli",
+          "description": "List Codex Cloud tasks",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        },
+        {
+          "id": "cli-codex-cloud-status",
+          "name": "codex cloud status",
+          "family": "cli",
+          "description": "Show the status of a Codex Cloud task",
+          "argument": "<TASK_ID>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        },
+        {
+          "id": "cli-codex-cloud-diff",
+          "name": "codex cloud diff",
+          "family": "cli",
+          "description": "Show the unified diff for a Codex Cloud task",
+          "argument": "<TASK_ID>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        },
+        {
+          "id": "cli-codex-cloud-exec",
+          "name": "codex cloud exec",
+          "family": "cli",
+          "description": "Submit a new Codex Cloud task without launching the TUI",
+          "argument": "--env <ENV_ID> [QUERY]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        },
+        {
+          "id": "cli-codex-cloud-apply",
+          "name": "codex cloud apply",
+          "family": "cli",
+          "description": "Apply the diff for a Codex Cloud task locally",
+          "argument": "<TASK_ID>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/cloud"
+        }
+      ]
+    },
+    {
+      "id": "sec-debug-feature-flags",
+      "title": "Debug & feature flags",
+      "blurb": "Diagnostics, and the switchboard behind the build",
+      "commands": [
+        {
+          "id": "cli-codex-debug",
+          "name": "codex debug",
+          "family": "cli",
+          "description": "Debugging tools",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-debug-models",
+          "name": "codex debug models",
+          "family": "cli",
+          "description": "Render the raw model catalog as JSON",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-debug-prompt-input",
+          "name": "codex debug prompt-input",
+          "family": "cli",
+          "description": "Render the model-visible prompt input list as JSON",
+          "argument": "[PROMPT]",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-debug-app-server",
+          "name": "codex debug app-server",
+          "family": "cli",
+          "description": "Tooling: helps debug the app server",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-debug-app-server-send-message-v2",
+          "name": "codex debug app-server send-message-v2",
+          "family": "cli",
+          "description": "Send one user message to the app server",
+          "argument": "2 <USER_MESSAGE>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-features",
+          "name": "codex features",
+          "family": "cli",
+          "description": "Inspect feature flags",
+          "argument": "<COMMAND>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-features-list",
+          "name": "codex features list",
+          "family": "cli",
+          "description": "List known features with their stage and effective state",
+          "argument": null,
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-features-enable",
+          "name": "codex features enable",
+          "family": "cli",
+          "description": "Enable a feature in config.toml",
+          "argument": "<FEATURE>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        },
+        {
+          "id": "cli-codex-features-disable",
+          "name": "codex features disable",
+          "family": "cli",
+          "description": "Disable a feature in config.toml",
+          "argument": "<FEATURE>",
+          "aliases": [],
+          "experimental": false,
+          "registered": true,
+          "probe": "help",
+          "probeNote": null,
+          "docs": "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+        }
+      ]
+    }
+  ],
+  "flags": [
+    {
+      "flag": "-c, --config <key=value>",
+      "description": "Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`. Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal"
+    },
+    {
+      "flag": "--enable <FEATURE>",
+      "description": "Enable a feature (repeatable). Equivalent to `-c features.<name>=true`"
+    },
+    {
+      "flag": "--disable <FEATURE>",
+      "description": "Disable a feature (repeatable). Equivalent to `-c features.<name>=false`"
+    },
+    {
+      "flag": "--remote <ADDR>",
+      "description": "Connect the TUI to a remote app server endpoint. Accepted forms: `ws://host:port`, `wss://host:port`, `unix://`, or `unix://PATH`"
+    },
+    {
+      "flag": "--remote-auth-token-env <ENV_VAR>",
+      "description": "Name of the environment variable containing the bearer token to send to a remote app server websocket"
+    },
+    {
+      "flag": "--strict-config",
+      "description": "Error out when config.toml contains fields that are not recognized by this version of Codex"
+    },
+    {
+      "flag": "-i, --image <FILE>...",
+      "description": "Optional image(s) to attach to the initial prompt"
+    },
+    {
+      "flag": "-m, --model <MODEL>",
+      "description": "Model the agent should use"
+    },
+    {
+      "flag": "--oss",
+      "description": "Use open-source provider"
+    },
+    {
+      "flag": "--local-provider <OSS_PROVIDER>",
+      "description": "Specify which local provider to use (lmstudio or ollama). If not specified with --oss, will use config default or show selection"
+    },
+    {
+      "flag": "-p, --profile <CONFIG_PROFILE_V2>",
+      "description": "Layer $CODEX_HOME/<name>.config.toml on top of the base user config"
+    },
+    {
+      "flag": "-s, --sandbox <SANDBOX_MODE>",
+      "description": "Select the sandbox policy to use when executing model-generated shell commands [possible values: read-only, workspace-write, danger-full-access]"
+    },
+    {
+      "flag": "--dangerously-bypass-approvals-and-sandbox",
+      "description": "Skip all confirmation prompts and execute commands without sandboxing. EXTREMELY DANGEROUS. Intended solely for running in environments that are externally sandboxed"
+    },
+    {
+      "flag": "--dangerously-bypass-hook-trust",
+      "description": "Run enabled hooks without requiring persisted hook trust for this invocation. DANGEROUS. Intended only for automation that already vets hook sources"
+    },
+    {
+      "flag": "-C, --cd <DIR>",
+      "description": "Tell the agent to use the specified directory as its working root"
+    },
+    {
+      "flag": "--add-dir <DIR>",
+      "description": "Additional directories that should be writable alongside the primary workspace"
+    },
+    {
+      "flag": "-a, --ask-for-approval <APPROVAL_POLICY>",
+      "description": "Configure when the model requires human approval before executing a command"
+    },
+    {
+      "flag": "--search",
+      "description": "Enable live web search. When enabled, the native Responses `web_search` tool is available to the model (no per‑call approval)"
+    },
+    {
+      "flag": "--no-alt-screen",
+      "description": "Disable alternate screen mode Runs the TUI in inline mode, preserving terminal scrollback history"
+    },
+    {
+      "flag": "-h, --help",
+      "description": "Print help (see a summary with '-h')"
+    },
+    {
+      "flag": "-V, --version",
+      "description": "Print version"
+    }
+  ],
+  "features": [
+    {
+      "name": "apply_patch_freeform",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "apply_patch_streaming_events",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "apps",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "apps_mcp_path_override",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "artifact",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "auth_elicitation",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "browser_use",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "browser_use_external",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "browser_use_full_cdp_access",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "chronicle",
+      "stage": "under development",
+      "enabled": true
+    },
+    {
+      "name": "code_mode",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "code_mode_buffered_exec",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "code_mode_host",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "code_mode_only",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "codex_git_commit",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "collaboration_modes",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "computer_use",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "concurrent_reasoning_summaries",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "current_time_reminder",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "default_mode_request_user_input",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "deferred_executor",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "deferred_tool_world_state",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "elevated_windows_sandbox",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "enable_fanout",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "enable_mcp_apps",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "enable_request_compression",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "exec_permission_approvals",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "executor_capability_discovery",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "experimental_windows_sandbox",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "external_agent_memory_import",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "external_migration",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "fast_mode",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "goals",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "guardian_approval",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "guardianv2",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "hooks",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "image_detail_original",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "image_generation",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "in_app_browser",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "in_app_updates",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "item_ids",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "js_repl",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "js_repl_tools_only",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "local_thread_store_compression",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "mcp_2026_07_28",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "memories",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "mentions_v2",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "multi_agent",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "multi_agent_mode",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "multi_agent_v2",
+      "stage": "stable",
+      "enabled": false
+    },
+    {
+      "name": "network_proxy",
+      "stage": "experimental",
+      "enabled": false
+    },
+    {
+      "name": "non_prefixed_mcp_tool_names",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "personality",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "plugin_hooks",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "plugin_sharing",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "plugins",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "prevent_idle_sleep",
+      "stage": "experimental",
+      "enabled": false
+    },
+    {
+      "name": "realtime_conversation",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "remote_compaction_v2",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "remote_control",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "remote_models",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "remote_plugin",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "request_permissions_tool",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "request_rule",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "resize_all_images",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "respect_system_proxy",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "responses_websockets",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "responses_websockets_v2",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "rollout_budget",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "runtime_metrics",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "search_tool",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "secret_auth_storage",
+      "stage": "stable",
+      "enabled": false
+    },
+    {
+      "name": "shell_snapshot",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "shell_tool",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "shell_zsh_fork",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "skill_env_var_dependency_prompt",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "skill_mcp_dependency_install",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "skill_search",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "sqlite",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "standalone_web_search",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "steer",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "terminal_resize_reflow",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "terminal_visualization_instructions",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "token_budget",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "tool_call_mcp_elicitation",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "tool_search",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "tool_search_always_defer_mcp_tools",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "tool_suggest",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "tui_app_server",
+      "stage": "removed",
+      "enabled": true
+    },
+    {
+      "name": "unavailable_dummy_tools",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "undo",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "unified_exec",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "unified_exec_zsh_fork",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "use_agent_identity",
+      "stage": "under development",
+      "enabled": false
+    },
+    {
+      "name": "use_legacy_landlock",
+      "stage": "deprecated",
+      "enabled": false
+    },
+    {
+      "name": "use_linux_sandbox_bwrap",
+      "stage": "removed",
+      "enabled": false
+    },
+    {
+      "name": "web_search_cached",
+      "stage": "deprecated",
+      "enabled": false
+    },
+    {
+      "name": "web_search_request",
+      "stage": "deprecated",
+      "enabled": false
+    },
+    {
+      "name": "workspace_dependencies",
+      "stage": "stable",
+      "enabled": true
+    },
+    {
+      "name": "workspace_owner_usage_nudge",
+      "stage": "removed",
+      "enabled": false
+    }
+  ],
+  "totals": {
+    "commands": 122,
+    "flags": 21,
+    "features": 100
+  }
+}

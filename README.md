@@ -12,6 +12,7 @@ server.
 | --- | --- | --- |
 | [Claude Code Bundled Skills](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/) | The full prompt behind all 35 skills bundled inside Claude Code 2.1.220 — read out of the shipped binary and reproduced verbatim, not summarised | [json](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-built-in-skills/skills.md) |
 | [Claude Code Command Index](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/) | Every slash command, bundled skill, `claude` subcommand and CLI flag in Claude Code 2.1.220 — extracted from the installed binary, probed for availability, linked to the official docs | [json](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json) · [md](https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.md) |
+| [Codex CLI Command Index](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/) | Every slash command, `codex` subcommand, launch flag and feature switch in OpenAI Codex CLI 0.146.0 — slash commands read off the running `/` picker, availability settled by probing | [json](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json) · [md](https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.md) |
 
 ## Layout
 
@@ -35,6 +36,11 @@ ai-snacks/
 │   ├── skills.json                     every prompt, structured
 │   ├── skills.md                       every prompt, plain Markdown
 │   └── og.png
+├── codex-cheatsheet/
+│   ├── index.html                      the page, content pre-rendered
+│   ├── codex-commands.json             commands, flags and features, structured
+│   ├── codex-commands.md               the same page, plain Markdown
+│   └── og.png
 ├── build/                              what everything above is built from
 │   ├── build.py                        assembles the site into the repo root
 │   ├── capture.mjs                     pre-renders the cards, shoots the OG images
@@ -45,11 +51,17 @@ ai-snacks/
 │   │   ├── og.html                     OG template for the page
 │   │   ├── extract.json                captured command and flag data
 │   │   └── prerender.json              captured HTML for the cards
-│   └── claude-code-built-in-skills/
-│       ├── skills.html                 the page source — edit this, not the output
+│   ├── claude-code-built-in-skills/
+│   │   ├── skills.html                 the page source — edit this, not the output
+│   │   ├── og.html                     OG template for the page
+│   │   ├── extract_skills.py           mines the prompts out of the CLI binary
+│   │   └── skills-data.json            what it mined — the page's source of truth
+│   └── codex-cheatsheet/
+│       ├── codex-commands.html         the page source — edit this, not the output
 │       ├── og.html                     OG template for the page
-│       ├── extract_skills.py           mines the prompts out of the CLI binary
-│       └── skills-data.json            what it mined — the page's source of truth
+│       ├── probe_codex.py              re-measures the CLI: TUI picker, help tree, features
+│       ├── extract.json                captured command, flag and feature data
+│       └── prerender.json              captured HTML for the cards and tables
 └── README.md
 ```
 
@@ -66,11 +78,12 @@ node build/capture.mjs    # only when a page source or an OG template changed
 python3 build/build.py    # always — assembles the site
 ```
 
-`capture.mjs` opens the command-index source in headless Chromium, snapshots the JavaScript-built
-cards into `extract.json` and `prerender.json`, and screenshots all three OG images. `build.py`
-needs nothing but the checked-in JSON, so the usual edit-and-rebuild loop is Python only. It
-verifies the capture still holds 143 commands and 57 flags, and that the skill data still holds 35
-skills, and stops rather than publish a half-built page.
+`capture.mjs` opens both command-index sources in headless Chromium, snapshots the JavaScript-built
+cards into each page's `extract.json` and `prerender.json`, and screenshots all four OG images.
+`build.py` needs nothing but the checked-in JSON, so the usual edit-and-rebuild loop is Python only.
+It verifies the Claude capture still holds 143 commands and 57 flags, the skill data still holds 35
+skills, and the Codex capture still holds 122 commands, 21 flags and 100 feature switches, and stops
+rather than publish a half-built page.
 
 Playwright provides the browser (`npm install` in `build/`); set `CHROMIUM_PATH` to use one it did
 not install itself. A clean `python3 build/build.py` on an unchanged checkout produces no diff — if
@@ -88,6 +101,22 @@ python3 build/claude-code-built-in-skills/extract_skills.py \
 
 It reads the binary as text — it never executes it — finds each bundled skill's registration in the
 embedded JavaScript bundle, and resolves every prompt back to its source string.
+
+The Codex numbers come from a fourth script, run only when Codex itself updates:
+
+```sh
+CODEX_PROBE_CWD=~/some/trusted/repo \
+python3 build/codex-cheatsheet/probe_codex.py /opt/homebrew/bin/codex codex-probe.json
+```
+
+Unlike the Claude extractor, this one runs the tool. Codex is a Rust binary whose slash-command
+names are packed into one undelimited string block, so they cannot be recovered by reading it — the
+script drives the TUI in a pseudo-terminal instead, opens the `/` picker and walks it to the end.
+Names that appear in the binary but never in the picker are then typed at the prompt and classified
+against a deliberately nonsensical control command, which separates *runs but is withheld from the
+picker* from *"Unrecognized command"*. Three commands that would have done real work are declared in
+`DO_NOT_RUN` and reported as not probed rather than executed. Diff its report against the page
+source; it does not write the page.
 
 ## Readable by people, machines and crawlers
 

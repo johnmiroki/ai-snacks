@@ -1,0 +1,1195 @@
+<title>Codex CLI Command Index — v0.146.0</title>
+
+<style>
+  :root {
+    --ground:#F5F7F6;
+    --surface:#FFFFFF;
+    --surface-2:#EAEFEC;
+    --ink:#141A18;
+    --muted:#556059;
+    --faint:#87938B;
+    --rule:#DEE5E1;
+    --rule-soft:#EBF0ED;
+    --accent:#0E7C5A;
+    --accent-soft:#E4F2EC;
+    --fam-slash:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --fam-feat:#5B4BAE;
+    --shadow:0 1px 2px rgba(20,26,24,.05), 0 6px 16px -10px rgba(20,26,24,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0E1211;
+      --surface:#161B19;
+      --surface-2:#1E2523;
+      --ink:#E2E8E5;
+      --muted:#94A19A;
+      --faint:#6B7873;
+      --rule:#252E2B;
+      --rule-soft:#1E2523;
+      --accent:#4FC3A1;
+      --accent-soft:#122C24;
+      --fam-slash:#4FC3A1;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --fam-feat:#A99BF0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0E1211;
+    --surface:#161B19;
+    --surface-2:#1E2523;
+    --ink:#E2E8E5;
+    --muted:#94A19A;
+    --faint:#6B7873;
+    --rule:#252E2B;
+    --rule-soft:#1E2523;
+    --accent:#4FC3A1;
+    --accent-soft:#122C24;
+    --fam-slash:#4FC3A1;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --fam-feat:#A99BF0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F5F7F6;
+    --surface:#FFFFFF;
+    --surface-2:#EAEFEC;
+    --ink:#141A18;
+    --muted:#556059;
+    --faint:#87938B;
+    --rule:#DEE5E1;
+    --rule-soft:#EBF0ED;
+    --accent:#0E7C5A;
+    --accent-soft:#E4F2EC;
+    --fam-slash:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --fam-feat:#5B4BAE;
+    --shadow:0 1px 2px rgba(20,26,24,.05), 0 6px 16px -10px rgba(20,26,24,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,4.4vw,44px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .slash { color:var(--accent); }
+  .lede { margin:0; max-width:64ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .stats {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(224px,1fr));
+    gap:var(--sp-2); margin-top:var(--sp-5);
+  }
+  .stat {
+    appearance:none; font:inherit; color:inherit; text-align:left; width:100%; cursor:pointer;
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4);
+    border-left:2px solid var(--sc, var(--accent));
+    transition:background .12s ease, box-shadow .12s ease;
+  }
+  .stat:hover { box-shadow:var(--shadow); }
+  .stat:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .stat[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--sc) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--sc) 45%, var(--rule));
+    border-left-color:var(--sc);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:22px; font-weight:600;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.2;
+  }
+  .stat .lbl {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .stat .lbl::after {
+    content:"filter"; margin-left:auto; letter-spacing:.1em;
+    opacity:0; transition:opacity .12s ease; color:var(--sc);
+  }
+  .stat:hover .lbl::after, .stat:focus-visible .lbl::after { opacity:.85; }
+  .stat[aria-pressed="true"] .lbl::after { content:"filtering"; opacity:1; }
+  .stat .stat-note {
+    display:block; margin-top:var(--sp-2); font-size:12.5px; line-height:1.5;
+    color:var(--muted); max-width:38ch;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .stat .stat-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+  }
+  .toolbar-inner { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+
+  .search { position:relative; flex:1 1 260px; min-width:0; }
+  .search input {
+    width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px 34px 9px 30px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .search .prefix {
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); color:var(--accent); font-size:14px; pointer-events:none;
+  }
+  .search kbd {
+    position:absolute; right:9px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); font-size:10px; color:var(--faint);
+    border:1px solid var(--rule); border-radius:3px; padding:1px 5px; background:var(--ground);
+  }
+
+  .filters { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-1); }
+  .chip {
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--surface); color:var(--muted);
+    border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .chip .dot { width:7px; height:7px; border-radius:50%; background:var(--cc, var(--accent)); }
+  .chip.st .dot { background:transparent; border:1.5px solid var(--cc, var(--muted)); }
+  .chip[aria-pressed="true"] { background:var(--accent-soft); border-color:var(--accent); color:var(--ink); }
+  .chip.st[aria-pressed="true"] .dot { background:var(--cc, var(--accent)); }
+  .chips-sep { width:1px; align-self:stretch; background:var(--rule); margin:0 var(--sp-1); }
+  .reset { display:none; }
+  .reset.show { display:inline-flex; }
+
+  .count {
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top:var(--sp-6); }
+  .sec-head {
+    display:flex; align-items:baseline; gap:var(--sp-3);
+    border-bottom:1px solid var(--rule); padding-bottom:var(--sp-2); margin-bottom:var(--sp-4);
+  }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; margin:0; color:var(--ink);
+  }
+  .sec-head .n {
+    font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums;
+  }
+  .sec-head p { margin:0 0 0 auto; font-size:13px; color:var(--muted); text-align:right; }
+  .sec-head p code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(330px,1fr)); gap:var(--sp-2); }
+
+  .cmd {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-left:2px solid var(--fc, var(--accent));
+    padding:var(--sp-3) var(--sp-4);
+    transition:box-shadow .12s ease;
+  }
+  .cmd:hover { box-shadow:var(--shadow); }
+
+  .cmd-top { display:flex; align-items:baseline; gap:var(--sp-2); }
+  .cmd-id {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2);
+    flex:1 1 auto; min-width:0;
+  }
+  .cmd-name {
+    font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:-.01em;
+    color:var(--fc, var(--accent)); text-decoration:none;
+  }
+  a.cmd-name { border-bottom:1px solid transparent; }
+  a.cmd-name:hover { border-bottom-color:currentColor; }
+  a.cmd-name:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+  .cmd-name .ext { font-size:10px; margin-left:2px; opacity:.5; vertical-align:1px; }
+  a.cmd-name:hover .ext { opacity:1; }
+  .cmd-name.plain { color:var(--ink); }
+
+  .sr {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  .copy {
+    flex:0 0 auto; margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--faint); background:transparent;
+    border:1px solid transparent; border-radius:3px; padding:2px 6px; cursor:pointer;
+    opacity:0; transition:opacity .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .cmd:hover .copy, .copy:focus-visible { opacity:1; }
+  .copy:hover { color:var(--accent); border-color:var(--rule); }
+  .copy:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  @media (hover:none) { .copy { opacity:1; } }
+
+  .cmd-arg { font-family:var(--mono); font-size:11.5px; color:var(--faint); overflow-wrap:anywhere; }
+  .cmd-desc { margin:var(--sp-1) 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+
+  .tags { display:flex; flex-wrap:wrap; gap:var(--sp-1); margin-top:var(--sp-2); }
+  .tag {
+    font-family:var(--mono); font-size:10px; letter-spacing:.05em;
+    border:1px solid var(--rule); border-radius:3px; padding:1px 6px; color:var(--faint);
+    background:var(--surface-2);
+  }
+  .tag.alias::before { content:"/"; opacity:.55; }
+  .tag.gate { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); background:transparent; }
+  .tag.unreg {
+    color:var(--fam-hidden); background:transparent;
+    border-color:color-mix(in srgb, var(--fam-hidden) 45%, var(--rule));
+    font-weight:600; cursor:help;
+  }
+  .tag.hidden-t { color:var(--fam-hidden); border-color:color-mix(in srgb, var(--fam-hidden) 35%, var(--rule)); background:transparent; }
+
+  .empty {
+    display:none; padding:var(--sp-6); text-align:center; color:var(--muted);
+    border:1px dashed var(--rule); border-radius:3px; font-family:var(--mono); font-size:13px;
+  }
+  .empty.show { display:block; }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:640px; }
+  th, td { text-align:left; padding:9px var(--sp-4); border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; border-bottom:1px solid var(--rule);
+    background:var(--surface);
+  }
+  tbody tr:last-child td { border-bottom:none; }
+  td.f { font-family:var(--mono); font-size:12.5px; color:var(--fam-cli); white-space:nowrap; }
+  td.d { font-size:13.5px; color:var(--muted); }
+  td.k { font-family:var(--mono); font-size:12.5px; color:var(--fam-feat); white-space:nowrap; }
+  td.s { font-family:var(--mono); font-size:11.5px; color:var(--muted); white-space:nowrap; }
+  td.v { font-family:var(--mono); font-size:11.5px; white-space:nowrap; }
+  td.v.on { color:var(--fam-slash); }
+  td.v.off { color:var(--faint); }
+  .stage {
+    font-family:var(--mono); font-size:10px; letter-spacing:.05em; border-radius:3px;
+    padding:1px 6px; border:1px solid var(--rule); background:var(--surface-2); color:var(--faint);
+  }
+  .stage.stable { color:var(--fam-slash); border-color:color-mix(in srgb, var(--fam-slash) 35%, var(--rule)); background:transparent; }
+  .stage.removed { color:var(--fam-hidden); border-color:color-mix(in srgb, var(--fam-hidden) 35%, var(--rule)); background:transparent; }
+  .stage.under { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); background:transparent; }
+
+  /* ---------- notes / footer ---------- */
+  .note {
+    background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--fam-hidden);
+    border-radius:3px; padding:var(--sp-3) var(--sp-4); margin-top:var(--sp-4);
+    font-size:13.5px; color:var(--muted);
+  }
+  .note b { color:var(--ink); font-weight:600; }
+
+  footer {
+    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    border-top:1px solid var(--rule); color:var(--faint); font-size:12.5px;
+  }
+  footer code { font-family:var(--mono); font-size:.9em; }
+  footer p { margin:0 0 var(--sp-2); max-width:70ch; }
+
+  .toast {
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+    background:var(--ink); color:var(--ground);
+    font-family:var(--mono); font-size:12px; padding:9px 14px; border-radius:3px;
+    opacity:0; pointer-events:none; transition:opacity .16s ease, transform .16s ease; z-index:60;
+  }
+  .toast.show { opacity:1; transform:translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; animation:none !important; }
+  }
+
+  @media (max-width:640px) {
+    .wrap { padding:0 var(--sp-4); }
+    .masthead { padding-top:var(--sp-5); }
+    .sec-head p { display:none; }
+    .search kbd { display:none; }
+    .search input { padding-right:12px; }
+    .toolbar-inner { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-2); }
+    .search { flex:0 0 auto; }
+    .filters {
+      flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain;
+      scrollbar-width:none; -ms-overflow-style:none; gap:var(--sp-2);
+    }
+    .filters::-webkit-scrollbar { display:none; }
+    .chips { flex-wrap:nowrap; }
+    .chip { white-space:nowrap; }
+    .chips-sep { align-self:auto; height:20px; }
+    .count { display:none; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Reference &middot; build 0.146.0 &middot; extracted from the installed binary</p>
+    <h1><span class="slash">/</span>Codex CLI Command Index</h1>
+    <p class="lede">
+      Every command the latest OpenAI Codex CLI build ships with — the slash commands the TUI
+      registers, the whole <code>codex</code> subcommand tree, the launch flags, and the feature
+      switchboard behind them. Every tile below is also a filter — click one to isolate that group.
+      Search to find a command, follow its name through to the official documentation, or hover a
+      card to copy it.
+    </p>
+    <div class="stats">
+      <button class="stat" type="button" data-iso="slash" aria-pressed="false" style="--sc:var(--fam-slash)">
+        <b id="s-slash">0</b><span class="lbl">Slash commands</span>
+        <span class="stat-note">Typed at the Codex prompt and offered by the <code>/</code> picker. Compiled
+           into the binary, not loaded from a skills directory.</span>
+      </button>
+      <button class="stat" type="button" data-iso="cli" aria-pressed="false" style="--sc:var(--fam-cli)">
+        <b id="s-cli">0</b><span class="lbl">CLI commands</span>
+        <span class="stat-note">The <code>codex</code> executable and its whole subcommand tree —
+           <code>codex exec</code>, <code>codex mcp add</code>. Run in your shell, not at the prompt.</span>
+      </button>
+      <button class="stat" type="button" data-iso="hidden" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-hidden">0</b><span class="lbl">Hidden</span>
+        <span class="stat-note">In the binary but never offered by the <code>/</code> picker. Some still run;
+           some answer <em>Unrecognized command</em>. Off by default in the filter below.</span>
+      </button>
+      <button class="stat" type="button" data-iso="flags" aria-pressed="false" style="--sc:var(--muted)">
+        <b id="s-flags">0</b><span class="lbl">Launch flags</span>
+        <span class="stat-note">Options passed to <code>codex</code> at startup, from
+           <code>codex --help</code>. Tabulated at the foot of this page.</span>
+      </button>
+      <button class="stat" type="button" data-iso="features" aria-pressed="false" style="--sc:var(--fam-feat)">
+        <b id="s-features">0</b><span class="lbl">Feature flags</span>
+        <span class="stat-note">The switchboard from <code>codex features list</code>, each with its stage and
+           whether this build has it on. Tabulated below.</span>
+      </button>
+      <button class="stat" type="button" data-iso="linked" aria-pressed="false" style="--sc:var(--accent)">
+        <b id="s-linked">0</b><span class="lbl">Linked to docs</span>
+        <span class="stat-note">Entries whose name links through to its page on
+           <code>learn.chatgpt.com</code>. The rest have no official page.</span>
+      </button>
+      <button class="stat" type="button" data-iso="unreg" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-unreg">0</b><span class="lbl">Not registered</span>
+        <span class="stat-note">Named in the binary but rejected when typed — <em>Unrecognized command</em>,
+           the same answer a nonsense command gets.</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <span class="prefix">/</span>
+        <input id="q" type="search" placeholder="search name, alias, description&hellip;"
+               autocomplete="off" spellcheck="false" aria-label="Search commands" />
+        <kbd>/</kbd>
+      </div>
+      <div class="filters">
+      <div class="chips" id="fams" role="group" aria-label="Filter by family">
+        <button class="chip" type="button" data-fam="slash"    aria-pressed="true" style="--cc:var(--fam-slash)"><i class="dot"></i>Slash</button>
+        <button class="chip" type="button" data-fam="cli"      aria-pressed="true" style="--cc:var(--fam-cli)"><i class="dot"></i>CLI</button>
+        <button class="chip" type="button" data-fam="hidden"   aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Hidden</button>
+        <button class="chip" type="button" data-fam="flags"    aria-pressed="true" style="--cc:var(--muted)"><i class="dot"></i>Flags</button>
+        <button class="chip" type="button" data-fam="features" aria-pressed="true" style="--cc:var(--fam-feat)"><i class="dot"></i>Features</button>
+      </div>
+      <div class="chips-sep" aria-hidden="true"></div>
+      <div class="chips" id="stats-f" role="group" aria-label="Narrow by documentation and availability">
+        <button class="chip st" type="button" data-st="linked" aria-pressed="false" style="--cc:var(--accent)"><i class="dot"></i>Linked</button>
+        <button class="chip st" type="button" data-st="unreg"  aria-pressed="false" style="--cc:var(--fam-hidden)"><i class="dot"></i>Not registered</button>
+        <button class="chip reset" type="button" id="reset">Reset</button>
+      </div>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+
+  <main id="sections"></main>
+
+  <div class="empty" id="empty">No command matches that search.</div>
+
+  <section id="flags-sec">
+    <div class="sec-head">
+      <h2>Launch flags</h2>
+      <span class="n" id="flagcount"></span>
+      <p>Passed to <code>codex</code> at launch</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Flag</th><th scope="col">What it does</th></tr></thead>
+        <tbody id="flagbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="features-sec">
+    <div class="sec-head">
+      <h2>Feature flags</h2>
+      <span class="n" id="featcount"></span>
+      <p>From <code>codex features list</code></p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Feature</th><th scope="col">Stage</th><th scope="col">On in this build</th></tr></thead>
+        <tbody id="featbody"></tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>Read the state, not just the name.</b> <code>stage</code> is what OpenAI calls the feature's
+      maturity; the third column is whether it resolved to on for this machine, which depends on your
+      <code>config.toml</code>, your account and the build's own defaults. A <em>removed</em> feature
+      still listed as on is a flag whose code path is gone but whose default was never cleaned up.
+      Toggle any of them with <code>codex --enable &lt;name&gt;</code>, <code>--disable &lt;name&gt;</code>,
+      or persist the change with <code>codex features enable &lt;name&gt;</code>.
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <b>Source of truth.</b> Slash-command names and descriptions were read from the running TUI, not
+      from published documentation: build 0.146.0 was driven in a pseudo-terminal, the <code>/</code>
+      picker was opened and paged to its end, and every row it rendered was captured. Subcommands,
+      arguments and launch flags come from <code>codex --help</code> walked recursively over all 68
+      subcommands on the same build, and the feature table is <code>codex features list</code> verbatim.
+    </p>
+    <p>
+      <b>Defined is not the same as available.</b> Reading the binary as text turns up slash-command
+      names the picker never offers. That is two different states, and this page separates them by
+      testing rather than assuming. <code>/apps</code> and <code>/debug-config</code> are withheld from
+      the picker but run normally when typed. <code>/rollout</code>, <code>/sandbox-add-read-dir</code>
+      and <code>/test-approval</code> answer <em>Unrecognized command &mdash; type "/" for a list of
+      supported commands</em>, which is the identical response a deliberately nonsensical control
+      command got, so they are not registered in this build at all.
+    </p>
+    <p>
+      <b>Three were not run.</b> <code>/setup-default-sandbox</code> would have reconfigured the
+      sandbox, and the binary labels <code>/debug-m-drop</code> and <code>/debug-m-update</code>
+      <em>DO NOT USE</em>. They are listed as present in the binary and carry a
+      <span class="tag unreg">not probed</span> tag; their availability is genuinely unestablished here
+      rather than quietly guessed at.
+    </p>
+    <p>
+      <b>Where the links go.</b> Each name links to the most specific page that explains it on
+      <code>learn.chatgpt.com/docs</code> — the host OpenAI's Codex documentation moved to, and where
+      the older <code>developers.openai.com/codex/*</code> URLs now redirect. Subcommands link to their
+      own anchor in the developer-commands reference where one exists. A name shown without a link has
+      no official page: those exist only in the build.
+    </p>
+    <p>
+      <b>One build, one machine.</b> Codex resolves parts of its surface at run time — feature flags,
+      account entitlements, and <code>config.toml</code> all move it. <code>/fast</code>,
+      <code>/memories</code>, <code>/personality</code>, <code>/plugins</code> and <code>/subagents</code>
+      each correspond to a feature flag in the table above, so a build with those switched off will
+      offer fewer commands than are listed here.
+    </p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // family: slash | cli | hidden
+  var C = [
+    ["Session &amp; context", "Steering the conversation you are in right now", [
+      ["new", "start a new chat during a conversation", [], "", "slash", ""],
+      ["clear", "clear the terminal and start a new chat", [], "", "slash", ""],
+      ["compact", "summarize conversation to prevent hitting the context limit", [], "", "slash", ""],
+      ["resume", "resume a saved chat", [], "", "slash", ""],
+      ["fork", "fork the current chat", [], "", "slash", ""],
+      ["rename", "rename the current thread", [], "", "slash", ""],
+      ["archive", "archive this session and exit", [], "", "slash", ""],
+      ["delete", "permanently delete this session and exit", [], "", "slash", ""],
+      ["status", "show current session configuration and token usage", [], "", "slash", ""],
+      ["copy", "copy last response as markdown", [], "", "slash", ""],
+      ["raw", "toggle raw scrollback mode for copy-friendly terminal selection", [], "", "slash", ""],
+      ["side", "start a side conversation in an ephemeral fork", ["btw"], "", "slash", ""],
+      ["agent", "switch the active agent thread", [], "", "slash", ""],
+      ["subagents", "switch the active agent thread", [], "", "slash", ""],
+      ["exit", "exit Codex", ["quit"], "", "slash", ""]
+    ]],
+
+    ["Model &amp; reasoning", "How much horsepower each turn gets, and how it talks back", [
+      ["model", "choose what model and reasoning effort to use", [], "", "slash", ""],
+      ["fast", "1.5x speed, increased usage", [], "", "slash", ""],
+      ["plan", "switch to Plan mode", [], "", "slash", ""],
+      ["goal", "set or view the goal for a long-running task", [], "", "slash", ""],
+      ["personality", "choose a communication style for Codex", [], "", "slash", ""]
+    ]],
+
+    ["Workspace &amp; code", "Project instructions, your working diff, and review", [
+      ["init", "create an AGENTS.md file with instructions for Codex", [], "", "slash", ""],
+      ["review", "review my current changes and find issues", [], "", "slash", ""],
+      ["diff", "show git diff (including untracked files)", [], "", "slash", ""],
+      ["mention", "mention a file", [], "", "slash", ""],
+      ["approve", "approve one retry of a recent auto-review denial", [], "", "slash", ""]
+    ]],
+
+    ["Config &amp; environment", "Settings, permissions, hooks, and how the terminal behaves", [
+      ["permissions", "choose what Codex is allowed to do", [], "", "slash", ""],
+      ["keymap", "remap TUI shortcuts", [], "", "slash", ""],
+      ["vim", "toggle Vim mode for the composer", [], "", "slash", ""],
+      ["theme", "choose a syntax highlighting theme", [], "", "slash", ""],
+      ["statusline", "configure which items appear in the status line", [], "", "slash", ""],
+      ["title", "configure which items appear in the terminal title", [], "", "slash", ""],
+      ["pets", "choose or hide the terminal pet", [], "", "slash", ""],
+      ["experimental", "toggle experimental features", [], "", "slash", ""],
+      ["import", "import setup, this project, and recent chats from Claude Code", [], "", "slash", ""],
+      ["hooks", "view and manage lifecycle hooks", [], "", "slash", ""],
+      ["memories", "configure memory use and generation", [], "", "slash", ""],
+      ["skills", "use skills to improve how Codex performs specific tasks", [], "", "slash", ""],
+      ["ide", "include current selection, open files, and other context from your IDE", [], "", "slash", ""]
+    ]],
+
+    ["Extensions", "MCP servers and plugins", [
+      ["mcp", "list configured MCP tools; use /mcp verbose for details", [], "", "slash", ""],
+      ["plugins", "browse plugins", [], "", "slash", ""]
+    ]],
+
+    ["Account &amp; usage", "Who you are signed in as, what it costs, and the desktop app", [
+      ["usage", "view account usage or use a usage limit reset", [], "", "slash", ""],
+      ["logout", "log out of Codex", [], "", "slash", ""],
+      ["feedback", "send logs to maintainers", [], "", "slash", ""],
+      ["app", "continue this session in the Desktop app", [], "", "slash", ""]
+    ]],
+
+    ["Background terminals", "Long-running shells the agent started", [
+      ["ps", "list background terminals", [], "", "slash", ""],
+      ["stop", "stop all background terminals", [], "", "slash", ""]
+    ]],
+
+    ["Hidden &amp; internal", "In the binary but not offered by the <code>/</code> picker &mdash; listed for completeness", [
+      ["apps", "manage apps", [], "", "hidden", "hidden"],
+      ["debug-config", "show config layers and requirement sources for debugging", [], "", "hidden", "hidden"],
+      ["rollout", "print the rollout file path", [], "", "hidden", "unreg"],
+      ["sandbox-add-read-dir", "let sandbox read a directory: /sandbox-add-read-dir <absolute_path>", [], "", "hidden", "unreg"],
+      ["test-approval", "test approval request", [], "", "hidden", "unreg"],
+      ["setup-default-sandbox", "set up elevated agent sandbox", [], "", "hidden", "unprobed"],
+      ["debug-m-drop", "DO NOT USE", [], "", "hidden", "unprobed"],
+      ["debug-m-update", "DO NOT USE", [], "", "hidden", "unprobed"]
+    ]],
+
+    ["Terminal CLI &mdash; core", "The <code>codex</code> executable itself, run from your shell", [
+      ["codex", "Start an interactive session in the current directory", [], "[PROMPT]", "cli", ""],
+      ["codex exec", "Run Codex non-interactively", ["e"], "[PROMPT] codex exec <COMMAND> [ARGS]", "cli", ""],
+      ["codex exec resume", "Resume a previous session by id or pick the most recent with --last", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex exec review", "Run a code review against the current repository", [], "[PROMPT]", "cli", ""],
+      ["codex review", "Run a code review non-interactively", [], "[PROMPT]", "cli", ""],
+      ["codex resume", "Resume a previous interactive session (picker by default; use --last to continue the most recent)", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex fork", "Fork a previous interactive session (picker by default; use --last to fork the most recent)", [], "[SESSION_ID] [PROMPT]", "cli", ""],
+      ["codex apply", "Apply the latest diff produced by Codex agent as a `git apply` to your local working tree", ["a"], "<TASK_ID>", "cli", ""],
+      ["codex archive", "Archive a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex unarchive", "Unarchive a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex delete", "Permanently delete a saved session by id or session name", [], "<SESSION>", "cli", ""],
+      ["codex login", "Manage login", [], "[COMMAND]", "cli", ""],
+      ["codex login status", "Show login status", [], "", "cli", ""],
+      ["codex logout", "Remove stored authentication credentials", [], "", "cli", ""],
+      ["codex update", "Update Codex to the latest version", [], "", "cli", ""],
+      ["codex doctor", "Diagnose local Codex installation, config, auth, and runtime health", [], "", "cli", ""],
+      ["codex completion", "Generate shell completion scripts", [], "[SHELL]", "cli", ""],
+      ["codex sandbox", "Run commands within a Codex-provided sandbox", [], "[COMMAND]...", "cli", ""],
+      ["codex app", "Launch the Desktop app (opens the app installer if missing)", [], "[PATH]", "cli", ""]
+    ]],
+
+    ["MCP &amp; plugins", "External tool servers, and the plugin marketplace", [
+      ["codex mcp", "Manage external MCP servers for Codex", [], "<COMMAND>", "cli", ""],
+      ["codex mcp add", "Add an MCP server by URL or launch command", [], "<NAME> (--url <URL> | -- <COMMAND>...)", "cli", ""],
+      ["codex mcp get", "Show one configured MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp list", "List configured MCP servers", [], "", "cli", ""],
+      ["codex mcp login", "Sign in to an MCP server that needs auth", [], "<NAME>", "cli", ""],
+      ["codex mcp logout", "Sign out of an MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp remove", "Remove a configured MCP server", [], "<NAME>", "cli", ""],
+      ["codex mcp-server", "Start Codex as an MCP server (stdio)", [], "", "cli", ""],
+      ["codex plugin", "Manage Codex plugins", [], "<COMMAND>", "cli", ""],
+      ["codex plugin add", "Install a plugin from a configured marketplace snapshot", [], "<PLUGIN[@MARKETPLACE]>", "cli", ""],
+      ["codex plugin list", "List plugins available from configured marketplace snapshots", [], "", "cli", ""],
+      ["codex plugin remove", "Remove an installed plugin from local config and cache", [], "<PLUGIN[@MARKETPLACE]>", "cli", ""],
+      ["codex plugin marketplace", "Add, list, upgrade, or remove configured plugin marketplaces", [], "<COMMAND>", "cli", ""],
+      ["codex plugin marketplace add", "Add a local or Git marketplace to the configured marketplace sources", [], "<SOURCE>", "cli", ""],
+      ["codex plugin marketplace list", "List plugin marketplaces Codex is currently considering and their roots", [], "", "cli", ""],
+      ["codex plugin marketplace remove", "Remove a configured marketplace source by name", [], "<MARKETPLACE_NAME>", "cli", ""],
+      ["codex plugin marketplace upgrade", "Refresh configured Git marketplace snapshots", [], "[MARKETPLACE_NAME]", "cli", ""]
+    ]],
+
+    ["App server, daemon &amp; remote control", "The long-running service other front-ends talk to", [
+      ["codex app-server", "Run the app server or related tooling", [], "[COMMAND]", "cli", "experimental"],
+      ["codex app-server daemon", "Manage the local app-server daemon", [], "<COMMAND>", "cli", ""],
+      ["codex app-server daemon start", "Start the local app server daemon if it is not already running", [], "", "cli", ""],
+      ["codex app-server daemon stop", "Stop the local app server daemon", [], "", "cli", ""],
+      ["codex app-server daemon restart", "Restart the local app server daemon", [], "", "cli", ""],
+      ["codex app-server daemon bootstrap", "Install durable local app-server management for SSH-driven use", [], "", "cli", ""],
+      ["codex app-server daemon version", "Print local CLI and running app-server versions as JSON", [], "", "cli", ""],
+      ["codex app-server daemon enable-remote-control", "Enable remote control for future starts and a currently running managed daemon", [], "", "cli", ""],
+      ["codex app-server daemon disable-remote-control", "Disable remote control for future starts and a currently running managed daemon", [], "", "cli", ""],
+      ["codex app-server generate-json-schema", "Generate JSON Schema for the app server protocol", [], "--out <DIR>", "cli", "experimental"],
+      ["codex app-server generate-ts", "Generate TypeScript bindings for the app server protocol", [], "--out <DIR>", "cli", "experimental"],
+      ["codex app-server proxy", "Proxy stdio bytes to the running app-server control socket", [], "", "cli", ""],
+      ["codex remote-control", "Manage the app-server daemon with remote control enabled", [], "[COMMAND]", "cli", "experimental"],
+      ["codex remote-control start", "Start the app-server daemon with remote control enabled", [], "", "cli", ""],
+      ["codex remote-control stop", "Stop the app-server daemon", [], "", "cli", ""],
+      ["codex remote-control pair", "Create and print a short-lived manual pairing code", [], "", "cli", ""],
+      ["codex exec-server", "Run the standalone exec-server service", [], "", "cli", "experimental"]
+    ]],
+
+    ["Codex Cloud", "Tasks running on OpenAI's infrastructure, driven from your shell", [
+      ["codex cloud", "Browse tasks from Codex Cloud and apply changes locally", [], "[COMMAND]", "cli", "experimental"],
+      ["codex cloud list", "List Codex Cloud tasks", [], "", "cli", ""],
+      ["codex cloud status", "Show the status of a Codex Cloud task", [], "<TASK_ID>", "cli", ""],
+      ["codex cloud diff", "Show the unified diff for a Codex Cloud task", [], "<TASK_ID>", "cli", ""],
+      ["codex cloud exec", "Submit a new Codex Cloud task without launching the TUI", [], "--env <ENV_ID> [QUERY]", "cli", ""],
+      ["codex cloud apply", "Apply the diff for a Codex Cloud task locally", [], "<TASK_ID>", "cli", ""]
+    ]],
+
+    ["Debug &amp; feature flags", "Diagnostics, and the switchboard behind the build", [
+      ["codex debug", "Debugging tools", [], "<COMMAND>", "cli", ""],
+      ["codex debug models", "Render the raw model catalog as JSON", [], "", "cli", ""],
+      ["codex debug prompt-input", "Render the model-visible prompt input list as JSON", [], "[PROMPT]", "cli", ""],
+      ["codex debug app-server", "Tooling: helps debug the app server", [], "<COMMAND>", "cli", ""],
+      ["codex debug app-server send-message-v2", "Send one user message to the app server", [], "2 <USER_MESSAGE>", "cli", ""],
+      ["codex features", "Inspect feature flags", [], "<COMMAND>", "cli", ""],
+      ["codex features list", "List known features with their stage and effective state", [], "", "cli", ""],
+      ["codex features enable", "Enable a feature in config.toml", [], "<FEATURE>", "cli", ""],
+      ["codex features disable", "Disable a feature in config.toml", [], "<FEATURE>", "cli", ""]
+    ]]
+  ];
+
+  var FLAGS = [
+    ["-c, --config <key=value>", "Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`. Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed as TOML. If it fails to parse as TOML, the raw string is used as a literal"],
+    ["--enable <FEATURE>", "Enable a feature (repeatable). Equivalent to `-c features.<name>=true`"],
+    ["--disable <FEATURE>", "Disable a feature (repeatable). Equivalent to `-c features.<name>=false`"],
+    ["--remote <ADDR>", "Connect the TUI to a remote app server endpoint. Accepted forms: `ws://host:port`, `wss://host:port`, `unix://`, or `unix://PATH`"],
+    ["--remote-auth-token-env <ENV_VAR>", "Name of the environment variable containing the bearer token to send to a remote app server websocket"],
+    ["--strict-config", "Error out when config.toml contains fields that are not recognized by this version of Codex"],
+    ["-i, --image <FILE>...", "Optional image(s) to attach to the initial prompt"],
+    ["-m, --model <MODEL>", "Model the agent should use"],
+    ["--oss", "Use open-source provider"],
+    ["--local-provider <OSS_PROVIDER>", "Specify which local provider to use (lmstudio or ollama). If not specified with --oss, will use config default or show selection"],
+    ["-p, --profile <CONFIG_PROFILE_V2>", "Layer $CODEX_HOME/<name>.config.toml on top of the base user config"],
+    ["-s, --sandbox <SANDBOX_MODE>", "Select the sandbox policy to use when executing model-generated shell commands [possible values: read-only, workspace-write, danger-full-access]"],
+    ["--dangerously-bypass-approvals-and-sandbox", "Skip all confirmation prompts and execute commands without sandboxing. EXTREMELY DANGEROUS. Intended solely for running in environments that are externally sandboxed"],
+    ["--dangerously-bypass-hook-trust", "Run enabled hooks without requiring persisted hook trust for this invocation. DANGEROUS. Intended only for automation that already vets hook sources"],
+    ["-C, --cd <DIR>", "Tell the agent to use the specified directory as its working root"],
+    ["--add-dir <DIR>", "Additional directories that should be writable alongside the primary workspace"],
+    ["-a, --ask-for-approval <APPROVAL_POLICY>", "Configure when the model requires human approval before executing a command"],
+    ["--search", "Enable live web search. When enabled, the native Responses `web_search` tool is available to the model (no per‑call approval)"],
+    ["--no-alt-screen", "Disable alternate screen mode Runs the TUI in inline mode, preserving terminal scrollback history"],
+    ["-h, --help", "Print help (see a summary with '-h')"],
+    ["-V, --version", "Print version"]
+  ];
+
+  var FEATURES = [
+    ["apply_patch_freeform", "removed", "false"],
+    ["apply_patch_streaming_events", "under development", "false"],
+    ["apps", "stable", "true"],
+    ["apps_mcp_path_override", "removed", "false"],
+    ["artifact", "under development", "false"],
+    ["auth_elicitation", "stable", "true"],
+    ["browser_use", "stable", "true"],
+    ["browser_use_external", "stable", "true"],
+    ["browser_use_full_cdp_access", "stable", "true"],
+    ["chronicle", "under development", "true"],
+    ["code_mode", "under development", "false"],
+    ["code_mode_buffered_exec", "under development", "false"],
+    ["code_mode_host", "stable", "true"],
+    ["code_mode_only", "under development", "false"],
+    ["codex_git_commit", "removed", "false"],
+    ["collaboration_modes", "removed", "true"],
+    ["computer_use", "stable", "true"],
+    ["concurrent_reasoning_summaries", "under development", "false"],
+    ["current_time_reminder", "under development", "false"],
+    ["default_mode_request_user_input", "under development", "false"],
+    ["deferred_executor", "under development", "false"],
+    ["deferred_tool_world_state", "under development", "false"],
+    ["elevated_windows_sandbox", "removed", "false"],
+    ["enable_fanout", "removed", "false"],
+    ["enable_mcp_apps", "under development", "false"],
+    ["enable_request_compression", "stable", "true"],
+    ["exec_permission_approvals", "under development", "false"],
+    ["executor_capability_discovery", "under development", "false"],
+    ["experimental_windows_sandbox", "removed", "false"],
+    ["external_agent_memory_import", "under development", "false"],
+    ["external_migration", "removed", "false"],
+    ["fast_mode", "stable", "true"],
+    ["goals", "stable", "true"],
+    ["guardian_approval", "stable", "true"],
+    ["guardianv2", "under development", "false"],
+    ["hooks", "stable", "true"],
+    ["image_detail_original", "removed", "false"],
+    ["image_generation", "stable", "true"],
+    ["in_app_browser", "stable", "true"],
+    ["in_app_updates", "stable", "true"],
+    ["item_ids", "removed", "true"],
+    ["js_repl", "removed", "false"],
+    ["js_repl_tools_only", "removed", "false"],
+    ["local_thread_store_compression", "under development", "false"],
+    ["mcp_2026_07_28", "under development", "false"],
+    ["memories", "stable", "true"],
+    ["mentions_v2", "stable", "true"],
+    ["multi_agent", "stable", "true"],
+    ["multi_agent_mode", "removed", "false"],
+    ["multi_agent_v2", "stable", "false"],
+    ["network_proxy", "experimental", "false"],
+    ["non_prefixed_mcp_tool_names", "under development", "false"],
+    ["personality", "stable", "true"],
+    ["plugin_hooks", "removed", "false"],
+    ["plugin_sharing", "stable", "true"],
+    ["plugins", "stable", "true"],
+    ["prevent_idle_sleep", "experimental", "false"],
+    ["realtime_conversation", "under development", "false"],
+    ["remote_compaction_v2", "stable", "true"],
+    ["remote_control", "removed", "false"],
+    ["remote_models", "removed", "false"],
+    ["remote_plugin", "stable", "true"],
+    ["request_permissions_tool", "under development", "false"],
+    ["request_rule", "removed", "false"],
+    ["resize_all_images", "removed", "true"],
+    ["respect_system_proxy", "under development", "false"],
+    ["responses_websockets", "removed", "false"],
+    ["responses_websockets_v2", "removed", "false"],
+    ["rollout_budget", "under development", "false"],
+    ["runtime_metrics", "under development", "false"],
+    ["search_tool", "removed", "false"],
+    ["secret_auth_storage", "stable", "false"],
+    ["shell_snapshot", "stable", "true"],
+    ["shell_tool", "stable", "true"],
+    ["shell_zsh_fork", "under development", "false"],
+    ["skill_env_var_dependency_prompt", "removed", "false"],
+    ["skill_mcp_dependency_install", "stable", "true"],
+    ["skill_search", "stable", "true"],
+    ["sqlite", "removed", "true"],
+    ["standalone_web_search", "under development", "false"],
+    ["steer", "removed", "true"],
+    ["terminal_resize_reflow", "removed", "true"],
+    ["terminal_visualization_instructions", "under development", "false"],
+    ["token_budget", "under development", "false"],
+    ["tool_call_mcp_elicitation", "stable", "true"],
+    ["tool_search", "removed", "false"],
+    ["tool_search_always_defer_mcp_tools", "removed", "true"],
+    ["tool_suggest", "stable", "true"],
+    ["tui_app_server", "removed", "true"],
+    ["unavailable_dummy_tools", "removed", "false"],
+    ["undo", "removed", "false"],
+    ["unified_exec", "stable", "true"],
+    ["unified_exec_zsh_fork", "under development", "false"],
+    ["use_agent_identity", "under development", "false"],
+    ["use_legacy_landlock", "deprecated", "false"],
+    ["use_linux_sandbox_bwrap", "removed", "false"],
+    ["web_search_cached", "deprecated", "false"],
+    ["web_search_request", "deprecated", "false"],
+    ["workspace_dependencies", "stable", "true"],
+    ["workspace_owner_usage_nudge", "removed", "false"]
+  ];
+
+  var esc = function (s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+
+  // Official docs. OpenAI's Codex documentation now lives on learn.chatgpt.com;
+  // the developers.openai.com/codex/* paths 308-redirect here.
+  var BASE = "https://learn.chatgpt.com/docs/";
+  var CMDS_PAGE = "developer-commands?surface=cli";
+  var SLASH_PAGE = CMDS_PAGE + "#built-in-slash-commands";
+
+  // Commands with no official page get no link (see the note in the footer).
+  var DOCS = {
+    // slash commands with a dedicated topic page
+    permissions: "permissions", plan: "permission-modes", approve: "sandboxing/auto-review",
+    review: "code-review", init: "agent-configuration/agents-md",
+    agent: "agent-configuration/subagents", subagents: "agent-configuration/subagents",
+    hooks: "hooks", skills: "build-skills", plugins: "plugins", mcp: "extend/mcp",
+    memories: "customization/memories", model: "models", app: "web",
+    ide: "codex/ide", theme: "cli-customization", statusline: "cli-customization",
+    keymap: "cli-customization", vim: "cli-customization", title: "cli-customization",
+    pets: "cli-customization", personality: "customization/overview",
+    usage: "reference/troubleshooting", logout: "auth",
+
+    // slash commands the reference lists but gives no page of their own
+    "new": SLASH_PAGE, clear: SLASH_PAGE, compact: SLASH_PAGE, resume: SLASH_PAGE,
+    fork: SLASH_PAGE, rename: SLASH_PAGE, archive: SLASH_PAGE, "delete": SLASH_PAGE,
+    status: SLASH_PAGE, copy: SLASH_PAGE, diff: SLASH_PAGE, mention: SLASH_PAGE,
+    exit: SLASH_PAGE, side: SLASH_PAGE, fast: SLASH_PAGE, goal: SLASH_PAGE,
+    experimental: SLASH_PAGE, feedback: SLASH_PAGE,
+
+    // CLI subcommands with their own anchor in the developer-commands reference
+    "codex exec": "non-interactive-mode",
+    "codex exec resume": "non-interactive-mode",
+    "codex exec review": "non-interactive-mode",
+    "codex review": "code-review",
+    "codex resume": CMDS_PAGE + "#codex-resume",
+    "codex fork": CMDS_PAGE + "#codex-fork",
+    "codex login": "auth",
+    "codex login status": "auth",
+    "codex logout": "auth",
+    "codex mcp": "extend/mcp",
+    "codex mcp add": "extend/mcp",
+    "codex mcp get": "extend/mcp",
+    "codex mcp list": "extend/mcp",
+    "codex mcp login": "extend/mcp",
+    "codex mcp logout": "extend/mcp",
+    "codex mcp remove": "extend/mcp",
+    "codex mcp-server": "mcp-server",
+    "codex plugin": "plugins",
+    "codex plugin add": "plugins",
+    "codex plugin list": "plugins",
+    "codex plugin remove": "plugins",
+    "codex plugin marketplace": "build-plugins",
+    "codex plugin marketplace add": "build-plugins",
+    "codex plugin marketplace list": "build-plugins",
+    "codex plugin marketplace remove": "build-plugins",
+    "codex plugin marketplace upgrade": "build-plugins",
+    "codex sandbox": "sandboxing",
+    "codex doctor": "reference/troubleshooting",
+    "codex cloud": "cloud",
+    "codex cloud list": "cloud",
+    "codex cloud status": "cloud",
+    "codex cloud diff": "cloud",
+    "codex cloud exec": "cloud",
+    "codex cloud apply": "cloud",
+    "codex app-server": "app-server",
+    "codex app-server daemon": "app-server",
+    "codex app-server generate-json-schema": "app-server",
+    "codex app-server generate-ts": "app-server",
+    "codex app-server proxy": "app-server",
+    "codex update": CMDS_PAGE + "#codex-update",
+    "codex app": "web",
+    "codex": "codex/cli"
+  };
+
+  // Named in the binary but rejected when typed at the prompt: the response is
+  // "Unrecognized command", identical to what a nonsense control command gets.
+  // Established by probing build 0.146.0 in a pseudo-terminal.
+  var UNREG = {
+    "rollout": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+    "sandbox-add-read-dir": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does.",
+    "test-approval": "Answers “Unrecognized command” in build 0.146.0, exactly as a nonsense control command does."
+  };
+
+  // Present in the binary, never offered by the picker, and deliberately not executed:
+  // running them would have changed sandbox setup or is marked DO NOT USE in the build.
+  var UNPROBED = {
+    "setup-default-sandbox": "Not run: it would have reconfigured the agent sandbox. Availability unestablished.",
+    "debug-m-drop": "Not run: the binary labels this DO NOT USE. Availability unestablished.",
+    "debug-m-update": "Not run: the binary labels this DO NOT USE. Availability unestablished."
+  };
+
+  function docFor(name, fam) {
+    var p = DOCS[name];
+    if (p) return BASE + p;
+    if (fam === "cli") return BASE + CMDS_PAGE;
+    return null;
+  }
+
+  function slugify(s) {
+    return s.toLowerCase().replace(/&[a-z]+;/g, " ")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
+
+  var usedIds = {};
+  function anchor(name, fam) {
+    var base = (fam === "cli" ? "cli-" : "cmd-") + slugify(name);
+    usedIds[base] = (usedIds[base] || 0) + 1;
+    return usedIds[base] > 1 ? base + "-" + usedIds[base] : base;
+  }
+
+  // ---- build DOM ----
+  var host = document.getElementById("sections");
+  var counts = { slash: 0, cli: 0, hidden: 0 };
+  var linked = 0;
+  var unreg = 0;
+  var html = [];
+
+  C.forEach(function (sec, si) {
+    var rows = sec[2];
+    var items = rows.map(function (r) {
+      var name = r[0], desc = r[1], aliases = r[2], arg = r[3], fam = r[4], flag = r[5];
+      counts[fam] = (counts[fam] || 0) + 1;
+
+      var isCli = fam === "cli";
+      var display = isCli ? name : "/" + name;
+      var tags = aliases.map(function (a) {
+        return '<span class="tag' + (isCli ? "" : " alias") + '">' + esc(a) + "</span>";
+      });
+      if (flag === "experimental") tags.push('<span class="tag gate">experimental</span>');
+      if (fam === "hidden") tags.push('<span class="tag hidden-t">not in the picker</span>');
+      var isUnreg = !!UNREG[name];
+      if (isUnreg) {
+        unreg++;
+        tags.push('<span class="tag unreg" title="' + esc(UNREG[name]) +
+          '">not registered &mdash; &ldquo;Unrecognized command&rdquo;</span>');
+      }
+      if (UNPROBED[name]) {
+        tags.push('<span class="tag unreg" title="' + esc(UNPROBED[name]) +
+          '">not probed</span>');
+      }
+
+      // How this entry's availability was established, so the extract can carry it verbatim.
+      var probe = isCli ? "help"
+        : UNREG[name] ? "unrecognized"
+        : UNPROBED[name] ? "not probed"
+        : fam === "hidden" ? "ran" : "picker";
+      var probeNote = UNREG[name] || UNPROBED[name] || "";
+
+      var hay = (display + " " + aliases.join(" ") + " " + desc).toLowerCase();
+      var href = docFor(name, fam);
+      if (href) linked++;
+
+      var nameHtml = href
+        ? '<a class="cmd-name" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(display) + '<span class="ext" aria-hidden="true">&#8599;</span>' +
+          '<span class="sr">&nbsp;(opens the official documentation)</span></a>'
+        : '<span class="cmd-name plain">' + esc(display) + "</span>";
+
+      return '<article class="cmd" id="' + anchor(name, fam) +
+        '" style="--fc:var(--fam-' + fam + ')" data-fam="' + fam +
+        '" data-doc="' + (href ? "1" : "0") + '" data-unreg="' + (isUnreg ? "1" : "0") +
+        '" data-probe="' + probe + '" data-probe-note="' + esc(probeNote) +
+        '" data-exp="' + (flag === "experimental" ? "1" : "0") +
+        '" data-name="' + esc(display) + '" data-hay="' + esc(hay) + '">' +
+        '<div class="cmd-top"><span class="cmd-id">' + nameHtml +
+        (arg ? '<span class="cmd-arg">' + esc(arg) + "</span>" : "") +
+        "</span>" +
+        '<button class="copy" type="button" data-copy="' + esc(display) +
+        '" aria-label="Copy ' + esc(display) + '">copy</button>' +
+        "</div>" +
+        '<p class="cmd-desc">' + esc(desc) + "</p>" +
+        (tags.length ? '<span class="tags">' + tags.join("") + "</span>" : "") +
+        "</article>";
+    });
+
+    html.push(
+      '<section id="sec-' + slugify(sec[0]) + '" data-sec="' + si + '">' +
+      '<div class="sec-head"><h2>' + sec[0] + '</h2>' +
+      '<span class="n" data-n="' + si + '">' + rows.length + "</span>" +
+      "<p>" + sec[1] + "</p></div>" +
+      '<div class="grid">' + items.join("") + "</div></section>"
+    );
+  });
+
+  host.innerHTML = html.join("");
+
+  // flags table
+  document.getElementById("flagbody").innerHTML = FLAGS.map(function (f) {
+    return "<tr data-hay=\"" + esc((f[0] + " " + f[1]).toLowerCase()) + "\">" +
+      "<td class=\"f\">" + esc(f[0]) + "</td><td class=\"d\">" + esc(f[1]) + "</td></tr>";
+  }).join("");
+  document.getElementById("flagcount").textContent = FLAGS.length;
+
+  // features table
+  document.getElementById("featbody").innerHTML = FEATURES.map(function (f) {
+    var cls = f[1] === "stable" ? "stable" : f[1] === "removed" ? "removed"
+      : f[1] === "under development" ? "under" : "";
+    var on = f[2] === "true";
+    return "<tr data-hay=\"" + esc((f[0] + " " + f[1] + " " + f[2]).toLowerCase()) + "\">" +
+      "<td class=\"k\">" + esc(f[0]) + "</td>" +
+      "<td class=\"s\"><span class=\"stage " + cls + "\">" + esc(f[1]) + "</span></td>" +
+      "<td class=\"v " + (on ? "on" : "off") + "\">" + (on ? "on" : "off") + "</td></tr>";
+  }).join("");
+  document.getElementById("featcount").textContent = FEATURES.length;
+
+  // stats
+  document.getElementById("s-slash").textContent = counts.slash;
+  document.getElementById("s-cli").textContent = counts.cli;
+  document.getElementById("s-hidden").textContent = counts.hidden;
+  document.getElementById("s-flags").textContent = FLAGS.length;
+  document.getElementById("s-features").textContent = FEATURES.length;
+  document.getElementById("s-linked").textContent = linked;
+  document.getElementById("s-unreg").textContent = unreg;
+
+  // ---- filtering ----
+  var q = document.getElementById("q");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".cmd"));
+  var secs = Array.prototype.slice.call(document.querySelectorAll("#sections section"));
+  var flagRows = Array.prototype.slice.call(document.querySelectorAll("#flagbody tr"));
+  var featRows = Array.prototype.slice.call(document.querySelectorAll("#featbody tr"));
+  var flagSec = document.getElementById("flags-sec");
+  var featSec = document.getElementById("features-sec");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+
+  var FAMS = ["slash", "cli", "hidden", "flags", "features"];
+  var STS = ["linked", "unreg"];
+  var DEFAULTS = { slash: true, cli: true, hidden: false, flags: true, features: true, linked: false, unreg: false };
+  var state = Object.assign({}, DEFAULTS);
+
+  function stateFor(key) {
+    var s = {};
+    if (STS.indexOf(key) !== -1) {
+      FAMS.forEach(function (f) { s[f] = f !== "flags" && f !== "features"; });
+      STS.forEach(function (t) { s[t] = t === key; });
+    } else {
+      FAMS.forEach(function (f) { s[f] = f === key; });
+      STS.forEach(function (t) { s[t] = false; });
+    }
+    return s;
+  }
+
+  function equals(a, b) {
+    return FAMS.concat(STS).every(function (k) { return !!a[k] === !!b[k]; });
+  }
+
+  function sync() {
+    document.querySelectorAll("#fams .chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.fam]));
+    });
+    document.querySelectorAll("#stats-f .chip.st").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.st]));
+    });
+    document.querySelectorAll(".stat").forEach(function (t) {
+      t.setAttribute("aria-pressed", String(equals(state, stateFor(t.dataset.iso))));
+    });
+    resetBtn.classList.toggle("show", !equals(state, DEFAULTS) || q.value.trim() !== "");
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase().replace(/^\//, "");
+    var narrowing = STS.some(function (t) { return state[t]; });
+    var shown = 0;
+    var perSec = {};
+
+    cards.forEach(function (el) {
+      var ok = state[el.dataset.fam] &&
+        (!term || el.dataset.hay.indexOf(term) !== -1) &&
+        (!narrowing ||
+          (state.linked && el.dataset.doc === "1") ||
+          (state.unreg && el.dataset.unreg === "1"));
+      el.style.display = ok ? "" : "none";
+      if (ok) {
+        shown++;
+        var si = el.closest("section").dataset.sec;
+        perSec[si] = (perSec[si] || 0) + 1;
+      }
+    });
+
+    secs.forEach(function (s) {
+      var any = perSec[s.dataset.sec] || 0;
+      s.style.display = any ? "" : "none";
+      var n = s.querySelector(".n");
+      if (n) n.textContent = any;
+    });
+
+    var flagsShown = 0;
+    if (state.flags) {
+      flagRows.forEach(function (r) {
+        var ok = !term || r.dataset.hay.indexOf(term) !== -1;
+        r.style.display = ok ? "" : "none";
+        if (ok) flagsShown++;
+      });
+    }
+    flagSec.style.display = flagsShown ? "" : "none";
+    document.getElementById("flagcount").textContent = flagsShown;
+
+    var featShown = 0;
+    if (state.features) {
+      featRows.forEach(function (r) {
+        var ok = !term || r.dataset.hay.indexOf(term) !== -1;
+        r.style.display = ok ? "" : "none";
+        if (ok) featShown++;
+      });
+    }
+    featSec.style.display = featShown ? "" : "none";
+    document.getElementById("featcount").textContent = featShown;
+
+    countEl.textContent = shown + " shown" +
+      (flagsShown ? " · " + flagsShown + " flags" : "") +
+      (featShown ? " · " + featShown + " features" : "");
+    emptyEl.classList.toggle("show", shown === 0 && flagsShown === 0 && featShown === 0);
+    sync();
+  }
+
+  q.addEventListener("input", apply);
+
+  function onChip(e) {
+    var btn = e.target.closest(".chip");
+    if (!btn || btn.id === "reset") return;
+    var key = btn.dataset.fam || btn.dataset.st;
+    state[key] = !state[key];
+    if (btn.dataset.st && state[key]) { state.flags = false; state.features = false; }
+    apply();
+  }
+  document.getElementById("fams").addEventListener("click", onChip);
+  document.getElementById("stats-f").addEventListener("click", onChip);
+
+  document.querySelector(".stats").addEventListener("click", function (e) {
+    var tile = e.target.closest(".stat");
+    if (!tile) return;
+    var iso = stateFor(tile.dataset.iso);
+    state = equals(state, iso) ? Object.assign({}, DEFAULTS) : iso;
+    apply();
+    document.querySelector(".toolbar").scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = Object.assign({}, DEFAULTS);
+    q.value = "";
+    apply();
+  });
+
+  // ---- copy ----
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+  function flash(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1400);
+  }
+
+  host.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var text = btn.dataset.copy;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { flash("Copied  " + text); },
+        function () { flash(text); }
+      );
+    } else {
+      flash(text);
+    }
+  });
+
+  // ---- "/" focuses search ----
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+      q.blur();
+    }
+  });
+
+  apply();
+})();
+</script>
