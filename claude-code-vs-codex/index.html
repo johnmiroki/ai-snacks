@@ -1,0 +1,2176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code vs Codex CLI — Command by Command</title>
+<meta name="description" content="Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 side by side: 43 jobs both ship a command for, 69 only Claude Code has, 55 only Codex has, plus sandboxing, permissions, hooks and config — measured, not quoted from the docs.">
+<link rel="canonical" href="https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/">
+<meta name="author" content="johnmiroki">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F6F7FA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1117" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AI Snacks">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Claude Code vs Codex CLI — 43 jobs both do, 124 neither shares">
+<meta property="og:description" content="Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 side by side: 43 jobs both ship a command for, 69 only Claude Code has, 55 only Codex has, plus sandboxing, permissions, hooks and config — measured, not quoted from the docs.">
+<meta property="og:url" content="https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/">
+<meta property="og:image" content="https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Claude Code 2.1.220 against Codex CLI 0.146.0, command for command">
+<meta property="article:published_time" content="2026-08-02">
+<meta property="article:modified_time" content="2026-08-02">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code vs Codex CLI — 43 jobs both do, 124 neither shares">
+<meta name="twitter:description" content="Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 side by side: 43 jobs both ship a command for, 69 only Claude Code has, 55 only Codex has, plus sandboxing, permissions, hooks and config — measured, not quoted from the docs.">
+<meta name="twitter:image" content="https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/og.png">
+
+<link rel="alternate" type="text/markdown" href="compare.md" title="Markdown version of this page">
+<link rel="alternate" type="application/json" href="compare.json" title="JSON dataset of every pairing and both leftovers">
+<link rel="sitemap" type="application/xml" href="../sitemap.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='54' font-size='76' text-anchor='middle' dominant-baseline='central'%3E%E2%9A%96%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#article",
+    "headline": "Claude Code vs Codex CLI",
+    "name": "Claude Code vs Codex CLI — Command by Command",
+    "description": "Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 side by side: 43 jobs both ship a command for, 69 only Claude Code has, 55 only Codex has, plus sandboxing, permissions, hooks and config — measured, not quoted from the docs.",
+    "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/"
+    },
+    "inLanguage": "en",
+    "datePublished": "2026-08-02",
+    "dateModified": "2026-08-02",
+    "author": {
+      "@type": "Person",
+      "name": "johnmiroki",
+      "url": "https://github.com/johnmiroki"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Snacks",
+      "url": "https://johnmiroki.github.io/ai-snacks/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "@id": "https://johnmiroki.github.io/ai-snacks/#collection"
+    },
+    "image": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/og.png",
+    "about": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Claude Code",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "softwareVersion": "2.1.220",
+        "url": "https://code.claude.com/docs/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Anthropic"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "OpenAI Codex CLI",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "softwareVersion": "0.146.0",
+        "url": "https://learn.chatgpt.com/docs/codex/cli",
+        "publisher": {
+          "@type": "Organization",
+          "name": "OpenAI"
+        }
+      }
+    ],
+    "keywords": "Claude Code vs Codex, Codex CLI comparison, AI coding agent comparison, slash commands, sandboxing, approval policy, hooks, CLAUDE.md, AGENTS.md",
+    "articleSection": [
+      "The shape of each surface",
+      "The same job, both tools",
+      "Only in one of them",
+      "Capabilities",
+      "Which one to reach for"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#dataset",
+    "name": "Claude Code 2.1.220 and Codex CLI 0.146.0 command comparison",
+    "description": "43 jobs both tools ship a command for, with each build's own description of its command, plus the 69 Claude Code commands and 55 Codex commands that have no counterpart, and 13 capability comparisons sourced from the running CLIs.",
+    "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": {
+      "@type": "Person",
+      "name": "johnmiroki"
+    },
+    "dateModified": "2026-08-02",
+    "isAccessibleForFree": true,
+    "measurementTechnique": "Set operations over the two published command inventories, plus `claude --help`, `codex --help` and the on-disk config layout of both tools",
+    "variableMeasured": [
+      "job",
+      "Claude Code commands",
+      "Codex commands",
+      "each build's own description",
+      "unpaired commands",
+      "capability topic",
+      "how each capability was established"
+    ],
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.json"
+      },
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "text/markdown",
+        "contentUrl": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/compare.md"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AI Snacks",
+        "item": "https://johnmiroki.github.io/ai-snacks/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Claude Code vs Codex CLI",
+        "item": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/"
+      }
+    ]
+  }
+]
+</script>
+
+<style>
+  :root {
+    --ground:#F6F7F8;
+    --surface:#FFFFFF;
+    --surface-2:#ECEEF3;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EA;
+    --rule-soft:#EDEFF4;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --cc:#3F4FC0;
+    --cc-soft:#E9ECFB;
+    --cx:#0E7C5A;
+    --cx-soft:#E4F2EC;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0F1116;
+      --surface:#161921;
+      --surface-2:#1E222C;
+      --ink:#E4E7EE;
+      --muted:#969DB0;
+      --faint:#6C7385;
+      --rule:#262B36;
+      --rule-soft:#1E222C;
+      --accent:#8E9AF2;
+      --accent-soft:#1F2540;
+      --cc:#8E9AF2;
+      --cc-soft:#1F2540;
+      --cx:#4FC3A1;
+      --cx-soft:#122C24;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0F1116;
+    --surface:#161921;
+    --surface-2:#1E222C;
+    --ink:#E4E7EE;
+    --muted:#969DB0;
+    --faint:#6C7385;
+    --rule:#262B36;
+    --rule-soft:#1E222C;
+    --accent:#8E9AF2;
+    --accent-soft:#1F2540;
+    --cc:#8E9AF2;
+    --cc-soft:#1F2540;
+    --cx:#4FC3A1;
+    --cx-soft:#122C24;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F6F7F8;
+    --surface:#FFFFFF;
+    --surface-2:#ECEEF3;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EA;
+    --rule-soft:#EDEFF4;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --cc:#3F4FC0;
+    --cc-soft:#E9ECFB;
+    --cx:#0E7C5A;
+    --cx-soft:#E4F2EC;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(26px,4.2vw,42px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .a { color:var(--cc); }
+  h1 .b { color:var(--cx); }
+  h1 .v { color:var(--faint); font-weight:400; }
+  .lede { margin:0; max-width:66ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .lede a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .lede a:hover { border-bottom-color:currentColor; }
+
+  /* five tiles, and they should sit on one row rather than leaving a lone orphan below */
+  .stats {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:var(--sp-2); margin-top:var(--sp-5);
+  }
+  .stat {
+    appearance:none; font:inherit; color:inherit; text-align:left; width:100%; cursor:pointer;
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4);
+    border-left:2px solid var(--sc, var(--accent));
+    transition:background .12s ease, box-shadow .12s ease;
+  }
+  .stat:hover { box-shadow:var(--shadow); }
+  .stat:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .stat[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--sc) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--sc) 45%, var(--rule));
+    border-left-color:var(--sc);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:22px; font-weight:600;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.2;
+  }
+  .stat .lbl {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .stat .lbl::after {
+    content:"jump"; margin-left:auto; letter-spacing:.1em;
+    opacity:0; transition:opacity .12s ease; color:var(--sc);
+  }
+  .stat:hover .lbl::after, .stat:focus-visible .lbl::after { opacity:.85; }
+  .stat[aria-pressed="true"] .lbl::after { content:"showing"; opacity:1; }
+  .stat .stat-note {
+    display:block; margin-top:var(--sp-2); font-size:12.5px; line-height:1.5;
+    color:var(--muted); max-width:38ch;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .stat .stat-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+  }
+  .toolbar-inner { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+
+  .search { position:relative; flex:1 1 260px; min-width:0; }
+  .search input {
+    width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px 34px 9px 30px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .search .prefix {
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); color:var(--accent); font-size:14px; pointer-events:none;
+  }
+  .search kbd {
+    position:absolute; right:9px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); font-size:10px; color:var(--faint);
+    border:1px solid var(--rule); border-radius:3px; padding:1px 5px; background:var(--ground);
+  }
+
+  .filters { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-1); }
+  .chip {
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--surface); color:var(--muted);
+    border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .chip .dot { width:7px; height:7px; border-radius:50%; background:var(--cw, var(--accent)); }
+  .chip[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--cw, var(--accent)) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--cw, var(--accent)) 45%, var(--rule));
+    color:var(--ink);
+  }
+  .reset { display:none; }
+  .reset.show { display:inline-flex; }
+
+  .count {
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top:var(--sp-6); }
+  .sec-head {
+    display:flex; align-items:baseline; gap:var(--sp-3);
+    border-bottom:1px solid var(--rule); padding-bottom:var(--sp-2); margin-bottom:var(--sp-4);
+  }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; margin:0; color:var(--ink);
+  }
+  .sec-head .n {
+    font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums;
+  }
+  .sec-head p { margin:0 0 0 auto; font-size:13px; color:var(--muted); text-align:right; }
+  .sec-head p code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .intro { margin:0 0 var(--sp-4); max-width:74ch; font-size:14px; color:var(--muted); }
+  .intro code { font-family:var(--mono); font-size:.88em; color:var(--ink); }
+  .intro b { color:var(--ink); font-weight:600; }
+  .intro a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .intro a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- the shape of each surface ---------- */
+  .shape { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:var(--sp-3); }
+  .surface {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-left:2px solid var(--tc); padding:var(--sp-4);
+  }
+  .surface h3 {
+    margin:0; font-family:var(--mono); font-size:13px; font-weight:600; color:var(--tc);
+    letter-spacing:-.01em;
+  }
+  .surface .tot {
+    font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums; margin:var(--sp-2) 0 0; line-height:1.1;
+  }
+  .surface .tot span { font-size:12px; font-weight:400; color:var(--faint); letter-spacing:.1em;
+    text-transform:uppercase; margin-left:var(--sp-2); }
+  .bar { display:flex; height:10px; border-radius:2px; overflow:hidden; margin:var(--sp-3) 0 var(--sp-3);
+    background:var(--surface-2); }
+  .bar i { display:block; height:100%; }
+  .legend { display:flex; flex-wrap:wrap; gap:var(--sp-1) var(--sp-3); margin:0; padding:0; list-style:none; }
+  .legend li {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .legend i { width:8px; height:8px; border-radius:2px; flex:0 0 auto; }
+  .legend b { color:var(--ink); font-weight:600; }
+  .surface .say { margin:var(--sp-3) 0 0; font-size:13px; color:var(--muted); }
+  .surface .say b { color:var(--ink); font-weight:600; }
+
+  /* ---------- pair cards ---------- */
+  .pairgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(430px,1fr)); gap:var(--sp-2); }
+
+  .pair {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4) var(--sp-4);
+    transition:box-shadow .12s ease;
+  }
+  .pair:hover { box-shadow:var(--shadow); }
+
+  .pair-top { display:flex; align-items:baseline; gap:var(--sp-2); margin-bottom:var(--sp-3); }
+  .pair-job {
+    flex:1 1 auto; margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em;
+    color:var(--ink);
+  }
+  .anchor {
+    flex:0 0 auto; font-family:var(--mono); font-size:12px; color:var(--faint);
+    text-decoration:none; opacity:0; transition:opacity .12s ease, color .12s ease;
+  }
+  .pair:hover .anchor, .anchor:focus-visible { opacity:1; }
+  .anchor:hover { color:var(--accent); }
+  @media (hover:none) { .anchor { opacity:1; } }
+
+  .side { display:grid; grid-template-columns:76px 1fr; gap:var(--sp-3); padding:var(--sp-2) 0; }
+  .side + .side { border-top:1px dashed var(--rule); }
+  .side .who {
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--tc); padding-top:3px;
+  }
+  .side .body { min-width:0; }
+  .said { margin:0; font-size:13px; color:var(--muted); line-height:1.5; }
+  .said + .said { margin-top:var(--sp-1); }
+  .said q { quotes:"\201C" "\201D"; }
+  .said a, .said .nm {
+    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--tc);
+    text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .said a:hover { border-bottom-color:currentColor; }
+  .said a:focus-visible { outline:2px solid var(--tc); outline-offset:2px; border-radius:2px; }
+  .said .nm { font-weight:500; opacity:.85; }
+  .none { font-family:var(--mono); font-size:12px; color:var(--faint); }
+
+  .pair-note {
+    margin:var(--sp-3) 0 0; padding-top:var(--sp-3); border-top:1px solid var(--rule-soft);
+    font-size:13px; color:var(--muted); line-height:1.5;
+  }
+  .pair-note code { font-family:var(--mono); font-size:.88em; color:var(--ink); }
+  .pair-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- only-in lists ---------- */
+  .onlywrap { display:grid; grid-template-columns:repeat(auto-fit, minmax(430px,1fr)); gap:var(--sp-4); }
+  .onlycol { min-width:0; }
+  .onlyhead {
+    display:flex; align-items:baseline; gap:var(--sp-2); margin-bottom:var(--sp-3);
+    padding-bottom:var(--sp-2); border-bottom:2px solid var(--tc);
+  }
+  .onlyhead h3 {
+    margin:0; font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--tc);
+  }
+  .onlyhead .n { font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .onlygroup { margin:0 0 var(--sp-4); }
+  .onlygroup h4 {
+    margin:0 0 var(--sp-2); font-family:var(--mono); font-size:10px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  }
+  .only {
+    display:grid; grid-template-columns:minmax(0,auto) 1fr; gap:var(--sp-1) var(--sp-3);
+    align-items:baseline; padding:5px 0; border-bottom:1px solid var(--rule-soft);
+  }
+  .only a, .only span.nm {
+    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--tc);
+    text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .only a:hover { border-bottom-color:currentColor; }
+  .only p { margin:0; font-size:12.5px; color:var(--muted); line-height:1.45; }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:820px; }
+  th, td { text-align:left; padding:11px var(--sp-4); border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; border-bottom:1px solid var(--rule);
+    background:var(--surface);
+  }
+  th.h-cc { color:var(--cc); }
+  th.h-cx { color:var(--cx); }
+  tbody tr:last-child td { border-bottom:none; }
+  td.topic { font-size:13.5px; font-weight:600; color:var(--ink); width:15%; }
+  td.body { font-size:13px; color:var(--muted); line-height:1.5; width:31%; }
+  td.body code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  td.body a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  td.body a:hover { border-bottom-color:currentColor; }
+  td.body em { font-style:normal; color:var(--ink); }
+  td.how { font-size:12px; color:var(--faint); line-height:1.45; width:23%; }
+  td.how code { font-family:var(--mono); font-size:.92em; }
+
+  /* ---------- verdict ---------- */
+  .verdict { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px,1fr)); gap:var(--sp-3); }
+  .vcol {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-top:2px solid var(--tc); padding:var(--sp-4);
+  }
+  .vcol h3 {
+    margin:0 0 var(--sp-3); font-family:var(--mono); font-size:12px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--tc);
+  }
+  .vcol ul { margin:0; padding:0; list-style:none; }
+  .vcol li {
+    position:relative; padding-left:var(--sp-4); margin-bottom:var(--sp-3);
+    font-size:13.5px; color:var(--muted); line-height:1.55;
+  }
+  .vcol li:last-child { margin-bottom:0; }
+  .vcol li::before {
+    content:"\2192"; position:absolute; left:0; top:0; color:var(--tc); font-family:var(--mono);
+  }
+  .vcol li b { color:var(--ink); font-weight:600; }
+  .vcol code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .vcol em { font-style:normal; color:var(--ink); }
+
+  .empty {
+    display:none; padding:var(--sp-6); text-align:center; color:var(--muted);
+    border:1px dashed var(--rule); border-radius:3px; font-family:var(--mono); font-size:13px;
+  }
+  .empty.show { display:block; }
+
+  /* ---------- notes / footer ---------- */
+  .note {
+    background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--fam-hidden);
+    border-radius:3px; padding:var(--sp-3) var(--sp-4); margin-top:var(--sp-4);
+    font-size:13.5px; color:var(--muted);
+  }
+  .note b { color:var(--ink); font-weight:600; }
+  .note code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .note em { font-style:normal; color:var(--ink); }
+
+  footer {
+    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    border-top:1px solid var(--rule); color:var(--faint); font-size:12.5px;
+  }
+  footer code { font-family:var(--mono); font-size:.9em; }
+  footer p { margin:0 0 var(--sp-2); max-width:74ch; }
+  footer a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  footer a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- support ---------- */
+  .masthead-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-3); }
+  .masthead-top .eyebrow { flex:1 1 260px; margin-bottom:0; }
+
+  .coffee {
+    display:inline-flex; align-items:center; gap:7px; flex:0 0 auto;
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--fam-cli); text-decoration:none; white-space:nowrap;
+    border:1px solid color-mix(in srgb, var(--fam-cli) 40%, var(--rule));
+    background:color-mix(in srgb, var(--fam-cli) 7%, var(--surface));
+    border-radius:3px; padding:7px 11px;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .coffee:hover {
+    background:color-mix(in srgb, var(--fam-cli) 16%, var(--surface));
+    border-color:var(--fam-cli);
+  }
+  .coffee:focus-visible { outline:2px solid var(--fam-cli); outline-offset:2px; }
+  .coffee .cup { font-size:13px; }
+
+  .support {
+    display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-4);
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-cli); border-radius:3px;
+    padding:var(--sp-4); margin-top:var(--sp-6);
+  }
+  .support p { margin:0; flex:1 1 340px; font-size:13.5px; color:var(--muted); }
+  .support b { color:var(--ink); font-weight:600; }
+  .support code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .support .coffee { font-size:12px; padding:9px 14px; }
+
+  .machine {
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2) var(--sp-3);
+    margin-top:var(--sp-4); padding-top:var(--sp-3); border-top:1px solid var(--rule);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--faint);
+  }
+  .machine b { color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.12em; }
+  .machine a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .machine a:hover { border-bottom-color:currentColor; }
+
+
+  .eyebrow .home { color:var(--muted); text-decoration:none; border-bottom:1px solid var(--rule); }
+  .eyebrow .home:hover { color:var(--accent); border-bottom-color:currentColor; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; animation:none !important; }
+  }
+
+  @media (max-width:640px) {
+    .wrap { padding:0 var(--sp-4); }
+    .masthead { padding-top:var(--sp-5); }
+    .sec-head p { display:none; }
+    .search kbd { display:none; }
+    .search input { padding-right:12px; }
+    .toolbar-inner { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-2); }
+    .search { flex:0 0 auto; }
+    .filters {
+      flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain;
+      scrollbar-width:none; -ms-overflow-style:none; gap:var(--sp-2);
+    }
+    .filters::-webkit-scrollbar { display:none; }
+    .chips { flex-wrap:nowrap; }
+    .chip { white-space:nowrap; }
+    .count { display:none; }
+    .pairgrid, .onlywrap { grid-template-columns:1fr; }
+    .side { grid-template-columns:1fr; gap:var(--sp-1); }
+    .side .who { padding-top:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="masthead-top">
+      <p class="eyebrow"><a href="../" class="home">AI Snacks</a> &middot; build 2.1.220 + codex 0.146.0 &middot; both read from the installed binaries</p>
+      <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+        <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+    </div>
+    <h1><span class="a">Claude Code</span> <span class="v">vs</span> <span class="b">Codex CLI</span></h1>
+    <p class="lede">
+      Two terminal coding agents, command for command. Where both do the same job, this page puts
+      them side by side and quotes each tool's own description of itself rather than paraphrasing
+      either. What is left over on each side is the part that has no counterpart at all. Built from
+      the same inventories as the
+      <a href="../claude-code-cheatsheet/">Claude Code</a> and
+      <a href="../codex-cheatsheet/">Codex</a> index pages, so every name here links back to its entry.
+    </p>
+    <div class="stats">
+      <button class="stat" type="button" data-iso="pairs" aria-pressed="false" style="--sc:var(--accent)">
+        <b id="s-pairs">43</b><span class="lbl">Jobs both do</span>
+        <span class="stat-note">Where each tool ships a command for the same thing. The pairing is
+           the editorial part of this page &mdash; both descriptions are printed so you can check it.</span>
+      </button>
+      <button class="stat" type="button" data-iso="onlycc" aria-pressed="false" style="--sc:var(--cc)">
+        <b id="s-onlycc">69</b><span class="lbl">Only Claude Code</span>
+        <span class="stat-note">Commands with nothing paired against them on the Codex side. Computed
+           as the complement, not hand-picked.</span>
+      </button>
+      <button class="stat" type="button" data-iso="onlycx" aria-pressed="false" style="--sc:var(--cx)">
+        <b id="s-onlycx">55</b><span class="lbl">Only Codex</span>
+        <span class="stat-note">The same in reverse. Most of Codex's are deeper in the
+           <code>codex</code> subcommand tree than anything Claude Code exposes.</span>
+      </button>
+      <button class="stat" type="button" data-iso="caps" aria-pressed="false" style="--sc:var(--fam-cli)">
+        <b id="s-caps">13</b><span class="lbl">Capabilities compared</span>
+        <span class="stat-note">Sandboxing, permissions, hooks, config, providers &mdash; sourced from
+           <code>--help</code> and the files on disk, with how each row was established.</span>
+      </button>
+      <button class="stat" type="button" data-iso="verdict" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-verdict">10</b><span class="lbl">Reasons to pick one</span>
+        <span class="stat-note">The one opinionated section, kept separate from the measured ones and
+           labelled as opinion.</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <span class="prefix">/</span>
+        <input id="q" type="search" placeholder="search a command, a job, a capability&hellip;"
+               autocomplete="off" spellcheck="false" aria-label="Search the comparison" />
+        <kbd>/</kbd>
+      </div>
+      <div class="filters">
+        <div class="chips" id="views" role="group" aria-label="Show or hide sections">
+          <button class="chip" type="button" data-view="pairs"  aria-pressed="true" style="--cw:var(--accent)"><i class="dot"></i>Both</button>
+          <button class="chip" type="button" data-view="onlycc" aria-pressed="true" style="--cw:var(--cc)"><i class="dot"></i>Claude only</button>
+          <button class="chip" type="button" data-view="onlycx" aria-pressed="true" style="--cw:var(--cx)"><i class="dot"></i>Codex only</button>
+          <button class="chip" type="button" data-view="caps"   aria-pressed="true" style="--cw:var(--fam-cli)"><i class="dot"></i>Capabilities</button>
+          <button class="chip reset" type="button" id="reset">Reset</button>
+        </div>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+
+  <section id="shape-sec">
+    <div class="sec-head">
+      <h2>The shape of each surface</h2>
+      <p>Same job, two very different places to type it</p>
+    </div>
+    <p class="intro">
+      Before any single command: the two tools disagree about <b>where a coding agent's controls
+      belong</b>. Claude Code puts them at the prompt, behind a <code>/</code>. Codex puts them in
+      your shell, as subcommands. That one choice explains most of the differences further down —
+      including why Codex needs 68 subcommands and Claude Code needs 14.
+    </p>
+    <div class="shape" id="shape">
+      <div class="surface" style="--tc:var(--cc)">
+        <h3>Claude Code 2.1.220</h3>
+        <p class="tot">143 <span>commands</span></p>
+        <div class="bar"><i style="width:67.13%;background:var(--cc)"></i><i style="width:16.08%;background:color-mix(in srgb, var(--cc) 62%, var(--surface-2))"></i><i style="width:9.79%;background:color-mix(in srgb, var(--cc) 38%, var(--surface-2))"></i><i style="width:6.99%;background:color-mix(in srgb, var(--cc) 20%, var(--surface-2))"></i></div>
+        <ul class="legend"><li><i style="background:var(--cc)"></i><b>96</b> native slash</li><li><i style="background:color-mix(in srgb, var(--cc) 62%, var(--surface-2))"></i><b>23</b> bundled skills</li><li><i style="background:color-mix(in srgb, var(--cc) 38%, var(--surface-2))"></i><b>14</b> shell subcommands</li><li><i style="background:color-mix(in srgb, var(--cc) 20%, var(--surface-2))"></i><b>10</b> hidden</li></ul>
+        <p class="say">Almost everything is a slash command, and the shell side is a short list of things you do <em>to</em> Claude Code rather than with it — install it, log in, manage plugins.</p>
+      </div>
+      <div class="surface" style="--tc:var(--cx)">
+        <h3>Codex CLI 0.146.0</h3>
+        <p class="tot">122 <span>commands</span></p>
+        <div class="bar"><i style="width:37.70%;background:var(--cx)"></i><i style="width:55.74%;background:color-mix(in srgb, var(--cx) 62%, var(--surface-2))"></i><i style="width:6.56%;background:color-mix(in srgb, var(--cx) 38%, var(--surface-2))"></i></div>
+        <ul class="legend"><li><i style="background:var(--cx)"></i><b>46</b> slash commands</li><li><i style="background:color-mix(in srgb, var(--cx) 62%, var(--surface-2))"></i><b>68</b> shell subcommands</li><li><i style="background:color-mix(in srgb, var(--cx) 38%, var(--surface-2))"></i><b>8</b> hidden</li></ul>
+        <p class="say">The shell side is the bigger half, and it goes deep: <code>codex app-server daemon enable-remote-control</code> is a real command. Codex expects to be scripted and embedded, not only typed at.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pairs-sec">
+    <div class="sec-head">
+      <h2>The same job, both tools</h2>
+      <span class="n" id="paircount">43</span>
+      <p>Each tool's own words, not a paraphrase</p>
+    </div>
+    <p class="intro">
+      Every description below is the string the build itself carries, quoted as found. What is
+      <b>not</b> measured is the pairing: deciding that <code>/branch</code> and <code>/fork</code>
+      are the same job is a judgement, and printing both sides is how you check it. Where the two
+      differ in kind rather than in name, the note says so.
+    </p>
+    <main id="pairs">
+      <div class="pairgrid">
+      <article class="pair" id="pair-launch" data-hay="start it claude codex start an interactive session in the current directory start an interactive session in the current directory word for word the same sentence in both builds — the only entry on this page where the two descriptions are identical.">
+        <div class="pair-top">
+          <h3 class="pair-job">Start it</h3>
+          <a class="anchor" href="#pair-launch" aria-label="Link to Start it">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude">claude</a> <q>Start an interactive session in the current directory</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex">codex</a> <q>Start an interactive session in the current directory</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Word for word the same sentence in both builds — the only entry on this page where the two descriptions are identical.</p>
+      </article>
+      <article class="pair" id="pair-fresh-start" data-hay="start over /clear /new /clear start a new session with empty context; the previous session stays on disk and is resumable with /resume start a new chat during a conversation clear the terminal and start a new chat codex splits it in two: /new starts the chat over, /clear also wipes the terminal. claude code keeps the old session on disk either way.">
+        <div class="pair-top">
+          <h3 class="pair-job">Start over</h3>
+          <a class="anchor" href="#pair-fresh-start" aria-label="Link to Start over">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-clear">/clear</a> <q>Start a new session with empty context; the previous session stays on disk and is resumable with /resume</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-new">/new</a> <q>start a new chat during a conversation</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-clear">/clear</a> <q>clear the terminal and start a new chat</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex splits it in two: <code>/new</code> starts the chat over, <code>/clear</code> also wipes the terminal. Claude Code keeps the old session on disk either way.</p>
+      </article>
+      <article class="pair" id="pair-compact" data-hay="reclaim context /compact /autocompact /context /compact free up context by summarizing the conversation so far set how full the context gets before auto-summarizing visualize current context usage as a colored grid summarize conversation to prevent hitting the context limit same summarise-and-continue move. claude code additionally lets you set the trigger threshold and draw the context as a grid; codex reports usage through /status.">
+        <div class="pair-top">
+          <h3 class="pair-job">Reclaim context</h3>
+          <a class="anchor" href="#pair-compact" aria-label="Link to Reclaim context">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-compact">/compact</a> <q>Free up context by summarizing the conversation so far</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-autocompact">/autocompact</a> <q>Set how full the context gets before auto-summarizing</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-context">/context</a> <q>Visualize current context usage as a colored grid</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-compact">/compact</a> <q>summarize conversation to prevent hitting the context limit</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through <code>/status</code>.</p>
+      </article>
+      <article class="pair" id="pair-resume" data-hay="pick up an old session /resume /resume codex resume resume a previous conversation resume a saved chat resume a previous interactive session (picker by default; use --last to continue the most recent) both offer a picker. codex can also do it from the shell before launch, and takes --last to skip the picker.">
+        <div class="pair-top">
+          <h3 class="pair-job">Pick up an old session</h3>
+          <a class="anchor" href="#pair-resume" aria-label="Link to Pick up an old session">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-resume">/resume</a> <q>Resume a previous conversation</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-resume">/resume</a> <q>resume a saved chat</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-resume">codex resume</a> <q>Resume a previous interactive session (picker by default; use --last to continue the most recent)</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both offer a picker. Codex can also do it from the shell before launch, and takes <code>--last</code> to skip the picker.</p>
+      </article>
+      <article class="pair" id="pair-branch" data-hay="branch the conversation /branch /fork codex fork create a branch of the current conversation at this point fork the current chat fork a previous interactive session (picker by default; use --last to fork the most recent) different word, same idea — keep this history, continue down a second path. claude code's /fork is not this; it spawns a background agent.">
+        <div class="pair-top">
+          <h3 class="pair-job">Branch the conversation</h3>
+          <a class="anchor" href="#pair-branch" aria-label="Link to Branch the conversation">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-branch">/branch</a> <q>Create a branch of the current conversation at this point</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-fork">/fork</a> <q>fork the current chat</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-fork">codex fork</a> <q>Fork a previous interactive session (picker by default; use --last to fork the most recent)</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Different word, same idea — keep this history, continue down a second path. Claude Code's <code>/fork</code> is <em>not</em> this; it spawns a background agent.</p>
+      </article>
+      <article class="pair" id="pair-side" data-hay="ask a side question /btw /side ask a quick side question without interrupting the main conversation start a side conversation in an ephemeral fork codex's /side answers to the alias btw — the same name claude code gives the command, which it keeps out of /help.">
+        <div class="pair-top">
+          <h3 class="pair-job">Ask a side question</h3>
+          <a class="anchor" href="#pair-side" aria-label="Link to Ask a side question">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-btw">/btw</a> <q>Ask a quick side question without interrupting the main conversation</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-side">/side</a> <q>start a side conversation in an ephemeral fork</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex's <code>/side</code> answers to the alias <code>btw</code> — the same name Claude Code gives the command, which it keeps out of <code>/help</code>.</p>
+      </article>
+      <article class="pair" id="pair-rename" data-hay="rename the session /rename /rename rename the current conversation rename the current thread ">
+        <div class="pair-top">
+          <h3 class="pair-job">Rename the session</h3>
+          <a class="anchor" href="#pair-rename" aria-label="Link to Rename the session">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-rename">/rename</a> <q>Rename the current conversation</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-rename">/rename</a> <q>rename the current thread</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-copy" data-hay="copy the last answer /copy /copy copy claude's last response to clipboard (or /copy n for the nth-latest) copy last response as markdown claude code takes an index — /copy 3 for the third-latest.">
+        <div class="pair-top">
+          <h3 class="pair-job">Copy the last answer</h3>
+          <a class="anchor" href="#pair-copy" aria-label="Link to Copy the last answer">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-copy">/copy</a> <q>Copy Claude's last response to clipboard (or /copy N for the Nth-latest)</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-copy">/copy</a> <q>copy last response as markdown</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code takes an index — <code>/copy 3</code> for the third-latest.</p>
+      </article>
+      <article class="pair" id="pair-status" data-hay="what is this session doing /status /status show claude code status including version, model, account, api connectivity, and tool statuses show current session configuration and token usage codex folds token usage into the same command; claude code puts that in /context and /usage.">
+        <div class="pair-top">
+          <h3 class="pair-job">What is this session doing</h3>
+          <a class="anchor" href="#pair-status" aria-label="Link to What is this session doing">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-status">/status</a> <q>Show Claude Code status including version, model, account, API connectivity, and tool statuses</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-status">/status</a> <q>show current session configuration and token usage</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex folds token usage into the same command; Claude Code puts that in <code>/context</code> and <code>/usage</code>.</p>
+      </article>
+      <article class="pair" id="pair-exit" data-hay="leave /exit /exit end the session exit codex ">
+        <div class="pair-top">
+          <h3 class="pair-job">Leave</h3>
+          <a class="anchor" href="#pair-exit" aria-label="Link to Leave">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-exit">/exit</a> <q>End the session</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-exit">/exit</a> <q>exit Codex</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-model" data-hay="choose the model /model /model set the ai model for claude code choose what model and reasoning effort to use ">
+        <div class="pair-top">
+          <h3 class="pair-job">Choose the model</h3>
+          <a class="anchor" href="#pair-model" aria-label="Link to Choose the model">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-model">/model</a> <q>Set the AI model for Claude Code</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-model">/model</a> <q>choose what model and reasoning effort to use</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-effort" data-hay="set reasoning effort /effort /model set effort level for model usage (low, medium, high, xhigh, max) choose what model and reasoning effort to use codex has no separate command — its own /model description says it picks “what model and reasoning effort to use”. claude code splits the two.">
+        <div class="pair-top">
+          <h3 class="pair-job">Set reasoning effort</h3>
+          <a class="anchor" href="#pair-effort" aria-label="Link to Set reasoning effort">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-effort">/effort</a> <q>Set effort level for model usage (low, medium, high, xhigh, max)</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-model">/model</a> <q>choose what model and reasoning effort to use</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex has no separate command — its own <code>/model</code> description says it picks “what model and reasoning effort to use”. Claude Code splits the two.</p>
+      </article>
+      <article class="pair" id="pair-fast" data-hay="trade usage for speed /fast /fast toggle fast mode — opus with faster output, not a smaller model 1.5x speed, increased usage same name, and both are explicit that you are not being downgraded to a smaller model — you are paying for speed.">
+        <div class="pair-top">
+          <h3 class="pair-job">Trade usage for speed</h3>
+          <a class="anchor" href="#pair-fast" aria-label="Link to Trade usage for speed">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-fast">/fast</a> <q>Toggle fast mode — Opus with faster output, not a smaller model</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-fast">/fast</a> <q>1.5x speed, increased usage</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Same name, and both are explicit that you are not being downgraded to a smaller model — you are paying for speed.</p>
+      </article>
+      <article class="pair" id="pair-plan" data-hay="plan before touching anything /plan /plan enable plan mode or view the current session plan switch to plan mode ">
+        <div class="pair-top">
+          <h3 class="pair-job">Plan before touching anything</h3>
+          <a class="anchor" href="#pair-plan" aria-label="Link to Plan before touching anything">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-plan">/plan</a> <q>Enable plan mode or view the current session plan</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-plan">/plan</a> <q>switch to Plan mode</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-goal" data-hay="set a goal to hold to /goal /goal set a goal claude checks before stopping set or view the goal for a long-running task claude code checks it before stopping; codex frames it as the goal for a long-running task.">
+        <div class="pair-top">
+          <h3 class="pair-job">Set a goal to hold to</h3>
+          <a class="anchor" href="#pair-goal" aria-label="Link to Set a goal to hold to">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-goal">/goal</a> <q>Set a goal Claude checks before stopping</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-goal">/goal</a> <q>set or view the goal for a long-running task</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code checks it before stopping; Codex frames it as the goal for a long-running task.</p>
+      </article>
+      <article class="pair" id="pair-init" data-hay="write the project instructions file /init /init initialize a new claude.md file with codebase documentation (the newer variant also scaffolds skills and hooks) create an agents.md file with instructions for codex the one place the two ecosystems visibly diverge: claude.md against agents.md. same command, different filename.">
+        <div class="pair-top">
+          <h3 class="pair-job">Write the project instructions file</h3>
+          <a class="anchor" href="#pair-init" aria-label="Link to Write the project instructions file">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-init">/init</a> <q>Initialize a new CLAUDE.md file with codebase documentation (the newer variant also scaffolds skills and hooks)</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-init">/init</a> <q>create an AGENTS.md file with instructions for Codex</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">The one place the two ecosystems visibly diverge: <code>CLAUDE.md</code> against <code>AGENTS.md</code>. Same command, different filename.</p>
+      </article>
+      <article class="pair" id="pair-diff" data-hay="show the working diff /diff /diff view uncommitted changes and per-turn diffs show git diff (including untracked files) codex includes untracked files; claude code adds a per-turn view of what it changed.">
+        <div class="pair-top">
+          <h3 class="pair-job">Show the working diff</h3>
+          <a class="anchor" href="#pair-diff" aria-label="Link to Show the working diff">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-diff">/diff</a> <q>View uncommitted changes and per-turn diffs</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-diff">/diff</a> <q>show git diff (including untracked files)</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex includes untracked files; Claude Code adds a per-turn view of what it changed.</p>
+      </article>
+      <article class="pair" id="pair-review" data-hay="review the changes you have not committed /code-review /simplify /review codex review codex exec review review the changes since a fixed point along two axes — repo standards and the originating spec — in parallel sub-agents review changed code for reuse, simplification and efficiency, then apply the fixes review my current changes and find issues run a code review non-interactively run a code review against the current repository codex exposes review three ways, one of them non-interactive and scriptable. claude code's is a bundled skill, and it ships a second one that applies cleanups rather than reporting them.">
+        <div class="pair-top">
+          <h3 class="pair-job">Review the changes you have not committed</h3>
+          <a class="anchor" href="#pair-review" aria-label="Link to Review the changes you have not committed">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-code-review">/code-review</a> <q>Review the changes since a fixed point along two axes — repo standards and the originating spec — in parallel sub-agents</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-simplify">/simplify</a> <q>Review changed code for reuse, simplification and efficiency, then apply the fixes</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-review">/review</a> <q>review my current changes and find issues</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-review">codex review</a> <q>Run a code review non-interactively</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-exec-review">codex exec review</a> <q>Run a code review against the current repository</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex exposes review three ways, one of them non-interactive and scriptable. Claude Code's is a bundled skill, and it ships a second one that applies cleanups rather than reporting them.</p>
+      </article>
+      <article class="pair" id="pair-workdir" data-hay="work somewhere else on disk /add-dir /cd --add-dir &lt;dirs...&gt; --add-dir &lt;dir&gt; -c, --cd &lt;dir&gt; add a new working directory move this session to a new working directory additional directories to allow tool access to additional directories that should be writable alongside the primary workspace tell the agent to use the specified directory as its working root claude code can move mid-session; codex settles it at launch. the flag spellings are identical.">
+        <div class="pair-top">
+          <h3 class="pair-job">Work somewhere else on disk</h3>
+          <a class="anchor" href="#pair-workdir" aria-label="Link to Work somewhere else on disk">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-add-dir">/add-dir</a> <q>Add a new working directory</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-cd">/cd</a> <q>Move this session to a new working directory</q></p>
+            <p class="said"><span class="nm">--add-dir &lt;dirs...&gt;</span> <q>Additional directories to allow tool access to</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><span class="nm">--add-dir &lt;DIR&gt;</span> <q>Additional directories that should be writable alongside the primary workspace</q></p>
+            <p class="said"><span class="nm">-C, --cd &lt;DIR&gt;</span> <q>Tell the agent to use the specified directory as its working root</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code can move mid-session; Codex settles it at launch. The flag spellings are identical.</p>
+      </article>
+      <article class="pair" id="pair-permissions" data-hay="decide what it may do without asking /permissions /permissions manage allow and deny tool permission rules choose what codex is allowed to do same command name, different model underneath — see the capability table below.">
+        <div class="pair-top">
+          <h3 class="pair-job">Decide what it may do without asking</h3>
+          <a class="anchor" href="#pair-permissions" aria-label="Link to Decide what it may do without asking">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-permissions">/permissions</a> <q>Manage allow and deny tool permission rules</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-permissions">/permissions</a> <q>choose what Codex is allowed to do</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Same command name, different model underneath — see the capability table below.</p>
+      </article>
+      <article class="pair" id="pair-sandbox" data-hay="sandbox what it runs /sandbox codex sandbox /setup-default-sandbox /sandbox-add-read-dir toggle sandbox mode for the bash tool; available on supported platforms only run commands within a codex-provided sandbox set up elevated agent sandbox let sandbox read a directory: /sandbox-add-read-dir &lt;absolute_path&gt; claude code toggles a sandbox for its own bash tool. codex also ships the sandbox as a shell command you can wrap any process in, agent or not.">
+        <div class="pair-top">
+          <h3 class="pair-job">Sandbox what it runs</h3>
+          <a class="anchor" href="#pair-sandbox" aria-label="Link to Sandbox what it runs">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-sandbox">/sandbox</a> <q>Toggle sandbox mode for the Bash tool; available on supported platforms only</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-sandbox">codex sandbox</a> <q>Run commands within a Codex-provided sandbox</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-setup-default-sandbox">/setup-default-sandbox</a> <q>set up elevated agent sandbox</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-sandbox-add-read-dir">/sandbox-add-read-dir</a> <q>let sandbox read a directory: /sandbox-add-read-dir &lt;absolute_path&gt;</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code toggles a sandbox for its own Bash tool. Codex also ships the sandbox as a shell command you can wrap any process in, agent or not.</p>
+      </article>
+      <article class="pair" id="pair-hooks" data-hay="run your own code on lifecycle events /hooks /hooks view hook configurations for tool events view and manage lifecycle hooks ">
+        <div class="pair-top">
+          <h3 class="pair-job">Run your own code on lifecycle events</h3>
+          <a class="anchor" href="#pair-hooks" aria-label="Link to Run your own code on lifecycle events">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-hooks">/hooks</a> <q>View hook configurations for tool events</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-hooks">/hooks</a> <q>view and manage lifecycle hooks</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-config" data-hay="open the settings /config /update-config /debug-config open settings change settings: hooks, permissions, environment variables show config layers and requirement sources for debugging claude code has a settings ui and a skill that rewrites the file for you. codex expects you to edit config.toml; its config command is hidden and read-only — it shows which layer a value came from.">
+        <div class="pair-top">
+          <h3 class="pair-job">Open the settings</h3>
+          <a class="anchor" href="#pair-config" aria-label="Link to Open the settings">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-config">/config</a> <q>Open settings</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-update-config">/update-config</a> <q>Change settings: hooks, permissions, environment variables</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-debug-config">/debug-config</a> <q>show config layers and requirement sources for debugging</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code has a settings UI and a skill that rewrites the file for you. Codex expects you to edit <code>config.toml</code>; its config command is hidden and read-only — it shows which layer a value came from.</p>
+      </article>
+      <article class="pair" id="pair-theme" data-hay="change the colours /theme /color /theme change the theme set the prompt bar color for this session choose a syntax highlighting theme ">
+        <div class="pair-top">
+          <h3 class="pair-job">Change the colours</h3>
+          <a class="anchor" href="#pair-theme" aria-label="Link to Change the colours">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-theme">/theme</a> <q>Change the theme</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-color">/color</a> <q>Set the prompt bar color for this session</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-theme">/theme</a> <q>choose a syntax highlighting theme</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-statusline" data-hay="configure the status line /statusline /statusline /title set up claude code's status line ui configure which items appear in the status line configure which items appear in the terminal title codex will also put session items in the terminal's title bar.">
+        <div class="pair-top">
+          <h3 class="pair-job">Configure the status line</h3>
+          <a class="anchor" href="#pair-statusline" aria-label="Link to Configure the status line">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-statusline">/statusline</a> <q>Set up Claude Code's status line UI</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-statusline">/statusline</a> <q>configure which items appear in the status line</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-title">/title</a> <q>configure which items appear in the terminal title</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex will also put session items in the terminal's title bar.</p>
+      </article>
+      <article class="pair" id="pair-keys" data-hay="remap the keyboard /keybindings /keybindings-help /terminal-setup /keymap /vim open your keyboard shortcuts file customize keyboard shortcuts, rebind keys, and add chord bindings configure terminal key bindings — shift+enter or option+enter for newlines remap tui shortcuts toggle vim mode for the composer codex ships a vim mode for the composer; claude code ships a skill that edits the keybindings file with you.">
+        <div class="pair-top">
+          <h3 class="pair-job">Remap the keyboard</h3>
+          <a class="anchor" href="#pair-keys" aria-label="Link to Remap the keyboard">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-keybindings">/keybindings</a> <q>Open your keyboard shortcuts file</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-keybindings-help">/keybindings-help</a> <q>Customize keyboard shortcuts, rebind keys, and add chord bindings</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-terminal-setup">/terminal-setup</a> <q>Configure terminal key bindings — Shift+Enter or Option+Enter for newlines</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-keymap">/keymap</a> <q>remap TUI shortcuts</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-vim">/vim</a> <q>toggle Vim mode for the composer</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex ships a Vim mode for the composer; Claude Code ships a skill that edits the keybindings file with you.</p>
+      </article>
+      <article class="pair" id="pair-memory" data-hay="manage what it remembers /memory /pause-memory /memories open a memory file in your editor pause automemory for this session configure memory use and generation both keep memory outside the conversation and let you pause or shape it.">
+        <div class="pair-top">
+          <h3 class="pair-job">Manage what it remembers</h3>
+          <a class="anchor" href="#pair-memory" aria-label="Link to Manage what it remembers">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-memory">/memory</a> <q>Open a memory file in your editor</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-pause-memory">/pause-memory</a> <q>Pause automemory for this session</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-memories">/memories</a> <q>configure memory use and generation</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both keep memory outside the conversation and let you pause or shape it.</p>
+      </article>
+      <article class="pair" id="pair-import" data-hay="import the other one's setup /import /import import config from another ai coding agent import setup, this project, and recent chats from claude code both ship it, and codex names its source out loud: “import setup, this project, and recent chats from claude code.”">
+        <div class="pair-top">
+          <h3 class="pair-job">Import the other one's setup</h3>
+          <a class="anchor" href="#pair-import" aria-label="Link to Import the other one's setup">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-import">/import</a> <q>Import config from another AI coding agent</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-import">/import</a> <q>import setup, this project, and recent chats from Claude Code</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both ship it, and Codex names its source out loud: “import setup, this project, and recent chats <em>from Claude Code</em>.”</p>
+      </article>
+      <article class="pair" id="pair-ide" data-hay="talk to the editor /ide /ide manage ide integrations and show status include current selection, open files, and other context from your ide claude code manages an integration; codex pulls your selection and open files in as context.">
+        <div class="pair-top">
+          <h3 class="pair-job">Talk to the editor</h3>
+          <a class="anchor" href="#pair-ide" aria-label="Link to Talk to the editor">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ide">/ide</a> <q>Manage IDE integrations and show status</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-ide">/ide</a> <q>include current selection, open files, and other context from your IDE</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code manages an integration; Codex pulls your selection and open files in as context.</p>
+      </article>
+      <article class="pair" id="pair-skills" data-hay="use skills /skills /reload-skills /skill-doctor /skills list available skills pick up skills added or changed on disk during this session show which loaded skills are unused and costing context use skills to improve how codex performs specific tasks claude code additionally reloads them mid-session and reports which loaded skills are costing you context for nothing.">
+        <div class="pair-top">
+          <h3 class="pair-job">Use skills</h3>
+          <a class="anchor" href="#pair-skills" aria-label="Link to Use skills">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-skills">/skills</a> <q>List available skills</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-reload-skills">/reload-skills</a> <q>Pick up skills added or changed on disk during this session</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-skill-doctor">/skill-doctor</a> <q>Show which loaded skills are unused and costing context</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-skills">/skills</a> <q>use skills to improve how Codex performs specific tasks</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code additionally reloads them mid-session and reports which loaded skills are costing you context for nothing.</p>
+      </article>
+      <article class="pair" id="pair-mcp" data-hay="wire up mcp servers /mcp claude mcp /mcp codex mcp codex mcp add codex mcp list codex mcp remove manage mcp servers configure and manage mcp servers list configured mcp tools; use /mcp verbose for details manage external mcp servers for codex add an mcp server by url or launch command list configured mcp servers remove a configured mcp server codex breaks the shell side into one subcommand per operation, including login and logout for servers behind auth.">
+        <div class="pair-top">
+          <h3 class="pair-job">Wire up MCP servers</h3>
+          <a class="anchor" href="#pair-mcp" aria-label="Link to Wire up MCP servers">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-mcp">/mcp</a> <q>Manage MCP servers</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-mcp">claude mcp</a> <q>Configure and manage MCP servers</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-mcp">/mcp</a> <q>list configured MCP tools; use /mcp verbose for details</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-mcp">codex mcp</a> <q>Manage external MCP servers for Codex</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-mcp-add">codex mcp add</a> <q>Add an MCP server by URL or launch command</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-mcp-list">codex mcp list</a> <q>List configured MCP servers</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-mcp-remove">codex mcp remove</a> <q>Remove a configured MCP server</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex breaks the shell side into one subcommand per operation, including <code>login</code> and <code>logout</code> for servers behind auth.</p>
+      </article>
+      <article class="pair" id="pair-plugins" data-hay="install plugins /plugin claude plugin /reload-plugins /plugins codex plugin codex plugin add codex plugin marketplace manage claude code plugins manage claude code plugins activate pending plugin changes in the current session browse plugins manage codex plugins install a plugin from a configured marketplace snapshot add, list, upgrade, or remove configured plugin marketplaces both have marketplaces. codex's are explicit config entries you add, list, upgrade and remove by name.">
+        <div class="pair-top">
+          <h3 class="pair-job">Install plugins</h3>
+          <a class="anchor" href="#pair-plugins" aria-label="Link to Install plugins">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-plugin">/plugin</a> <q>Manage Claude Code plugins</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-plugin">claude plugin</a> <q>Manage Claude Code plugins</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-reload-plugins">/reload-plugins</a> <q>Activate pending plugin changes in the current session</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-plugins">/plugins</a> <q>browse plugins</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-plugin">codex plugin</a> <q>Manage Codex plugins</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-plugin-add">codex plugin add</a> <q>Install a plugin from a configured marketplace snapshot</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace">codex plugin marketplace</a> <q>Add, list, upgrade, or remove configured plugin marketplaces</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both have marketplaces. Codex's are explicit config entries you add, list, upgrade and remove by name.</p>
+      </article>
+      <article class="pair" id="pair-auth" data-hay="sign in and out /login /logout claude auth /logout codex login codex login status codex logout sign in with your anthropic account, or switch accounts sign out from your anthropic account manage authentication log out of codex manage login show login status remove stored authentication credentials codex has no /login at the prompt — signing in is a shell command.">
+        <div class="pair-top">
+          <h3 class="pair-job">Sign in and out</h3>
+          <a class="anchor" href="#pair-auth" aria-label="Link to Sign in and out">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-login">/login</a> <q>Sign in with your Anthropic account, or switch accounts</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-logout">/logout</a> <q>Sign out from your Anthropic account</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-auth">claude auth</a> <q>Manage authentication</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-logout">/logout</a> <q>log out of Codex</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-login">codex login</a> <q>Manage login</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-login-status">codex login status</a> <q>Show login status</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-logout">codex logout</a> <q>Remove stored authentication credentials</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex has no <code>/login</code> at the prompt — signing in is a shell command.</p>
+      </article>
+      <article class="pair" id="pair-usage" data-hay="see what it is costing /usage /explain-usage /insights /usage show session cost, plan usage, and activity stats see where this session's tokens went, in plain words generate a report analyzing your claude code sessions view account usage or use a usage limit reset claude code adds a plain-words breakdown of where a session's tokens went and a report across sessions.">
+        <div class="pair-top">
+          <h3 class="pair-job">See what it is costing</h3>
+          <a class="anchor" href="#pair-usage" aria-label="Link to See what it is costing">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-usage">/usage</a> <q>Show session cost, plan usage, and activity stats</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-explain-usage">/explain-usage</a> <q>See where this session's tokens went, in plain words</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-insights">/insights</a> <q>Generate a report analyzing your Claude Code sessions</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-usage">/usage</a> <q>view account usage or use a usage limit reset</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code adds a plain-words breakdown of where a session's tokens went and a report across sessions.</p>
+      </article>
+      <article class="pair" id="pair-doctor" data-hay="diagnose the install /doctor claude doctor codex doctor health-check your setup and fix issues: installation, unused extensions, duplicates check the health of your installation, reading settings without a trust prompt diagnose local codex installation, config, auth, and runtime health both check installation, config and auth. claude code's also runs inside a session.">
+        <div class="pair-top">
+          <h3 class="pair-job">Diagnose the install</h3>
+          <a class="anchor" href="#pair-doctor" aria-label="Link to Diagnose the install">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-doctor">/doctor</a> <q>Health-check your setup and fix issues: installation, unused extensions, duplicates</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-doctor">claude doctor</a> <q>Check the health of your installation, reading settings without a trust prompt</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-doctor">codex doctor</a> <q>Diagnose local Codex installation, config, auth, and runtime health</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both check installation, config and auth. Claude Code's also runs inside a session.</p>
+      </article>
+      <article class="pair" id="pair-update" data-hay="update /update claude update /version codex update switch to the latest version; the conversation continues check for updates and install if available show this session's version — autoupdate may have a newer one update codex to the latest version claude code can swap the binary without dropping the conversation.">
+        <div class="pair-top">
+          <h3 class="pair-job">Update</h3>
+          <a class="anchor" href="#pair-update" aria-label="Link to Update">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-update">/update</a> <q>Switch to the latest version; the conversation continues</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-update">claude update</a> <q>Check for updates and install if available</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-version">/version</a> <q>Show this session's version — autoupdate may have a newer one</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-update">codex update</a> <q>Update Codex to the latest version</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code can swap the binary without dropping the conversation.</p>
+      </article>
+      <article class="pair" id="pair-feedback" data-hay="send feedback /feedback /bug /feedback send feedback to anthropic or report a bug report a bug or share your conversation send logs to maintainers ">
+        <div class="pair-top">
+          <h3 class="pair-job">Send feedback</h3>
+          <a class="anchor" href="#pair-feedback" aria-label="Link to Send feedback">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-feedback">/feedback</a> <q>Send feedback to Anthropic or report a bug</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-bug">/bug</a> <q>Report a bug or share your conversation</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-feedback">/feedback</a> <q>send logs to maintainers</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-desktop" data-hay="continue in the desktop app /desktop /app codex app continue the current session in claude desktop continue this session in the desktop app launch the desktop app (opens the app installer if missing) ">
+        <div class="pair-top">
+          <h3 class="pair-job">Continue in the desktop app</h3>
+          <a class="anchor" href="#pair-desktop" aria-label="Link to Continue in the desktop app">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-desktop">/desktop</a> <q>Continue the current session in Claude Desktop</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-app">/app</a> <q>continue this session in the Desktop app</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-app">codex app</a> <q>Launch the Desktop app (opens the app installer if missing)</q></p>
+          </div>
+        </div>
+
+      </article>
+      <article class="pair" id="pair-headless" data-hay="run it non-interactively claude -p codex exec codex exec resume print mode: run a prompt non-interactively and exit, useful for pipes and scripts run codex non-interactively resume a previous session by id or pick the most recent with --last the scripting entry point on both. claude code drives it with flags — --output-format, --json-schema, --max-budget-usd; codex gives exec its own subcommands.">
+        <div class="pair-top">
+          <h3 class="pair-job">Run it non-interactively</h3>
+          <a class="anchor" href="#pair-headless" aria-label="Link to Run it non-interactively">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-p">claude -p</a> <q>Print mode: run a prompt non-interactively and exit, useful for pipes and scripts</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-exec">codex exec</a> <q>Run Codex non-interactively</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-exec-resume">codex exec resume</a> <q>Resume a previous session by id or pick the most recent with --last</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">The scripting entry point on both. Claude Code drives it with flags — <code>--output-format</code>, <code>--json-schema</code>, <code>--max-budget-usd</code>; Codex gives <code>exec</code> its own subcommands.</p>
+      </article>
+      <article class="pair" id="pair-background" data-hay="background work /background /tasks /stop claude agents /ps /stop send this session to the background and free the terminal view and manage everything running in the background stop this background session; transcript and worktree are kept manage background agents list background terminals stop all background terminals the names line up and the meanings do not. claude code backgrounds whole sessions and agents; codex's /ps and /stop list and kill the shell processes the agent started.">
+        <div class="pair-top">
+          <h3 class="pair-job">Background work</h3>
+          <a class="anchor" href="#pair-background" aria-label="Link to Background work">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-background">/background</a> <q>Send this session to the background and free the terminal</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-tasks">/tasks</a> <q>View and manage everything running in the background</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-stop">/stop</a> <q>Stop this background session; transcript and worktree are kept</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cli-claude-agents">claude agents</a> <q>Manage background agents</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-ps">/ps</a> <q>list background terminals</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-stop">/stop</a> <q>stop all background terminals</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">The names line up and the meanings do not. Claude Code backgrounds <em>whole sessions and agents</em>; Codex's <code>/ps</code> and <code>/stop</code> list and kill the <em>shell processes</em> the agent started.</p>
+      </article>
+      <article class="pair" id="pair-subagents" data-hay="hand work to another agent /subtask /fork /agents /agent /subagents send a subagent off with your full context; its result comes back here spawn a background agent that inherits the full conversation removed. ask claude to create or manage subagents, or edit .claude/agents/ directly switch the active agent thread switch the active agent thread codex switches which agent thread you are typing at. claude code sends work away and brings the result back, and its /agents entry says the command was removed in favour of editing .claude/agents/ directly.">
+        <div class="pair-top">
+          <h3 class="pair-job">Hand work to another agent</h3>
+          <a class="anchor" href="#pair-subagents" aria-label="Link to Hand work to another agent">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-subtask">/subtask</a> <q>Send a subagent off with your full context; its result comes back here</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-fork">/fork</a> <q>Spawn a background agent that inherits the full conversation</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-agents">/agents</a> <q>Removed. Ask Claude to create or manage subagents, or edit .claude/agents/ directly</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cmd-agent">/agent</a> <q>switch the active agent thread</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cmd-subagents">/subagents</a> <q>switch the active agent thread</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Codex switches which agent thread you are typing at. Claude Code sends work away and brings the result back, and its <code>/agents</code> entry says the command was removed in favour of editing <code>.claude/agents/</code> directly.</p>
+      </article>
+      <article class="pair" id="pair-remote" data-hay="drive it from somewhere else /remote-control /session /teleport codex remote-control codex remote-control pair control this session from your phone or claude.ai/code show cloud session url and qr code resume a claude code session from claude.ai manage the app-server daemon with remote control enabled create and print a short-lived manual pairing code claude code hands off to a phone or claude.ai; codex pairs a daemon you connect a front-end to.">
+        <div class="pair-top">
+          <h3 class="pair-job">Drive it from somewhere else</h3>
+          <a class="anchor" href="#pair-remote" aria-label="Link to Drive it from somewhere else">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-remote-control">/remote-control</a> <q>Control this session from your phone or claude.ai/code</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-session">/session</a> <q>Show cloud session URL and QR code</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-teleport">/teleport</a> <q>Resume a Claude Code session from claude.ai</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-remote-control">codex remote-control</a> <q>Manage the app-server daemon with remote control enabled</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-remote-control-pair">codex remote-control pair</a> <q>Create and print a short-lived manual pairing code</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Claude Code hands off to a phone or claude.ai; Codex pairs a daemon you connect a front-end to.</p>
+      </article>
+      <article class="pair" id="pair-cloud" data-hay="run it in the cloud /ultrareview /ultraplan /web-setup codex cloud codex cloud exec codex cloud apply find and verify bugs in your branch using claude code on the web draft an editable plan in claude code on the web set up claude code on the web with your github account browse tasks from codex cloud and apply changes locally submit a new codex cloud task without launching the tui apply the diff for a codex cloud task locally both send work off-machine and bring a diff back. codex's is a general task queue you drive from the shell; claude code's is job-shaped — review this branch, draft this plan.">
+        <div class="pair-top">
+          <h3 class="pair-job">Run it in the cloud</h3>
+          <a class="anchor" href="#pair-cloud" aria-label="Link to Run it in the cloud">#</a>
+        </div>
+        <div class="side" style="--tc:var(--cc)">
+          <span class="who">Claude Code</span>
+          <div class="body">
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultrareview">/ultrareview</a> <q>Find and verify bugs in your branch using Claude Code on the web</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-ultraplan">/ultraplan</a> <q>Draft an editable plan in Claude Code on the web</q></p>
+            <p class="said"><a href="../claude-code-cheatsheet/#cmd-web-setup">/web-setup</a> <q>Set up Claude Code on the web with your GitHub account</q></p>
+          </div>
+        </div>
+        <div class="side" style="--tc:var(--cx)">
+          <span class="who">Codex CLI</span>
+          <div class="body">
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud">codex cloud</a> <q>Browse tasks from Codex Cloud and apply changes locally</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud-exec">codex cloud exec</a> <q>Submit a new Codex Cloud task without launching the TUI</q></p>
+            <p class="said"><a href="../codex-cheatsheet/#cli-codex-cloud-apply">codex cloud apply</a> <q>Apply the diff for a Codex Cloud task locally</q></p>
+          </div>
+        </div>
+
+        <p class="pair-note">Both send work off-machine and bring a diff back. Codex's is a general task queue you drive from the shell; Claude Code's is job-shaped — review this branch, draft this plan.</p>
+      </article>
+      </div>
+    </main>
+  </section>
+
+  <div class="empty" id="empty">Nothing matches that search.</div>
+
+  <section id="only-sec">
+    <div class="sec-head">
+      <h2>Only in one of them</h2>
+      <span class="n" id="onlycount">124</span>
+      <p>Everything not paired above</p>
+    </div>
+    <p class="intro">
+      These lists are a complement, not a selection: every command in either inventory that no pair
+      above claims. That makes them honest but blunt — a deep subcommand like
+      <code>codex app-server daemon restart</code> sits here next to <code>/rewind</code>, and only
+      one of those is an interesting difference. Grouped by the section each command sits in on its
+      own page.
+    </p>
+    <div class="onlywrap">
+      <div class="onlycol" style="--tc:var(--cc)">
+        <div class="onlyhead">
+          <h3>Only in Claude Code</h3>
+          <span class="n" id="cccount">69</span>
+        </div>
+        <div id="onlycc">
+        <div class="onlygroup">
+          <h4>Session &amp; context</h4>
+          <div class="only" data-hay="/help show help and available commands"><a href="../claude-code-cheatsheet/#cmd-help">/help</a><p>Show help and available commands</p></div>
+          <div class="only" data-hay="/rewind restore the code and/or conversation to a previous point"><a href="../claude-code-cheatsheet/#cmd-rewind">/rewind</a><p>Restore the code and/or conversation to a previous point</p></div>
+          <div class="only" data-hay="/export export the current conversation to a file or clipboard"><a href="../claude-code-cheatsheet/#cmd-export">/export</a><p>Export the current conversation to a file or clipboard</p></div>
+          <div class="only" data-hay="/focus toggle focus view: just your prompt, summary, and response"><a href="../claude-code-cheatsheet/#cmd-focus">/focus</a><p>Toggle focus view: just your prompt, summary, and response</p></div>
+          <div class="only" data-hay="/brief toggle brief-only mode"><a href="../claude-code-cheatsheet/#cmd-brief">/brief</a><p>Toggle brief-only mode</p></div>
+          <div class="only" data-hay="/recap generate a one-line session recap now"><a href="../claude-code-cheatsheet/#cmd-recap">/recap</a><p>Generate a one-line session recap now</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Model &amp; reasoning</h4>
+          <div class="only" data-hay="/advisor let claude consult a stronger model at key moments"><a href="../claude-code-cheatsheet/#cmd-advisor">/advisor</a><p>Let Claude consult a stronger model at key moments</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Workspace &amp; code</h4>
+          <div class="only" data-hay="/review review a github pull request; for your working diff use /code-review"><a href="../claude-code-cheatsheet/#cmd-review">/review</a><p>Review a GitHub pull request; for your working diff use /code-review</p></div>
+          <div class="only" data-hay="/security-review analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure"><a href="../claude-code-cheatsheet/#cmd-security-review">/security-review</a><p>Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure</p></div>
+          <div class="only" data-hay="/batch plan a large change; background agents each open a pr"><a href="../claude-code-cheatsheet/#cmd-batch">/batch</a><p>Plan a large change; background agents each open a PR</p></div>
+          <div class="only" data-hay="/run launch this project's app to see your change working"><a href="../claude-code-cheatsheet/#cmd-run">/run</a><p>Launch this project's app to see your change working</p></div>
+          <div class="only" data-hay="/run-skill-generator create a skill that knows how to run this project's app"><a href="../claude-code-cheatsheet/#cmd-run-skill-generator">/run-skill-generator</a><p>Create a skill that knows how to run this project's app</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Config &amp; environment</h4>
+          <div class="only" data-hay="/fewer-permission-prompts pre-approve safe read-only commands based on your usage"><a href="../claude-code-cheatsheet/#cmd-fewer-permission-prompts">/fewer-permission-prompts</a><p>Pre-approve safe read-only commands based on your usage</p></div>
+          <div class="only" data-hay="/tui set the terminal ui renderer"><a href="../claude-code-cheatsheet/#cmd-tui">/tui</a><p>Set the terminal UI renderer</p></div>
+          <div class="only" data-hay="/scroll-speed adjust mouse wheel scroll speed"><a href="../claude-code-cheatsheet/#cmd-scroll-speed">/scroll-speed</a><p>Adjust mouse wheel scroll speed</p></div>
+          <div class="only" data-hay="/voice toggle voice mode"><a href="../claude-code-cheatsheet/#cmd-voice">/voice</a><p>Toggle voice mode</p></div>
+          <div class="only" data-hay="/wellbeing configure optional break reminders and quiet-hours nudges"><a href="../claude-code-cheatsheet/#cmd-wellbeing">/wellbeing</a><p>Configure optional break reminders and quiet-hours nudges</p></div>
+          <div class="only" data-hay="/debug turn on debug logging and investigate problems"><a href="../claude-code-cheatsheet/#cmd-debug">/debug</a><p>Turn on debug logging and investigate problems</p></div>
+          <div class="only" data-hay="/setup-bedrock reconfigure amazon bedrock authentication, region, or model pins"><a href="../claude-code-cheatsheet/#cmd-setup-bedrock">/setup-bedrock</a><p>Reconfigure Amazon Bedrock authentication, region, or model pins</p></div>
+          <div class="only" data-hay="/setup-vertex reconfigure google vertex ai authentication, project, region, or model pins"><a href="../claude-code-cheatsheet/#cmd-setup-vertex">/setup-vertex</a><p>Reconfigure Google Vertex AI authentication, project, region, or model pins</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Background &amp; parallel work</h4>
+          <div class="only" data-hay="/workflows browse running and completed workflows"><a href="../claude-code-cheatsheet/#cmd-workflows">/workflows</a><p>Browse running and completed workflows</p></div>
+          <div class="only" data-hay="/loops list, create, and delete loops"><a href="../claude-code-cheatsheet/#cmd-loops">/loops</a><p>List, create, and delete loops</p></div>
+          <div class="only" data-hay="/loop repeat a prompt or command on an interval, e.g. /loop 5m /foo"><a href="../claude-code-cheatsheet/#cmd-loop">/loop</a><p>Repeat a prompt or command on an interval, e.g. /loop 5m /foo</p></div>
+          <div class="only" data-hay="/daemon manage background services and routines"><a href="../claude-code-cheatsheet/#cmd-daemon">/daemon</a><p>Manage background services and routines</p></div>
+          <div class="only" data-hay="/schedule create and manage routines: cloud agents on a schedule"><a href="../claude-code-cheatsheet/#cmd-schedule">/schedule</a><p>Create and manage routines: cloud agents on a schedule</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Cloud, web &amp; devices</h4>
+          <div class="only" data-hay="/remote-env choose the default environment for cloud agents"><a href="../claude-code-cheatsheet/#cmd-remote-env">/remote-env</a><p>Choose the default environment for cloud agents</p></div>
+          <div class="only" data-hay="/autofix-pr monitor and autofix any issues with the current pr"><a href="../claude-code-cheatsheet/#cmd-autofix-pr">/autofix-pr</a><p>Monitor and autofix any issues with the current PR</p></div>
+          <div class="only" data-hay="/install-github-app set up claude github actions for a repository"><a href="../claude-code-cheatsheet/#cmd-install-github-app">/install-github-app</a><p>Set up Claude GitHub Actions for a repository</p></div>
+          <div class="only" data-hay="/install-slack-app install the claude slack app"><a href="../claude-code-cheatsheet/#cmd-install-slack-app">/install-slack-app</a><p>Install the Claude Slack app</p></div>
+          <div class="only" data-hay="/chrome open claude in chrome settings"><a href="../claude-code-cheatsheet/#cmd-chrome">/chrome</a><p>Open Claude in Chrome settings</p></div>
+          <div class="only" data-hay="/claude-in-chrome let claude browse and interact with pages in your chrome"><a href="../claude-code-cheatsheet/#cmd-claude-in-chrome">/claude-in-chrome</a><p>Let Claude browse and interact with pages in your Chrome</p></div>
+          <div class="only" data-hay="/setup-cowork guided setup — pick a role, install a plugin, try a skill, connect a tool"><a href="../claude-code-cheatsheet/#cmd-setup-cowork">/setup-cowork</a><p>Guided setup — pick a role, install a plugin, try a skill, connect a tool</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Design &amp; artifacts</h4>
+          <div class="only" data-hay="/artifacts browse your published and shared artifacts"><a href="../claude-code-cheatsheet/#cmd-artifacts">/artifacts</a><p>Browse your published and shared artifacts</p></div>
+          <div class="only" data-hay="/artifact-design design guidance and fundamentals for artifacts"><a href="../claude-code-cheatsheet/#cmd-artifact-design">/artifact-design</a><p>Design guidance and fundamentals for Artifacts</p></div>
+          <div class="only" data-hay="/artifact-capabilities runtime capabilities for published artifacts"><a href="../claude-code-cheatsheet/#cmd-artifact-capabilities">/artifact-capabilities</a><p>Runtime capabilities for published Artifacts</p></div>
+          <div class="only" data-hay="/plan-artifact publish a plan as a shareable artifact"><a href="../claude-code-cheatsheet/#cmd-plan-artifact">/plan-artifact</a><p>Publish a plan as a shareable Artifact</p></div>
+          <div class="only" data-hay="/whiteboard sketch on a whiteboard artifact you can send to claude"><a href="../claude-code-cheatsheet/#cmd-whiteboard">/whiteboard</a><p>Sketch on a whiteboard Artifact you can send to Claude</p></div>
+          <div class="only" data-hay="/workshop workshop a document through artifact decisions"><a href="../claude-code-cheatsheet/#cmd-workshop">/workshop</a><p>Workshop a document through artifact decisions</p></div>
+          <div class="only" data-hay="/dataviz chart, dashboard and palette guidance for any visualization you build"><a href="../claude-code-cheatsheet/#cmd-dataviz">/dataviz</a><p>Chart, dashboard and palette guidance for any visualization you build</p></div>
+          <div class="only" data-hay="/design grant or revoke claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design">/design</a><p>Grant or revoke Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/design-login authorize design-system access for /design-sync with your claude.ai account"><a href="../claude-code-cheatsheet/#cmd-design-login">/design-login</a><p>Authorize design-system access for /design-sync with your claude.ai account</p></div>
+          <div class="only" data-hay="/design-sync push your design system components to claude.ai/design"><a href="../claude-code-cheatsheet/#cmd-design-sync">/design-sync</a><p>Push your design system components to claude.ai/design</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Account, usage &amp; install</h4>
+          <div class="only" data-hay="/usage-credits configure usage credits or request them from your admin when you hit a limit"><a href="../claude-code-cheatsheet/#cmd-usage-credits">/usage-credits</a><p>Configure usage credits or request them from your admin when you hit a limit</p></div>
+          <div class="only" data-hay="/upgrade upgrade to max for higher rate limits and more opus"><a href="../claude-code-cheatsheet/#cmd-upgrade">/upgrade</a><p>Upgrade to Max for higher rate limits and more Opus</p></div>
+          <div class="only" data-hay="/passes share a free week of claude code with friends and earn usage credits"><a href="../claude-code-cheatsheet/#cmd-passes">/passes</a><p>Share a free week of Claude Code with friends and earn usage credits</p></div>
+          <div class="only" data-hay="/privacy-settings view and update your privacy settings"><a href="../claude-code-cheatsheet/#cmd-privacy-settings">/privacy-settings</a><p>View and update your privacy settings</p></div>
+          <div class="only" data-hay="/release-notes view release notes"><a href="../claude-code-cheatsheet/#cmd-release-notes">/release-notes</a><p>View release notes</p></div>
+          <div class="only" data-hay="/install install claude code native build"><a href="../claude-code-cheatsheet/#cmd-install">/install</a><p>Install Claude Code native build</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Help, feedback &amp; extras</h4>
+          <div class="only" data-hay="/claude-api build and debug apps that use the claude api"><a href="../claude-code-cheatsheet/#cmd-claude-api">/claude-api</a><p>Build and debug apps that use the Claude API</p></div>
+          <div class="only" data-hay="/powerup discover claude code features through quick interactive lessons"><a href="../claude-code-cheatsheet/#cmd-powerup">/powerup</a><p>Discover Claude Code features through quick interactive lessons</p></div>
+          <div class="only" data-hay="/team-onboarding help teammates ramp on claude code with a guide from your usage"><a href="../claude-code-cheatsheet/#cmd-team-onboarding">/team-onboarding</a><p>Help teammates ramp on Claude Code with a guide from your usage</p></div>
+          <div class="only" data-hay="/mobile show qr code to download the claude mobile app"><a href="../claude-code-cheatsheet/#cmd-mobile">/mobile</a><p>Show QR code to download the Claude mobile app</p></div>
+          <div class="only" data-hay="/stickers order claude code stickers"><a href="../claude-code-cheatsheet/#cmd-stickers">/stickers</a><p>Order Claude Code stickers</p></div>
+          <div class="only" data-hay="/radio listen to claude fm lo-fi radio"><a href="../claude-code-cheatsheet/#cmd-radio">/radio</a><p>Listen to Claude FM lo-fi radio</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Terminal CLI</h4>
+          <div class="only" data-hay="claude auto-mode inspect or reset auto mode classifier configuration"><a href="../claude-code-cheatsheet/#cli-claude-auto-mode">claude auto-mode</a><p>Inspect or reset auto mode classifier configuration</p></div>
+          <div class="only" data-hay="claude gateway run the enterprise auth/telemetry gateway"><a href="../claude-code-cheatsheet/#cli-claude-gateway">claude gateway</a><p>Run the enterprise auth/telemetry gateway</p></div>
+          <div class="only" data-hay="claude install install the native build — stable, latest, or a specific version"><a href="../claude-code-cheatsheet/#cli-claude-install">claude install</a><p>Install the native build — stable, latest, or a specific version</p></div>
+          <div class="only" data-hay="claude project manage claude code project state"><a href="../claude-code-cheatsheet/#cli-claude-project">claude project</a><p>Manage Claude Code project state</p></div>
+          <div class="only" data-hay="claude setup-token set up a long-lived authentication token, requires a claude subscription"><a href="../claude-code-cheatsheet/#cli-claude-setup-token">claude setup-token</a><p>Set up a long-lived authentication token, requires a Claude subscription</p></div>
+          <div class="only" data-hay="claude ultrareview run a cloud-hosted multi-agent code review of the current branch or a pr and print the findings"><a href="../claude-code-cheatsheet/#cli-claude-ultrareview">claude ultrareview</a><p>Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Hidden &amp; internal</h4>
+          <div class="only" data-hay="/auto-mode-setup set up and customise auto mode — environment context, plus optional rule tweaks"><a href="../claude-code-cheatsheet/#cmd-auto-mode-setup">/auto-mode-setup</a><p>Set up and customise auto mode — environment context, plus optional rule tweaks</p></div>
+          <div class="only" data-hay="/heapdump dump the js heap to ~/desktop"><a href="../claude-code-cheatsheet/#cmd-heapdump">/heapdump</a><p>Dump the JS heap to ~/Desktop</p></div>
+          <div class="only" data-hay="/design-consent grant claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design-consent">/design-consent</a><p>Grant Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/design-revoke revoke claude agent access to your design projects"><a href="../claude-code-cheatsheet/#cmd-design-revoke">/design-revoke</a><p>Revoke Claude agent access to your Design projects</p></div>
+          <div class="only" data-hay="/extra-usage renamed to /usage-credits"><a href="../claude-code-cheatsheet/#cmd-extra-usage">/extra-usage</a><p>Renamed to /usage-credits</p></div>
+          <div class="only" data-hay="/pro-trial-expired options shown when the pro plan claude code trial has ended"><a href="../claude-code-cheatsheet/#cmd-pro-trial-expired">/pro-trial-expired</a><p>Options shown when the Pro plan Claude Code trial has ended</p></div>
+          <div class="only" data-hay="/rate-limit-options show options when rate limit is reached"><a href="../claude-code-cheatsheet/#cmd-rate-limit-options">/rate-limit-options</a><p>Show options when rate limit is reached</p></div>
+          <div class="only" data-hay="/__remote-workflow run the workflow script delivered in this session environment — server-launched sessions only"><a href="../claude-code-cheatsheet/#cmd-remote-workflow">/__remote-workflow</a><p>Run the workflow script delivered in this session environment — server-launched sessions only</p></div>
+          <div class="only" data-hay="/workflow-launch-exec execute a server-launched workflow handoff — workflow_launch event sessions only"><a href="../claude-code-cheatsheet/#cmd-workflow-launch-exec">/workflow-launch-exec</a><p>Execute a server-launched workflow handoff — workflow_launch event sessions only</p></div>
+        </div>
+        </div>
+      </div>
+      <div class="onlycol" style="--tc:var(--cx)">
+        <div class="onlyhead">
+          <h3>Only in Codex</h3>
+          <span class="n" id="cxcount">55</span>
+        </div>
+        <div id="onlycx">
+        <div class="onlygroup">
+          <h4>Session &amp; context</h4>
+          <div class="only" data-hay="/archive archive this session and exit"><a href="../codex-cheatsheet/#cmd-archive">/archive</a><p>archive this session and exit</p></div>
+          <div class="only" data-hay="/delete permanently delete this session and exit"><a href="../codex-cheatsheet/#cmd-delete">/delete</a><p>permanently delete this session and exit</p></div>
+          <div class="only" data-hay="/raw toggle raw scrollback mode for copy-friendly terminal selection"><a href="../codex-cheatsheet/#cmd-raw">/raw</a><p>toggle raw scrollback mode for copy-friendly terminal selection</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Model &amp; reasoning</h4>
+          <div class="only" data-hay="/personality choose a communication style for codex"><a href="../codex-cheatsheet/#cmd-personality">/personality</a><p>choose a communication style for Codex</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Workspace &amp; code</h4>
+          <div class="only" data-hay="/mention mention a file"><a href="../codex-cheatsheet/#cmd-mention">/mention</a><p>mention a file</p></div>
+          <div class="only" data-hay="/approve approve one retry of a recent auto-review denial"><a href="../codex-cheatsheet/#cmd-approve">/approve</a><p>approve one retry of a recent auto-review denial</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Config &amp; environment</h4>
+          <div class="only" data-hay="/pets choose or hide the terminal pet"><a href="../codex-cheatsheet/#cmd-pets">/pets</a><p>choose or hide the terminal pet</p></div>
+          <div class="only" data-hay="/experimental toggle experimental features"><a href="../codex-cheatsheet/#cmd-experimental">/experimental</a><p>toggle experimental features</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Hidden &amp; internal</h4>
+          <div class="only" data-hay="/apps manage apps"><a href="../codex-cheatsheet/#cmd-apps">/apps</a><p>manage apps</p></div>
+          <div class="only" data-hay="/rollout print the rollout file path"><a href="../codex-cheatsheet/#cmd-rollout">/rollout</a><p>print the rollout file path</p></div>
+          <div class="only" data-hay="/test-approval test approval request"><a href="../codex-cheatsheet/#cmd-test-approval">/test-approval</a><p>test approval request</p></div>
+          <div class="only" data-hay="/debug-m-drop do not use"><a href="../codex-cheatsheet/#cmd-debug-m-drop">/debug-m-drop</a><p>DO NOT USE</p></div>
+          <div class="only" data-hay="/debug-m-update do not use"><a href="../codex-cheatsheet/#cmd-debug-m-update">/debug-m-update</a><p>DO NOT USE</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Terminal CLI — core</h4>
+          <div class="only" data-hay="codex apply apply the latest diff produced by codex agent as a `git apply` to your local working tree"><a href="../codex-cheatsheet/#cli-codex-apply">codex apply</a><p>Apply the latest diff produced by Codex agent as a `git apply` to your local working tree</p></div>
+          <div class="only" data-hay="codex archive archive a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-archive">codex archive</a><p>Archive a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex unarchive unarchive a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-unarchive">codex unarchive</a><p>Unarchive a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex delete permanently delete a saved session by id or session name"><a href="../codex-cheatsheet/#cli-codex-delete">codex delete</a><p>Permanently delete a saved session by id or session name</p></div>
+          <div class="only" data-hay="codex completion generate shell completion scripts"><a href="../codex-cheatsheet/#cli-codex-completion">codex completion</a><p>Generate shell completion scripts</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>MCP &amp; plugins</h4>
+          <div class="only" data-hay="codex mcp get show one configured mcp server"><a href="../codex-cheatsheet/#cli-codex-mcp-get">codex mcp get</a><p>Show one configured MCP server</p></div>
+          <div class="only" data-hay="codex mcp login sign in to an mcp server that needs auth"><a href="../codex-cheatsheet/#cli-codex-mcp-login">codex mcp login</a><p>Sign in to an MCP server that needs auth</p></div>
+          <div class="only" data-hay="codex mcp logout sign out of an mcp server"><a href="../codex-cheatsheet/#cli-codex-mcp-logout">codex mcp logout</a><p>Sign out of an MCP server</p></div>
+          <div class="only" data-hay="codex mcp-server start codex as an mcp server (stdio)"><a href="../codex-cheatsheet/#cli-codex-mcp-server">codex mcp-server</a><p>Start Codex as an MCP server (stdio)</p></div>
+          <div class="only" data-hay="codex plugin list list plugins available from configured marketplace snapshots"><a href="../codex-cheatsheet/#cli-codex-plugin-list">codex plugin list</a><p>List plugins available from configured marketplace snapshots</p></div>
+          <div class="only" data-hay="codex plugin remove remove an installed plugin from local config and cache"><a href="../codex-cheatsheet/#cli-codex-plugin-remove">codex plugin remove</a><p>Remove an installed plugin from local config and cache</p></div>
+          <div class="only" data-hay="codex plugin marketplace add add a local or git marketplace to the configured marketplace sources"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-add">codex plugin marketplace add</a><p>Add a local or Git marketplace to the configured marketplace sources</p></div>
+          <div class="only" data-hay="codex plugin marketplace list list plugin marketplaces codex is currently considering and their roots"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-list">codex plugin marketplace list</a><p>List plugin marketplaces Codex is currently considering and their roots</p></div>
+          <div class="only" data-hay="codex plugin marketplace remove remove a configured marketplace source by name"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-remove">codex plugin marketplace remove</a><p>Remove a configured marketplace source by name</p></div>
+          <div class="only" data-hay="codex plugin marketplace upgrade refresh configured git marketplace snapshots"><a href="../codex-cheatsheet/#cli-codex-plugin-marketplace-upgrade">codex plugin marketplace upgrade</a><p>Refresh configured Git marketplace snapshots</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>App server, daemon &amp; remote control</h4>
+          <div class="only" data-hay="codex app-server run the app server or related tooling"><a href="../codex-cheatsheet/#cli-codex-app-server">codex app-server</a><p>Run the app server or related tooling</p></div>
+          <div class="only" data-hay="codex app-server daemon manage the local app-server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon">codex app-server daemon</a><p>Manage the local app-server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon start start the local app server daemon if it is not already running"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-start">codex app-server daemon start</a><p>Start the local app server daemon if it is not already running</p></div>
+          <div class="only" data-hay="codex app-server daemon stop stop the local app server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-stop">codex app-server daemon stop</a><p>Stop the local app server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon restart restart the local app server daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-restart">codex app-server daemon restart</a><p>Restart the local app server daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon bootstrap install durable local app-server management for ssh-driven use"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-bootstrap">codex app-server daemon bootstrap</a><p>Install durable local app-server management for SSH-driven use</p></div>
+          <div class="only" data-hay="codex app-server daemon version print local cli and running app-server versions as json"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-version">codex app-server daemon version</a><p>Print local CLI and running app-server versions as JSON</p></div>
+          <div class="only" data-hay="codex app-server daemon enable-remote-control enable remote control for future starts and a currently running managed daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-enable-remote-control">codex app-server daemon enable-remote-control</a><p>Enable remote control for future starts and a currently running managed daemon</p></div>
+          <div class="only" data-hay="codex app-server daemon disable-remote-control disable remote control for future starts and a currently running managed daemon"><a href="../codex-cheatsheet/#cli-codex-app-server-daemon-disable-remote-control">codex app-server daemon disable-remote-control</a><p>Disable remote control for future starts and a currently running managed daemon</p></div>
+          <div class="only" data-hay="codex app-server generate-json-schema generate json schema for the app server protocol"><a href="../codex-cheatsheet/#cli-codex-app-server-generate-json-schema">codex app-server generate-json-schema</a><p>Generate JSON Schema for the app server protocol</p></div>
+          <div class="only" data-hay="codex app-server generate-ts generate typescript bindings for the app server protocol"><a href="../codex-cheatsheet/#cli-codex-app-server-generate-ts">codex app-server generate-ts</a><p>Generate TypeScript bindings for the app server protocol</p></div>
+          <div class="only" data-hay="codex app-server proxy proxy stdio bytes to the running app-server control socket"><a href="../codex-cheatsheet/#cli-codex-app-server-proxy">codex app-server proxy</a><p>Proxy stdio bytes to the running app-server control socket</p></div>
+          <div class="only" data-hay="codex remote-control start start the app-server daemon with remote control enabled"><a href="../codex-cheatsheet/#cli-codex-remote-control-start">codex remote-control start</a><p>Start the app-server daemon with remote control enabled</p></div>
+          <div class="only" data-hay="codex remote-control stop stop the app-server daemon"><a href="../codex-cheatsheet/#cli-codex-remote-control-stop">codex remote-control stop</a><p>Stop the app-server daemon</p></div>
+          <div class="only" data-hay="codex exec-server run the standalone exec-server service"><a href="../codex-cheatsheet/#cli-codex-exec-server">codex exec-server</a><p>Run the standalone exec-server service</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Codex Cloud</h4>
+          <div class="only" data-hay="codex cloud list list codex cloud tasks"><a href="../codex-cheatsheet/#cli-codex-cloud-list">codex cloud list</a><p>List Codex Cloud tasks</p></div>
+          <div class="only" data-hay="codex cloud status show the status of a codex cloud task"><a href="../codex-cheatsheet/#cli-codex-cloud-status">codex cloud status</a><p>Show the status of a Codex Cloud task</p></div>
+          <div class="only" data-hay="codex cloud diff show the unified diff for a codex cloud task"><a href="../codex-cheatsheet/#cli-codex-cloud-diff">codex cloud diff</a><p>Show the unified diff for a Codex Cloud task</p></div>
+        </div>
+        <div class="onlygroup">
+          <h4>Debug &amp; feature flags</h4>
+          <div class="only" data-hay="codex debug debugging tools"><a href="../codex-cheatsheet/#cli-codex-debug">codex debug</a><p>Debugging tools</p></div>
+          <div class="only" data-hay="codex debug models render the raw model catalog as json"><a href="../codex-cheatsheet/#cli-codex-debug-models">codex debug models</a><p>Render the raw model catalog as JSON</p></div>
+          <div class="only" data-hay="codex debug prompt-input render the model-visible prompt input list as json"><a href="../codex-cheatsheet/#cli-codex-debug-prompt-input">codex debug prompt-input</a><p>Render the model-visible prompt input list as JSON</p></div>
+          <div class="only" data-hay="codex debug app-server tooling: helps debug the app server"><a href="../codex-cheatsheet/#cli-codex-debug-app-server">codex debug app-server</a><p>Tooling: helps debug the app server</p></div>
+          <div class="only" data-hay="codex debug app-server send-message-v2 send one user message to the app server"><a href="../codex-cheatsheet/#cli-codex-debug-app-server-send-message-v2">codex debug app-server send-message-v2</a><p>Send one user message to the app server</p></div>
+          <div class="only" data-hay="codex features inspect feature flags"><a href="../codex-cheatsheet/#cli-codex-features">codex features</a><p>Inspect feature flags</p></div>
+          <div class="only" data-hay="codex features list list known features with their stage and effective state"><a href="../codex-cheatsheet/#cli-codex-features-list">codex features list</a><p>List known features with their stage and effective state</p></div>
+          <div class="only" data-hay="codex features enable enable a feature in config.toml"><a href="../codex-cheatsheet/#cli-codex-features-enable">codex features enable</a><p>Enable a feature in config.toml</p></div>
+          <div class="only" data-hay="codex features disable disable a feature in config.toml"><a href="../codex-cheatsheet/#cli-codex-features-disable">codex features disable</a><p>Disable a feature in config.toml</p></div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <b>One entry here is an artefact of how each inventory was built, and it is
+      <code>/help</code>.</b> It sits on the Claude Code side because Codex's <code>/</code> picker
+      has no <code>/help</code> row to capture — not because Codex has no help. Codex's lives at
+      <code>codex --help</code> and <code>codex help &lt;subcommand&gt;</code>, which are neither
+      slash commands nor listed as subcommands, so nothing in either inventory pairs against it.
+      That is the shape of mistake these two lists can make: <em>absent from the inventory</em> is
+      not the same claim as <em>absent from the tool</em>.
+    </div>
+  </section>
+
+  <section id="caps-sec">
+    <div class="sec-head">
+      <h2>Capabilities, not commands</h2>
+      <span class="n" id="capcount">13</span>
+      <p>Sourced from <code>--help</code> and the files on disk</p>
+    </div>
+    <p class="intro">
+      The differences that a command list cannot show. Every row names how it was established, and
+      nothing here comes from either vendor's documentation.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th scope="col">Topic</th>
+          <th scope="col" class="h-cc">Claude Code 2.1.220</th>
+          <th scope="col" class="h-cx">Codex CLI 0.146.0</th>
+          <th scope="col">How this was established</th>
+        </tr></thead>
+        <tbody id="capbody">
+        <tr id="cap-config" data-hay="where settings live ~/.claude/settings.json — json, with a /config ui and a bundled skill that rewrites it for you. ~/.codex/config.toml — toml, layered. any key is overridable per-run with -c foo.bar=value, and --profile &amp;lt;name&amp;gt; stacks $codex_home/&amp;lt;name&amp;gt;.config.toml on top. both files on this machine, plus codex --help."><td class="topic">Where settings live</td><td class="body"><code>~/.claude/settings.json</code> — JSON, with a <code>/config</code> UI and a bundled skill that rewrites it for you.</td><td class="body"><code>~/.codex/config.toml</code> — TOML, layered. Any key is overridable per-run with <code>-c foo.bar=value</code>, and <code>--profile &lt;name&gt;</code> stacks <code>$CODEX_HOME/&lt;name&gt;.config.toml</code> on top.</td><td class="how">Both files on this machine, plus <code>codex --help</code>.</td></tr>
+        <tr id="cap-memory-file" data-hay="project instructions file claude.md, written by /init, auto-discovered up the tree. agents.md, written by /init. each tool's own /init description, and both files present in the two config homes."><td class="topic">Project instructions file</td><td class="body"><code>CLAUDE.md</code>, written by <code>/init</code>, auto-discovered up the tree.</td><td class="body"><code>AGENTS.md</code>, written by <code>/init</code>.</td><td class="how">Each tool's own <code>/init</code> description, and both files present in the two config homes.</td></tr>
+        <tr id="cap-permission" data-hay="permission model one axis. --permission-mode takes acceptedits, auto, bypasspermissions, manual, dontask or plan, with allow/deny rules per tool underneath. two orthogonal axes. --ask-for-approval takes untrusted, on-request or never; --sandbox independently takes read-only, workspace-write or danger-full-access. the [possible values] block each cli prints for those flags in --help."><td class="topic">Permission model</td><td class="body">One axis. <code>--permission-mode</code> takes <code>acceptEdits</code>, <code>auto</code>, <code>bypassPermissions</code>, <code>manual</code>, <code>dontAsk</code> or <code>plan</code>, with allow/deny rules per tool underneath.</td><td class="body">Two orthogonal axes. <code>--ask-for-approval</code> takes <code>untrusted</code>, <code>on-request</code> or <code>never</code>; <code>--sandbox</code> independently takes <code>read-only</code>, <code>workspace-write</code> or <code>danger-full-access</code>.</td><td class="how">The <code>[possible values]</code> block each CLI prints for those flags in <code>--help</code>.</td></tr>
+        <tr id="cap-sandbox" data-hay="sandbox /sandbox toggles sandboxing for the bash tool, on supported platforms only. it applies to what claude code runs. the same sandbox is also a command you can point at anything: codex sandbox -- &amp;lt;cmd&amp;gt; runs it under seatbelt, and --log-denials prints the macos denials it collected. codex sandbox --help; the /sandbox description in the build."><td class="topic">Sandbox</td><td class="body"><code>/sandbox</code> toggles sandboxing for the Bash tool, on supported platforms only. It applies to what Claude Code runs.</td><td class="body">The same sandbox is also a command you can point at anything: <code>codex sandbox -- &lt;cmd&gt;</code> runs it under seatbelt, and <code>--log-denials</code> prints the macOS denials it collected.</td><td class="how"><code>codex sandbox --help</code>; the <code>/sandbox</code> description in the build.</td></tr>
+        <tr id="cap-escape" data-hay="the escape hatch --dangerously-skip-permissions, plus --allow-dangerously-skip-permissions to make it available without turning it on. --dangerously-bypass-approvals-and-sandbox, and separately --dangerously-bypass-hook-trust for running hooks whose source has not been vetted. --help on both."><td class="topic">The escape hatch</td><td class="body"><code>--dangerously-skip-permissions</code>, plus <code>--allow-dangerously-skip-permissions</code> to make it available without turning it on.</td><td class="body"><code>--dangerously-bypass-approvals-and-sandbox</code>, and separately <code>--dangerously-bypass-hook-trust</code> for running hooks whose source has not been vetted.</td><td class="how"><code>--help</code> on both.</td></tr>
+        <tr id="cap-hooks" data-hay="lifecycle hooks configured under hooks in settings.json. the binary carries eleven event names: pretooluse, posttooluse, permissionrequest, userpromptsubmit, notification, precompact, sessionstart, sessionend, stop, subagentstart, subagentstop. a separate ~/.codex/hooks.json, with per-hook trust recorded back into config.toml under hooks.state — codex will not run a hook it has not been trusted to run. event names read out of the claude code binary; the codex side read off the two config files. see the caveat below the table."><td class="topic">Lifecycle hooks</td><td class="body">Configured under <code>hooks</code> in <code>settings.json</code>. The binary carries eleven event names: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>, <code>UserPromptSubmit</code>, <code>Notification</code>, <code>PreCompact</code>, <code>SessionStart</code>, <code>SessionEnd</code>, <code>Stop</code>, <code>SubagentStart</code>, <code>SubagentStop</code>.</td><td class="body">A separate <code>~/.codex/hooks.json</code>, with per-hook trust recorded back into <code>config.toml</code> under <code>hooks.state</code> — Codex will not run a hook it has not been trusted to run.</td><td class="how">Event names read out of the Claude Code binary; the Codex side read off the two config files. See the caveat below the table.</td></tr>
+        <tr id="cap-skills" data-hay="skills 35 compiled into the binary — the whole prompt corpus is on its own page here — plus whatever is in ~/.claude/skills. 23 of the bundled ones are typeable as slash commands. /skills, loading from ~/.codex/skills and from plugins. whether codex also bundles prompts of its own is not established here — no equivalent extractor was written for it, and a rust binary does not give them up the way a bun-compiled javascript bundle does. read that as a gap in this page, not a finding about codex. the skills extraction behind the bundled-skills page; both skills directories on this machine. the codex half is deliberately a non-claim."><td class="topic">Skills</td><td class="body">35 compiled into the binary — the whole prompt corpus is <a href="../claude-code-built-in-skills/">on its own page here</a> — plus whatever is in <code>~/.claude/skills</code>. 23 of the bundled ones are typeable as slash commands.</td><td class="body"><code>/skills</code>, loading from <code>~/.codex/skills</code> and from plugins. Whether Codex also bundles prompts of its own is <em>not</em> established here — no equivalent extractor was written for it, and a Rust binary does not give them up the way a Bun-compiled JavaScript bundle does. Read that as a gap in this page, not a finding about Codex.</td><td class="how">The skills extraction behind the bundled-skills page; both skills directories on this machine. The Codex half is deliberately a non-claim.</td></tr>
+        <tr id="cap-agents" data-hay="subagents definitions in .claude/agents/ or inline via --agents &amp;lt;json&amp;gt;. /subtask and /fork send work off and bring the result back; /workflows tracks multi-agent runs. /agent and /subagents switch which agent thread you are typing at. subagentstart and subagentstop exist as hook points. both command inventories; ~/.claude/agents/; the hook state keys in config.toml."><td class="topic">Subagents</td><td class="body">Definitions in <code>.claude/agents/</code> or inline via <code>--agents &lt;json&gt;</code>. <code>/subtask</code> and <code>/fork</code> send work off and bring the result back; <code>/workflows</code> tracks multi-agent runs.</td><td class="body"><code>/agent</code> and <code>/subagents</code> switch which agent thread you are typing at. <code>SubagentStart</code> and <code>SubagentStop</code> exist as hook points.</td><td class="how">Both command inventories; <code>~/.claude/agents/</code>; the hook state keys in <code>config.toml</code>.</td></tr>
+        <tr id="cap-mcp" data-hay="mcp a client. claude mcp manages servers; --mcp-config loads them from a file or string and --strict-mcp-config ignores everything else. a client and a server: codex mcp-server starts codex itself as an mcp server over stdio, so another agent can call it as a tool. codex --help; the flag tables on both index pages."><td class="topic">MCP</td><td class="body">A client. <code>claude mcp</code> manages servers; <code>--mcp-config</code> loads them from a file or string and <code>--strict-mcp-config</code> ignores everything else.</td><td class="body">A client <em>and</em> a server: <code>codex mcp-server</code> starts Codex itself as an MCP server over stdio, so another agent can call it as a tool.</td><td class="how"><code>codex --help</code>; the flag tables on both index pages.</td></tr>
+        <tr id="cap-headless" data-hay="scripting surface claude -p plus flags: --output-format json|stream-json, --json-schema for structured output, --max-budget-usd, --input-format, --include-partial-messages. codex exec with its own subcommands (resume, review), plus codex app-server — a protocol daemon that will emit its own json schema and typescript bindings for you. both flag tables and subcommand trees."><td class="topic">Scripting surface</td><td class="body"><code>claude -p</code> plus flags: <code>--output-format json|stream-json</code>, <code>--json-schema</code> for structured output, <code>--max-budget-usd</code>, <code>--input-format</code>, <code>--include-partial-messages</code>.</td><td class="body"><code>codex exec</code> with its own subcommands (<code>resume</code>, <code>review</code>), plus <code>codex app-server</code> — a protocol daemon that will emit its own JSON Schema and TypeScript bindings for you.</td><td class="how">Both flag tables and subcommand trees.</td></tr>
+        <tr id="cap-providers" data-hay="model providers anthropic, with /setup-bedrock and /setup-vertex for the cloud resellers, --fallback-model when the default is overloaded, and --betas for api-key users. openai, with --oss and --local-provider lmstudio|ollama for running against a local model instead. --help on both; the command inventories."><td class="topic">Model providers</td><td class="body">Anthropic, with <code>/setup-bedrock</code> and <code>/setup-vertex</code> for the cloud resellers, <code>--fallback-model</code> when the default is overloaded, and <code>--betas</code> for API-key users.</td><td class="body">OpenAI, with <code>--oss</code> and <code>--local-provider lmstudio|ollama</code> for running against a local model instead.</td><td class="how"><code>--help</code> on both; the command inventories.</td></tr>
+        <tr id="cap-features" data-hay="feature switchboard none user-facing. gating is internal: ten commands are in the binary but withheld from /help, and some skills register only when a check passes. codex features list prints 100 switches with a maturity stage each, 40 of them on in this build, toggleable per-run with --enable/--disable or persisted with codex features enable. both index pages; the feature table is codex features list verbatim."><td class="topic">Feature switchboard</td><td class="body">None user-facing. Gating is internal: ten commands are in the binary but withheld from <code>/help</code>, and some skills register only when a check passes.</td><td class="body"><code>codex features list</code> prints 100 switches with a maturity stage each, 40 of them on in this build, toggleable per-run with <code>--enable</code>/<code>--disable</code> or persisted with <code>codex features enable</code>.</td><td class="how">Both index pages; the feature table is <code>codex features list</code> verbatim.</td></tr>
+        <tr id="cap-shape" data-hay="where the surface lives at the prompt. 129 of 143 entries are typed after a / — 96 native, 23 bundled skills, 10 hidden — leaving 14 shell subcommands. in the shell. 68 of 122 entries are codex subcommands, against 54 typed after a / — the only one of the two where the shell side is the bigger half. counted from the two inventories. hidden commands are counted as slash commands on both sides, because that is how they are typed."><td class="topic">Where the surface lives</td><td class="body">At the prompt. 129 of 143 entries are typed after a <code>/</code> — 96 native, 23 bundled skills, 10 hidden — leaving 14 shell subcommands.</td><td class="body">In the shell. 68 of 122 entries are <code>codex</code> subcommands, against 54 typed after a <code>/</code> — the only one of the two where the shell side is the bigger half.</td><td class="how">Counted from the two inventories. Hidden commands are counted as slash commands on both sides, because that is how they are typed.</td></tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>One row is weaker than the others, and it is the hooks row.</b> Both binaries carry the same
+      eleven event names. For Claude Code that settles it — they are the keys its
+      <code>settings.json</code> takes. For Codex it does not: Codex also ships <code>/import</code>,
+      which imports a Claude Code setup, so it has a reason to know those names whether or not it
+      fires all of them. What is established on the Codex side is narrower — that hooks are
+      configured in <code>~/.codex/hooks.json</code>, and that each one carries a trust record in
+      <code>config.toml</code> before it will run. Which of the eleven Codex actually fires was
+      <em>not</em> established here, and is not claimed.
+    </div>
+  </section>
+
+  <section id="verdict-sec">
+    <div class="sec-head">
+      <h2>Which one to reach for</h2>
+      <span class="n" id="verdictcount">10</span>
+      <p>The opinion section, marked as such</p>
+    </div>
+    <p class="intro">
+      Everything above this line is measured. This part is not — it is a reading of those
+      measurements, and someone who weighs sandboxing against session ergonomics differently would
+      write it differently. Both tools are good. The question worth asking is not which is better
+      but <b>which set of assumptions matches how you work</b>.
+    </p>
+    <div class="verdict" id="verdict">
+      <div class="vcol" style="--tc:var(--cc)">
+        <h3>Reach for Claude Code when</h3>
+        <ul>
+          <li>You want the session itself to be the workspace. Claude Code puts almost everything behind a <code>/</code>, including things Codex settles at launch — move to another directory, change effort, swap the model, background the whole session and get the terminal back.</li>
+          <li>You want to undo. <code>/rewind</code> has no counterpart on the Codex side of this page.</li>
+          <li>You lean on skills and subagents. 35 prompts ship in the binary, agents are files you write, and <code>/subtask</code>, <code>/fork</code> and <code>/workflows</code> exist to fan work out and collect it.</li>
+          <li>You want the model choice to include Bedrock or Vertex.</li>
+        </ul>
+      </div>
+      <div class="vcol" style="--tc:var(--cx)">
+        <h3>Reach for Codex when</h3>
+        <ul>
+          <li>You want the agent under a sandbox you can reason about — and reuse. Approval policy and sandbox policy are separate flags with named values, and <code>codex sandbox</code> will wrap any command, not just the agent's.</li>
+          <li>You are building on top of it. <code>codex mcp-server</code> makes Codex a tool other agents call; <code>codex app-server</code> hands you a protocol daemon with generated schema and TypeScript bindings.</li>
+          <li>You want the tool configured as data. One TOML file, layered profiles, and <code>-c any.key=value</code> for a single run.</li>
+          <li>You want to run against a local model — <code>--oss</code> with LM Studio or Ollama.</li>
+          <li>You want to see the feature flags rather than discover them.</li>
+        </ul>
+      </div>
+      <div class="vcol" style="--tc:var(--fam-cli)">
+        <h3>And mostly</h3>
+        <ul>
+          <li>Neither list is a ranking, and the overlap is the real story: 43 jobs on this page have a command on both sides, several with the same name. Both ship hooks, MCP, plugins, skills, plan mode, a review command, a memory system and a desktop hand-off. Both also ship a command that imports the other one's setup, which tells you what the vendors expect you to be doing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="support">
+    <p><b>Found this useful?</b> Both halves of this page were measured rather than looked up — the
+      pairing against the two inventories on this site, the capability table against
+      <code>--help</code> on the two installed builds. If it saved you from installing both just to
+      find out how they differ, you can put a coffee toward keeping it current.</p>
+    <a class="coffee" href="https://buymeacoffee.com/john42" target="_blank" rel="noopener noreferrer">
+      <span class="cup" aria-hidden="true">&#9749;</span>Buy me a coffee</a>
+  </div>
+
+  <footer>
+    <p>
+      <b>Where the two halves came from.</b> The command comparison is built from the same two
+      inventories as the index pages on this site, and adds nothing to them: Claude Code's names and
+      descriptions were parsed out of the installed binary, Codex's were read off the running
+      <code>/</code> picker and a recursive walk of <code>codex --help</code>. Descriptions are
+      reproduced as the builds carry them. Every name links back to its full entry.
+    </p>
+    <p>
+      <b>The pairing is editorial; the complement is not.</b> Which two commands count as “the same
+      job” is a judgement made by hand, and the reason both descriptions are printed is so that
+      judgement can be checked rather than trusted. The two <em>only in</em> lists are then computed
+      as whatever no pair claimed — so a bad pairing shows up as a missing entry, and every command
+      in both inventories appears exactly once on this page.
+    </p>
+    <p>
+      <b>The capability table was measured on one machine.</b> Sandbox modes, approval policies,
+      config paths and provider options come from <code>claude --help</code> and
+      <code>codex --help</code> on the builds named above, plus the shape of the files in
+      <code>~/.claude</code> and <code>~/.codex</code>. Where a claim could not be established that
+      way it is marked rather than rounded off — see the note under the table.
+    </p>
+    <p>
+      <b>Two builds, one moment.</b> Both tools ship fast, and both resolve part of their surface at
+      run time: Codex against 100 feature flags and your account, Claude Code against its own gating.
+      A count here is the count on these two builds, not a permanent fact about either tool.
+    </p>
+    <p class="machine">
+      <b>Machine-readable</b>
+      <a href="compare.json">compare.json</a>
+      <a href="compare.md">compare.md</a>
+      <a href="../llms.txt">llms.txt</a>
+      <span>&mdash; every pairing and both leftovers, for scripts and agents.</span>
+    </p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var q = document.getElementById("q");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+
+  var VIEWS = ["pairs", "onlycc", "onlycx", "caps"];
+  var SECS = {
+    pairs: document.getElementById("pairs-sec"),
+    onlycc: document.getElementById("only-sec"),
+    onlycx: document.getElementById("only-sec"),
+    caps: document.getElementById("caps-sec")
+  };
+
+  var pairCards = [].slice.call(document.querySelectorAll(".pair"));
+  var ccRows = [].slice.call(document.querySelectorAll("#onlycc .only"));
+  var cxRows = [].slice.call(document.querySelectorAll("#onlycx .only"));
+  var capRows = [].slice.call(document.querySelectorAll("#capbody tr"));
+
+  var DEFAULTS = { pairs: true, onlycc: true, onlycx: true, caps: true };
+  var state = Object.assign({}, DEFAULTS);
+
+  function only(key) {
+    var s = {};
+    VIEWS.forEach(function (v) { s[v] = v === key; });
+    return s;
+  }
+  function equals(a, b) {
+    return VIEWS.every(function (k) { return !!a[k] === !!b[k]; });
+  }
+
+  function sync() {
+    document.querySelectorAll("#views .chip[data-view]").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.view]));
+    });
+    document.querySelectorAll(".stat").forEach(function (t) {
+      var iso = t.dataset.iso;
+      t.setAttribute("aria-pressed",
+        String(VIEWS.indexOf(iso) !== -1 && equals(state, only(iso))));
+    });
+    resetBtn.classList.toggle("show", !equals(state, DEFAULTS) || q.value.trim() !== "");
+  }
+
+  function run(rows, on, term) {
+    var n = 0;
+    rows.forEach(function (el) {
+      var ok = on && (!term || el.dataset.hay.indexOf(term) !== -1);
+      el.style.display = ok ? "" : "none";
+      if (ok) n++;
+    });
+    return n;
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase().replace(/^\//, "");
+
+    var p = run(pairCards, state.pairs, term);
+    var a = run(ccRows, state.onlycc, term);
+    var b = run(cxRows, state.onlycx, term);
+    var c = run(capRows, state.caps, term);
+
+    // hide a group heading once every row under it is filtered out
+    document.querySelectorAll(".onlygroup").forEach(function (g) {
+      var any = [].slice.call(g.querySelectorAll(".only"))
+        .some(function (r) { return r.style.display !== "none"; });
+      g.style.display = any ? "" : "none";
+    });
+    document.querySelectorAll(".onlycol").forEach(function (col) {
+      var any = [].slice.call(col.querySelectorAll(".only"))
+        .some(function (r) { return r.style.display !== "none"; });
+      col.style.display = any ? "" : "none";
+    });
+
+    SECS.pairs.style.display = p ? "" : "none";
+    SECS.caps.style.display = c ? "" : "none";
+    SECS.onlycc.style.display = (a + b) ? "" : "none";
+    document.getElementById("shape-sec").style.display = term ? "none" : "";
+    document.getElementById("verdict-sec").style.display = term ? "none" : "";
+
+    document.getElementById("paircount").textContent = p;
+    document.getElementById("cccount").textContent = a;
+    document.getElementById("cxcount").textContent = b;
+    document.getElementById("onlycount").textContent = a + b;
+    document.getElementById("capcount").textContent = c;
+
+    countEl.textContent = [
+      p ? p + " paired" : "",
+      (a + b) ? (a + b) + " unpaired" : "",
+      c ? c + " capabilities" : ""
+    ].filter(Boolean).join(" · ") || "nothing shown";
+
+    emptyEl.classList.toggle("show", p + a + b + c === 0);
+    sync();
+  }
+
+  q.addEventListener("input", apply);
+
+  document.getElementById("views").addEventListener("click", function (e) {
+    var btn = e.target.closest(".chip[data-view]");
+    if (!btn) return;
+    state[btn.dataset.view] = !state[btn.dataset.view];
+    apply();
+  });
+
+  document.querySelector(".stats").addEventListener("click", function (e) {
+    var tile = e.target.closest(".stat");
+    if (!tile) return;
+    var iso = tile.dataset.iso;
+    var target = document.getElementById(
+      iso === "verdict" ? "verdict-sec" : iso === "caps" ? "caps-sec"
+        : iso === "pairs" ? "pairs-sec" : "only-sec");
+    if (VIEWS.indexOf(iso) !== -1) {
+      state = equals(state, only(iso)) ? Object.assign({}, DEFAULTS) : only(iso);
+      apply();
+    }
+    if (target) target.scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = Object.assign({}, DEFAULTS);
+    q.value = "";
+    apply();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+      q.blur();
+    }
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>

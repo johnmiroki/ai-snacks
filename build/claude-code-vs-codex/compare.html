@@ -1,0 +1,792 @@
+<title>Claude Code vs Codex CLI — 2.1.220 vs 0.146.0</title>
+
+<style>
+  :root {
+    --ground:#F6F7F8;
+    --surface:#FFFFFF;
+    --surface-2:#ECEEF3;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EA;
+    --rule-soft:#EDEFF4;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --cc:#3F4FC0;
+    --cc-soft:#E9ECFB;
+    --cx:#0E7C5A;
+    --cx-soft:#E4F2EC;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0F1116;
+      --surface:#161921;
+      --surface-2:#1E222C;
+      --ink:#E4E7EE;
+      --muted:#969DB0;
+      --faint:#6C7385;
+      --rule:#262B36;
+      --rule-soft:#1E222C;
+      --accent:#8E9AF2;
+      --accent-soft:#1F2540;
+      --cc:#8E9AF2;
+      --cc-soft:#1F2540;
+      --cx:#4FC3A1;
+      --cx-soft:#122C24;
+      --fam-cli:#D8AE60;
+      --fam-hidden:#EC8CA2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0F1116;
+    --surface:#161921;
+    --surface-2:#1E222C;
+    --ink:#E4E7EE;
+    --muted:#969DB0;
+    --faint:#6C7385;
+    --rule:#262B36;
+    --rule-soft:#1E222C;
+    --accent:#8E9AF2;
+    --accent-soft:#1F2540;
+    --cc:#8E9AF2;
+    --cc-soft:#1F2540;
+    --cx:#4FC3A1;
+    --cx-soft:#122C24;
+    --fam-cli:#D8AE60;
+    --fam-hidden:#EC8CA2;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F6F7F8;
+    --surface:#FFFFFF;
+    --surface-2:#ECEEF3;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EA;
+    --rule-soft:#EDEFF4;
+    --accent:#3F4FC0;
+    --accent-soft:#E9ECFB;
+    --cc:#3F4FC0;
+    --cc-soft:#E9ECFB;
+    --cx:#0E7C5A;
+    --cx-soft:#E4F2EC;
+    --fam-cli:#8A6320;
+    --fam-hidden:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1180px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(26px,4.2vw,42px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .a { color:var(--cc); }
+  h1 .b { color:var(--cx); }
+  h1 .v { color:var(--faint); font-weight:400; }
+  .lede { margin:0; max-width:66ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .lede a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .lede a:hover { border-bottom-color:currentColor; }
+
+  /* five tiles, and they should sit on one row rather than leaving a lone orphan below */
+  .stats {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:var(--sp-2); margin-top:var(--sp-5);
+  }
+  .stat {
+    appearance:none; font:inherit; color:inherit; text-align:left; width:100%; cursor:pointer;
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4);
+    border-left:2px solid var(--sc, var(--accent));
+    transition:background .12s ease, box-shadow .12s ease;
+  }
+  .stat:hover { box-shadow:var(--shadow); }
+  .stat:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .stat[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--sc) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--sc) 45%, var(--rule));
+    border-left-color:var(--sc);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:22px; font-weight:600;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em; line-height:1.2;
+  }
+  .stat .lbl {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--faint);
+  }
+  .stat .lbl::after {
+    content:"jump"; margin-left:auto; letter-spacing:.1em;
+    opacity:0; transition:opacity .12s ease; color:var(--sc);
+  }
+  .stat:hover .lbl::after, .stat:focus-visible .lbl::after { opacity:.85; }
+  .stat[aria-pressed="true"] .lbl::after { content:"showing"; opacity:1; }
+  .stat .stat-note {
+    display:block; margin-top:var(--sp-2); font-size:12.5px; line-height:1.5;
+    color:var(--muted); max-width:38ch;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .stat .stat-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--rule);
+    padding:var(--sp-3) 0;
+  }
+  .toolbar-inner { display:flex; flex-wrap:wrap; gap:var(--sp-3); align-items:center; }
+
+  .search { position:relative; flex:1 1 260px; min-width:0; }
+  .search input {
+    width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:9px 34px 9px 30px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+  .search .prefix {
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); color:var(--accent); font-size:14px; pointer-events:none;
+  }
+  .search kbd {
+    position:absolute; right:9px; top:50%; transform:translateY(-50%);
+    font-family:var(--mono); font-size:10px; color:var(--faint);
+    border:1px solid var(--rule); border-radius:3px; padding:1px 5px; background:var(--ground);
+  }
+
+  .filters { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:var(--sp-1); }
+  .chip {
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--surface); color:var(--muted);
+    border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .chip .dot { width:7px; height:7px; border-radius:50%; background:var(--cw, var(--accent)); }
+  .chip[aria-pressed="true"] {
+    background:color-mix(in srgb, var(--cw, var(--accent)) 12%, var(--surface));
+    border-color:color-mix(in srgb, var(--cw, var(--accent)) 45%, var(--rule));
+    color:var(--ink);
+  }
+  .reset { display:none; }
+  .reset.show { display:inline-flex; }
+
+  .count {
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--faint); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top:var(--sp-6); }
+  .sec-head {
+    display:flex; align-items:baseline; gap:var(--sp-3);
+    border-bottom:1px solid var(--rule); padding-bottom:var(--sp-2); margin-bottom:var(--sp-4);
+  }
+  .sec-head h2 {
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; margin:0; color:var(--ink);
+  }
+  .sec-head .n {
+    font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums;
+  }
+  .sec-head p { margin:0 0 0 auto; font-size:13px; color:var(--muted); text-align:right; }
+  .sec-head p code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+
+  .intro { margin:0 0 var(--sp-4); max-width:74ch; font-size:14px; color:var(--muted); }
+  .intro code { font-family:var(--mono); font-size:.88em; color:var(--ink); }
+  .intro b { color:var(--ink); font-weight:600; }
+  .intro a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .intro a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- the shape of each surface ---------- */
+  .shape { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:var(--sp-3); }
+  .surface {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-left:2px solid var(--tc); padding:var(--sp-4);
+  }
+  .surface h3 {
+    margin:0; font-family:var(--mono); font-size:13px; font-weight:600; color:var(--tc);
+    letter-spacing:-.01em;
+  }
+  .surface .tot {
+    font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums; margin:var(--sp-2) 0 0; line-height:1.1;
+  }
+  .surface .tot span { font-size:12px; font-weight:400; color:var(--faint); letter-spacing:.1em;
+    text-transform:uppercase; margin-left:var(--sp-2); }
+  .bar { display:flex; height:10px; border-radius:2px; overflow:hidden; margin:var(--sp-3) 0 var(--sp-3);
+    background:var(--surface-2); }
+  .bar i { display:block; height:100%; }
+  .legend { display:flex; flex-wrap:wrap; gap:var(--sp-1) var(--sp-3); margin:0; padding:0; list-style:none; }
+  .legend li {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .legend i { width:8px; height:8px; border-radius:2px; flex:0 0 auto; }
+  .legend b { color:var(--ink); font-weight:600; }
+  .surface .say { margin:var(--sp-3) 0 0; font-size:13px; color:var(--muted); }
+  .surface .say b { color:var(--ink); font-weight:600; }
+
+  /* ---------- pair cards ---------- */
+  .pairgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(430px,1fr)); gap:var(--sp-2); }
+
+  .pair {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:var(--sp-3) var(--sp-4) var(--sp-4);
+    transition:box-shadow .12s ease;
+  }
+  .pair:hover { box-shadow:var(--shadow); }
+
+  .pair-top { display:flex; align-items:baseline; gap:var(--sp-2); margin-bottom:var(--sp-3); }
+  .pair-job {
+    flex:1 1 auto; margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em;
+    color:var(--ink);
+  }
+  .anchor {
+    flex:0 0 auto; font-family:var(--mono); font-size:12px; color:var(--faint);
+    text-decoration:none; opacity:0; transition:opacity .12s ease, color .12s ease;
+  }
+  .pair:hover .anchor, .anchor:focus-visible { opacity:1; }
+  .anchor:hover { color:var(--accent); }
+  @media (hover:none) { .anchor { opacity:1; } }
+
+  .side { display:grid; grid-template-columns:76px 1fr; gap:var(--sp-3); padding:var(--sp-2) 0; }
+  .side + .side { border-top:1px dashed var(--rule); }
+  .side .who {
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--tc); padding-top:3px;
+  }
+  .side .body { min-width:0; }
+  .said { margin:0; font-size:13px; color:var(--muted); line-height:1.5; }
+  .said + .said { margin-top:var(--sp-1); }
+  .said q { quotes:"\201C" "\201D"; }
+  .said a, .said .nm {
+    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--tc);
+    text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .said a:hover { border-bottom-color:currentColor; }
+  .said a:focus-visible { outline:2px solid var(--tc); outline-offset:2px; border-radius:2px; }
+  .said .nm { font-weight:500; opacity:.85; }
+  .none { font-family:var(--mono); font-size:12px; color:var(--faint); }
+
+  .pair-note {
+    margin:var(--sp-3) 0 0; padding-top:var(--sp-3); border-top:1px solid var(--rule-soft);
+    font-size:13px; color:var(--muted); line-height:1.5;
+  }
+  .pair-note code { font-family:var(--mono); font-size:.88em; color:var(--ink); }
+  .pair-note em { font-style:normal; color:var(--ink); }
+
+  /* ---------- only-in lists ---------- */
+  .onlywrap { display:grid; grid-template-columns:repeat(auto-fit, minmax(430px,1fr)); gap:var(--sp-4); }
+  .onlycol { min-width:0; }
+  .onlyhead {
+    display:flex; align-items:baseline; gap:var(--sp-2); margin-bottom:var(--sp-3);
+    padding-bottom:var(--sp-2); border-bottom:2px solid var(--tc);
+  }
+  .onlyhead h3 {
+    margin:0; font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--tc);
+  }
+  .onlyhead .n { font-family:var(--mono); font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .onlygroup { margin:0 0 var(--sp-4); }
+  .onlygroup h4 {
+    margin:0 0 var(--sp-2); font-family:var(--mono); font-size:10px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  }
+  .only {
+    display:grid; grid-template-columns:minmax(0,auto) 1fr; gap:var(--sp-1) var(--sp-3);
+    align-items:baseline; padding:5px 0; border-bottom:1px solid var(--rule-soft);
+  }
+  .only a, .only span.nm {
+    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--tc);
+    text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .only a:hover { border-bottom-color:currentColor; }
+  .only p { margin:0; font-size:12.5px; color:var(--muted); line-height:1.45; }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:820px; }
+  th, td { text-align:left; padding:11px var(--sp-4); border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); font-weight:600; border-bottom:1px solid var(--rule);
+    background:var(--surface);
+  }
+  th.h-cc { color:var(--cc); }
+  th.h-cx { color:var(--cx); }
+  tbody tr:last-child td { border-bottom:none; }
+  td.topic { font-size:13.5px; font-weight:600; color:var(--ink); width:15%; }
+  td.body { font-size:13px; color:var(--muted); line-height:1.5; width:31%; }
+  td.body code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  td.body a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  td.body a:hover { border-bottom-color:currentColor; }
+  td.body em { font-style:normal; color:var(--ink); }
+  td.how { font-size:12px; color:var(--faint); line-height:1.45; width:23%; }
+  td.how code { font-family:var(--mono); font-size:.92em; }
+
+  /* ---------- verdict ---------- */
+  .verdict { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px,1fr)); gap:var(--sp-3); }
+  .vcol {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    border-top:2px solid var(--tc); padding:var(--sp-4);
+  }
+  .vcol h3 {
+    margin:0 0 var(--sp-3); font-family:var(--mono); font-size:12px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--tc);
+  }
+  .vcol ul { margin:0; padding:0; list-style:none; }
+  .vcol li {
+    position:relative; padding-left:var(--sp-4); margin-bottom:var(--sp-3);
+    font-size:13.5px; color:var(--muted); line-height:1.55;
+  }
+  .vcol li:last-child { margin-bottom:0; }
+  .vcol li::before {
+    content:"\2192"; position:absolute; left:0; top:0; color:var(--tc); font-family:var(--mono);
+  }
+  .vcol li b { color:var(--ink); font-weight:600; }
+  .vcol code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .vcol em { font-style:normal; color:var(--ink); }
+
+  .empty {
+    display:none; padding:var(--sp-6); text-align:center; color:var(--muted);
+    border:1px dashed var(--rule); border-radius:3px; font-family:var(--mono); font-size:13px;
+  }
+  .empty.show { display:block; }
+
+  /* ---------- notes / footer ---------- */
+  .note {
+    background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--fam-hidden);
+    border-radius:3px; padding:var(--sp-3) var(--sp-4); margin-top:var(--sp-4);
+    font-size:13.5px; color:var(--muted);
+  }
+  .note b { color:var(--ink); font-weight:600; }
+  .note code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .note em { font-style:normal; color:var(--ink); }
+
+  footer {
+    margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-7);
+    border-top:1px solid var(--rule); color:var(--faint); font-size:12.5px;
+  }
+  footer code { font-family:var(--mono); font-size:.9em; }
+  footer p { margin:0 0 var(--sp-2); max-width:74ch; }
+  footer a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  footer a:hover { border-bottom-color:currentColor; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; animation:none !important; }
+  }
+
+  @media (max-width:640px) {
+    .wrap { padding:0 var(--sp-4); }
+    .masthead { padding-top:var(--sp-5); }
+    .sec-head p { display:none; }
+    .search kbd { display:none; }
+    .search input { padding-right:12px; }
+    .toolbar-inner { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-2); }
+    .search { flex:0 0 auto; }
+    .filters {
+      flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain;
+      scrollbar-width:none; -ms-overflow-style:none; gap:var(--sp-2);
+    }
+    .filters::-webkit-scrollbar { display:none; }
+    .chips { flex-wrap:nowrap; }
+    .chip { white-space:nowrap; }
+    .count { display:none; }
+    .pairgrid, .onlywrap { grid-template-columns:1fr; }
+    .side { grid-template-columns:1fr; gap:var(--sp-1); }
+    .side .who { padding-top:0; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Reference &middot; build 2.1.220 + codex 0.146.0 &middot; both read from the installed binaries</p>
+    <h1><span class="a">Claude Code</span> <span class="v">vs</span> <span class="b">Codex CLI</span></h1>
+    <p class="lede">
+      Two terminal coding agents, command for command. Where both do the same job, this page puts
+      them side by side and quotes each tool's own description of itself rather than paraphrasing
+      either. What is left over on each side is the part that has no counterpart at all. Built from
+      the same inventories as the
+      <a href="../claude-code-cheatsheet/">Claude Code</a> and
+      <a href="../codex-cheatsheet/">Codex</a> index pages, so every name here links back to its entry.
+    </p>
+    <div class="stats">
+      <button class="stat" type="button" data-iso="pairs" aria-pressed="false" style="--sc:var(--accent)">
+        <b id="s-pairs">0</b><span class="lbl">Jobs both do</span>
+        <span class="stat-note">Where each tool ships a command for the same thing. The pairing is
+           the editorial part of this page &mdash; both descriptions are printed so you can check it.</span>
+      </button>
+      <button class="stat" type="button" data-iso="onlycc" aria-pressed="false" style="--sc:var(--cc)">
+        <b id="s-onlycc">0</b><span class="lbl">Only Claude Code</span>
+        <span class="stat-note">Commands with nothing paired against them on the Codex side. Computed
+           as the complement, not hand-picked.</span>
+      </button>
+      <button class="stat" type="button" data-iso="onlycx" aria-pressed="false" style="--sc:var(--cx)">
+        <b id="s-onlycx">0</b><span class="lbl">Only Codex</span>
+        <span class="stat-note">The same in reverse. Most of Codex's are deeper in the
+           <code>codex</code> subcommand tree than anything Claude Code exposes.</span>
+      </button>
+      <button class="stat" type="button" data-iso="caps" aria-pressed="false" style="--sc:var(--fam-cli)">
+        <b id="s-caps">0</b><span class="lbl">Capabilities compared</span>
+        <span class="stat-note">Sandboxing, permissions, hooks, config, providers &mdash; sourced from
+           <code>--help</code> and the files on disk, with how each row was established.</span>
+      </button>
+      <button class="stat" type="button" data-iso="verdict" aria-pressed="false" style="--sc:var(--fam-hidden)">
+        <b id="s-verdict">0</b><span class="lbl">Reasons to pick one</span>
+        <span class="stat-note">The one opinionated section, kept separate from the measured ones and
+           labelled as opinion.</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <span class="prefix">/</span>
+        <input id="q" type="search" placeholder="search a command, a job, a capability&hellip;"
+               autocomplete="off" spellcheck="false" aria-label="Search the comparison" />
+        <kbd>/</kbd>
+      </div>
+      <div class="filters">
+        <div class="chips" id="views" role="group" aria-label="Show or hide sections">
+          <button class="chip" type="button" data-view="pairs"  aria-pressed="true" style="--cw:var(--accent)"><i class="dot"></i>Both</button>
+          <button class="chip" type="button" data-view="onlycc" aria-pressed="true" style="--cw:var(--cc)"><i class="dot"></i>Claude only</button>
+          <button class="chip" type="button" data-view="onlycx" aria-pressed="true" style="--cw:var(--cx)"><i class="dot"></i>Codex only</button>
+          <button class="chip" type="button" data-view="caps"   aria-pressed="true" style="--cw:var(--fam-cli)"><i class="dot"></i>Capabilities</button>
+          <button class="chip reset" type="button" id="reset">Reset</button>
+        </div>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+
+  <section id="shape-sec">
+    <div class="sec-head">
+      <h2>The shape of each surface</h2>
+      <p>Same job, two very different places to type it</p>
+    </div>
+    <p class="intro">
+      Before any single command: the two tools disagree about <b>where a coding agent's controls
+      belong</b>. Claude Code puts them at the prompt, behind a <code>/</code>. Codex puts them in
+      your shell, as subcommands. That one choice explains most of the differences further down —
+      including why Codex needs 68 subcommands and Claude Code needs 14.
+    </p>
+    <div class="shape" id="shape"></div>
+  </section>
+
+  <section id="pairs-sec">
+    <div class="sec-head">
+      <h2>The same job, both tools</h2>
+      <span class="n" id="paircount"></span>
+      <p>Each tool's own words, not a paraphrase</p>
+    </div>
+    <p class="intro">
+      Every description below is the string the build itself carries, quoted as found. What is
+      <b>not</b> measured is the pairing: deciding that <code>/branch</code> and <code>/fork</code>
+      are the same job is a judgement, and printing both sides is how you check it. Where the two
+      differ in kind rather than in name, the note says so.
+    </p>
+    <main id="pairs"></main>
+  </section>
+
+  <div class="empty" id="empty">Nothing matches that search.</div>
+
+  <section id="only-sec">
+    <div class="sec-head">
+      <h2>Only in one of them</h2>
+      <span class="n" id="onlycount"></span>
+      <p>Everything not paired above</p>
+    </div>
+    <p class="intro">
+      These lists are a complement, not a selection: every command in either inventory that no pair
+      above claims. That makes them honest but blunt — a deep subcommand like
+      <code>codex app-server daemon restart</code> sits here next to <code>/rewind</code>, and only
+      one of those is an interesting difference. Grouped by the section each command sits in on its
+      own page.
+    </p>
+    <div class="onlywrap">
+      <div class="onlycol" style="--tc:var(--cc)">
+        <div class="onlyhead">
+          <h3>Only in Claude Code</h3>
+          <span class="n" id="cccount"></span>
+        </div>
+        <div id="onlycc"></div>
+      </div>
+      <div class="onlycol" style="--tc:var(--cx)">
+        <div class="onlyhead">
+          <h3>Only in Codex</h3>
+          <span class="n" id="cxcount"></span>
+        </div>
+        <div id="onlycx"></div>
+      </div>
+    </div>
+    <div class="note">
+      <b>One entry here is an artefact of how each inventory was built, and it is
+      <code>/help</code>.</b> It sits on the Claude Code side because Codex's <code>/</code> picker
+      has no <code>/help</code> row to capture — not because Codex has no help. Codex's lives at
+      <code>codex --help</code> and <code>codex help &lt;subcommand&gt;</code>, which are neither
+      slash commands nor listed as subcommands, so nothing in either inventory pairs against it.
+      That is the shape of mistake these two lists can make: <em>absent from the inventory</em> is
+      not the same claim as <em>absent from the tool</em>.
+    </div>
+  </section>
+
+  <section id="caps-sec">
+    <div class="sec-head">
+      <h2>Capabilities, not commands</h2>
+      <span class="n" id="capcount"></span>
+      <p>Sourced from <code>--help</code> and the files on disk</p>
+    </div>
+    <p class="intro">
+      The differences that a command list cannot show. Every row names how it was established, and
+      nothing here comes from either vendor's documentation.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th scope="col">Topic</th>
+          <th scope="col" class="h-cc">Claude Code 2.1.220</th>
+          <th scope="col" class="h-cx">Codex CLI 0.146.0</th>
+          <th scope="col">How this was established</th>
+        </tr></thead>
+        <tbody id="capbody"></tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>One row is weaker than the others, and it is the hooks row.</b> Both binaries carry the same
+      eleven event names. For Claude Code that settles it — they are the keys its
+      <code>settings.json</code> takes. For Codex it does not: Codex also ships <code>/import</code>,
+      which imports a Claude Code setup, so it has a reason to know those names whether or not it
+      fires all of them. What is established on the Codex side is narrower — that hooks are
+      configured in <code>~/.codex/hooks.json</code>, and that each one carries a trust record in
+      <code>config.toml</code> before it will run. Which of the eleven Codex actually fires was
+      <em>not</em> established here, and is not claimed.
+    </div>
+  </section>
+
+  <section id="verdict-sec">
+    <div class="sec-head">
+      <h2>Which one to reach for</h2>
+      <span class="n" id="verdictcount"></span>
+      <p>The opinion section, marked as such</p>
+    </div>
+    <p class="intro">
+      Everything above this line is measured. This part is not — it is a reading of those
+      measurements, and someone who weighs sandboxing against session ergonomics differently would
+      write it differently. Both tools are good. The question worth asking is not which is better
+      but <b>which set of assumptions matches how you work</b>.
+    </p>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <footer>
+    <p>
+      <b>Where the two halves came from.</b> The command comparison is built from the same two
+      inventories as the index pages on this site, and adds nothing to them: Claude Code's names and
+      descriptions were parsed out of the installed binary, Codex's were read off the running
+      <code>/</code> picker and a recursive walk of <code>codex --help</code>. Descriptions are
+      reproduced as the builds carry them. Every name links back to its full entry.
+    </p>
+    <p>
+      <b>The pairing is editorial; the complement is not.</b> Which two commands count as “the same
+      job” is a judgement made by hand, and the reason both descriptions are printed is so that
+      judgement can be checked rather than trusted. The two <em>only in</em> lists are then computed
+      as whatever no pair claimed — so a bad pairing shows up as a missing entry, and every command
+      in both inventories appears exactly once on this page.
+    </p>
+    <p>
+      <b>The capability table was measured on one machine.</b> Sandbox modes, approval policies,
+      config paths and provider options come from <code>claude --help</code> and
+      <code>codex --help</code> on the builds named above, plus the shape of the files in
+      <code>~/.claude</code> and <code>~/.codex</code>. Where a claim could not be established that
+      way it is marked rather than rounded off — see the note under the table.
+    </p>
+    <p>
+      <b>Two builds, one moment.</b> Both tools ship fast, and both resolve part of their surface at
+      run time: Codex against 100 feature flags and your account, Claude Code against its own gating.
+      A count here is the count on these two builds, not a permanent fact about either tool.
+    </p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var q = document.getElementById("q");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+
+  var VIEWS = ["pairs", "onlycc", "onlycx", "caps"];
+  var SECS = {
+    pairs: document.getElementById("pairs-sec"),
+    onlycc: document.getElementById("only-sec"),
+    onlycx: document.getElementById("only-sec"),
+    caps: document.getElementById("caps-sec")
+  };
+
+  var pairCards = [].slice.call(document.querySelectorAll(".pair"));
+  var ccRows = [].slice.call(document.querySelectorAll("#onlycc .only"));
+  var cxRows = [].slice.call(document.querySelectorAll("#onlycx .only"));
+  var capRows = [].slice.call(document.querySelectorAll("#capbody tr"));
+
+  var DEFAULTS = { pairs: true, onlycc: true, onlycx: true, caps: true };
+  var state = Object.assign({}, DEFAULTS);
+
+  function only(key) {
+    var s = {};
+    VIEWS.forEach(function (v) { s[v] = v === key; });
+    return s;
+  }
+  function equals(a, b) {
+    return VIEWS.every(function (k) { return !!a[k] === !!b[k]; });
+  }
+
+  function sync() {
+    document.querySelectorAll("#views .chip[data-view]").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(!!state[c.dataset.view]));
+    });
+    document.querySelectorAll(".stat").forEach(function (t) {
+      var iso = t.dataset.iso;
+      t.setAttribute("aria-pressed",
+        String(VIEWS.indexOf(iso) !== -1 && equals(state, only(iso))));
+    });
+    resetBtn.classList.toggle("show", !equals(state, DEFAULTS) || q.value.trim() !== "");
+  }
+
+  function run(rows, on, term) {
+    var n = 0;
+    rows.forEach(function (el) {
+      var ok = on && (!term || el.dataset.hay.indexOf(term) !== -1);
+      el.style.display = ok ? "" : "none";
+      if (ok) n++;
+    });
+    return n;
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase().replace(/^\//, "");
+
+    var p = run(pairCards, state.pairs, term);
+    var a = run(ccRows, state.onlycc, term);
+    var b = run(cxRows, state.onlycx, term);
+    var c = run(capRows, state.caps, term);
+
+    // hide a group heading once every row under it is filtered out
+    document.querySelectorAll(".onlygroup").forEach(function (g) {
+      var any = [].slice.call(g.querySelectorAll(".only"))
+        .some(function (r) { return r.style.display !== "none"; });
+      g.style.display = any ? "" : "none";
+    });
+    document.querySelectorAll(".onlycol").forEach(function (col) {
+      var any = [].slice.call(col.querySelectorAll(".only"))
+        .some(function (r) { return r.style.display !== "none"; });
+      col.style.display = any ? "" : "none";
+    });
+
+    SECS.pairs.style.display = p ? "" : "none";
+    SECS.caps.style.display = c ? "" : "none";
+    SECS.onlycc.style.display = (a + b) ? "" : "none";
+    document.getElementById("shape-sec").style.display = term ? "none" : "";
+    document.getElementById("verdict-sec").style.display = term ? "none" : "";
+
+    document.getElementById("paircount").textContent = p;
+    document.getElementById("cccount").textContent = a;
+    document.getElementById("cxcount").textContent = b;
+    document.getElementById("onlycount").textContent = a + b;
+    document.getElementById("capcount").textContent = c;
+
+    countEl.textContent = [
+      p ? p + " paired" : "",
+      (a + b) ? (a + b) + " unpaired" : "",
+      c ? c + " capabilities" : ""
+    ].filter(Boolean).join(" · ") || "nothing shown";
+
+    emptyEl.classList.toggle("show", p + a + b + c === 0);
+    sync();
+  }
+
+  q.addEventListener("input", apply);
+
+  document.getElementById("views").addEventListener("click", function (e) {
+    var btn = e.target.closest(".chip[data-view]");
+    if (!btn) return;
+    state[btn.dataset.view] = !state[btn.dataset.view];
+    apply();
+  });
+
+  document.querySelector(".stats").addEventListener("click", function (e) {
+    var tile = e.target.closest(".stat");
+    if (!tile) return;
+    var iso = tile.dataset.iso;
+    var target = document.getElementById(
+      iso === "verdict" ? "verdict-sec" : iso === "caps" ? "caps-sec"
+        : iso === "pairs" ? "pairs-sec" : "only-sec");
+    if (VIEWS.indexOf(iso) !== -1) {
+      state = equals(state, only(iso)) ? Object.assign({}, DEFAULTS) : only(iso);
+      apply();
+    }
+    if (target) target.scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = Object.assign({}, DEFAULTS);
+    q.value = "";
+    apply();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      q.focus();
+      q.select();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = "";
+      apply();
+      q.blur();
+    }
+  });
+
+  apply();
+})();
+</script>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --ground:#F6F7F8; --surface:#FFFFFF; --ink:#15171E; --muted:#5B6172; --faint:#8B91A3;
+    --rule:#E0E3EA; --cc:#3F4FC0; --cx:#0E7C5A; --cli:#8A6320;
+    --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; }
+  body {
+    width:1200px; height:630px; background:var(--ground); color:var(--ink);
+    font-family:var(--mono); display:flex; flex-direction:column;
+    padding:64px 72px; overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .eyebrow {
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow b { color:var(--cc); font-weight:600; }
+  .eyebrow i { flex:1 1 auto; height:1px; background:var(--rule); font-style:normal; }
+
+  h1 {
+    margin-top:40px; font-size:76px; font-weight:600; letter-spacing:-.035em; line-height:1.04;
+  }
+  h1 .a { color:var(--cc); }
+  h1 .b { color:var(--cx); }
+  h1 .v { color:var(--faint); font-weight:400; font-size:56px; }
+
+  p.sub {
+    margin-top:24px; margin-bottom:40px; font-size:24px; line-height:1.5;
+    color:var(--muted); max-width:40ch;
+  }
+  p.sub b { color:var(--ink); font-weight:600; }
+
+  .grid { margin-top:auto; display:flex; gap:12px; }
+  .cell {
+    flex:1 1 0; background:var(--surface); border:1px solid var(--rule);
+    border-left:3px solid var(--c); border-radius:4px; padding:18px 20px;
+  }
+  .cell b { display:block; font-size:40px; font-weight:600; letter-spacing:-.03em; }
+  .cell span {
+    display:block; margin-top:6px; font-size:15px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .foot {
+    margin-top:26px; display:flex; align-items:center; gap:16px;
+    font-size:18px; color:var(--faint); letter-spacing:.04em;
+  }
+  .foot .url { color:var(--cc); }
+  .foot .dot { color:var(--rule); }
+</style>
+</head>
+<body>
+  <div class="eyebrow"><b>AI Snacks</b><i></i><span>2.1.220 &middot; 0.146.0</span></div>
+
+  <h1><span class="a">Claude Code</span> <span class="v">vs</span><br><span class="b">Codex CLI</span></h1>
+  <p class="sub">Command for command, in <b>each tool's own words</b>.</p>
+
+  <div class="grid">
+    <div class="cell" style="--c:var(--muted)"><b>43</b><span>Both do</span></div>
+    <div class="cell" style="--c:var(--cc)"><b>69</b><span>Claude only</span></div>
+    <div class="cell" style="--c:var(--cx)"><b>55</b><span>Codex only</span></div>
+    <div class="cell" style="--c:var(--cli)"><b>13</b><span>Capabilities</span></div>
+  </div>
+
+  <div class="foot">
+    <span class="url">johnmiroki.github.io/ai-snacks</span>
+    <span class="dot">&bull;</span>
+    <span>Measured against both installed binaries</span>
+  </div>
+</body>
+</html>

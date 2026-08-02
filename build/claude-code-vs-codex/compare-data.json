@@ -1,0 +1,432 @@
+{
+  "_comment": [
+    "Hand-authored. The pairing is the editorial part of this page: which two commands count as",
+    "'the same job' is a judgement, and the page prints each tool's own description beside the",
+    "other so a reader can check it. Names in cc[] and cx[] are resolved by build.py against",
+    "claude-code-cheatsheet/commands.json and codex-cheatsheet/codex-commands.json — a name that",
+    "no longer exists fails the build rather than publishing a dead pairing. Everything not named",
+    "here lands in 'only in one of them', which is therefore a computed complement, not a list."
+  ],
+
+  "shape": {
+    "cc": "Almost everything is a slash command, and the shell side is a short list of things you do <em>to</em> Claude Code rather than with it — install it, log in, manage plugins.",
+    "cx": "The shell side is the bigger half, and it goes deep: <code>codex app-server daemon enable-remote-control</code> is a real command. Codex expects to be scripted and embedded, not only typed at."
+  },
+
+  "pairs": [
+    {
+      "id": "pair-launch",
+      "job": "Start it",
+      "cc": ["claude"],
+      "cx": ["codex"],
+      "note": "Word for word the same sentence in both builds — the only entry on this page where the two descriptions are identical."
+    },
+    {
+      "id": "pair-fresh-start",
+      "job": "Start over",
+      "cc": ["/clear"],
+      "cx": ["/new", "/clear"],
+      "note": "Codex splits it in two: <code>/new</code> starts the chat over, <code>/clear</code> also wipes the terminal. Claude Code keeps the old session on disk either way."
+    },
+    {
+      "id": "pair-compact",
+      "job": "Reclaim context",
+      "cc": ["/compact", "/autocompact", "/context"],
+      "cx": ["/compact"],
+      "note": "Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through <code>/status</code>."
+    },
+    {
+      "id": "pair-resume",
+      "job": "Pick up an old session",
+      "cc": ["/resume"],
+      "cx": ["/resume", "codex resume"],
+      "note": "Both offer a picker. Codex can also do it from the shell before launch, and takes <code>--last</code> to skip the picker."
+    },
+    {
+      "id": "pair-branch",
+      "job": "Branch the conversation",
+      "cc": ["/branch"],
+      "cx": ["/fork", "codex fork"],
+      "note": "Different word, same idea — keep this history, continue down a second path. Claude Code's <code>/fork</code> is <em>not</em> this; it spawns a background agent."
+    },
+    {
+      "id": "pair-side",
+      "job": "Ask a side question",
+      "cc": ["/btw"],
+      "cx": ["/side"],
+      "note": "Codex's <code>/side</code> answers to the alias <code>btw</code> — the same name Claude Code gives the command, which it keeps out of <code>/help</code>."
+    },
+    {
+      "id": "pair-rename",
+      "job": "Rename the session",
+      "cc": ["/rename"],
+      "cx": ["/rename"],
+      "note": ""
+    },
+    {
+      "id": "pair-copy",
+      "job": "Copy the last answer",
+      "cc": ["/copy"],
+      "cx": ["/copy"],
+      "note": "Claude Code takes an index — <code>/copy 3</code> for the third-latest."
+    },
+    {
+      "id": "pair-status",
+      "job": "What is this session doing",
+      "cc": ["/status"],
+      "cx": ["/status"],
+      "note": "Codex folds token usage into the same command; Claude Code puts that in <code>/context</code> and <code>/usage</code>."
+    },
+    {
+      "id": "pair-exit",
+      "job": "Leave",
+      "cc": ["/exit"],
+      "cx": ["/exit"],
+      "note": ""
+    },
+    {
+      "id": "pair-model",
+      "job": "Choose the model",
+      "cc": ["/model"],
+      "cx": ["/model"],
+      "note": ""
+    },
+    {
+      "id": "pair-effort",
+      "job": "Set reasoning effort",
+      "cc": ["/effort"],
+      "cx": ["/model"],
+      "note": "Codex has no separate command — its own <code>/model</code> description says it picks “what model and reasoning effort to use”. Claude Code splits the two."
+    },
+    {
+      "id": "pair-fast",
+      "job": "Trade usage for speed",
+      "cc": ["/fast"],
+      "cx": ["/fast"],
+      "note": "Same name, and both are explicit that you are not being downgraded to a smaller model — you are paying for speed."
+    },
+    {
+      "id": "pair-plan",
+      "job": "Plan before touching anything",
+      "cc": ["/plan"],
+      "cx": ["/plan"],
+      "note": ""
+    },
+    {
+      "id": "pair-goal",
+      "job": "Set a goal to hold to",
+      "cc": ["/goal"],
+      "cx": ["/goal"],
+      "note": "Claude Code checks it before stopping; Codex frames it as the goal for a long-running task."
+    },
+    {
+      "id": "pair-init",
+      "job": "Write the project instructions file",
+      "cc": ["/init"],
+      "cx": ["/init"],
+      "note": "The one place the two ecosystems visibly diverge: <code>CLAUDE.md</code> against <code>AGENTS.md</code>. Same command, different filename."
+    },
+    {
+      "id": "pair-diff",
+      "job": "Show the working diff",
+      "cc": ["/diff"],
+      "cx": ["/diff"],
+      "note": "Codex includes untracked files; Claude Code adds a per-turn view of what it changed."
+    },
+    {
+      "id": "pair-review",
+      "job": "Review the changes you have not committed",
+      "cc": ["/code-review", "/simplify"],
+      "cx": ["/review", "codex review", "codex exec review"],
+      "note": "Codex exposes review three ways, one of them non-interactive and scriptable. Claude Code's is a bundled skill, and it ships a second one that applies cleanups rather than reporting them."
+    },
+    {
+      "id": "pair-workdir",
+      "job": "Work somewhere else on disk",
+      "cc": ["/add-dir", "/cd"],
+      "cx": [],
+      "ccFlags": ["--add-dir <dirs...>"],
+      "cxFlags": ["--add-dir <DIR>", "-C, --cd <DIR>"],
+      "note": "Claude Code can move mid-session; Codex settles it at launch. The flag spellings are identical."
+    },
+    {
+      "id": "pair-permissions",
+      "job": "Decide what it may do without asking",
+      "cc": ["/permissions"],
+      "cx": ["/permissions"],
+      "note": "Same command name, different model underneath — see the capability table below."
+    },
+    {
+      "id": "pair-sandbox",
+      "job": "Sandbox what it runs",
+      "cc": ["/sandbox"],
+      "cx": ["codex sandbox", "/setup-default-sandbox", "/sandbox-add-read-dir"],
+      "note": "Claude Code toggles a sandbox for its own Bash tool. Codex also ships the sandbox as a shell command you can wrap any process in, agent or not."
+    },
+    {
+      "id": "pair-hooks",
+      "job": "Run your own code on lifecycle events",
+      "cc": ["/hooks"],
+      "cx": ["/hooks"],
+      "note": ""
+    },
+    {
+      "id": "pair-config",
+      "job": "Open the settings",
+      "cc": ["/config", "/update-config"],
+      "cx": ["/debug-config"],
+      "note": "Claude Code has a settings UI and a skill that rewrites the file for you. Codex expects you to edit <code>config.toml</code>; its config command is hidden and read-only — it shows which layer a value came from."
+    },
+    {
+      "id": "pair-theme",
+      "job": "Change the colours",
+      "cc": ["/theme", "/color"],
+      "cx": ["/theme"],
+      "note": ""
+    },
+    {
+      "id": "pair-statusline",
+      "job": "Configure the status line",
+      "cc": ["/statusline"],
+      "cx": ["/statusline", "/title"],
+      "note": "Codex will also put session items in the terminal's title bar."
+    },
+    {
+      "id": "pair-keys",
+      "job": "Remap the keyboard",
+      "cc": ["/keybindings", "/keybindings-help", "/terminal-setup"],
+      "cx": ["/keymap", "/vim"],
+      "note": "Codex ships a Vim mode for the composer; Claude Code ships a skill that edits the keybindings file with you."
+    },
+    {
+      "id": "pair-memory",
+      "job": "Manage what it remembers",
+      "cc": ["/memory", "/pause-memory"],
+      "cx": ["/memories"],
+      "note": "Both keep memory outside the conversation and let you pause or shape it."
+    },
+    {
+      "id": "pair-import",
+      "job": "Import the other one's setup",
+      "cc": ["/import"],
+      "cx": ["/import"],
+      "note": "Both ship it, and Codex names its source out loud: “import setup, this project, and recent chats <em>from Claude Code</em>.”"
+    },
+    {
+      "id": "pair-ide",
+      "job": "Talk to the editor",
+      "cc": ["/ide"],
+      "cx": ["/ide"],
+      "note": "Claude Code manages an integration; Codex pulls your selection and open files in as context."
+    },
+    {
+      "id": "pair-skills",
+      "job": "Use skills",
+      "cc": ["/skills", "/reload-skills", "/skill-doctor"],
+      "cx": ["/skills"],
+      "note": "Claude Code additionally reloads them mid-session and reports which loaded skills are costing you context for nothing."
+    },
+    {
+      "id": "pair-mcp",
+      "job": "Wire up MCP servers",
+      "cc": ["/mcp", "claude mcp"],
+      "cx": ["/mcp", "codex mcp", "codex mcp add", "codex mcp list", "codex mcp remove"],
+      "note": "Codex breaks the shell side into one subcommand per operation, including <code>login</code> and <code>logout</code> for servers behind auth."
+    },
+    {
+      "id": "pair-plugins",
+      "job": "Install plugins",
+      "cc": ["/plugin", "claude plugin", "/reload-plugins"],
+      "cx": ["/plugins", "codex plugin", "codex plugin add", "codex plugin marketplace"],
+      "note": "Both have marketplaces. Codex's are explicit config entries you add, list, upgrade and remove by name."
+    },
+    {
+      "id": "pair-auth",
+      "job": "Sign in and out",
+      "cc": ["/login", "/logout", "claude auth"],
+      "cx": ["/logout", "codex login", "codex login status", "codex logout"],
+      "note": "Codex has no <code>/login</code> at the prompt — signing in is a shell command."
+    },
+    {
+      "id": "pair-usage",
+      "job": "See what it is costing",
+      "cc": ["/usage", "/explain-usage", "/insights"],
+      "cx": ["/usage"],
+      "note": "Claude Code adds a plain-words breakdown of where a session's tokens went and a report across sessions."
+    },
+    {
+      "id": "pair-doctor",
+      "job": "Diagnose the install",
+      "cc": ["/doctor", "claude doctor"],
+      "cx": ["codex doctor"],
+      "note": "Both check installation, config and auth. Claude Code's also runs inside a session."
+    },
+    {
+      "id": "pair-update",
+      "job": "Update",
+      "cc": ["/update", "claude update", "/version"],
+      "cx": ["codex update"],
+      "note": "Claude Code can swap the binary without dropping the conversation."
+    },
+    {
+      "id": "pair-feedback",
+      "job": "Send feedback",
+      "cc": ["/feedback", "/bug"],
+      "cx": ["/feedback"],
+      "note": ""
+    },
+    {
+      "id": "pair-desktop",
+      "job": "Continue in the desktop app",
+      "cc": ["/desktop"],
+      "cx": ["/app", "codex app"],
+      "note": ""
+    },
+    {
+      "id": "pair-headless",
+      "job": "Run it non-interactively",
+      "cc": ["claude -p"],
+      "cx": ["codex exec", "codex exec resume"],
+      "note": "The scripting entry point on both. Claude Code drives it with flags — <code>--output-format</code>, <code>--json-schema</code>, <code>--max-budget-usd</code>; Codex gives <code>exec</code> its own subcommands."
+    },
+    {
+      "id": "pair-background",
+      "job": "Background work",
+      "cc": ["/background", "/tasks", "/stop", "claude agents"],
+      "cx": ["/ps", "/stop"],
+      "note": "The names line up and the meanings do not. Claude Code backgrounds <em>whole sessions and agents</em>; Codex's <code>/ps</code> and <code>/stop</code> list and kill the <em>shell processes</em> the agent started."
+    },
+    {
+      "id": "pair-subagents",
+      "job": "Hand work to another agent",
+      "cc": ["/subtask", "/fork", "/agents"],
+      "cx": ["/agent", "/subagents"],
+      "note": "Codex switches which agent thread you are typing at. Claude Code sends work away and brings the result back, and its <code>/agents</code> entry says the command was removed in favour of editing <code>.claude/agents/</code> directly."
+    },
+    {
+      "id": "pair-remote",
+      "job": "Drive it from somewhere else",
+      "cc": ["/remote-control", "/session", "/teleport"],
+      "cx": ["codex remote-control", "codex remote-control pair"],
+      "note": "Claude Code hands off to a phone or claude.ai; Codex pairs a daemon you connect a front-end to."
+    },
+    {
+      "id": "pair-cloud",
+      "job": "Run it in the cloud",
+      "cc": ["/ultrareview", "/ultraplan", "/web-setup"],
+      "cx": ["codex cloud", "codex cloud exec", "codex cloud apply"],
+      "note": "Both send work off-machine and bring a diff back. Codex's is a general task queue you drive from the shell; Claude Code's is job-shaped — review this branch, draft this plan."
+    }
+  ],
+
+  "capabilities": [
+    {
+      "id": "cap-config",
+      "topic": "Where settings live",
+      "cc": "<code>~/.claude/settings.json</code> — JSON, with a <code>/config</code> UI and a bundled skill that rewrites it for you.",
+      "cx": "<code>~/.codex/config.toml</code> — TOML, layered. Any key is overridable per-run with <code>-c foo.bar=value</code>, and <code>--profile &lt;name&gt;</code> stacks <code>$CODEX_HOME/&lt;name&gt;.config.toml</code> on top.",
+      "evidence": "Both files on this machine, plus <code>codex --help</code>."
+    },
+    {
+      "id": "cap-memory-file",
+      "topic": "Project instructions file",
+      "cc": "<code>CLAUDE.md</code>, written by <code>/init</code>, auto-discovered up the tree.",
+      "cx": "<code>AGENTS.md</code>, written by <code>/init</code>.",
+      "evidence": "Each tool's own <code>/init</code> description, and both files present in the two config homes."
+    },
+    {
+      "id": "cap-permission",
+      "topic": "Permission model",
+      "cc": "One axis. <code>--permission-mode</code> takes <code>acceptEdits</code>, <code>auto</code>, <code>bypassPermissions</code>, <code>manual</code>, <code>dontAsk</code> or <code>plan</code>, with allow/deny rules per tool underneath.",
+      "cx": "Two orthogonal axes. <code>--ask-for-approval</code> takes <code>untrusted</code>, <code>on-request</code> or <code>never</code>; <code>--sandbox</code> independently takes <code>read-only</code>, <code>workspace-write</code> or <code>danger-full-access</code>.",
+      "evidence": "The <code>[possible values]</code> block each CLI prints for those flags in <code>--help</code>."
+    },
+    {
+      "id": "cap-sandbox",
+      "topic": "Sandbox",
+      "cc": "<code>/sandbox</code> toggles sandboxing for the Bash tool, on supported platforms only. It applies to what Claude Code runs.",
+      "cx": "The same sandbox is also a command you can point at anything: <code>codex sandbox -- &lt;cmd&gt;</code> runs it under seatbelt, and <code>--log-denials</code> prints the macOS denials it collected.",
+      "evidence": "<code>codex sandbox --help</code>; the <code>/sandbox</code> description in the build."
+    },
+    {
+      "id": "cap-escape",
+      "topic": "The escape hatch",
+      "cc": "<code>--dangerously-skip-permissions</code>, plus <code>--allow-dangerously-skip-permissions</code> to make it available without turning it on.",
+      "cx": "<code>--dangerously-bypass-approvals-and-sandbox</code>, and separately <code>--dangerously-bypass-hook-trust</code> for running hooks whose source has not been vetted.",
+      "evidence": "<code>--help</code> on both."
+    },
+    {
+      "id": "cap-hooks",
+      "topic": "Lifecycle hooks",
+      "cc": "Configured under <code>hooks</code> in <code>settings.json</code>. The binary carries eleven event names: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PermissionRequest</code>, <code>UserPromptSubmit</code>, <code>Notification</code>, <code>PreCompact</code>, <code>SessionStart</code>, <code>SessionEnd</code>, <code>Stop</code>, <code>SubagentStart</code>, <code>SubagentStop</code>.",
+      "cx": "A separate <code>~/.codex/hooks.json</code>, with per-hook trust recorded back into <code>config.toml</code> under <code>hooks.state</code> — Codex will not run a hook it has not been trusted to run.",
+      "evidence": "Event names read out of the Claude Code binary; the Codex side read off the two config files. See the caveat below the table."
+    },
+    {
+      "id": "cap-skills",
+      "topic": "Skills",
+      "cc": "35 compiled into the binary — the whole prompt corpus is <a href=\"../claude-code-built-in-skills/\">on its own page here</a> — plus whatever is in <code>~/.claude/skills</code>. 23 of the bundled ones are typeable as slash commands.",
+      "cx": "<code>/skills</code>, loading from <code>~/.codex/skills</code> and from plugins. Whether Codex also bundles prompts of its own is <em>not</em> established here — no equivalent extractor was written for it, and a Rust binary does not give them up the way a Bun-compiled JavaScript bundle does. Read that as a gap in this page, not a finding about Codex.",
+      "evidence": "The skills extraction behind the bundled-skills page; both skills directories on this machine. The Codex half is deliberately a non-claim."
+    },
+    {
+      "id": "cap-agents",
+      "topic": "Subagents",
+      "cc": "Definitions in <code>.claude/agents/</code> or inline via <code>--agents &lt;json&gt;</code>. <code>/subtask</code> and <code>/fork</code> send work off and bring the result back; <code>/workflows</code> tracks multi-agent runs.",
+      "cx": "<code>/agent</code> and <code>/subagents</code> switch which agent thread you are typing at. <code>SubagentStart</code> and <code>SubagentStop</code> exist as hook points.",
+      "evidence": "Both command inventories; <code>~/.claude/agents/</code>; the hook state keys in <code>config.toml</code>."
+    },
+    {
+      "id": "cap-mcp",
+      "topic": "MCP",
+      "cc": "A client. <code>claude mcp</code> manages servers; <code>--mcp-config</code> loads them from a file or string and <code>--strict-mcp-config</code> ignores everything else.",
+      "cx": "A client <em>and</em> a server: <code>codex mcp-server</code> starts Codex itself as an MCP server over stdio, so another agent can call it as a tool.",
+      "evidence": "<code>codex --help</code>; the flag tables on both index pages."
+    },
+    {
+      "id": "cap-headless",
+      "topic": "Scripting surface",
+      "cc": "<code>claude -p</code> plus flags: <code>--output-format json|stream-json</code>, <code>--json-schema</code> for structured output, <code>--max-budget-usd</code>, <code>--input-format</code>, <code>--include-partial-messages</code>.",
+      "cx": "<code>codex exec</code> with its own subcommands (<code>resume</code>, <code>review</code>), plus <code>codex app-server</code> — a protocol daemon that will emit its own JSON Schema and TypeScript bindings for you.",
+      "evidence": "Both flag tables and subcommand trees."
+    },
+    {
+      "id": "cap-providers",
+      "topic": "Model providers",
+      "cc": "Anthropic, with <code>/setup-bedrock</code> and <code>/setup-vertex</code> for the cloud resellers, <code>--fallback-model</code> when the default is overloaded, and <code>--betas</code> for API-key users.",
+      "cx": "OpenAI, with <code>--oss</code> and <code>--local-provider lmstudio|ollama</code> for running against a local model instead.",
+      "evidence": "<code>--help</code> on both; the command inventories."
+    },
+    {
+      "id": "cap-features",
+      "topic": "Feature switchboard",
+      "cc": "None user-facing. Gating is internal: ten commands are in the binary but withheld from <code>/help</code>, and some skills register only when a check passes.",
+      "cx": "<code>codex features list</code> prints 100 switches with a maturity stage each, 40 of them on in this build, toggleable per-run with <code>--enable</code>/<code>--disable</code> or persisted with <code>codex features enable</code>.",
+      "evidence": "Both index pages; the feature table is <code>codex features list</code> verbatim."
+    },
+    {
+      "id": "cap-shape",
+      "topic": "Where the surface lives",
+      "cc": "At the prompt. 129 of 143 entries are typed after a <code>/</code> — 96 native, 23 bundled skills, 10 hidden — leaving 14 shell subcommands.",
+      "cx": "In the shell. 68 of 122 entries are <code>codex</code> subcommands, against 54 typed after a <code>/</code> — the only one of the two where the shell side is the bigger half.",
+      "evidence": "Counted from the two inventories. Hidden commands are counted as slash commands on both sides, because that is how they are typed."
+    }
+  ],
+
+  "verdict": {
+    "cc": [
+      "You want the session itself to be the workspace. Claude Code puts almost everything behind a <code>/</code>, including things Codex settles at launch — move to another directory, change effort, swap the model, background the whole session and get the terminal back.",
+      "You want to undo. <code>/rewind</code> has no counterpart on the Codex side of this page.",
+      "You lean on skills and subagents. 35 prompts ship in the binary, agents are files you write, and <code>/subtask</code>, <code>/fork</code> and <code>/workflows</code> exist to fan work out and collect it.",
+      "You want the model choice to include Bedrock or Vertex."
+    ],
+    "cx": [
+      "You want the agent under a sandbox you can reason about — and reuse. Approval policy and sandbox policy are separate flags with named values, and <code>codex sandbox</code> will wrap any command, not just the agent's.",
+      "You are building on top of it. <code>codex mcp-server</code> makes Codex a tool other agents call; <code>codex app-server</code> hands you a protocol daemon with generated schema and TypeScript bindings.",
+      "You want the tool configured as data. One TOML file, layered profiles, and <code>-c any.key=value</code> for a single run.",
+      "You want to run against a local model — <code>--oss</code> with LM Studio or Ollama.",
+      "You want to see the feature flags rather than discover them."
+    ],
+    "both": "Neither list is a ranking, and the overlap is the real story: 43 jobs on this page have a command on both sides, several with the same name. Both ship hooks, MCP, plugins, skills, plan mode, a review command, a memory system and a desktop hand-off. Both also ship a command that imports the other one's setup, which tells you what the vendors expect you to be doing."
+  }
+}

@@ -1,0 +1,2317 @@
+{
+  "name": "Claude Code and Codex CLI, compared command for command",
+  "description": "Where Claude Code 2.1.220 and OpenAI Codex CLI 0.146.0 ship a command for the same job, what only one of them has, and how they differ on sandboxing, permissions, hooks and configuration.",
+  "claudeCodeBuild": "2.1.220",
+  "codexBuild": "0.146.0",
+  "generated": "2026-08-02",
+  "license": "CC BY 4.0",
+  "canonicalPage": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/",
+  "source": {
+    "method": "The command halves are set operations over the two inventories published on this site, which were themselves read out of the installed builds. Descriptions are each build's own string, unedited. Which two commands count as the same job is a hand-made judgement — that is the one part of this file that was not measured — and the unpaired lists are then the computed complement, so every command appears exactly once. The capability rows come from `claude --help`, `codex --help` and the on-disk config layout of both tools; each carries how it was established.",
+    "claudeCodeInventory": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/commands.json",
+    "codexInventory": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/codex-commands.json"
+  },
+  "counts": {
+    "pairedJobs": 43,
+    "claudeCodeCommands": 143,
+    "codexCommands": 122,
+    "onlyClaudeCode": 69,
+    "onlyCodex": 55,
+    "capabilities": 13
+  },
+  "fields": {
+    "id": "Stable anchor on the canonical page; append as #id to deep-link",
+    "job": "The shared job, named by hand — this is the editorial part",
+    "claudeCode": "The Claude Code commands and launch flags that do it, with their own descriptions and a link to the full entry",
+    "codex": "The same for Codex",
+    "note": "Where the two differ in kind rather than in name",
+    "onlyClaudeCode": "Every Claude Code command no pairing claimed",
+    "onlyCodex": "Every Codex command no pairing claimed",
+    "capabilities": "Differences a command list cannot show, each with its evidence",
+    "verdict": "Opinion, derived from the rows above and marked as such"
+  },
+  "pairs": [
+    {
+      "id": "pair-launch",
+      "job": "Start it",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "claude",
+            "description": "Start an interactive session in the current directory",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex",
+            "description": "Start an interactive session in the current directory",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Word for word the same sentence in both builds — the only entry on this page where the two descriptions are identical.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-launch"
+    },
+    {
+      "id": "pair-fresh-start",
+      "job": "Start over",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/clear",
+            "description": "Start a new session with empty context; the previous session stays on disk and is resumable with /resume",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-clear"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/new",
+            "description": "start a new chat during a conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-new"
+          },
+          {
+            "name": "/clear",
+            "description": "clear the terminal and start a new chat",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-clear"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex splits it in two: /new starts the chat over, /clear also wipes the terminal. Claude Code keeps the old session on disk either way.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-fresh-start"
+    },
+    {
+      "id": "pair-compact",
+      "job": "Reclaim context",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/compact",
+            "description": "Free up context by summarizing the conversation so far",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-compact"
+          },
+          {
+            "name": "/autocompact",
+            "description": "Set how full the context gets before auto-summarizing",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-autocompact"
+          },
+          {
+            "name": "/context",
+            "description": "Visualize current context usage as a colored grid",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-context"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/compact",
+            "description": "summarize conversation to prevent hitting the context limit",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-compact"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Same summarise-and-continue move. Claude Code additionally lets you set the trigger threshold and draw the context as a grid; Codex reports usage through /status.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-compact"
+    },
+    {
+      "id": "pair-resume",
+      "job": "Pick up an old session",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/resume",
+            "description": "Resume a previous conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-resume"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/resume",
+            "description": "resume a saved chat",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-resume"
+          },
+          {
+            "name": "codex resume",
+            "description": "Resume a previous interactive session (picker by default; use --last to continue the most recent)",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-resume"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both offer a picker. Codex can also do it from the shell before launch, and takes --last to skip the picker.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-resume"
+    },
+    {
+      "id": "pair-branch",
+      "job": "Branch the conversation",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/branch",
+            "description": "Create a branch of the current conversation at this point",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-branch"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/fork",
+            "description": "fork the current chat",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-fork"
+          },
+          {
+            "name": "codex fork",
+            "description": "Fork a previous interactive session (picker by default; use --last to fork the most recent)",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-fork"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Different word, same idea — keep this history, continue down a second path. Claude Code's /fork is not this; it spawns a background agent.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-branch"
+    },
+    {
+      "id": "pair-side",
+      "job": "Ask a side question",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/btw",
+            "description": "Ask a quick side question without interrupting the main conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-btw"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/side",
+            "description": "start a side conversation in an ephemeral fork",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-side"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex's /side answers to the alias btw — the same name Claude Code gives the command, which it keeps out of /help.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-side"
+    },
+    {
+      "id": "pair-rename",
+      "job": "Rename the session",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/rename",
+            "description": "Rename the current conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rename"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/rename",
+            "description": "rename the current thread",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-rename"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-rename"
+    },
+    {
+      "id": "pair-copy",
+      "job": "Copy the last answer",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/copy",
+            "description": "Copy Claude's last response to clipboard (or /copy N for the Nth-latest)",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-copy"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/copy",
+            "description": "copy last response as markdown",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-copy"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code takes an index — /copy 3 for the third-latest.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-copy"
+    },
+    {
+      "id": "pair-status",
+      "job": "What is this session doing",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/status",
+            "description": "Show Claude Code status including version, model, account, API connectivity, and tool statuses",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-status"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/status",
+            "description": "show current session configuration and token usage",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-status"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex folds token usage into the same command; Claude Code puts that in /context and /usage.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-status"
+    },
+    {
+      "id": "pair-exit",
+      "job": "Leave",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/exit",
+            "description": "End the session",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-exit"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/exit",
+            "description": "exit Codex",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-exit"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-exit"
+    },
+    {
+      "id": "pair-model",
+      "job": "Choose the model",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/model",
+            "description": "Set the AI model for Claude Code",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-model"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/model",
+            "description": "choose what model and reasoning effort to use",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-model"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-model"
+    },
+    {
+      "id": "pair-effort",
+      "job": "Set reasoning effort",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/effort",
+            "description": "Set effort level for model usage (low, medium, high, xhigh, max)",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-effort"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/model",
+            "description": "choose what model and reasoning effort to use",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-model"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex has no separate command — its own /model description says it picks “what model and reasoning effort to use”. Claude Code splits the two.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-effort"
+    },
+    {
+      "id": "pair-fast",
+      "job": "Trade usage for speed",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/fast",
+            "description": "Toggle fast mode — Opus with faster output, not a smaller model",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fast"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/fast",
+            "description": "1.5x speed, increased usage",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-fast"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Same name, and both are explicit that you are not being downgraded to a smaller model — you are paying for speed.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-fast"
+    },
+    {
+      "id": "pair-plan",
+      "job": "Plan before touching anything",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/plan",
+            "description": "Enable plan mode or view the current session plan",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plan"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/plan",
+            "description": "switch to Plan mode",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-plan"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-plan"
+    },
+    {
+      "id": "pair-goal",
+      "job": "Set a goal to hold to",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/goal",
+            "description": "Set a goal Claude checks before stopping",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-goal"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/goal",
+            "description": "set or view the goal for a long-running task",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-goal"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code checks it before stopping; Codex frames it as the goal for a long-running task.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-goal"
+    },
+    {
+      "id": "pair-init",
+      "job": "Write the project instructions file",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/init",
+            "description": "Initialize a new CLAUDE.md file with codebase documentation (the newer variant also scaffolds skills and hooks)",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-init"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/init",
+            "description": "create an AGENTS.md file with instructions for Codex",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-init"
+          }
+        ],
+        "flags": []
+      },
+      "note": "The one place the two ecosystems visibly diverge: CLAUDE.md against AGENTS.md. Same command, different filename.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-init"
+    },
+    {
+      "id": "pair-diff",
+      "job": "Show the working diff",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/diff",
+            "description": "View uncommitted changes and per-turn diffs",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-diff"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/diff",
+            "description": "show git diff (including untracked files)",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-diff"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex includes untracked files; Claude Code adds a per-turn view of what it changed.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-diff"
+    },
+    {
+      "id": "pair-review",
+      "job": "Review the changes you have not committed",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/code-review",
+            "description": "Review the changes since a fixed point along two axes — repo standards and the originating spec — in parallel sub-agents",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-code-review"
+          },
+          {
+            "name": "/simplify",
+            "description": "Review changed code for reuse, simplification and efficiency, then apply the fixes",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-simplify"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/review",
+            "description": "review my current changes and find issues",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-review"
+          },
+          {
+            "name": "codex review",
+            "description": "Run a code review non-interactively",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-review"
+          },
+          {
+            "name": "codex exec review",
+            "description": "Run a code review against the current repository",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-exec-review"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex exposes review three ways, one of them non-interactive and scriptable. Claude Code's is a bundled skill, and it ships a second one that applies cleanups rather than reporting them.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-review"
+    },
+    {
+      "id": "pair-workdir",
+      "job": "Work somewhere else on disk",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/add-dir",
+            "description": "Add a new working directory",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-add-dir"
+          },
+          {
+            "name": "/cd",
+            "description": "Move this session to a new working directory",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-cd"
+          }
+        ],
+        "flags": [
+          {
+            "flag": "--add-dir <dirs...>",
+            "description": "Additional directories to allow tool access to"
+          }
+        ]
+      },
+      "codex": {
+        "commands": [],
+        "flags": [
+          {
+            "flag": "--add-dir <DIR>",
+            "description": "Additional directories that should be writable alongside the primary workspace"
+          },
+          {
+            "flag": "-C, --cd <DIR>",
+            "description": "Tell the agent to use the specified directory as its working root"
+          }
+        ]
+      },
+      "note": "Claude Code can move mid-session; Codex settles it at launch. The flag spellings are identical.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-workdir"
+    },
+    {
+      "id": "pair-permissions",
+      "job": "Decide what it may do without asking",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/permissions",
+            "description": "Manage allow and deny tool permission rules",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-permissions"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/permissions",
+            "description": "choose what Codex is allowed to do",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-permissions"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Same command name, different model underneath — see the capability table below.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-permissions"
+    },
+    {
+      "id": "pair-sandbox",
+      "job": "Sandbox what it runs",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/sandbox",
+            "description": "Toggle sandbox mode for the Bash tool; available on supported platforms only",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-sandbox"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex sandbox",
+            "description": "Run commands within a Codex-provided sandbox",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-sandbox"
+          },
+          {
+            "name": "/setup-default-sandbox",
+            "description": "set up elevated agent sandbox",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-setup-default-sandbox"
+          },
+          {
+            "name": "/sandbox-add-read-dir",
+            "description": "let sandbox read a directory: /sandbox-add-read-dir <absolute_path>",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-sandbox-add-read-dir"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code toggles a sandbox for its own Bash tool. Codex also ships the sandbox as a shell command you can wrap any process in, agent or not.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-sandbox"
+    },
+    {
+      "id": "pair-hooks",
+      "job": "Run your own code on lifecycle events",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/hooks",
+            "description": "View hook configurations for tool events",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-hooks"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/hooks",
+            "description": "view and manage lifecycle hooks",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-hooks"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-hooks"
+    },
+    {
+      "id": "pair-config",
+      "job": "Open the settings",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/config",
+            "description": "Open settings",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-config"
+          },
+          {
+            "name": "/update-config",
+            "description": "Change settings: hooks, permissions, environment variables",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-update-config"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/debug-config",
+            "description": "show config layers and requirement sources for debugging",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-debug-config"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code has a settings UI and a skill that rewrites the file for you. Codex expects you to edit config.toml; its config command is hidden and read-only — it shows which layer a value came from.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-config"
+    },
+    {
+      "id": "pair-theme",
+      "job": "Change the colours",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/theme",
+            "description": "Change the theme",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-theme"
+          },
+          {
+            "name": "/color",
+            "description": "Set the prompt bar color for this session",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-color"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/theme",
+            "description": "choose a syntax highlighting theme",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-theme"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-theme"
+    },
+    {
+      "id": "pair-statusline",
+      "job": "Configure the status line",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/statusline",
+            "description": "Set up Claude Code's status line UI",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-statusline"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/statusline",
+            "description": "configure which items appear in the status line",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-statusline"
+          },
+          {
+            "name": "/title",
+            "description": "configure which items appear in the terminal title",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-title"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex will also put session items in the terminal's title bar.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-statusline"
+    },
+    {
+      "id": "pair-keys",
+      "job": "Remap the keyboard",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/keybindings",
+            "description": "Open your keyboard shortcuts file",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-keybindings"
+          },
+          {
+            "name": "/keybindings-help",
+            "description": "Customize keyboard shortcuts, rebind keys, and add chord bindings",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-keybindings-help"
+          },
+          {
+            "name": "/terminal-setup",
+            "description": "Configure terminal key bindings — Shift+Enter or Option+Enter for newlines",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-terminal-setup"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/keymap",
+            "description": "remap TUI shortcuts",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-keymap"
+          },
+          {
+            "name": "/vim",
+            "description": "toggle Vim mode for the composer",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-vim"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex ships a Vim mode for the composer; Claude Code ships a skill that edits the keybindings file with you.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-keys"
+    },
+    {
+      "id": "pair-memory",
+      "job": "Manage what it remembers",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/memory",
+            "description": "Open a memory file in your editor",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-memory"
+          },
+          {
+            "name": "/pause-memory",
+            "description": "Pause automemory for this session",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-pause-memory"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/memories",
+            "description": "configure memory use and generation",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-memories"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both keep memory outside the conversation and let you pause or shape it.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-memory"
+    },
+    {
+      "id": "pair-import",
+      "job": "Import the other one's setup",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/import",
+            "description": "Import config from another AI coding agent",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-import"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/import",
+            "description": "import setup, this project, and recent chats from Claude Code",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-import"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both ship it, and Codex names its source out loud: “import setup, this project, and recent chats from Claude Code.”",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-import"
+    },
+    {
+      "id": "pair-ide",
+      "job": "Talk to the editor",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/ide",
+            "description": "Manage IDE integrations and show status",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ide"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/ide",
+            "description": "include current selection, open files, and other context from your IDE",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-ide"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code manages an integration; Codex pulls your selection and open files in as context.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-ide"
+    },
+    {
+      "id": "pair-skills",
+      "job": "Use skills",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/skills",
+            "description": "List available skills",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-skills"
+          },
+          {
+            "name": "/reload-skills",
+            "description": "Pick up skills added or changed on disk during this session",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-reload-skills"
+          },
+          {
+            "name": "/skill-doctor",
+            "description": "Show which loaded skills are unused and costing context",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-skill-doctor"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/skills",
+            "description": "use skills to improve how Codex performs specific tasks",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-skills"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code additionally reloads them mid-session and reports which loaded skills are costing you context for nothing.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-skills"
+    },
+    {
+      "id": "pair-mcp",
+      "job": "Wire up MCP servers",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/mcp",
+            "description": "Manage MCP servers",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-mcp"
+          },
+          {
+            "name": "claude mcp",
+            "description": "Configure and manage MCP servers",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-mcp"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/mcp",
+            "description": "list configured MCP tools; use /mcp verbose for details",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-mcp"
+          },
+          {
+            "name": "codex mcp",
+            "description": "Manage external MCP servers for Codex",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp"
+          },
+          {
+            "name": "codex mcp add",
+            "description": "Add an MCP server by URL or launch command",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-add"
+          },
+          {
+            "name": "codex mcp list",
+            "description": "List configured MCP servers",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-list"
+          },
+          {
+            "name": "codex mcp remove",
+            "description": "Remove a configured MCP server",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-remove"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex breaks the shell side into one subcommand per operation, including login and logout for servers behind auth.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-mcp"
+    },
+    {
+      "id": "pair-plugins",
+      "job": "Install plugins",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/plugin",
+            "description": "Manage Claude Code plugins",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plugin"
+          },
+          {
+            "name": "claude plugin",
+            "description": "Manage Claude Code plugins",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-plugin"
+          },
+          {
+            "name": "/reload-plugins",
+            "description": "Activate pending plugin changes in the current session",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-reload-plugins"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/plugins",
+            "description": "browse plugins",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-plugins"
+          },
+          {
+            "name": "codex plugin",
+            "description": "Manage Codex plugins",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin"
+          },
+          {
+            "name": "codex plugin add",
+            "description": "Install a plugin from a configured marketplace snapshot",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-add"
+          },
+          {
+            "name": "codex plugin marketplace",
+            "description": "Add, list, upgrade, or remove configured plugin marketplaces",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-marketplace"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both have marketplaces. Codex's are explicit config entries you add, list, upgrade and remove by name.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-plugins"
+    },
+    {
+      "id": "pair-auth",
+      "job": "Sign in and out",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/login",
+            "description": "Sign in with your Anthropic account, or switch accounts",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-login"
+          },
+          {
+            "name": "/logout",
+            "description": "Sign out from your Anthropic account",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-logout"
+          },
+          {
+            "name": "claude auth",
+            "description": "Manage authentication",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-auth"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/logout",
+            "description": "log out of Codex",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-logout"
+          },
+          {
+            "name": "codex login",
+            "description": "Manage login",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-login"
+          },
+          {
+            "name": "codex login status",
+            "description": "Show login status",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-login-status"
+          },
+          {
+            "name": "codex logout",
+            "description": "Remove stored authentication credentials",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-logout"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex has no /login at the prompt — signing in is a shell command.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-auth"
+    },
+    {
+      "id": "pair-usage",
+      "job": "See what it is costing",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/usage",
+            "description": "Show session cost, plan usage, and activity stats",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-usage"
+          },
+          {
+            "name": "/explain-usage",
+            "description": "See where this session's tokens went, in plain words",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-explain-usage"
+          },
+          {
+            "name": "/insights",
+            "description": "Generate a report analyzing your Claude Code sessions",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-insights"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/usage",
+            "description": "view account usage or use a usage limit reset",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-usage"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code adds a plain-words breakdown of where a session's tokens went and a report across sessions.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-usage"
+    },
+    {
+      "id": "pair-doctor",
+      "job": "Diagnose the install",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/doctor",
+            "description": "Health-check your setup and fix issues: installation, unused extensions, duplicates",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-doctor"
+          },
+          {
+            "name": "claude doctor",
+            "description": "Check the health of your installation, reading settings without a trust prompt",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-doctor"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex doctor",
+            "description": "Diagnose local Codex installation, config, auth, and runtime health",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-doctor"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both check installation, config and auth. Claude Code's also runs inside a session.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-doctor"
+    },
+    {
+      "id": "pair-update",
+      "job": "Update",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/update",
+            "description": "Switch to the latest version; the conversation continues",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-update"
+          },
+          {
+            "name": "claude update",
+            "description": "Check for updates and install if available",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-update"
+          },
+          {
+            "name": "/version",
+            "description": "Show this session's version — autoupdate may have a newer one",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-version"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex update",
+            "description": "Update Codex to the latest version",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-update"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code can swap the binary without dropping the conversation.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-update"
+    },
+    {
+      "id": "pair-feedback",
+      "job": "Send feedback",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/feedback",
+            "description": "Send feedback to Anthropic or report a bug",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-feedback"
+          },
+          {
+            "name": "/bug",
+            "description": "Report a bug or share your conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-bug"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/feedback",
+            "description": "send logs to maintainers",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-feedback"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-feedback"
+    },
+    {
+      "id": "pair-desktop",
+      "job": "Continue in the desktop app",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/desktop",
+            "description": "Continue the current session in Claude Desktop",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-desktop"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/app",
+            "description": "continue this session in the Desktop app",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-app"
+          },
+          {
+            "name": "codex app",
+            "description": "Launch the Desktop app (opens the app installer if missing)",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app"
+          }
+        ],
+        "flags": []
+      },
+      "note": null,
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-desktop"
+    },
+    {
+      "id": "pair-headless",
+      "job": "Run it non-interactively",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "claude -p",
+            "description": "Print mode: run a prompt non-interactively and exit, useful for pipes and scripts",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-p"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex exec",
+            "description": "Run Codex non-interactively",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-exec"
+          },
+          {
+            "name": "codex exec resume",
+            "description": "Resume a previous session by id or pick the most recent with --last",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-exec-resume"
+          }
+        ],
+        "flags": []
+      },
+      "note": "The scripting entry point on both. Claude Code drives it with flags — --output-format, --json-schema, --max-budget-usd; Codex gives exec its own subcommands.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-headless"
+    },
+    {
+      "id": "pair-background",
+      "job": "Background work",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/background",
+            "description": "Send this session to the background and free the terminal",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-background"
+          },
+          {
+            "name": "/tasks",
+            "description": "View and manage everything running in the background",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-tasks"
+          },
+          {
+            "name": "/stop",
+            "description": "Stop this background session; transcript and worktree are kept",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-stop"
+          },
+          {
+            "name": "claude agents",
+            "description": "Manage background agents",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-agents"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/ps",
+            "description": "list background terminals",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-ps"
+          },
+          {
+            "name": "/stop",
+            "description": "stop all background terminals",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-stop"
+          }
+        ],
+        "flags": []
+      },
+      "note": "The names line up and the meanings do not. Claude Code backgrounds whole sessions and agents; Codex's /ps and /stop list and kill the shell processes the agent started.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-background"
+    },
+    {
+      "id": "pair-subagents",
+      "job": "Hand work to another agent",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/subtask",
+            "description": "Send a subagent off with your full context; its result comes back here",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-subtask"
+          },
+          {
+            "name": "/fork",
+            "description": "Spawn a background agent that inherits the full conversation",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fork"
+          },
+          {
+            "name": "/agents",
+            "description": "Removed. Ask Claude to create or manage subagents, or edit .claude/agents/ directly",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-agents"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "/agent",
+            "description": "switch the active agent thread",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-agent"
+          },
+          {
+            "name": "/subagents",
+            "description": "switch the active agent thread",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-subagents"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Codex switches which agent thread you are typing at. Claude Code sends work away and brings the result back, and its /agents entry says the command was removed in favour of editing .claude/agents/ directly.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-subagents"
+    },
+    {
+      "id": "pair-remote",
+      "job": "Drive it from somewhere else",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/remote-control",
+            "description": "Control this session from your phone or claude.ai/code",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-control"
+          },
+          {
+            "name": "/session",
+            "description": "Show cloud session URL and QR code",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-session"
+          },
+          {
+            "name": "/teleport",
+            "description": "Resume a Claude Code session from claude.ai",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-teleport"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex remote-control",
+            "description": "Manage the app-server daemon with remote control enabled",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-remote-control"
+          },
+          {
+            "name": "codex remote-control pair",
+            "description": "Create and print a short-lived manual pairing code",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-remote-control-pair"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Claude Code hands off to a phone or claude.ai; Codex pairs a daemon you connect a front-end to.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-remote"
+    },
+    {
+      "id": "pair-cloud",
+      "job": "Run it in the cloud",
+      "claudeCode": {
+        "commands": [
+          {
+            "name": "/ultrareview",
+            "description": "Find and verify bugs in your branch using Claude Code on the web",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ultrareview"
+          },
+          {
+            "name": "/ultraplan",
+            "description": "Draft an editable plan in Claude Code on the web",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-ultraplan"
+          },
+          {
+            "name": "/web-setup",
+            "description": "Set up Claude Code on the web with your GitHub account",
+            "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-web-setup"
+          }
+        ],
+        "flags": []
+      },
+      "codex": {
+        "commands": [
+          {
+            "name": "codex cloud",
+            "description": "Browse tasks from Codex Cloud and apply changes locally",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud"
+          },
+          {
+            "name": "codex cloud exec",
+            "description": "Submit a new Codex Cloud task without launching the TUI",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud-exec"
+          },
+          {
+            "name": "codex cloud apply",
+            "description": "Apply the diff for a Codex Cloud task locally",
+            "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud-apply"
+          }
+        ],
+        "flags": []
+      },
+      "note": "Both send work off-machine and bring a diff back. Codex's is a general task queue you drive from the shell; Claude Code's is job-shaped — review this branch, draft this plan.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#pair-cloud"
+    }
+  ],
+  "onlyClaudeCode": [
+    {
+      "name": "/help",
+      "section": "Session & context",
+      "description": "Show help and available commands",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-help"
+    },
+    {
+      "name": "/rewind",
+      "section": "Session & context",
+      "description": "Restore the code and/or conversation to a previous point",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rewind"
+    },
+    {
+      "name": "/export",
+      "section": "Session & context",
+      "description": "Export the current conversation to a file or clipboard",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-export"
+    },
+    {
+      "name": "/focus",
+      "section": "Session & context",
+      "description": "Toggle focus view: just your prompt, summary, and response",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-focus"
+    },
+    {
+      "name": "/brief",
+      "section": "Session & context",
+      "description": "Toggle brief-only mode",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-brief"
+    },
+    {
+      "name": "/recap",
+      "section": "Session & context",
+      "description": "Generate a one-line session recap now",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-recap"
+    },
+    {
+      "name": "/advisor",
+      "section": "Model & reasoning",
+      "description": "Let Claude consult a stronger model at key moments",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-advisor"
+    },
+    {
+      "name": "/review",
+      "section": "Workspace & code",
+      "description": "Review a GitHub pull request; for your working diff use /code-review",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-review"
+    },
+    {
+      "name": "/security-review",
+      "section": "Workspace & code",
+      "description": "Analyze pending changes on the current branch for security vulnerabilities — injection, auth issues, data exposure",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-security-review"
+    },
+    {
+      "name": "/batch",
+      "section": "Workspace & code",
+      "description": "Plan a large change; background agents each open a PR",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-batch"
+    },
+    {
+      "name": "/run",
+      "section": "Workspace & code",
+      "description": "Launch this project's app to see your change working",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-run"
+    },
+    {
+      "name": "/run-skill-generator",
+      "section": "Workspace & code",
+      "description": "Create a skill that knows how to run this project's app",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-run-skill-generator"
+    },
+    {
+      "name": "/fewer-permission-prompts",
+      "section": "Config & environment",
+      "description": "Pre-approve safe read-only commands based on your usage",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-fewer-permission-prompts"
+    },
+    {
+      "name": "/tui",
+      "section": "Config & environment",
+      "description": "Set the terminal UI renderer",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-tui"
+    },
+    {
+      "name": "/scroll-speed",
+      "section": "Config & environment",
+      "description": "Adjust mouse wheel scroll speed",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-scroll-speed"
+    },
+    {
+      "name": "/voice",
+      "section": "Config & environment",
+      "description": "Toggle voice mode",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-voice"
+    },
+    {
+      "name": "/wellbeing",
+      "section": "Config & environment",
+      "description": "Configure optional break reminders and quiet-hours nudges",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-wellbeing"
+    },
+    {
+      "name": "/debug",
+      "section": "Config & environment",
+      "description": "Turn on debug logging and investigate problems",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-debug"
+    },
+    {
+      "name": "/setup-bedrock",
+      "section": "Config & environment",
+      "description": "Reconfigure Amazon Bedrock authentication, region, or model pins",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-bedrock"
+    },
+    {
+      "name": "/setup-vertex",
+      "section": "Config & environment",
+      "description": "Reconfigure Google Vertex AI authentication, project, region, or model pins",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-vertex"
+    },
+    {
+      "name": "/workflows",
+      "section": "Background & parallel work",
+      "description": "Browse running and completed workflows",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workflows"
+    },
+    {
+      "name": "/loops",
+      "section": "Background & parallel work",
+      "description": "List, create, and delete loops",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-loops"
+    },
+    {
+      "name": "/loop",
+      "section": "Background & parallel work",
+      "description": "Repeat a prompt or command on an interval, e.g. /loop 5m /foo",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-loop"
+    },
+    {
+      "name": "/daemon",
+      "section": "Background & parallel work",
+      "description": "Manage background services and routines",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-daemon"
+    },
+    {
+      "name": "/schedule",
+      "section": "Background & parallel work",
+      "description": "Create and manage routines: cloud agents on a schedule",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-schedule"
+    },
+    {
+      "name": "/remote-env",
+      "section": "Cloud, web & devices",
+      "description": "Choose the default environment for cloud agents",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-env"
+    },
+    {
+      "name": "/autofix-pr",
+      "section": "Cloud, web & devices",
+      "description": "Monitor and autofix any issues with the current PR",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-autofix-pr"
+    },
+    {
+      "name": "/install-github-app",
+      "section": "Cloud, web & devices",
+      "description": "Set up Claude GitHub Actions for a repository",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install-github-app"
+    },
+    {
+      "name": "/install-slack-app",
+      "section": "Cloud, web & devices",
+      "description": "Install the Claude Slack app",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install-slack-app"
+    },
+    {
+      "name": "/chrome",
+      "section": "Cloud, web & devices",
+      "description": "Open Claude in Chrome settings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-chrome"
+    },
+    {
+      "name": "/claude-in-chrome",
+      "section": "Cloud, web & devices",
+      "description": "Let Claude browse and interact with pages in your Chrome",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-claude-in-chrome"
+    },
+    {
+      "name": "/setup-cowork",
+      "section": "Cloud, web & devices",
+      "description": "Guided setup — pick a role, install a plugin, try a skill, connect a tool",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-setup-cowork"
+    },
+    {
+      "name": "/artifacts",
+      "section": "Design & artifacts",
+      "description": "Browse your published and shared artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifacts"
+    },
+    {
+      "name": "/artifact-design",
+      "section": "Design & artifacts",
+      "description": "Design guidance and fundamentals for Artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifact-design"
+    },
+    {
+      "name": "/artifact-capabilities",
+      "section": "Design & artifacts",
+      "description": "Runtime capabilities for published Artifacts",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-artifact-capabilities"
+    },
+    {
+      "name": "/plan-artifact",
+      "section": "Design & artifacts",
+      "description": "Publish a plan as a shareable Artifact",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-plan-artifact"
+    },
+    {
+      "name": "/whiteboard",
+      "section": "Design & artifacts",
+      "description": "Sketch on a whiteboard Artifact you can send to Claude",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-whiteboard"
+    },
+    {
+      "name": "/workshop",
+      "section": "Design & artifacts",
+      "description": "Workshop a document through artifact decisions",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workshop"
+    },
+    {
+      "name": "/dataviz",
+      "section": "Design & artifacts",
+      "description": "Chart, dashboard and palette guidance for any visualization you build",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-dataviz"
+    },
+    {
+      "name": "/design",
+      "section": "Design & artifacts",
+      "description": "Grant or revoke Claude agent access to your Design projects",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design"
+    },
+    {
+      "name": "/design-login",
+      "section": "Design & artifacts",
+      "description": "Authorize design-system access for /design-sync with your claude.ai account",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-login"
+    },
+    {
+      "name": "/design-sync",
+      "section": "Design & artifacts",
+      "description": "Push your design system components to claude.ai/design",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-sync"
+    },
+    {
+      "name": "/usage-credits",
+      "section": "Account, usage & install",
+      "description": "Configure usage credits or request them from your admin when you hit a limit",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-usage-credits"
+    },
+    {
+      "name": "/upgrade",
+      "section": "Account, usage & install",
+      "description": "Upgrade to Max for higher rate limits and more Opus",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-upgrade"
+    },
+    {
+      "name": "/passes",
+      "section": "Account, usage & install",
+      "description": "Share a free week of Claude Code with friends and earn usage credits",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-passes"
+    },
+    {
+      "name": "/privacy-settings",
+      "section": "Account, usage & install",
+      "description": "View and update your privacy settings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-privacy-settings"
+    },
+    {
+      "name": "/release-notes",
+      "section": "Account, usage & install",
+      "description": "View release notes",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-release-notes"
+    },
+    {
+      "name": "/install",
+      "section": "Account, usage & install",
+      "description": "Install Claude Code native build",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-install"
+    },
+    {
+      "name": "/claude-api",
+      "section": "Help, feedback & extras",
+      "description": "Build and debug apps that use the Claude API",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-claude-api"
+    },
+    {
+      "name": "/powerup",
+      "section": "Help, feedback & extras",
+      "description": "Discover Claude Code features through quick interactive lessons",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-powerup"
+    },
+    {
+      "name": "/team-onboarding",
+      "section": "Help, feedback & extras",
+      "description": "Help teammates ramp on Claude Code with a guide from your usage",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-team-onboarding"
+    },
+    {
+      "name": "/mobile",
+      "section": "Help, feedback & extras",
+      "description": "Show QR code to download the Claude mobile app",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-mobile"
+    },
+    {
+      "name": "/stickers",
+      "section": "Help, feedback & extras",
+      "description": "Order Claude Code stickers",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-stickers"
+    },
+    {
+      "name": "/radio",
+      "section": "Help, feedback & extras",
+      "description": "Listen to Claude FM lo-fi radio",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-radio"
+    },
+    {
+      "name": "claude auto-mode",
+      "section": "Terminal CLI",
+      "description": "Inspect or reset auto mode classifier configuration",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-auto-mode"
+    },
+    {
+      "name": "claude gateway",
+      "section": "Terminal CLI",
+      "description": "Run the enterprise auth/telemetry gateway",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-gateway"
+    },
+    {
+      "name": "claude install",
+      "section": "Terminal CLI",
+      "description": "Install the native build — stable, latest, or a specific version",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-install"
+    },
+    {
+      "name": "claude project",
+      "section": "Terminal CLI",
+      "description": "Manage Claude Code project state",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-project"
+    },
+    {
+      "name": "claude setup-token",
+      "section": "Terminal CLI",
+      "description": "Set up a long-lived authentication token, requires a Claude subscription",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-setup-token"
+    },
+    {
+      "name": "claude ultrareview",
+      "section": "Terminal CLI",
+      "description": "Run a cloud-hosted multi-agent code review of the current branch or a PR and print the findings",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cli-claude-ultrareview"
+    },
+    {
+      "name": "/auto-mode-setup",
+      "section": "Hidden & internal",
+      "description": "Set up and customise auto mode — environment context, plus optional rule tweaks",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-auto-mode-setup"
+    },
+    {
+      "name": "/heapdump",
+      "section": "Hidden & internal",
+      "description": "Dump the JS heap to ~/Desktop",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-heapdump"
+    },
+    {
+      "name": "/design-consent",
+      "section": "Hidden & internal",
+      "description": "Grant Claude agent access to your Design projects",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-consent"
+    },
+    {
+      "name": "/design-revoke",
+      "section": "Hidden & internal",
+      "description": "Revoke Claude agent access to your Design projects",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-design-revoke"
+    },
+    {
+      "name": "/extra-usage",
+      "section": "Hidden & internal",
+      "description": "Renamed to /usage-credits",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-extra-usage"
+    },
+    {
+      "name": "/pro-trial-expired",
+      "section": "Hidden & internal",
+      "description": "Options shown when the Pro plan Claude Code trial has ended",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-pro-trial-expired"
+    },
+    {
+      "name": "/rate-limit-options",
+      "section": "Hidden & internal",
+      "description": "Show options when rate limit is reached",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-rate-limit-options"
+    },
+    {
+      "name": "/__remote-workflow",
+      "section": "Hidden & internal",
+      "description": "Run the workflow script delivered in this session environment — server-launched sessions only",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-remote-workflow"
+    },
+    {
+      "name": "/workflow-launch-exec",
+      "section": "Hidden & internal",
+      "description": "Execute a server-launched workflow handoff — workflow_launch event sessions only",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-cheatsheet/#cmd-workflow-launch-exec"
+    }
+  ],
+  "onlyCodex": [
+    {
+      "name": "/archive",
+      "section": "Session & context",
+      "description": "archive this session and exit",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-archive"
+    },
+    {
+      "name": "/delete",
+      "section": "Session & context",
+      "description": "permanently delete this session and exit",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-delete"
+    },
+    {
+      "name": "/raw",
+      "section": "Session & context",
+      "description": "toggle raw scrollback mode for copy-friendly terminal selection",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-raw"
+    },
+    {
+      "name": "/personality",
+      "section": "Model & reasoning",
+      "description": "choose a communication style for Codex",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-personality"
+    },
+    {
+      "name": "/mention",
+      "section": "Workspace & code",
+      "description": "mention a file",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-mention"
+    },
+    {
+      "name": "/approve",
+      "section": "Workspace & code",
+      "description": "approve one retry of a recent auto-review denial",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-approve"
+    },
+    {
+      "name": "/pets",
+      "section": "Config & environment",
+      "description": "choose or hide the terminal pet",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-pets"
+    },
+    {
+      "name": "/experimental",
+      "section": "Config & environment",
+      "description": "toggle experimental features",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-experimental"
+    },
+    {
+      "name": "/apps",
+      "section": "Hidden & internal",
+      "description": "manage apps",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-apps"
+    },
+    {
+      "name": "/rollout",
+      "section": "Hidden & internal",
+      "description": "print the rollout file path",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-rollout"
+    },
+    {
+      "name": "/test-approval",
+      "section": "Hidden & internal",
+      "description": "test approval request",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-test-approval"
+    },
+    {
+      "name": "/debug-m-drop",
+      "section": "Hidden & internal",
+      "description": "DO NOT USE",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-debug-m-drop"
+    },
+    {
+      "name": "/debug-m-update",
+      "section": "Hidden & internal",
+      "description": "DO NOT USE",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cmd-debug-m-update"
+    },
+    {
+      "name": "codex apply",
+      "section": "Terminal CLI — core",
+      "description": "Apply the latest diff produced by Codex agent as a `git apply` to your local working tree",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-apply"
+    },
+    {
+      "name": "codex archive",
+      "section": "Terminal CLI — core",
+      "description": "Archive a saved session by id or session name",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-archive"
+    },
+    {
+      "name": "codex unarchive",
+      "section": "Terminal CLI — core",
+      "description": "Unarchive a saved session by id or session name",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-unarchive"
+    },
+    {
+      "name": "codex delete",
+      "section": "Terminal CLI — core",
+      "description": "Permanently delete a saved session by id or session name",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-delete"
+    },
+    {
+      "name": "codex completion",
+      "section": "Terminal CLI — core",
+      "description": "Generate shell completion scripts",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-completion"
+    },
+    {
+      "name": "codex mcp get",
+      "section": "MCP & plugins",
+      "description": "Show one configured MCP server",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-get"
+    },
+    {
+      "name": "codex mcp login",
+      "section": "MCP & plugins",
+      "description": "Sign in to an MCP server that needs auth",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-login"
+    },
+    {
+      "name": "codex mcp logout",
+      "section": "MCP & plugins",
+      "description": "Sign out of an MCP server",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-logout"
+    },
+    {
+      "name": "codex mcp-server",
+      "section": "MCP & plugins",
+      "description": "Start Codex as an MCP server (stdio)",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-mcp-server"
+    },
+    {
+      "name": "codex plugin list",
+      "section": "MCP & plugins",
+      "description": "List plugins available from configured marketplace snapshots",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-list"
+    },
+    {
+      "name": "codex plugin remove",
+      "section": "MCP & plugins",
+      "description": "Remove an installed plugin from local config and cache",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-remove"
+    },
+    {
+      "name": "codex plugin marketplace add",
+      "section": "MCP & plugins",
+      "description": "Add a local or Git marketplace to the configured marketplace sources",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-marketplace-add"
+    },
+    {
+      "name": "codex plugin marketplace list",
+      "section": "MCP & plugins",
+      "description": "List plugin marketplaces Codex is currently considering and their roots",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-marketplace-list"
+    },
+    {
+      "name": "codex plugin marketplace remove",
+      "section": "MCP & plugins",
+      "description": "Remove a configured marketplace source by name",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-marketplace-remove"
+    },
+    {
+      "name": "codex plugin marketplace upgrade",
+      "section": "MCP & plugins",
+      "description": "Refresh configured Git marketplace snapshots",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-plugin-marketplace-upgrade"
+    },
+    {
+      "name": "codex app-server",
+      "section": "App server, daemon & remote control",
+      "description": "Run the app server or related tooling",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server"
+    },
+    {
+      "name": "codex app-server daemon",
+      "section": "App server, daemon & remote control",
+      "description": "Manage the local app-server daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon"
+    },
+    {
+      "name": "codex app-server daemon start",
+      "section": "App server, daemon & remote control",
+      "description": "Start the local app server daemon if it is not already running",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-start"
+    },
+    {
+      "name": "codex app-server daemon stop",
+      "section": "App server, daemon & remote control",
+      "description": "Stop the local app server daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-stop"
+    },
+    {
+      "name": "codex app-server daemon restart",
+      "section": "App server, daemon & remote control",
+      "description": "Restart the local app server daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-restart"
+    },
+    {
+      "name": "codex app-server daemon bootstrap",
+      "section": "App server, daemon & remote control",
+      "description": "Install durable local app-server management for SSH-driven use",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-bootstrap"
+    },
+    {
+      "name": "codex app-server daemon version",
+      "section": "App server, daemon & remote control",
+      "description": "Print local CLI and running app-server versions as JSON",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-version"
+    },
+    {
+      "name": "codex app-server daemon enable-remote-control",
+      "section": "App server, daemon & remote control",
+      "description": "Enable remote control for future starts and a currently running managed daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-enable-remote-control"
+    },
+    {
+      "name": "codex app-server daemon disable-remote-control",
+      "section": "App server, daemon & remote control",
+      "description": "Disable remote control for future starts and a currently running managed daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-daemon-disable-remote-control"
+    },
+    {
+      "name": "codex app-server generate-json-schema",
+      "section": "App server, daemon & remote control",
+      "description": "Generate JSON Schema for the app server protocol",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-generate-json-schema"
+    },
+    {
+      "name": "codex app-server generate-ts",
+      "section": "App server, daemon & remote control",
+      "description": "Generate TypeScript bindings for the app server protocol",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-generate-ts"
+    },
+    {
+      "name": "codex app-server proxy",
+      "section": "App server, daemon & remote control",
+      "description": "Proxy stdio bytes to the running app-server control socket",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-app-server-proxy"
+    },
+    {
+      "name": "codex remote-control start",
+      "section": "App server, daemon & remote control",
+      "description": "Start the app-server daemon with remote control enabled",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-remote-control-start"
+    },
+    {
+      "name": "codex remote-control stop",
+      "section": "App server, daemon & remote control",
+      "description": "Stop the app-server daemon",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-remote-control-stop"
+    },
+    {
+      "name": "codex exec-server",
+      "section": "App server, daemon & remote control",
+      "description": "Run the standalone exec-server service",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-exec-server"
+    },
+    {
+      "name": "codex cloud list",
+      "section": "Codex Cloud",
+      "description": "List Codex Cloud tasks",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud-list"
+    },
+    {
+      "name": "codex cloud status",
+      "section": "Codex Cloud",
+      "description": "Show the status of a Codex Cloud task",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud-status"
+    },
+    {
+      "name": "codex cloud diff",
+      "section": "Codex Cloud",
+      "description": "Show the unified diff for a Codex Cloud task",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-cloud-diff"
+    },
+    {
+      "name": "codex debug",
+      "section": "Debug & feature flags",
+      "description": "Debugging tools",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-debug"
+    },
+    {
+      "name": "codex debug models",
+      "section": "Debug & feature flags",
+      "description": "Render the raw model catalog as JSON",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-debug-models"
+    },
+    {
+      "name": "codex debug prompt-input",
+      "section": "Debug & feature flags",
+      "description": "Render the model-visible prompt input list as JSON",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-debug-prompt-input"
+    },
+    {
+      "name": "codex debug app-server",
+      "section": "Debug & feature flags",
+      "description": "Tooling: helps debug the app server",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-debug-app-server"
+    },
+    {
+      "name": "codex debug app-server send-message-v2",
+      "section": "Debug & feature flags",
+      "description": "Send one user message to the app server",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-debug-app-server-send-message-v2"
+    },
+    {
+      "name": "codex features",
+      "section": "Debug & feature flags",
+      "description": "Inspect feature flags",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-features"
+    },
+    {
+      "name": "codex features list",
+      "section": "Debug & feature flags",
+      "description": "List known features with their stage and effective state",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-features-list"
+    },
+    {
+      "name": "codex features enable",
+      "section": "Debug & feature flags",
+      "description": "Enable a feature in config.toml",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-features-enable"
+    },
+    {
+      "name": "codex features disable",
+      "section": "Debug & feature flags",
+      "description": "Disable a feature in config.toml",
+      "url": "https://johnmiroki.github.io/ai-snacks/codex-cheatsheet/#cli-codex-features-disable"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "cap-config",
+      "topic": "Where settings live",
+      "claudeCode": "~/.claude/settings.json — JSON, with a /config UI and a bundled skill that rewrites it for you.",
+      "codex": "~/.codex/config.toml — TOML, layered. Any key is overridable per-run with -c foo.bar=value, and --profile &lt;name&gt; stacks $CODEX_HOME/&lt;name&gt;.config.toml on top.",
+      "establishedBy": "Both files on this machine, plus codex --help.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-config"
+    },
+    {
+      "id": "cap-memory-file",
+      "topic": "Project instructions file",
+      "claudeCode": "CLAUDE.md, written by /init, auto-discovered up the tree.",
+      "codex": "AGENTS.md, written by /init.",
+      "establishedBy": "Each tool's own /init description, and both files present in the two config homes.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-memory-file"
+    },
+    {
+      "id": "cap-permission",
+      "topic": "Permission model",
+      "claudeCode": "One axis. --permission-mode takes acceptEdits, auto, bypassPermissions, manual, dontAsk or plan, with allow/deny rules per tool underneath.",
+      "codex": "Two orthogonal axes. --ask-for-approval takes untrusted, on-request or never; --sandbox independently takes read-only, workspace-write or danger-full-access.",
+      "establishedBy": "The [possible values] block each CLI prints for those flags in --help.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-permission"
+    },
+    {
+      "id": "cap-sandbox",
+      "topic": "Sandbox",
+      "claudeCode": "/sandbox toggles sandboxing for the Bash tool, on supported platforms only. It applies to what Claude Code runs.",
+      "codex": "The same sandbox is also a command you can point at anything: codex sandbox -- &lt;cmd&gt; runs it under seatbelt, and --log-denials prints the macOS denials it collected.",
+      "establishedBy": "codex sandbox --help; the /sandbox description in the build.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-sandbox"
+    },
+    {
+      "id": "cap-escape",
+      "topic": "The escape hatch",
+      "claudeCode": "--dangerously-skip-permissions, plus --allow-dangerously-skip-permissions to make it available without turning it on.",
+      "codex": "--dangerously-bypass-approvals-and-sandbox, and separately --dangerously-bypass-hook-trust for running hooks whose source has not been vetted.",
+      "establishedBy": "--help on both.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-escape"
+    },
+    {
+      "id": "cap-hooks",
+      "topic": "Lifecycle hooks",
+      "claudeCode": "Configured under hooks in settings.json. The binary carries eleven event names: PreToolUse, PostToolUse, PermissionRequest, UserPromptSubmit, Notification, PreCompact, SessionStart, SessionEnd, Stop, SubagentStart, SubagentStop.",
+      "codex": "A separate ~/.codex/hooks.json, with per-hook trust recorded back into config.toml under hooks.state — Codex will not run a hook it has not been trusted to run.",
+      "establishedBy": "Event names read out of the Claude Code binary; the Codex side read off the two config files. See the caveat below the table.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-hooks"
+    },
+    {
+      "id": "cap-skills",
+      "topic": "Skills",
+      "claudeCode": "35 compiled into the binary — the whole prompt corpus is on its own page here — plus whatever is in ~/.claude/skills. 23 of the bundled ones are typeable as slash commands.",
+      "codex": "/skills, loading from ~/.codex/skills and from plugins. Whether Codex also bundles prompts of its own is not established here — no equivalent extractor was written for it, and a Rust binary does not give them up the way a Bun-compiled JavaScript bundle does. Read that as a gap in this page, not a finding about Codex.",
+      "establishedBy": "The skills extraction behind the bundled-skills page; both skills directories on this machine. The Codex half is deliberately a non-claim.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-skills"
+    },
+    {
+      "id": "cap-agents",
+      "topic": "Subagents",
+      "claudeCode": "Definitions in .claude/agents/ or inline via --agents &lt;json&gt;. /subtask and /fork send work off and bring the result back; /workflows tracks multi-agent runs.",
+      "codex": "/agent and /subagents switch which agent thread you are typing at. SubagentStart and SubagentStop exist as hook points.",
+      "establishedBy": "Both command inventories; ~/.claude/agents/; the hook state keys in config.toml.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-agents"
+    },
+    {
+      "id": "cap-mcp",
+      "topic": "MCP",
+      "claudeCode": "A client. claude mcp manages servers; --mcp-config loads them from a file or string and --strict-mcp-config ignores everything else.",
+      "codex": "A client and a server: codex mcp-server starts Codex itself as an MCP server over stdio, so another agent can call it as a tool.",
+      "establishedBy": "codex --help; the flag tables on both index pages.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-mcp"
+    },
+    {
+      "id": "cap-headless",
+      "topic": "Scripting surface",
+      "claudeCode": "claude -p plus flags: --output-format json|stream-json, --json-schema for structured output, --max-budget-usd, --input-format, --include-partial-messages.",
+      "codex": "codex exec with its own subcommands (resume, review), plus codex app-server — a protocol daemon that will emit its own JSON Schema and TypeScript bindings for you.",
+      "establishedBy": "Both flag tables and subcommand trees.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-headless"
+    },
+    {
+      "id": "cap-providers",
+      "topic": "Model providers",
+      "claudeCode": "Anthropic, with /setup-bedrock and /setup-vertex for the cloud resellers, --fallback-model when the default is overloaded, and --betas for API-key users.",
+      "codex": "OpenAI, with --oss and --local-provider lmstudio|ollama for running against a local model instead.",
+      "establishedBy": "--help on both; the command inventories.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-providers"
+    },
+    {
+      "id": "cap-features",
+      "topic": "Feature switchboard",
+      "claudeCode": "None user-facing. Gating is internal: ten commands are in the binary but withheld from /help, and some skills register only when a check passes.",
+      "codex": "codex features list prints 100 switches with a maturity stage each, 40 of them on in this build, toggleable per-run with --enable/--disable or persisted with codex features enable.",
+      "establishedBy": "Both index pages; the feature table is codex features list verbatim.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-features"
+    },
+    {
+      "id": "cap-shape",
+      "topic": "Where the surface lives",
+      "claudeCode": "At the prompt. 129 of 143 entries are typed after a / — 96 native, 23 bundled skills, 10 hidden — leaving 14 shell subcommands.",
+      "codex": "In the shell. 68 of 122 entries are codex subcommands, against 54 typed after a / — the only one of the two where the shell side is the bigger half.",
+      "establishedBy": "Counted from the two inventories. Hidden commands are counted as slash commands on both sides, because that is how they are typed.",
+      "url": "https://johnmiroki.github.io/ai-snacks/claude-code-vs-codex/#cap-shape"
+    }
+  ],
+  "verdict": {
+    "disclaimer": "Opinion, not measurement. Everything else in this file was measured.",
+    "reachForClaudeCode": [
+      "You want the session itself to be the workspace. Claude Code puts almost everything behind a /, including things Codex settles at launch — move to another directory, change effort, swap the model, background the whole session and get the terminal back.",
+      "You want to undo. /rewind has no counterpart on the Codex side of this page.",
+      "You lean on skills and subagents. 35 prompts ship in the binary, agents are files you write, and /subtask, /fork and /workflows exist to fan work out and collect it.",
+      "You want the model choice to include Bedrock or Vertex."
+    ],
+    "reachForCodex": [
+      "You want the agent under a sandbox you can reason about — and reuse. Approval policy and sandbox policy are separate flags with named values, and codex sandbox will wrap any command, not just the agent's.",
+      "You are building on top of it. codex mcp-server makes Codex a tool other agents call; codex app-server hands you a protocol daemon with generated schema and TypeScript bindings.",
+      "You want the tool configured as data. One TOML file, layered profiles, and -c any.key=value for a single run.",
+      "You want to run against a local model — --oss with LM Studio or Ollama.",
+      "You want to see the feature flags rather than discover them."
+    ],
+    "andMostly": "Neither list is a ranking, and the overlap is the real story: 43 jobs on this page have a command on both sides, several with the same name. Both ship hooks, MCP, plugins, skills, plan mode, a review command, a memory system and a desktop hand-off. Both also ship a command that imports the other one's setup, which tells you what the vendors expect you to be doing."
+  }
+}
