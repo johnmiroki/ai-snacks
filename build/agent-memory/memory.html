@@ -1,0 +1,390 @@
+<title>Agent Memory — v2.1.220 + 0.146.0</title>
+
+<style>
+  :root {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#5B4BAE;
+    --accent-soft:#EAE7F8;
+    --fam-cc:#3F4FC0;
+    --fam-cx:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-warn:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#0F1117;
+      --surface:#161922;
+      --surface-2:#1E222E;
+      --ink:#E3E6EE;
+      --muted:#969DB0;
+      --faint:#6C7385;
+      --rule:#262B38;
+      --rule-soft:#1E222E;
+      --accent:#A99BF5;
+      --accent-soft:#231F3C;
+      --fam-cc:#8E9AF2;
+      --fam-cx:#3FB98C;
+      --fam-cli:#D8AE60;
+      --fam-warn:#EC8CA2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:#0F1117;
+    --surface:#161922;
+    --surface-2:#1E222E;
+    --ink:#E3E6EE;
+    --muted:#969DB0;
+    --faint:#6C7385;
+    --rule:#262B38;
+    --rule-soft:#1E222E;
+    --accent:#A99BF5;
+    --accent-soft:#231F3C;
+    --fam-cc:#8E9AF2;
+    --fam-cx:#3FB98C;
+    --fam-cli:#D8AE60;
+    --fam-warn:#EC8CA2;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 20px -12px rgba(0,0,0,.7);
+  }
+
+  :root[data-theme="light"] {
+    --ground:#F6F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#ECEFF6;
+    --ink:#15171E;
+    --muted:#5B6172;
+    --faint:#8B91A3;
+    --rule:#E0E3EC;
+    --rule-soft:#EDEFF5;
+    --accent:#5B4BAE;
+    --accent-soft:#EAE7F8;
+    --fam-cc:#3F4FC0;
+    --fam-cx:#0E7C5A;
+    --fam-cli:#8A6320;
+    --fam-warn:#A3374F;
+    --shadow:0 1px 2px rgba(21,23,30,.05), 0 6px 16px -10px rgba(21,23,30,.18);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap { max-width:1040px; margin:0 auto; padding:0 var(--sp-5); }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding:var(--sp-7) 0 var(--sp-5); border-bottom:1px solid var(--rule); }
+  .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin:0 0 var(--sp-3);
+  }
+  h1 {
+    font-family:var(--mono); font-weight:600; font-size:clamp(28px,4.4vw,44px);
+    letter-spacing:-.02em; line-height:1.1; margin:0 0 var(--sp-3);
+    text-wrap:balance;
+  }
+  h1 .slash { color:var(--accent); }
+  .lede { margin:0; max-width:70ch; color:var(--muted); font-size:16px; }
+  .lede code { font-family:var(--mono); font-size:.87em; color:var(--ink); }
+  .lede b { color:var(--ink); font-weight:600; }
+  .lede a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .lede a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- stats ---------- */
+  .stats {
+    display:grid; gap:var(--sp-3); margin:var(--sp-5) 0 0;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .stat {
+    text-align:left;
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--sc, var(--accent));
+    border-radius:3px; padding:var(--sp-3) var(--sp-4);
+  }
+  .stat b {
+    display:block; font-family:var(--mono); font-size:21px; font-weight:600;
+    letter-spacing:-.01em; color:var(--sc, var(--accent)); line-height:1.2;
+  }
+  .stat .lbl { display:block; font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .stat .stat-note {
+    display:block; font-size:12px; color:var(--faint); margin-top:var(--sp-2); line-height:1.45;
+  }
+  .stat .stat-note code { font-family:var(--mono); font-size:.92em; }
+
+  /* ---------- how this was established ---------- */
+  .method {
+    margin:var(--sp-5) 0 0; padding:var(--sp-4);
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--fam-cli); border-radius:3px;
+  }
+  .method h2 {
+    margin:0 0 var(--sp-2); font-family:var(--mono); font-size:12px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--fam-cli); font-weight:600;
+  }
+  .method p { margin:0 0 var(--sp-3); font-size:13.5px; color:var(--muted); max-width:92ch; }
+  .method p:last-child { margin-bottom:0; }
+  .method b { color:var(--ink); font-weight:600; }
+  .method code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .method a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  .method a:hover { border-bottom-color:currentColor; }
+
+  /* ---------- contents ---------- */
+  .toc {
+    display:flex; flex-wrap:wrap; gap:var(--sp-2);
+    margin:var(--sp-5) 0 0; padding:0; list-style:none;
+  }
+  .toc a {
+    display:inline-block;
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.04em;
+    color:var(--muted); background:var(--surface); text-decoration:none;
+    border:1px solid var(--rule); border-radius:3px; padding:7px 10px;
+  }
+  .toc a:hover { color:var(--ink); border-color:var(--accent); }
+  .toc a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---------- a tool's walkthrough ---------- */
+  .tool { margin:var(--sp-7) 0 0; scroll-margin-top:var(--sp-4); }
+  .tool-head { border-left:2px solid var(--tc); padding-left:var(--sp-4); margin-bottom:var(--sp-5); }
+  .tool-head .kicker {
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--tc); margin:0 0 var(--sp-2);
+  }
+  .tool-head h2 {
+    font-family:var(--mono); font-size:clamp(20px,2.6vw,27px); font-weight:600;
+    letter-spacing:-.02em; margin:0 0 var(--sp-3); color:var(--ink);
+  }
+  .tool-head p { margin:0 0 var(--sp-3); max-width:84ch; color:var(--muted); font-size:14.5px; }
+  .tool-head p:last-child { margin-bottom:0; }
+  .tool-head p code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .tool-head p b { color:var(--ink); font-weight:600; }
+
+  .step {
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--tc); border-radius:3px;
+    padding:var(--sp-4); margin-bottom:var(--sp-3);
+    scroll-margin-top:var(--sp-4);
+  }
+  .step:target { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .step-top { display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--sp-2) var(--sp-3); }
+  .step-n {
+    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.1em;
+    color:var(--tc); background:color-mix(in srgb, var(--tc) 10%, var(--surface));
+    border:1px solid color-mix(in srgb, var(--tc) 32%, var(--rule));
+    border-radius:2px; padding:2px 7px; flex:0 0 auto;
+  }
+  .step h3 {
+    font-family:var(--mono); font-size:15px; font-weight:600; color:var(--ink);
+    letter-spacing:-.01em; margin:0; flex:1 1 auto; min-width:0;
+  }
+  .anchor {
+    font-family:var(--mono); font-size:12px; color:var(--faint);
+    text-decoration:none; opacity:0; transition:opacity .12s ease; flex:0 0 auto;
+  }
+  .step:hover .anchor, .anchor:focus { opacity:1; }
+  .anchor:hover { color:var(--accent); }
+
+  .step > p {
+    margin:var(--sp-3) 0 0; font-size:14px; color:var(--muted); max-width:88ch;
+    overflow-wrap:anywhere;
+  }
+  .step > p code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .step > p b { color:var(--ink); font-weight:600; }
+
+  /* ---------- verbatim evidence ---------- */
+  .ev { margin-top:var(--sp-3); }
+  .ev-body { position:relative; }
+  .ev pre {
+    /* Right padding keeps the first line clear of the floating Copy button. */
+    margin:0; padding:var(--sp-3) 76px var(--sp-3) var(--sp-4); max-height:26em; overflow:auto;
+    background:var(--surface-2); border:1px solid var(--rule); border-radius:3px;
+    font-family:var(--mono); font-size:12.5px; line-height:1.6; color:var(--ink);
+    white-space:pre-wrap; overflow-wrap:anywhere; tab-size:2;
+  }
+  .ev .src {
+    display:block; margin-top:var(--sp-2);
+    font-family:var(--mono); font-size:11.5px; color:var(--faint); letter-spacing:.02em;
+  }
+  .ev .src b { color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.12em; }
+  .copy {
+    position:absolute; top:var(--sp-2); right:var(--sp-2);
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); background:var(--surface); cursor:pointer;
+    border:1px solid var(--rule); border-radius:2px; padding:5px 9px;
+  }
+  .copy:hover { color:var(--ink); border-color:var(--accent); }
+  .copy:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---------- where the bytes live ---------- */
+  .files { margin-top:var(--sp-4); overflow-x:auto; }
+  .files table { border-collapse:collapse; width:100%; min-width:600px; font-size:13.5px; }
+  .files th, .files td {
+    text-align:left; vertical-align:top; padding:var(--sp-3) var(--sp-3);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .files th {
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:500; border-bottom:1px solid var(--rule); white-space:nowrap;
+  }
+  .files td.p { font-family:var(--mono); font-size:12.5px; color:var(--ink); overflow-wrap:anywhere; }
+  .files td.r { color:var(--muted); }
+  .files tr:last-child td { border-bottom:none; }
+
+  /* ---------- side by side ---------- */
+  .cmp { margin-top:var(--sp-5); overflow-x:auto; }
+  .cmp table { border-collapse:collapse; width:100%; min-width:760px; font-size:13.5px; }
+  .cmp th, .cmp td {
+    text-align:left; vertical-align:top; padding:var(--sp-3) var(--sp-4);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .cmp thead th {
+    position:sticky; top:0; z-index:2;
+    background:var(--ground); border-bottom:1px solid var(--rule);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    font-weight:600;
+  }
+  .cmp thead th.cc { color:var(--fam-cc); }
+  .cmp thead th.cx { color:var(--fam-cx); }
+  .cmp thead th.as { color:var(--muted); font-weight:500; }
+  .cmp tbody th {
+    font-weight:600; color:var(--ink); font-size:13.5px; width:22%;
+  }
+  .cmp tbody th .q { display:block; margin-top:3px; font-weight:400; font-size:12.5px; color:var(--faint); }
+  .cmp td { color:var(--muted); }
+  .cmp td code, .cmp th code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .cmp td.cc { border-left:2px solid color-mix(in srgb, var(--fam-cc) 30%, transparent); }
+  .cmp td.cx { border-left:2px solid color-mix(in srgb, var(--fam-cx) 30%, transparent); }
+  .cmp tr:last-child td, .cmp tr:last-child th { border-bottom:none; }
+
+  /* A note is about the whole dimension, not about one tool, so it spans the row rather than
+     living in either column. The :has() rule drops the rule line between a row and its own note. */
+  .cmp .noterow td {
+    padding-top:0; font-size:12.5px; color:var(--faint);
+  }
+  .cmp .noterow td::before { content:"\2014\00a0"; }
+  .cmp tr:has(+ .noterow) > th, .cmp tr:has(+ .noterow) > td { border-bottom:none; }
+
+  /* ---------- verdict chips ---------- */
+  .chip {
+    display:inline-block; margin-right:6px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid var(--rule); border-radius:2px; padding:2px 6px; white-space:nowrap;
+    color:var(--muted); background:var(--surface-2);
+  }
+  .chip.yes  { color:var(--fam-cx); border-color:color-mix(in srgb, var(--fam-cx) 35%, var(--rule)); }
+  .chip.no   { color:var(--fam-warn); border-color:color-mix(in srgb, var(--fam-warn) 35%, var(--rule)); }
+  .chip.part { color:var(--fam-cli); border-color:color-mix(in srgb, var(--fam-cli) 35%, var(--rule)); }
+  .chip.unk  { color:var(--faint); border-style:dashed; }
+
+  /* ---------- closing notes ---------- */
+  .closing { margin-top:var(--sp-7); }
+  .closing h2 {
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+    margin:0 0 var(--sp-4);
+  }
+  .take {
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:2px solid var(--accent); border-radius:3px;
+    padding:var(--sp-4); margin-bottom:var(--sp-3);
+  }
+  .take h3 {
+    font-family:var(--mono); font-size:14px; font-weight:600; color:var(--ink);
+    letter-spacing:-.01em; margin:0 0 var(--sp-2);
+  }
+  .take p { margin:0; font-size:14px; color:var(--muted); max-width:88ch; }
+  .take p code { font-family:var(--mono); font-size:.9em; color:var(--ink); }
+  .take p b { color:var(--ink); font-weight:600; }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top:1px solid var(--rule); margin-top:var(--sp-7);
+    padding:var(--sp-5) 0 var(--sp-7); color:var(--faint); font-size:13px;
+  }
+  footer p { margin:0 0 var(--sp-2); max-width:86ch; }
+  footer a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+  footer a:hover { border-bottom-color:currentColor; }
+  footer code { font-family:var(--mono); font-size:.9em; }
+
+  @media (max-width: 620px) {
+    .ev pre { font-size:12px; padding:var(--sp-3); }
+    .cmp thead th { position:static; }
+    .tool-head { padding-left:var(--sp-3); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Reference &middot; build 2.1.220 + codex 0.146.0 &middot; read out of both installed binaries</p>
+    <h1><span class="slash">/</span>auto-memory &mdash; Claude Code vs Codex</h1>
+    <p class="lede">
+      Both tools now keep notes on you between sessions, and they went about it in almost opposite
+      ways. Claude Code writes one small file per fact while it works, scoped to the project you are
+      in. Codex sends a separate agent through your session transcripts afterwards and folds what it
+      finds into a single global handbook that the working model is forbidden to edit. This page is
+      each mechanism end to end &mdash; where the bytes land, what reaches the model, and what turns
+      it off &mdash; read out of the two installed binaries rather than their documentation, then
+      set side by side.
+    </p>
+  </header>
+
+  <main id="memory"></main>
+
+  <footer>
+    <p>
+      Read out of <code>~/.local/share/claude/versions/2.1.220</code> and the Codex
+      <code>0.146.0</code> Homebrew cask on 2026-08-02. Prompt text belongs to Anthropic and OpenAI
+      respectively and is reproduced here for reference; both change between builds. Where this page
+      and either tool's documentation disagree, this page reflects what the binary contains.
+    </p>
+    <p>
+      Nothing here was learned by running the tools, and no memory contents from the machine this
+      was written on appear on this page &mdash; only the structures both tools define. Claims the
+      binaries do not settle are marked as not established rather than filled in.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var pre = btn.parentElement.querySelector("pre");
+    if (!pre || !navigator.clipboard) return;
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      var was = btn.textContent;
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = was; }, 1400);
+    });
+  });
+})();
+</script>

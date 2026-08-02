@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --ground:#F7F6FA; --surface:#FFFFFF; --ink:#16141E; --muted:#5C5670; --faint:#8E88A0;
+    --rule:#E3E0EC; --accent:#5B4BAE; --cc:#3F4FC0; --cx:#0E7C5A;
+    --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; }
+  body {
+    width:1200px; height:630px; background:var(--ground); color:var(--ink);
+    font-family:var(--mono); display:flex; flex-direction:column;
+    padding:64px 72px; overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .eyebrow {
+    font-size:19px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow b { color:var(--accent); font-weight:600; }
+  .eyebrow i { flex:1 1 auto; height:1px; background:var(--rule); font-style:normal; }
+
+  h1 {
+    margin-top:38px; font-size:74px; font-weight:600; letter-spacing:-.035em; line-height:1.02;
+  }
+  h1 .slash { color:var(--accent); }
+  p.sub {
+    margin-top:24px; margin-bottom:38px; font-size:24px; line-height:1.5;
+    color:var(--muted); max-width:40ch;
+  }
+  p.sub b { color:var(--ink); font-weight:600; }
+
+  .grid { margin-top:auto; display:flex; gap:14px; }
+  .cell {
+    flex:1 1 0; background:var(--surface); border:1px solid var(--rule);
+    border-left:3px solid var(--c); border-radius:4px; padding:18px 20px;
+  }
+  .cell b {
+    display:block; font-size:17px; letter-spacing:.14em; text-transform:uppercase; color:var(--c);
+  }
+  .cell span { display:block; margin-top:9px; font-size:19px; line-height:1.4; color:var(--muted); }
+  .cell span em { font-style:normal; color:var(--ink); }
+
+  .foot {
+    margin-top:26px; display:flex; align-items:center; gap:16px;
+    font-size:18px; color:var(--faint); letter-spacing:.04em;
+  }
+  .foot .url { color:var(--accent); }
+  .foot .dot { color:var(--rule); }
+</style>
+</head>
+<body>
+  <div class="eyebrow"><b>AI Snacks</b><i></i><span>2.1.220 &middot; 0.146.0</span></div>
+
+  <h1><span class="slash">/</span>Auto-Memory<br>Claude Code vs Codex</h1>
+  <p class="sub">What each one writes down, where it lands, and what reaches the model next time.</p>
+
+  <div class="grid">
+    <div class="cell" style="--c:var(--cc)">
+      <b>Claude Code</b>
+      <span><em>One file per fact,</em> per project, written inline by the model itself.</span>
+    </div>
+    <div class="cell" style="--c:var(--cx)">
+      <b>Codex CLI</b>
+      <span><em>One global handbook,</em> written afterwards by a separate agent.</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="url">johnmiroki.github.io/ai-snacks</span>
+    <span class="dot">&bull;</span>
+    <span>Read out of both installed binaries</span>
+  </div>
+</body>
+</html>
